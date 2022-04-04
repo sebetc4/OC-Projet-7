@@ -15,7 +15,7 @@ export default class FormSignIn extends Component {
     submit = (values, actions) => {
         actions.setSubmitting(false);
         axios
-            .post(`api/auth/signup`, values)
+            .post(`api/user/register`, values)
             .then((res) => {
                 console.log(res.data);
             })

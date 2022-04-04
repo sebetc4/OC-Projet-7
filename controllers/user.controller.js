@@ -1,6 +1,22 @@
 // Imports
 const models = require('../models');
 
+
+// Contrôleur d'inscription
+exports.createUser = async (req, res, next) => {
+    const { email, username, password } = req.body;
+    if (email == null || username == null || password == null) {
+        return res.status(400).send('missing parameters');
+    }
+    try {
+        const newUser = await models.User.create({ ...req.body, isAdmin: 0 })
+        console.log(newUser)
+        return res.status(201).json(`New user add in db with id ${newUser.id}`)
+    } catch (err) {
+        return res.status(400).json({ path: err.errors[0].path, error: err.errors[0].message })
+    }
+}
+
 exports.getAllUsers = async (req, res, next) => {
     try {
         const users = await models.User.findAll({

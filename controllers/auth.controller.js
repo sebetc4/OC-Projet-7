@@ -4,22 +4,6 @@ const bcrypt = require("bcrypt");
 const jswt = require("jsonwebtoken");
 const models = require('../models');
 
-// Contrôleur d'inscription
-exports.signup = async (req, res, next) => {
-    const { email, username, password } = req.body;
-    if (email == null || username == null || password == null) {
-        return res.status(400).send('missing parameters');
-    }
-    try {
-        const newUser = await models.User.create({ ...req.body, isAdmin: 0 })
-        console.log(newUser)
-        return res.status(201).json(`New user add in db with id ${newUser.id}`)
-    } catch (err) {
-        return res.status(400).json({ path: err.errors[0].path, error: err.errors[0].message })
-    }
-}
-
-
 // Contrôleur de connexion
 exports.login = async (req, res, next) => {
     const { email, password } = req.body;
@@ -39,9 +23,10 @@ exports.login = async (req, res, next) => {
         }
         res.cookie(
             'jwt',
-            jswt.sign({ userId: user.id, isAdmin: user.isAdmin }, process.env.USER_TOKEN, { expiresIn: "24h" }),
+            jswt.sign({ userId: user.id, isAdmin: user.isAdmin }, process.env.USER_TOKEN, { expiresIn: process.env.TOKEN_TIME_LIFE }),
             {
                 httpOnly: true,
+                maxAge: process.env.TOKEN_TIME_LIFE,
                 signed: true
             })
         return res.status(200).json(`Utilisateur ${user.id} connecté`)
