@@ -1,14 +1,6 @@
-import CanvasLogo from './CanvasLogo'
 import React, { Component } from 'react';
-import Button from "./Button";
 import { gsap } from "gsap";
-import { FormSignUp, FormSignIn } from './Form';
-
-import Modal from './Modal';
-import Svg from './Svg';
-
-
-// import Cursor from './Cursor/Cursor';
+import { FormSignIn, FormSignUp, CanvasLogo, MagneticButton, ModalLogin, SvgLogin } from '../components/'
 
 export default class Log extends Component {
     constructor(props) {
@@ -138,16 +130,16 @@ export default class Log extends Component {
                     mousePos={this.state.mousePos}
                 />
                 <div className='login-svg-container'>
-                    <Svg />
+                    <SvgLogin />
                 </div>
                 <div className='login-button-container'>
-                    <Button
+                    <MagneticButton
                         texte={"Connexion"}
                         mousePos={this.state.mousePos}
                         handleModal={() => this.handleModal(1)}
                         mouseOn={this.mouseOnButtonSignIn}
                     />
-                    <Button
+                    <MagneticButton
                         texte={"Inscription"}
                         mousePos={this.state.mousePos}
                         handleModal={() => this.handleModal(-1)}
@@ -155,18 +147,15 @@ export default class Log extends Component {
                 </div>
 
                 {this.state.modal.signUp &&
-                    <Modal handleModal={() => { this.handleModal(0) }}>
+                    <ModalLogin handleModal={() => { this.handleModal(0) }}>
                         <FormSignUp handleModal={() => { this.handleModal(1) }} />
-                    </Modal>
+                    </ModalLogin>
                 }
                 {this.state.modal.signIn &&
-                    <Modal handleModal={() => { this.handleModal(0) }}>
+                    <ModalLogin handleModal={() => { this.handleModal(0) }}>
                         <FormSignIn handleModal={() => { this.handleModal(-1) }} />
-                    </Modal>
+                    </ModalLogin>
                 }
-                {/* <Cursor 
-                    ref={this.refCursor} 
-                    mouseOn={ this.state.buttonLogin.mouseOn || this.state.buttonSignUp.mouseOn } /> */}
             </div>
         )
     }

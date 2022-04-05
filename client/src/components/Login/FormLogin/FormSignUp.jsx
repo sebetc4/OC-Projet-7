@@ -1,19 +1,22 @@
-import axios from "axios";
 import { Formik, Field, ErrorMessage } from "formik";
 import React, { Component } from "react";
 import * as Yup from "yup";
 import { customInput, customError } from "./models";
+import "axios";
+import axios from "axios";
 
 export default class FormSignIn extends Component {
     userSchema = Yup.object().shape({
+        username: Yup.string().min(6, "Trop court! veuillez utiliser au moins 6 caractères").required("Champ requis"),
         email: Yup.string().email("Mail non valide").required("Champ requis"),
-        password: Yup.string().min(6, "Trop court").required("Champ requis"),
+        password: Yup.string().min(6, "Trop court! veuillez utiliser au moins 6 caractères").required("Champ requis"),
     });
 
     submit = (values, actions) => {
+        actions.setSubmitting(false);
         axios
-            .post(`${process.env.REACT_APP_API_URL}api/auth/login`, values)
-            .then((res) => {
+            .post(`api/user/register`, values)
+            .then(res => {
                 console.log(res.data);
             })
             .catch((err) => {
@@ -26,30 +29,32 @@ export default class FormSignIn extends Component {
     render() {
         return (
             <div className="login-modale-content">
-                <h2 className="login-modale-content__title">Connexion</h2>
+                <h2 className="login-modale-content__title">Inscription</h2>
                 <Formik
                     onSubmit={this.submit}
-                    initialValues={{ email: "", password: "" }}
+                    initialValues={{ username: "", email: "", password: "" }}
                     validationSchema={this.userSchema}
-                    validateOnBlur={false}
+                    validateOnBlur={true}
                     validateOnChange={false}
                 >
-                    {({ handleSubmit, isSubmitting, values }) => (
+                    {({ handleSubmit, isSubmitting, values, errors }) => (
                         <form className="login-form" onSubmit={handleSubmit}>
+                            <Field name="username" component={customInput} type="text" placeholder="Pseudo" />
+                            <ErrorMessage name="username" component={customError} />
                             <Field name="email" component={customInput} type="email" placeholder="Email" />
                             <ErrorMessage name="email" component={customError} />
                             <Field name="password" component={customInput} type="password" placeholder="Mot de passe" />
                             <ErrorMessage name="password" component={customError} />
                             <button type="submit" className="login-form__button" disabled={isSubmitting}>
-                                Se connecter
+                                S'inscrire
                             </button>
                         </form>
                     )}
                 </Formik>
                 <p className="login-modale-content__text">
-                    Pas de compte?
+                    Déjà inscrit?
                     <span className="login-modale-content__link" onClick={this.props.handleModal}>
-                        Rejoignez nous!
+                        Connectez vous!
                     </span>
                 </p>
             </div>

@@ -1,4 +1,15 @@
-@import "./base/reset";
-@import "./libs/variables";
-@import "./settings";
-@import "./components/login";
+// Base
+@import './base/reset';
+
+// Libs
+@import './libs/variables';
+
+// General
+@import './settings';
+
+// Pages
+@import './pages/login';
+
+// Components
+@import './components/login/MagneticButton';
+@import './components/login/ModalLogin-FormLogin'

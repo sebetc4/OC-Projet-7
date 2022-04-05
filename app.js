@@ -1,11 +1,11 @@
-require("dotenv").config();
+require("dotenv");
 const express = require('express');
-const app = express();
+const cookieParser = require('cookie-parser')
 const db = require('./models')
 const router = require('./routes')
-const cookieParser = require('cookie-parser')
+const app = express();
 
-db.sequelize.sync({ force: true }).then(() => {
+db.sequelize.sync({ force: false }).then(() => {
   console.log("Drop and re-sync db.");
 });
 

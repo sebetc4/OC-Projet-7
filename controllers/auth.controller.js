@@ -22,8 +22,8 @@ exports.login = async (req, res, next) => {
             return res.status(403).json({ error: "invalid password" });
         }
         res.cookie(
-            'jwt',
-            jswt.sign({ userId: user.id, isAdmin: user.isAdmin }, process.env.USER_TOKEN, { expiresIn: process.env.TOKEN_TIME_LIFE }),
+            'jswt',
+            jswt.sign({ userId: user.id, isAdmin: user.isAdmin }, process.env.TOKEN_SECRET, { expiresIn: process.env.TOKEN_TIME_LIFE }),
             {
                 httpOnly: true,
                 maxAge: process.env.TOKEN_TIME_LIFE,
@@ -34,3 +34,19 @@ exports.login = async (req, res, next) => {
         return res.status(500).send({ err })
     }
 }
+
+exports.logout = async (req, res, next) => {
+    res.cookie('jswt', '', {maxAge: 1})
+    return res.status(200).json(`Utilisateur déconnecté`)
+}
+
+exports.checkJswt = async (req, res, nex) => {
+    try {
+        const decodedToken = jswt.verify(req.signedCookies.jswt, process.env.TOKEN_SECRET);
+        const userId = decodedToken.userId;
+        if (userId) {
+            return res.status(200).json({ userId })
+        }
+    } catch {
+        return res.status(200).json({ userId: null}) }
+};

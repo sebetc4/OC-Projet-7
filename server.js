@@ -1,12 +1,7 @@
-require("dotenv").config();
+require("dotenv");
 const http = require("http");
 const app = require("./app");
 
-/**
- * Retourne un port valide
- * @param { String | Number } val
- * @return {{ String | Number | Boolean }}
- */
 const normalizePort = (val) => {
     const port = parseInt(val, 10);
 
@@ -19,10 +14,6 @@ const normalizePort = (val) => {
     return false;
 };
 
-/**
- * Gère les erreurs liées au port écouté
- * @param { Error } error
- */
 const errorHandler = (error) => {
     if (error.syscall !== "listen") {
         throw error;

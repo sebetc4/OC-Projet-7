@@ -1,0 +1,67 @@
+// Bouton
+.login-button {
+    cursor: pointer;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    border: 0;
+    color: $button-text;
+    background: none;
+    width: 8rem;
+    height: 8rem;
+    padding: 0;
+    font-family: inherit;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    
+    &:focus,
+    &--hover {
+        outline: none;
+        color: $button-text-hover;
+        background: $button-bg-hover;
+    }
+}
+
+.login-button__deco {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-width: $button-stroke-width;
+    border-style: solid;
+    border-radius: $button-border-radius;
+
+    &--1 {
+        border-color: $button-stroke-1;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    &--2 {
+        border-color: $button-stroke-2;
+    }
+}
+
+.login-button--hover .login-button__deco--1 {
+    border-color: $button-stroke-hover-1;
+}
+
+.login-button--hover .login-button__deco--2 {
+    border-color: $button-stroke-hover-2;
+}
+
+.login-button__text,
+.login-button__text-inner {
+    display: flex;
+    font-size: 18px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.login-button__text {
+    overflow: hidden;
+}

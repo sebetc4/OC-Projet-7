@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 
-
 export default function Texture(props) {
     // Load the noise textures
     const heightMap = useTexture("./three/noise.jpg");
@@ -27,7 +26,7 @@ export default function Texture(props) {
     // Update time uniform on each frame
     useFrame(({ clock }) => {
         uniforms.time.value = clock.elapsedTime * 0.05;
-        uniforms.colorB.value.set(`rgb(${props.colorLogo.R}, ${props.colorLogo.G}, ${props.colorLogo.B})`)
+        uniforms.colorB.value.set(`rgb(${props.colorLogo.R}, ${props.colorLogo.G}, ${props.colorLogo.B})`);
     });
 
     // Add our custom bits to the MeshStandardMaterial
