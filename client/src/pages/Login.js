@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { gsap } from 'gsap';
-import { FormSignIn, FormSignUp, CanvasLogo, MagneticButton, ModalLogin, SvgLogin } from '../components/';
-import { UserContext } from '../components/AppContext';
+import { FormSignIn, FormSignUp, CanvasLogo, MagneticButton, ModalLogin, SvgLogin } from '../components';
 
-export default class Log extends Component {
-    static contextType = UserContext
+export default class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -29,6 +27,7 @@ export default class Log extends Component {
 		this.actualValue = { l: 0 };
 		this.lastValue = 0;
 	}
+
 
 	getMousePosition = e => {
 		if (this.state.modal.signIn === false && this.state.modal.signUp === false) {
@@ -153,29 +152,19 @@ export default class Log extends Component {
 
 					{this.state.modal.signUp && (
 						<ModalLogin
-							handleModal={() => {
-								this.handleModal(0);
-							}}
+							handleModal={() => { this.handleModal(0) }}
 						>
 							<FormSignUp
-								handleLogin={this.context.handleLogin}
-								handleModal={() => {
-									this.handleModal(1);
-								}}
+								handleModal={() => { this.handleModal(1) }}
 							/>
 						</ModalLogin>
 					)}
 					{this.state.modal.signIn && (
 						<ModalLogin
-							handleModal={() => {
-								this.handleModal(0);
-							}}
+							handleModal={() => { this.handleModal(0) }}
 						>
 							<FormSignIn
-								handleLogin={this.context.handleLogin}
-								handleModal={() => {
-									this.handleModal(-1);
-								}}
+								handleModal={() => { this.handleModal(-1) }}
 							/>
 						</ModalLogin>
 					)}

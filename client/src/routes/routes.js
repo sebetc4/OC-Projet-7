@@ -1,13 +1,17 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import { useSelector } from 'react-redux'
 import { Home, Login } from "../pages";
 
-export default function routes(props) {
+export default function routes() {
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const isLoggin = useSelector((state) => state.user.isLoggin)
 
     return (
         <Router>
             <Routes>
-                {!props.user ?
+                { !isLoggin ?
                     <>
                         <Route path="/login" element={<Login />} />
                         <Route path='*' element={<Navigate to='/login' replace />} />

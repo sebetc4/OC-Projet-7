@@ -1,32 +1,31 @@
 import "./styles/index.scss";
-import React from "react";
-import { UserContext } from "./components/AppContext";
+import React, { useEffect, useState } from "react";
 import Routes from "./routes/routes";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { getUser } from "./store/actions/user.actions";
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
+const App = () => {
 
-        this.state = {
-            user: null,
-            handleLogin: this.handleLogin,
-            handleLogout: this.handleLogout
-        }
-    }
+    const [userId, setUserId] = useState(null)
+    const dispatch = useDispatch();
 
-    handleLogin = (user) => {
-        this.setState({ user })
-    }
+    useEffect(() => {
+        axios.get('/api/auth/checkJwt')
+            .then(res => setUserId(res.data.userId))
+            .catch(() => console.log('Utilisateur non connecté'))
+    }, [])
 
-    handleLogout = () => this.setState({ user: null });
+    useEffect(() => {
+        if (userId)
+            dispatch(getUser(userId))
+    }, [userId])
 
-    render() {
-        return (
-            <UserContext.Provider value={this.state}>
-                <Routes user={this.state.user} />
-            </UserContext.Provider>
-        )
-    }
+
+    return (
+        <Routes userId={userId} />
+    )
 }
+
 
 export default App;
