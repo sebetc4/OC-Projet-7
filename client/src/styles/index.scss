@@ -1,15 +1,33 @@
+// font
+@import url('https://fonts.googleapis.com/css2?family=Anek+Odia:wght@100;200;300;400;500;600;700;800&display=swap');
+
 // Base
 @import './base/reset';
 
 // Libs
 @import './libs/variables';
+@import './libs/mixins';
 
 // General
 @import './settings';
 
 // Pages
 @import './pages/login';
+@import './pages/profil';
+
+
 
 // Components
-@import './components/login/MagneticButton';
-@import './components/login/ModalLogin-FormLogin'
+
+// Login
+@import './components/login/magnetic-button';
+@import './components/login/modals-forms-login';
+
+// Header
+@import './components/header/header';
+@import './components/header/search-bar';
+@import './components/header/navbar';
+@import './components/header/settings-bar';
+
+
+

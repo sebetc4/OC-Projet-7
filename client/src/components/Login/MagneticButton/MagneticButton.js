@@ -83,13 +83,13 @@ export default class Button extends React.Component {
     enter() {
         this.stateH.hover = true;
         this.refButton.current.classList.add('login-button--hover');
-        this.props.mouseOn(true)
+        this.props.mouseOn()
     }
 
     leave() {
         this.stateH.hover = false;
         this.refButton.current.classList.remove('login-button--hover');
-        this.props.mouseOn(false)
+        this.props.mouseOut()
     }
 
     componentDidMount() {

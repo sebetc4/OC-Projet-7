@@ -4,11 +4,7 @@ import Model from "./Model";
 import Texture from "./Texture";
 
 export default function Logo(props) {
-    let colorLogo = {
-        R: 280,
-        G: 81,
-        B: 90,
-    };
+
 
     let cursorPos = {
         axeX: 0,
@@ -30,7 +26,7 @@ export default function Logo(props) {
     return (
         <group>
             <mesh ref={myMesh}>
-                <Texture attach="material" colorLogo={colorLogo} />
+                <Texture attach="material" mouseOnButton={props.mouseOnButton} />
                 <Model />
             </mesh>
         </group>

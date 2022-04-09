@@ -29,7 +29,7 @@ exports.login = async (req, res, next) => {
                 maxAge: process.env.TOKEN_TIME_LIFE,
                 signed: true
             })
-        return res.status(200).json(`Utilisateur ${user.id} connecté`)
+        return res.status(200).json({userId: user.id})
     } catch (err) {
         return res.status(500).send({ err })
     }

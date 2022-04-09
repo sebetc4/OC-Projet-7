@@ -2,7 +2,7 @@ import React from "react";
 
 export default function svg(props) {
     return (
-        <svg className='login-svg' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 65">
+        <svg className={`login-svg ${props.modalState !== 0 ? '' : 'active' }` } xmlns="http://www.w3.org/2000/svg" viewBox="0 0 390 65">
 
                 <g transform="matrix(4.57 0 0 4.57 195.16 32.83)" >
                     <path

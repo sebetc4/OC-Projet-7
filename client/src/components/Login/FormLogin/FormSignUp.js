@@ -6,7 +6,9 @@ import axios from "axios";
 
 export default function FormSignIn(props) {
     const userSchema = Yup.object().shape({
-        username: Yup.string().min(6, "Trop court! veuillez utiliser au moins 6 caractères").required("Champ requis"),
+
+        firstName: Yup.string().min(2, "Trop court! veuillez utiliser au moins 2 caractères").max(20, "Trop long! veuillez utiliser moins de 20 caractères").required("Champ requis"),
+        lastName: Yup.string().min(2, "Trop court! veuillez utiliser au moins 2 caractères").max(20, "Trop long! veuillez utiliser moins de 20 caractères").required("Champ requis"),
         email: Yup.string().email("Mail non valide").required("Champ requis"),
         password: Yup.string().min(6, "Trop court! veuillez utiliser au moins 6 caractères").required("Champ requis"),
     });
@@ -16,7 +18,7 @@ export default function FormSignIn(props) {
         axios
             .post(`api/user/register`, values)
             .then((res) => {
-                props.handleLogin(res.data)
+                props.handleLogin(res.data.userId)
             })
             .catch((err) => {
                 if (err.response) {
@@ -37,8 +39,10 @@ export default function FormSignIn(props) {
             >
                 {({ handleSubmit, isSubmitting }) => (
                     <form className="login-form" onSubmit={handleSubmit}>
-                        <Field name="username" component={customInput} type="text" placeholder="Pseudo" />
-                        <ErrorMessage name="username" component={customError} />
+                        <Field name="firstName" component={customInput} type="text" placeholder="Prénom" />
+                        <ErrorMessage name="firstName" component={customError} />
+                        <Field name="lastName" component={customInput} type="text" placeholder="Nom" />
+                        <ErrorMessage name="lastName" component={customError} />
                         <Field name="email" component={customInput} type="email" placeholder="Email" />
                         <ErrorMessage name="email" component={customError} />
                         <Field name="password" component={customInput} type="password" placeholder="Mot de passe" />

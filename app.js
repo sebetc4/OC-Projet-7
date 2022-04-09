@@ -5,7 +5,7 @@ const db = require('./models')
 const router = require('./routes')
 const app = express();
 
-db.sequelize.sync({ force: false }).then(() => {
+db.sequelize.sync({ force: true }).then(() => {
   console.log("Drop and re-sync db.");
 });
 

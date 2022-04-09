@@ -1,174 +1,110 @@
-import React, { Component } from 'react';
-import { gsap } from 'gsap';
-import { FormSignIn, FormSignUp, CanvasLogo, MagneticButton, ModalLogin, SvgLogin } from '../components';
+import React, { useState } from 'react';
+import { a as aw, useSpring as useSpringWeb } from '@react-spring/web'
+import { FormSignIn, FormSignUp, CanvasLogo, MagneticButton, ModalLogin, SvgGroupomaniaText } from '../components';
+import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux";
+import { getUser } from "../store/actions/user.actions";
 
-export default class Login extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			mousePos: {
-				x: 0,
-				y: 0,
-			},
-			backgroundColor: {
-				l: 80,
-			},
-			mouseOn: {
-				buttonSignIn: false,
-				buttonSignUp: false,
-			},
-			modal: {
-				signUp: false,
-				signIn: false,
-			},
-		};
+export default function Login() {
 
-		// Valeurs de couleur de fond
-		this.actualValue = { l: 0 };
-		this.lastValue = 0;
+	const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+	
+	
+	const [colorState, setColorState] = useState(0)
+
+	// 0: neutre, 1:login, 2: signUp
+	const [mouseOnButton, setMouseOnButton] = useState(0)
+
+	// 0: neutre, 1:login, -1: signUp
+	const [modalState, setModalState] = useState(0)
+
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	
+	const options = [
+		[0, 0, 80],
+		[0, 57, 57]
+	  ]
+
+	const { hsl } = useSpringWeb({
+		hsl: options[colorState],
+		config: { tension: 50 },
+	})
+
+	const springyGradient = hsl.to((h, s, l) => `radial-gradient(hsl(${h}, ${s * 0.7}%, ${l}%), hsl(${h},${s * 0.4}%, ${l * 0.2}%))`)
+
+
+	const handleMousePosition = e => {
+		if (modalState === 0) {
+			setMousePos({
+				x: e.clientX,
+				y: e.clientY,
+			})
+		}
 	}
 
+	const handleLogin = (userId) => {
+		dispatch(getUser(userId))
+		navigate('/home')	
+	}
 
-	getMousePosition = e => {
-		if (this.state.modal.signIn === false && this.state.modal.signUp === false) {
-			this.setState({
-				mousePos: {
-					x: e.clientX,
-					y: e.clientY,
-				},
-			});
-		}
-	};
-
-	// Gestion des boutons
-	mouseOnButtonSignIn = state => {
-		if (state) {
-			this.initModifyBackgroundColor(65);
-		} else {
-			this.initModifyBackgroundColor(80);
-		}
-		this.setState({ buttonLogin: { mouseOn: state } });
-	};
-
-	mouseOnButtonSignUp = state => {
-		if (state) {
-			this.initModifyBackgroundColor(65);
-		} else {
-			this.initModifyBackgroundColor(80);
-		}
-		this.setState({
-			buttonSignUp: {
-				mouseOn: state,
-			},
-		});
-	};
-
-	// Gestion des modales
-	handleModal = state => {
-		switch (state) {
-			case 1:
-				this.setState({
-					modal: {
-						signIn: true,
-						signUp: false,
-					},
-				});
-				break;
-			case -1:
-				this.setState({
-					modal: {
-						signIn: false,
-						signUp: true,
-					},
-				});
-				break;
-			default:
-				this.setState({
-					modal: {
-						signIn: false,
-						signUp: false,
-					},
-				});
-		}
-	};
-
-	// Modification du la couleur de fond
-	initModifyBackgroundColor = value => {
-		this.actualValue.l = this.state.backgroundColor.l;
-		gsap.to(this.actualValue, { l: value, duration: 0.3, onUpdate: this.checkNewBackgroundColor });
-	};
-
-	checkNewBackgroundColor = () => {
-		let roundActualValue = Math.round(this.actualValue.l);
-		if (roundActualValue !== this.lastValue) {
-			this.lastValue = roundActualValue;
-			this.setBackgroundColor(roundActualValue);
-		}
-	};
-
-	setBackgroundColor = value => {
-		this.setState({
-			backgroundColor: {
-				l: value,
-			},
-		});
-	};
-
-	render() {
-		return (
-				<div
-					onMouseMove={e => {
-						this.getMousePosition(e);
+	return (
+		<aw.div style={{ background: springyGradient}} >
+		<div
+			onMouseMove={e => { handleMousePosition(e) }}
+			className='login'
+		>
+			<CanvasLogo mousePos={mousePos} mouseOnButton={mouseOnButton} />
+			<div className='login-svg-container'>
+				<SvgGroupomaniaText modalState={mouseOnButton} />
+			</div>
+			<div className='login-button-container'>
+				<MagneticButton
+					texte={'Connexion'}
+					mousePos={mousePos}
+					handleModal={() => setModalState(1)}
+					mouseOn={() => {
+						setMouseOnButton(1)
+						setColorState(1)
+						}}
+					mouseOut={() => {
+						setMouseOnButton(0)
+						setColorState(0)
 					}}
-					className='login'
-					style={{
-						background: `radial-gradient(hsl(0, 0%, ${this.state.backgroundColor.l}%), hsl(0, 0%, ${
-							this.state.backgroundColor.l * 0.2
-						}%))`,
+				/>
+				<MagneticButton
+					texte={'Inscription'}
+					mousePos={mousePos}
+					handleModal={() => setModalState(-1)}
+					mouseOn={() => {
+						setMouseOnButton(2)
+						setColorState(1)
 					}}
-				>
-					<CanvasLogo
-						mouseOnLogin={this.state.mouseOn.buttonSignIn}
-						mouseOnSignUp={this.state.mouseOn.buttonSignUp}
-						mousePos={this.state.mousePos}
+					mouseOut={() => {
+						setMouseOnButton(0)
+						setColorState(0)
+					}}
+				/>
+			</div>
+
+			{modalState === -1 && (
+				<ModalLogin handleModal={() => { setModalState(0) }} >
+					<FormSignUp 
+						handleModal={() => { setModalState(1) }} 
+						handleLogin={handleLogin}
 					/>
-					<div className='login-svg-container'>
-						<SvgLogin />
-					</div>
-					<div className='login-button-container'>
-						<MagneticButton
-							texte={'Connexion'}
-							mousePos={this.state.mousePos}
-							handleModal={() => this.handleModal(1)}
-							mouseOn={this.mouseOnButtonSignIn}
-						/>
-						<MagneticButton
-							texte={'Inscription'}
-							mousePos={this.state.mousePos}
-							handleModal={() => this.handleModal(-1)}
-							mouseOn={this.mouseOnButtonSignUp}
-						/>
-					</div>
+				</ModalLogin>
+			)}
 
-					{this.state.modal.signUp && (
-						<ModalLogin
-							handleModal={() => { this.handleModal(0) }}
-						>
-							<FormSignUp
-								handleModal={() => { this.handleModal(1) }}
-							/>
-						</ModalLogin>
-					)}
-					{this.state.modal.signIn && (
-						<ModalLogin
-							handleModal={() => { this.handleModal(0) }}
-						>
-							<FormSignIn
-								handleModal={() => { this.handleModal(-1) }}
-							/>
-						</ModalLogin>
-					)}
-				</div>
-		);
-	}
+			{modalState === 1 && (
+				<ModalLogin handleModal={() => { setModalState(0) }} >
+					<FormSignIn 
+						handleModal={() => { setModalState(-1) }} 
+						handleLogin={handleLogin}	
+					/>
+				</ModalLogin>
+			)}
+		</div>
+		</aw.div>
+	)
 }

@@ -4,7 +4,7 @@
     -moz-appearance: none;
     -webkit-appearance: none;
     border: 0;
-    color: $button-text;
+    color: #ffffff;
     background: none;
     width: 8rem;
     height: 8rem;
@@ -19,8 +19,8 @@
     &:focus,
     &--hover {
         outline: none;
-        color: $button-text-hover;
-        background: $button-bg-hover;
+        color: #fff;
+        background: transparent;
     }
 }
 
@@ -30,26 +30,22 @@
     left: 0;
     width: 100%;
     height: 100%;
-    border-width: $button-stroke-width;
+    border-width: 3px;
     border-style: solid;
-    border-radius: $button-border-radius;
+    border-radius: 50%;
 
     &--1 {
-        border-color: $button-stroke-1;
-        background: rgba(255, 255, 255, 0.1);
+        border-color: #5a5456;
+        background: #81a4cd20;
     }
 
     &--2 {
-        border-color: $button-stroke-2;
+        border-color: #5a5456;
     }
 }
 
-.login-button--hover .login-button__deco--1 {
-    border-color: $button-stroke-hover-1;
-}
-
-.login-button--hover .login-button__deco--2 {
-    border-color: $button-stroke-hover-2;
+.login-button--hover .login-button__deco--1, .login-button--hover .login-button__deco--2 {
+    border-color: $secondary-color-light;
 }
 
 .login-button__text,

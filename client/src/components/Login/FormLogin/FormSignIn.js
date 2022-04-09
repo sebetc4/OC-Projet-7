@@ -11,11 +11,11 @@ export default function FormSignIn(props) {
         password: Yup.string().min(6, "Trop court").required("Champ requis"),
     });
 
-    const submit = (values, actions) => {
-        axios
+    const submit = async (values, actions) => {
+        await axios
             .post(`api/auth/login`, values)
             .then((res) => {
-                props.handleLogin(res.data)
+                props.handleLogin(res.data.userId)
             })
             .catch((err) => {
                 if (err.response) {

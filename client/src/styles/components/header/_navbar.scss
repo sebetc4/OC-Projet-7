@@ -1,0 +1,9 @@
+.navbar__nav-link {
+    font-size: $header-bottons-size;
+    color: rgba(0, 0, 0, 0.53);
+    padding: 0 20px;
+
+    &.active {
+        color: rgb(0, 0, 0)
+    }
+}

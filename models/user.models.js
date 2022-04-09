@@ -21,14 +21,24 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: true
       }
     },
-    username: {
+    firstName: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: {
-        msg: 'Ce pseudo est déjà utilisé',
-      },
       validate: {
-        len: [4, 20]
+        len: {
+          args: [2, 20],
+          msg: 'Votre nom doit contenir entre 2 et 20 caractères'
+        }
+      }
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: {
+          args: [2, 20],
+          msg: 'Votre prénom doit contenir entre 2 et 20 caractères'
+        }
       }
     },
     password: {
@@ -38,9 +48,19 @@ module.exports = (sequelize, DataTypes) => {
         len: [6, 20]
       }
     },
-    picture: DataTypes.STRING,
+    userPicture: {
+      type: DataTypes.STRING,
+    },
+    coverPicture: {
+      type: DataTypes.STRING,
+    },
     bio: DataTypes.STRING,
-    isAdmin: DataTypes.BOOLEAN
+
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: 0
+    }
   }, {
     sequelize,
     modelName: 'User',

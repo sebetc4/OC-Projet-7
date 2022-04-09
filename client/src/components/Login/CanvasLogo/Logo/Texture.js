@@ -2,6 +2,8 @@ import * as THREE from "three";
 import { useState } from "react";
 import { useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
+import { useSpring as useSpringThree } from '@react-spring/three'
+
 
 export default function Texture(props) {
     // Load the noise textures
@@ -10,11 +12,28 @@ export default function Texture(props) {
     heightMap.minFilter = displacementMap.minFilter = THREE.NearestFilter;
     displacementMap.wrapS = displacementMap.wrapT = THREE.RepeatWrapping;
 
+
+    const options = [
+      [356, 75, 57],
+      [240, 70, 60],
+      [240, 70, 60]
+      ]
+
+    const { timeOffset } = useSpringThree({
+      hsl: options[props.mouseOnButton],
+      timeOffset: props.mouseOnButton * 0.2,
+      config: { tension: 50 },
+      onChange: ({ value: { hsl } }) => {
+        const [h, s, l] = hsl
+        uniforms.colorB.value.setHSL(h / 360, s / 100, l / 100)
+      },
+    })
+
     // Create persistent local uniforms object
     const [uniforms] = useState(() => ({
         time: { value: 0 },
         colorA: { value: new THREE.Color(0, 0, 0) },
-        colorB: { value: new THREE.Color("rgb(255, 0, 0)") },
+        colorB: { value: new THREE.Color(0, 0, 0) },
         heightMap: { value: heightMap },
         displacementMap: { value: displacementMap },
         iterations: { value: 48 },
@@ -25,8 +44,7 @@ export default function Texture(props) {
 
     // Update time uniform on each frame
     useFrame(({ clock }) => {
-        uniforms.time.value = clock.elapsedTime * 0.05;
-        uniforms.colorB.value.set(`rgb(${props.colorLogo.R}, ${props.colorLogo.G}, ${props.colorLogo.B})`);
+      uniforms.time.value = timeOffset.get() + clock.elapsedTime * 0.05
     });
 
     // Add our custom bits to the MeshStandardMaterial
