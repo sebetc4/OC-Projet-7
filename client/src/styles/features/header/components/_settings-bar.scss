@@ -1,0 +1,64 @@
+.settings-bar {
+	height: 100%;
+	position: relative;
+	display: flex;
+	align-items: center;
+
+	&__arrow-button {
+		@include arrow-button;
+		height: 35px;
+		width: 35px;
+		border-radius: 50%;
+		background-color: $form-input-background-color;
+		box-shadow: $form-input-box-shadow;
+	
+		&::before, &::after {
+			width: 15.5px;
+			height: 4px;
+			top: 16.5px;
+		}
+	
+		&::before {
+			right: 5px;
+			transform: rotate(-35deg);
+			background-color: rgb(0, 0, 0);
+		}
+		&::after {
+			left: 5px;
+			transform: rotate(35deg);
+			background-color: rgb(0, 0, 0);
+	
+		}
+	}
+}
+
+
+.settings-bar-modal {
+	width: 200px;
+	position: absolute;
+	right: -10px;
+	bottom: -5px;
+	transform: translateY(100%);
+	background: rgba(62, 123, 177, 0.8);
+	border-radius: 5px;
+	box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+
+	&__button {
+		width: 100%;
+		font-size: 16px;
+		font-weight: 500;
+		padding: 10px;
+		border: none;
+		background: none;
+		cursor: pointer;
+	
+		& span {
+			padding-left: 20px;
+		}
+	}
+
+	&__hr {
+		width: 80%;
+		margin: 0 auto;
+	}
+}

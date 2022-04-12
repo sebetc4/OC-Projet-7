@@ -11,23 +11,16 @@
 // General
 @import './settings';
 
-// Pages
-@import './pages/login';
-@import './pages/profil';
+// features
+@import './features/header/header';
+@import './features/login/login';
+@import './features/profile/profile';
+@import './features/settings/settings';
 
 
 
-// Components
 
-// Login
-@import './components/login/magnetic-button';
-@import './components/login/modals-forms-login';
 
-// Header
-@import './components/header/header';
-@import './components/header/search-bar';
-@import './components/header/navbar';
-@import './components/header/settings-bar';
 
 
 

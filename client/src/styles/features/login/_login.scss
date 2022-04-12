@@ -1,0 +1,42 @@
+@import './components/magnetic-button';
+@import './components/modals-forms-login';
+
+// Mise en place des composants
+.login {
+    min-height: 600px;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-end;
+	overflow: hidden;
+}
+
+.login-canvas-logo {
+	position: absolute !important;
+	top: 0;
+}
+
+.login-svg-container {
+	display: flex;
+	justify-content: center;
+}
+
+.login-svg {
+	width: 700px;
+	opacity: 0;
+	-webkit-filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.7));
+	filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.7));
+	transition: 1s;
+	&.active {
+		opacity: 1;
+	}
+}
+
+.login-button-container {
+	width: 75%;
+	height: 200px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}

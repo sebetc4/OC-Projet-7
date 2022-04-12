@@ -49,11 +49,12 @@ exports.getOneUser = async (req, res, next) => {
 }
 
 const getUserObject = (req) => {
-    req.file ?
+    return req.file ?
         {} :
         {
             email: req.body.email,
-            username: req.body.username,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
             password: req.body.password,
             bio: req.body.bio
         }

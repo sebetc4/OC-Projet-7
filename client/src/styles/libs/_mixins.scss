@@ -1,11 +1,101 @@
 // Mise en page
-@mixin center-width ($width) {
-    width: $width;
-    margin-left: auto;
-    margin-right: auto;
+@mixin center-width($width) {
+	width: $width;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 @mixin list-style {
-    padding-left: 0;
-    list-style: none;
+	padding-left: 0;
+	list-style: none;
+}
+
+@mixin main-section-box {
+	background-color: $grey-color;
+	padding: 50px 0;
+}
+
+// Components
+@mixin arrow-button {
+	outline: none;
+
+	border: none;
+	position: relative;
+	cursor: pointer;
+	z-index: 99;
+
+	&::before,
+	&::after {
+		content: '';
+		position: absolute;
+		transition: all 0.5s cubic-bezier(0.25, 1.7, 0.35, 0.8);
+		z-index: -1;
+	}
+
+	&::before {
+		border-radius: 10px 6px 6px 10px;
+	}
+
+	&::after {
+		border-radius: 6px 10px 10px 6px;
+	}
+
+	&.active::after {
+		transform-origin: center center;
+		transform: rotate(-35deg);
+	}
+
+	&.active::before {
+		transform-origin: center center;
+		transform: rotate(35deg);
+	}
+}
+
+@mixin standart-form {
+		&__input {
+			display: block;
+			padding: 8px 4px 8px 10px;
+			margin-top: 15px;
+			border: none;
+			border-radius: 5px;
+			background-color: $form-input-background-color;
+			box-shadow: $form-input-box-shadow;
+			transition: all 0.3s ease-out;
+		
+			&:focus {
+				box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 1px 1px rgba(0, 0, 0, 0.1),
+					0 0 0 3px rgba(248, 138, 48, 0.15);
+				outline: none;
+			}
+	
+			&.error {
+				border: 1px solid rgba(247, 7, 7, 0.8);
+				box-shadow: 1px 1px 2px rgba(255, 0, 0, 0.623), inset 1px 2px rgba(0, 0, 0, 0.3);
+			}
+		}
+	
+		&__error {
+			color: red;
+			margin: 5px 0 0 8px;
+			font-size: 14px;
+		}
+	
+		&__button {
+
+			background: linear-gradient(rgba(9, 31, 67, 0.7), rgba(62, 124, 177, 0.7));
+			border-radius: 5px;
+			border: none;
+			box-shadow: inset 0 1px rgba(255, 255, 255, 0.4), 0 2px 1px rgba(0, 0, 0, 0.1);
+			cursor: pointer;
+			transition: all 0.3s ease-out;
+			color: white;
+			text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+			font-size: 16px;
+			font-weight: bold;
+	
+			&:hover {
+				box-shadow: inset 0 1px rgba(255, 255, 255, 0.2), inset 10px 20px 30px rgba(3, 66, 201, 0.5);
+				background: rgba(62, 124, 177, 0.7);
+			}
+		}
 }

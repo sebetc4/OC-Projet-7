@@ -1,14 +1,10 @@
-import React from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import { useSelector } from 'react-redux'
-import { Home, Login, Profil, Settings } from "../pages";
-import { Header } from '../components'
+import { Header, Home, Login, Profile, Settings } from '../features'
+export default function Index() {
 
-export default function routes() {
-
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const userIsLogged = useSelector((state) => state.user.isLogged)
-
+   
     return (
         <Router>
             {!userIsLogged ?
@@ -22,9 +18,11 @@ export default function routes() {
                     <main className="main">
                         <Routes>
                             <Route path='/home' element={<Home />} />
-                            <Route path='/profil' element={<Profil />} />
+                            <Route path='/profile' >
+                                <Route path=':userId' element={<Profile />} />
+                            </Route>
                             <Route path='/settings' element={<Settings />} />
-                            <Route path='*' element={<Navigate to='/profil' replace />} />
+                            <Route path='*' element={<Navigate to={`/home`} replace />} />
                         </Routes>
                     </main>
                 </>
