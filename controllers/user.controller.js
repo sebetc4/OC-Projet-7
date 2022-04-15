@@ -9,13 +9,13 @@ exports.createUser = async (req, res, next) => {
         return res.status(400).send('Missing parameters');
     }
     try {
-        const newUser = await models.User.create({ 
+        const newUser = await models.User.create({
             email,
             firstName,
             lastName,
             password
         })
-        return res.status(201).json({userId: newUser.id})
+        return res.status(201).json({ userId: newUser.id })
     } catch (err) {
         return res.status(500).json({ path: err.errors[0].path, error: err.errors[0].message })
     }
@@ -48,9 +48,16 @@ exports.getOneUser = async (req, res, next) => {
     }
 }
 
+const getFileObject = (req) => {
+    if (req.files.avatar[0].fieldname === 'avatar') {
+        return { avatarUrl: `${req.protocol}://${req.get("host")}/images/${req.files.avatar[0].filename}` }
+    }
+}
+
 const getUserObject = (req) => {
-    return req.file ?
-        {} :
+    return req.files ? (
+        getFileObject(req)
+    ) :
         {
             email: req.body.email,
             firstName: req.body.firstName,
@@ -62,15 +69,18 @@ const getUserObject = (req) => {
 
 exports.updateUser = async (req, res, next) => {
     try {
-        const user = await models.User.findOne({ where: { id: req.params.id } })
+        const user = await models.User.findOne({
+            where: { id: req.params.id },
+            attributes: attributes.user
+        })
         if (!user) {
             return res.status(400).send(`ID unknown ${req.params.id}`)
         }
         const userObject = getUserObject(req)
         await user.update(userObject);
-        res.status(200).json("Modification effectuée")
+        res.status(200).json({ ...userObject })
     } catch (err) {
-        return res.status(500).send( err )
+        return res.status(500).send(err)
     }
 }
 

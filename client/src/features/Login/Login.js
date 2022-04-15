@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { a as aw, useSpring as useSpringWeb } from '@react-spring/web'
-import { SvgGroupomaniaText } from '../../components';
-import { FormSignIn, FormSignUp, CanvasLogo, MagneticButton, ModalLogin } from './components';
 import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux";
+import { a as aw, useSpring as useSpringWeb } from '@react-spring/web'
+import { SvgGroupomaniaText, StandartModal } from '../../components';
+import { FormSignIn, FormSignUp, CanvasLogo, MagneticButton, ModalLogin } from './components';
 import { getUser } from "../../store/actions/user.actions";
 
 export default function Login() {
@@ -82,21 +82,27 @@ export default function Login() {
 			</div>
 
 			{modalState === -1 && (
-				<ModalLogin handleModal={() => { setModalState(0) }} >
+				<StandartModal 
+				closeModal={() => { setModalState(0) }} 
+				closeClickOut={true}
+				>
 					<FormSignUp 
 						handleModal={() => { setModalState(1) }} 
 						handleLogin={handleLogin}
 					/>
-				</ModalLogin>
+				</StandartModal>
 			)}
 
 			{modalState === 1 && (
-				<ModalLogin handleModal={() => { setModalState(0) }} >
+				<StandartModal 
+				closeModal={() => { setModalState(0) }} 
+				closeClickOut={true}	
+				>
 					<FormSignIn 
 						handleModal={() => { setModalState(-1) }} 
-						handleLogin={handleLogin}	
+						handleLogin={handleLogin}
 					/>
-				</ModalLogin>
+				</StandartModal >
 			)}
 		</div>
 		</aw.div>

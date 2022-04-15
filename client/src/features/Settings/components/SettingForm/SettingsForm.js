@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch } from "react-redux";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { modifyUser } from '../../../../store/actions/user.actions';
+import { updateUser } from '../../../../store/actions/user.actions';
 
 
 export default function SettingForm(props) {
@@ -32,7 +32,7 @@ export default function SettingForm(props) {
     const settingsSchema = Yup.object().shape(props.validationSchemas);
 
     const submit = (values, actions) => {
-        dispatch(modifyUser(props.userId, values))
+        dispatch(updateUser(props.userId, values))
         actions.setSubmitting(false); 
     };
 

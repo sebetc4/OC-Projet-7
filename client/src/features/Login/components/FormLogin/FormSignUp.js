@@ -2,7 +2,7 @@ import React from "react";
 import { Formik, Field, ErrorMessage } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
-import { customInput, customError } from "./models";
+import { customInput, customError } from "./utils/models";
 
 export default function FormSignIn(props) {
     const userSchema = Yup.object().shape({
@@ -27,8 +27,8 @@ export default function FormSignIn(props) {
     };
 
     return (
-        <div className="login-modale-content">
-            <h2 className="login-modale-content__title">Inscription</h2>
+        <div className="login-form-container">
+            <h2 className="login-form-container__title">Inscription</h2>
             <Formik
                 onSubmit={submit}
                 initialValues={{ firstName: '', lastName: '', email: '', password: '' }}
@@ -52,9 +52,9 @@ export default function FormSignIn(props) {
                     </form>
                 )}
             </Formik>
-            <p className="login-modale-content__text">
+            <p className="login-form-container__text">
                 Déjà inscrit?
-                <span className="login-modale-content__link" onClick={props.handleModal}>
+                <span className="login-form-container__link" onClick={props.handleModal}>
                     Connectez vous!
                 </span>
             </p>

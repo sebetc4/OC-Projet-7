@@ -11,12 +11,15 @@
 // General
 @import './settings';
 
-// features
+// Features
 @import './features/header/header';
 @import './features/login/login';
 @import './features/profile/profile';
 @import './features/settings/settings';
 
+// Components
+@import './components/crop-image/crop-image.scss';
+@import './components/modals/standart_modal';
 
 
 

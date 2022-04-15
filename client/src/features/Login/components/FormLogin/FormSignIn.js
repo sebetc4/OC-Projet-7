@@ -2,7 +2,7 @@ import axios from "axios";
 import { Formik, Field, ErrorMessage } from "formik";
 import React from "react";
 import * as Yup from "yup";
-import { customInput, customError } from "./models";
+import { customInput, customError } from "./utils/models";
 
 export default function FormSignIn(props) {
 
@@ -25,8 +25,8 @@ export default function FormSignIn(props) {
     };
 
     return (
-            <div className="login-modale-content">
-                <h2 className="login-modale-content__title">Connexion</h2>
+            <div className="login-form-container">
+                <h2 className="login-form-container__title">Connexion</h2>
                 <Formik
                     onSubmit={submit}
                     initialValues={{ email: "", password: "" }}
@@ -35,7 +35,7 @@ export default function FormSignIn(props) {
                     validateOnChange={false}
                 >
                     {({ handleSubmit, isSubmitting, values }) => (
-                        <form className="login-form" onSubmit={handleSubmit}>
+                        <form className="login-form__form" onSubmit={handleSubmit}>
                             <Field name="email" component={customInput} type="email" placeholder="Email" />
                             <ErrorMessage name="email" component={customError} />
                             <Field name="password" component={customInput} type="password" placeholder="Mot de passe" />
@@ -46,9 +46,9 @@ export default function FormSignIn(props) {
                         </form>
                     )}
                 </Formik>
-                <p className="login-modale-content__text">
+                <p className="login-form-container__text">
                     Pas de compte?
-                    <span className="login-modale-content__link" onClick={props.handleModal}>
+                    <span className="login-form-container__link" onClick={props.handleModal}>
                         Rejoignez nous!
                     </span>
                 </p>

@@ -1,6 +1,7 @@
 require("dotenv");
 const express = require('express');
 const cookieParser = require('cookie-parser')
+const path = require("path");
 const db = require('./models')
 const router = require('./routes')
 const app = express();
@@ -22,6 +23,8 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
   next();
 });
+
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use(router)
 

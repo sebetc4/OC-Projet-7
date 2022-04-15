@@ -48,10 +48,10 @@ module.exports = (sequelize, DataTypes) => {
         len: [6, 20]
       }
     },
-    userPicture: {
+    avatarUrl: {
       type: DataTypes.STRING,
     },
-    coverPicture: {
+    coverUrl: {
       type: DataTypes.STRING,
     },
     bio: DataTypes.STRING,

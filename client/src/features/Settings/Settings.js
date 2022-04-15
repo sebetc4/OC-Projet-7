@@ -1,8 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { firstNameLastNameValidation, emailValidation, bioValidation } from './components/SettingForm/validationSchemas'
-
-
 import { SettingItem, SettingForm, ImageForm } from './components'
 
 
@@ -14,7 +12,6 @@ export default function Settings() {
 
   return (
     <div className='settings'>
-
       <section className='settings-section'>
         <h2 className='settings-section__title'>Paramètres du compte</h2>
         <SettingItem title={'Modification du nom et prénom'} >
@@ -59,13 +56,16 @@ export default function Settings() {
         <SettingItem title={'Modification du mot de passe'} >
         </SettingItem>
         <hr />
-        <SettingItem title={'Supression du compte'} >
+        <SettingItem title={'Suppression du compte'} >
         </SettingItem>
       </section>
       <section className='settings-section'>
         <h2 className='settings-section__title'>Paramètres du profil</h2>
         <SettingItem title={'Modification des images'} >
-          <ImageForm user={user} />
+
+          <ImageForm user={user} field={'avatar'} picture={user.avatarUrl} noPicture={'images/profile/avatar-profile.png'}/>
+          <ImageForm user={user} field={'cover'} picture={user.coverUrl} noPicture={'/images/profile/cover-profile.jpg'}/>
+
         </SettingItem>
         <hr />
         <SettingItem title={'Modification de la biographie'} >
