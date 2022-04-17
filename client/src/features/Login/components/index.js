@@ -1,5 +1,4 @@
-export { default as FormSignIn } from './FormLogin/FormSignIn'
-export { default as FormSignUp } from './FormLogin/FormSignUp'
-export { default as CanvasLogo } from './CanvasLogo/CanvasLogo'
+export { default as SignInForm } from './forms/SignInForm'
+export { default as SignUpForm } from './forms/SignUpForm'
+export { default as ThreeCanvas } from './ThreeCanvas/ThreeCanvas'
 export { default as MagneticButton } from './MagneticButton/MagneticButton'
-export { default as ModalLogin } from './ModalLogin/ModalLogin'

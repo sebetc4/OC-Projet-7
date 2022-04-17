@@ -1,0 +1,45 @@
+@import './components/new-post.scss';
+
+.feed {
+    @include center-width($width: $width-main-section);
+}
+
+.feed-article {
+    border-radius: 5px;
+    padding: 30px 0;
+    background-color: $grey-color;
+}
+
+.feed-article-header {
+    @include center-width($width: 80%);
+    display: flex;
+    align-items: center;
+}
+
+.feed-article-header__avatar {
+    height: 50px;
+}
+
+.feed-article-header__infos {
+    padding-left: 20px;
+}
+
+.feed-article-text{
+    @include center-width($width: 80%);
+    padding: 20px 0;
+}
+
+
+.feed-article-image {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+
+    & img {
+        display: block;
+        max-width: 80%;
+        max-height: 400px;
+    }
+}
+
+

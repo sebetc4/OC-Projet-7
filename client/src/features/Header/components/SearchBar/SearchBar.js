@@ -1,7 +1,6 @@
 import React from 'react'
 import { Formik } from 'formik'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { SearchThinSvg } from '../../../../components';
 
 export default function SearchBar() {
 
@@ -21,14 +20,13 @@ export default function SearchBar() {
                             onChange={handleChange}
                             onBlur={handleBlur}
                         />
+                        <span className='search-bar__bottom-bar' />
                         <button className='search-bar__button' type='submit' disabled={isSubmitting}>
-                            <FontAwesomeIcon icon={faMagnifyingGlass} />
+                            <SearchThinSvg />
                         </button>
                     </form>
                 )}
             </Formik>
         </div>
-
-
     )
 }

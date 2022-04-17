@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import { useSelector } from 'react-redux'
-import { Header, Home, Login, Profile, Settings } from '../features'
+import { Feed, Header, Home, Login, Profile, Settings } from '../features'
+
+
 export default function Index() {
 
     const userIsLogged = useSelector((state) => state.user.isLogged)
@@ -18,6 +20,7 @@ export default function Index() {
                     <main className="main">
                         <Routes>
                             <Route path='/home' element={<Home />} />
+                            <Route path='/feeds' element={<Feed />} />
                             <Route path='/profile' >
                                 <Route path=':userId' element={<Profile />} />
                             </Route>

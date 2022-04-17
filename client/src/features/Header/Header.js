@@ -1,11 +1,11 @@
 import React from 'react'
-import { SvgGroupomaniaLogo } from '../../components'
+import { GroupomaniaLogoSvg } from '../../components'
 import { Navbar, SearchBar, SettingsBar } from './components'
 export default function Header() {
   return (
     <header className='header'>
       <div className='header__components--left'>
-        <SvgGroupomaniaLogo className={'header-logo'} />
+        <GroupomaniaLogoSvg className={'header-logo'} />
         <SearchBar />
       </div>
       <div className='header__components--center'>

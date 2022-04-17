@@ -11,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   User.init({
+    id: {
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4,
+      primaryKey: true,
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -45,7 +50,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: [6, 20]
+        len: {
+          args: [6, 100],
+          msg: 'Votre mot de passe doit contenir entre 6 et 100 caractères'
+        }
       }
     },
     avatarUrl: {
@@ -66,12 +74,16 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'User',
   });
 
-  User.beforeCreate(async (user) => {
+  const hashPassword = async (user) => {
+    console.log(user.password)
     if (user.password) {
       const salt = await bcrypt.genSalt(10);
       user.password = bcrypt.hashSync(user.password, salt);
     }
-  })
+  }
+
+  User.beforeCreate(hashPassword)
+  User.beforeUpdate(hashPassword)
 
   return User;
 };

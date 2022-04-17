@@ -1,14 +1,14 @@
 // Contenu de la modal
 .login-form-container {
 	background: rgba(62, 123, 177, 0.5);
-	width: 300px;
+	width: 350px;
 	padding: 30px;
 	border-radius: 25px;
 	box-shadow: 5px 5px 20px 0px #000;
 
 	&__title {
 		color: white;
-		font-size: 30px;
+		font-size: 25px;
 		padding-bottom: 20px;
 		font-weight: bold;
 	}
@@ -52,7 +52,7 @@
 
     &__button {
         width: 100%;
-        margin-top: 15px;
+        margin-top: 25px;
         padding: 8px 0;
         transition: 0.5s;
     }

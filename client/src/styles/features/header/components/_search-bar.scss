@@ -4,43 +4,57 @@
 }
 
 .search-bar {
+	position: relative;
 	height: 100%;
 	display: flex;
 	align-items: center;
 
 	&__input {
-		width: 250px;
+		width: 210px;
 		height: 40px;
 		padding: 8px 4px 8px 10px;
 		border: none;
-		border-radius: 5px;
-		background-color: $form-input-background-color;
-		box-shadow: $form-input-box-shadow;
-		transition: all 0.3s ease-out;
-		color: rgb(0, 0, 0);
+		color: $text-color-dark;
 		font-size: 14px;
+		transition: all 0.3s ease-out;
 
 		&::placeholder {
-			color: rgb(0, 0, 0);
-			text-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
-			font-weight: 800;
+			color: $text-color-dark;
+			font-weight: 500;
 		}
 
 		&:focus {
-			box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2), inset 0 1px 1px rgba(0, 0, 0, 0.1),
-				0 0 0 3px rgba(255, 255, 255, 0.15);
 			outline: none;
+
+			& ~ .search-bar__bottom-bar {
+				transform: scaleX(1);
+				transform-origin: bottom left;
+			}
 		}
 	}
 
 	&__button {
-		width: 40px;
-		height: 40px;
-		margin-left: 10px;
+		background-color: transparent;
 		border: none;
-		border-radius: 5px;
-		background-color: $form-input-background-color;
-		box-shadow: $form-input-box-shadow;
 		cursor: pointer;
+
+		& svg {
+			height: 22px;
+			width: 22px;
+			fill: $grey-color-dark;
+		}
+	}
+
+	&__bottom-bar {
+		content: '';
+		position: absolute;
+		bottom: 8px;
+		left: 0;
+		width: 100%;
+		height: 1px;
+		background-color: $primary-color;
+		transform: scaleX(0);
+		transform-origin: bottom right;
+		transition: ease-in-out 0.4s;
 	}
 }

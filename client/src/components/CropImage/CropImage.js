@@ -3,7 +3,7 @@ import Cropper from 'react-easy-crop';
 import getCroppedImg from './utils/scripts';
 import { StandartModal } from '..';
 
-const CropEasy = ({ photoURL, setOpenCrop, setPhotoURL, setFile }) => {
+const CropEasy = (props) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [rotation, setRotation] = useState(0);
@@ -16,13 +16,13 @@ const CropEasy = ({ photoURL, setOpenCrop, setPhotoURL, setFile }) => {
   const cropImage = async () => {
     try {
       const { file, url } = await getCroppedImg(
-        photoURL,
+        props.photoURL,
         croppedAreaPixels,
         rotation
       );
-      setPhotoURL(url);
-      setFile(file);
-      setOpenCrop(false);
+      props.setPhotoURL(url);
+      props.setCropImage(file);
+      props.setOpenCrop(false);
     } catch (error) {
       console.log(error);
     }
@@ -33,11 +33,13 @@ const CropEasy = ({ photoURL, setOpenCrop, setPhotoURL, setFile }) => {
       <div className='crop-image'>
         <div className='crop-image__cropper-container' >
         <Cropper
-          image={photoURL}
+          image={props.photoURL}
           crop={crop}
           zoom={zoom}
           rotation={rotation}
-          aspect={1}
+          aspect={props.ratio}
+          cropShape={props.cropShape}
+          showGrid={props.showGrid}
           onZoomChange={setZoom}
           onRotationChange={setRotation}
           onCropChange={setCrop}
@@ -68,11 +70,11 @@ const CropEasy = ({ photoURL, setOpenCrop, setPhotoURL, setFile }) => {
               onChange={(e) => setRotation(e.target.value)} />
           </div>
           <div className='crop-image-action__buttons'>
-          <button onClick={() => setOpenCrop(false)} >
+          <button onClick={props.handleCancel} >
             Annuler
           </button>
           <button onClick={cropImage} >
-            Recadrer
+            Valider
           </button>
         </div>
         </div>

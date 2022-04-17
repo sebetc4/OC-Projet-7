@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRightFromBracket, faGear } from "@fortawesome/free-solid-svg-icons";
-import { ArrowButton } from '../../../../components'
+import { useSelector } from 'react-redux'
 import { logoutUser } from "../../../../store/actions/user.actions";
 
 
@@ -13,6 +13,9 @@ export default function SettingsBar() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate()
+
+    const userAvatar = useSelector((state) => state.user.data.avatarUrl)
+
 
     const navigateToSettings = () => {
         navigate('/settings', { replace: true })
@@ -24,7 +27,9 @@ export default function SettingsBar() {
     return (
         <div className='settings-bar'>
 
-            <ArrowButton actionOnClick={toggleModalSettings} modalState={modalSettings} childrenClassName={'settings-bar__arrow-button'} />
+            <button className='settings-bar__button' onClick={toggleModalSettings}>
+                <img alt={'avatar de l\'ustilisateur'} src={userAvatar ? userAvatar : '/images/profile/avatar-profile.png' } />
+            </button>
 
             {modalSettings &&
                 <div className='settings-bar-modal'>

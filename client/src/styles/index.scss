@@ -16,9 +16,11 @@
 @import './features/login/login';
 @import './features/profile/profile';
 @import './features/settings/settings';
+@import './features/feed/feed.scss';
+
 
 // Components
-@import './components/crop-image/crop-image.scss';
+@import './components/crop-image/crop-image';
 @import './components/modals/standart_modal';
 
 

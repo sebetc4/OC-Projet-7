@@ -8,7 +8,8 @@ body, html {
 	margin: 0;
 	font-family: 'Anek Odia', sans-serif;
 	position: relative;
-	background: radial-gradient(rgb(250, 137, 137), hsl(0, 22%, 31%));
+	background-color: $page-background;
+	// background: radial-gradient(rgb(250, 137, 137), hsl(0, 22%, 31%));
 	min-height: 100vh;
 }
 

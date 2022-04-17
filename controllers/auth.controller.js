@@ -2,12 +2,13 @@
 require("dotenv").config();
 const bcrypt = require("bcrypt");
 const jswt = require("jsonwebtoken");
+const attributes = require('../utils/attributesInRes')
 const models = require('../models');
 
 // Contrôleur de connexion
 exports.login = async (req, res, next) => {
     const { email, password } = req.body;
-    if (email == null || password == null) {
+    if (email === null || password === null) {
         return res.status(400).send('missing parameters');
     }
     try {
@@ -15,7 +16,7 @@ exports.login = async (req, res, next) => {
             where: { email }
         })
         if (!user) {
-            return res.status(404).json({ error: "user not exist" });
+            return res.status(404).json({ error: "user not found" });
         }
         const validPassword = bcrypt.compareSync(password, user.password)
         if (!validPassword) {
@@ -29,24 +30,28 @@ exports.login = async (req, res, next) => {
                 maxAge: process.env.TOKEN_TIME_LIFE,
                 signed: true
             })
-        return res.status(200).json({userId: user.id})
+        return res.status(200).json('logged in user')
     } catch (err) {
         return res.status(500).send({ err })
     }
 }
 
 exports.logout = async (req, res, next) => {
-    res.cookie('jswt', '', {maxAge: 1})
-    return res.status(200).json(`Utilisateur déconnecté`)
+    res.cookie('jswt', '', { maxAge: 1 })
+    return res.status(200).json(`logged out user`)
 }
 
 exports.checkJswt = async (req, res, nex) => {
     try {
         const decodedToken = jswt.verify(req.signedCookies.jswt, process.env.TOKEN_SECRET);
         const userId = decodedToken.userId;
-        if (userId) {
-            return res.status(200).json({ userId })
-        }
+        const user = await models.User.findOne({
+            where: { id: userId },
+            attributes: attributes.jswt
+        })
+        return res.status(200).json({user: user})
     } catch {
-        return res.status(200).json({ userId: null}) }
+        res.cookie('jswt', '', { maxAge: 1 })
+        return res.status(200).json({user: null})
+    }
 };

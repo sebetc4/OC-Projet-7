@@ -1,38 +1,68 @@
-.profil {
+.profile {
 	@include center-width($width: $width-main-section);
 
-	&__cover-picture {
+	&__cover-image {
 		width: 100%;
 		height: 400px;
 		object-fit: cover;
-		border-radius: 0 0 15px 15px;
+		border-radius: 0 0 5px 5px;
+		box-shadow: $box-shadow-element;
 	}
 }
 
-.profil-user-general-information {
+.profile-general-information {
 	display: flex;
 	align-items: center;
 	@include center-width($width: $width-text-main-section);
 
-	&__user-picture {
-		width: 18%;
-		border-radius: 50%;
+	&__avatar {
 		transform: translateY(-25%);
+		width: 150px;
+		padding: 3px;
+		display: flex;
+		overflow: hidden;
+		border-radius: 50%;
+		background-color: $primary-color;
+		box-shadow: $box-shadow-element;
+		img {
+			width: 100%;
+			border-radius: 50%;
+		}
 	}
 
-    &__user-usurname {
+    &__name {
         padding-left: 10px;
         font-size: 30px;
         font-weight: bold;
     }
+
+	&__registration-date {
+		flex: 1;
+		display: flex;
+		justify-content: flex-end
+	}
 }
 
-.profil-user-bio {
-	@include main-section-box;
-	border-radius: 15px;
+.profile-secondary-information{
+	display: flex;
+	justify-content: space-around;
+	padding-bottom: 50px;
+}
 
+.profile-bio, .profile-informations {
+	@include main-section-box;
+	width: 45%;
+	border-radius: 10px;
+	box-shadow: $box-shadow-element;
+
+	&__title {
+		@include center-width($width: $width-text-main-section);
+		font-size: 25px;
+		font-weight: bold;
+	}
 
     &__text {
 		@include center-width($width: $width-text-main-section);
+		margin-top: 20px;
 	}
 }

@@ -9,7 +9,7 @@
     height: $header-height;
     display: flex;
     padding: 0 30px;
-    background-color: rgba(62, 123, 177, 0.95);
+    background-color: $section-background;
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
 
     &__components--left, .header__components--right {
@@ -40,5 +40,6 @@
 
 .header-logo {
     width: 50px;
+    fill: $primary-color
 }
 

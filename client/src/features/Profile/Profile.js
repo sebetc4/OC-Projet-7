@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from 'react-redux'
 import axios from "axios";
+import { CreationDate } from '../../components';
 
 export default function Profile() {
 
@@ -25,14 +26,27 @@ export default function Profile() {
 
 
 	return (
-		<section className='profil'>
-			<img className='profil__cover-picture' alt='Couverture de la page de profil' src={profilData.coverUrl ? profilData.coverUrl : '/images/profile/cover-profile.jpg'} />
-			<div className='profil-user-general-information'>
-				<img className='profil-user-general-information__user-picture' alt={'Personne ou représentation de l\'utilisateur'} src={profilData.avatarUrl ? profilData.avatarUrl : 'images/profile/avatar-profile.png' } />
-				<h2 className='profil-user-general-information__user-usurname' >{`${profilData.firstName} ${profilData.lastName}`}</h2>
+		<section className='profile'>
+			<img className='profile__cover-image' alt='Couverture de la page de profil' src={profilData.coverUrl ? profilData.coverUrl : '/images/profile/cover-profile.jpg'} />
+			<div className='profile-general-information'>
+				<div className='profile-general-information__avatar'>
+					<img alt={'avatar de l\'ustilisateur'} src={profilData.avatarUrl ? profilData.avatarUrl : '/images/profile/avatar-profile.png'} />
+				</div>
+				<h3 className='profile-general-information__name' >{`${profilData.firstName} ${profilData.lastName}`}</h3>
+				<div className='profile-general-information__registration-date'>
+					<p >{'Membre depuis le '}<CreationDate date={profilData.createdAt} />
+					</p>
+				</div>
 			</div>
-			<div className='profil-user-bio'>
-				<p className='profil-user-bio__text'>{profilData.bio}</p>
+			<div className='profile-secondary-information'>
+				<div className='profile-informations'>
+					<h3 className='profile-informations__title'>Mes informations:</h3>
+					<p className='profile-informations__text'>Pas d'informations</p>
+				</div>
+				<div className='profile-bio'>
+					<h3 className='profile-bio__title'>Ma biographie:</h3>
+					<p className='profile-bio__text'>{profilData.bio ? profilData.bio : 'Briographie vide...'}</p>
+				</div>
 			</div>
 		</section>
 

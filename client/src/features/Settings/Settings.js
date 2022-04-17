@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
-import { firstNameLastNameValidation, emailValidation, bioValidation } from './components/SettingForm/validationSchemas'
+import { firstNameLastNameValidation, emailValidation, bioValidation, passwordValidation, deleteAccountValidation } from './components/forms/utils/validationSchemas'
 import { SettingItem, SettingForm, ImageForm } from './components'
 
 
 
 
-export default function Settings() {
+export default function Settingss() {
 
   const user = useSelector((state) => state.user.data)
 
@@ -33,6 +33,7 @@ export default function Settings() {
               }
             }
             validationSchemas={firstNameLastNameValidation}
+            action='updateUser'
           />
         </SettingItem>
         <hr />
@@ -50,22 +51,84 @@ export default function Settings() {
               }
             }
             validationSchemas={emailValidation}
+            action='updateUser'
           />
         </SettingItem>
         <hr />
         <SettingItem title={'Modification du mot de passe'} >
+          <SettingForm
+            userId={user.id}
+            inputs={[{
+              name: 'password',
+              type: 'password',
+              placeholder: 'Ancien mot de passe'
+            }, {
+              name: 'newPassword',
+              type: 'password',
+              placeholder: 'Nouveau mot de passe'
+            }, {
+              name: 'confirmNewPassword',
+              type: 'password',
+              placeholder: 'Confirmation du nouveau mot de passe'
+            }]}
+            initialValues={
+              {
+                password: '',
+                newPassword: '',
+                confirmNewPassword: ''
+              }
+            }
+            validationSchemas={passwordValidation}
+            action='updatePassword'
+          />
         </SettingItem>
         <hr />
         <SettingItem title={'Suppression du compte'} >
+          <SettingForm
+            userId={user.id}
+            inputs={[{
+              name: 'password',
+              type: 'password',
+              placeholder: 'Mot de passe'
+            }, {
+              name: 'confirmPassword',
+              type: 'password',
+              placeholder: 'Confirmation du mot de passe'
+            }]}
+            initialValues={
+              {
+                password: '',
+                confirmPassword: ''
+              }
+            }
+            validationSchemas={deleteAccountValidation}
+            action='deleteAccount'
+          />
         </SettingItem>
       </section>
       <section className='settings-section'>
         <h2 className='settings-section__title'>Paramètres du profil</h2>
         <SettingItem title={'Modification des images'} >
-
-          <ImageForm user={user} field={'avatar'} picture={user.avatarUrl} noPicture={'images/profile/avatar-profile.png'}/>
-          <ImageForm user={user} field={'cover'} picture={user.coverUrl} noPicture={'/images/profile/cover-profile.jpg'}/>
-
+          <div className='settings-section-pictures' >
+            <ImageForm
+              user={user}
+              field={'avatar'}
+              ratio={1}
+              cropShape={'round'}
+              showGrid={false}
+              picture={user.avatarUrl}
+              noPicture={'images/profile/avatar-profile.png'}
+            />
+            <ImageForm
+              user={user}
+              field={'cover'}
+              ratio={2.375}
+              cropShape={'rect'}
+              showGrid={true}
+              picture={user.coverUrl}
+              noPicture={'/images/profile/cover-profile.jpg'}
+              F />
+          </div>
         </SettingItem>
         <hr />
         <SettingItem title={'Modification de la biographie'} >
@@ -78,10 +141,11 @@ export default function Settings() {
             }]}
             initialValues={
               {
-                bio: user.bio,
+                bio: `${user.bio ? user.bio : ''}`,
               }
             }
             validationSchemas={bioValidation}
+            action='updateUser'
           />
         </SettingItem>
         <hr />
