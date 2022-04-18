@@ -27,21 +27,19 @@ export default function Profile() {
 
 	return (
 		<section className='profile'>
-			<img className='profile__cover-image' alt='Couverture de la page de profil' src={profilData.coverUrl ? profilData.coverUrl : '/images/profile/cover-profile.jpg'} />
+			<img className='profile__cover-image' alt='Couverture de la page de profil' src={profilData.coverUrl} />
 			<div className='profile-general-information'>
 				<div className='profile-general-information__avatar'>
-					<img alt={'avatar de l\'ustilisateur'} src={profilData.avatarUrl ? profilData.avatarUrl : '/images/profile/avatar-profile.png'} />
+					<img alt={'avatar de l\'ustilisateur'} src={profilData.avatarUrl} />
 				</div>
 				<h3 className='profile-general-information__name' >{`${profilData.firstName} ${profilData.lastName}`}</h3>
-				<div className='profile-general-information__registration-date'>
-					<p >{'Membre depuis le '}<CreationDate date={profilData.createdAt} />
-					</p>
-				</div>
 			</div>
 			<div className='profile-secondary-information'>
 				<div className='profile-informations'>
 					<h3 className='profile-informations__title'>Mes informations:</h3>
-					<p className='profile-informations__text'>Pas d'informations</p>
+					<div className='profile-informations__text'>
+						<p >{'Membre depuis le '}<CreationDate date={profilData.createdAt} /></p>
+					</div>
 				</div>
 				<div className='profile-bio'>
 					<h3 className='profile-bio__title'>Ma biographie:</h3>

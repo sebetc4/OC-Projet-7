@@ -38,10 +38,10 @@ export const loadedUser = () => {
     }
 }
 
-export const updateUser = (userId, data) => {
+export const updateUser = (data) => {
     return async (dispatch) => {
         try {
-            const newData = await axios.put(`/api/user/${userId}`, data);
+            const newData = await axios.put(`/api/user`, data);
             dispatch({
                 type: UPDATE_USER,
                 playload: newData
@@ -52,7 +52,7 @@ export const updateUser = (userId, data) => {
     }
 }
 
-export const deleteUser = (userId, data) => {
+export const deleteUser = (data, userId) => {
     return async (dispatch) => {
         try {
             await axios.delete(`/api/user/${userId}`, data);

@@ -21,6 +21,8 @@
 .new-post-form {
 	@include center-width($width: 80%);
 	&__input-text {
+		overflow: hidden;
+		padding: 20px 5px;
 		display: block;
 		font-size: 16px;
 		resize: none;

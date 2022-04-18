@@ -117,7 +117,6 @@ export default function Settingss() {
               cropShape={'round'}
               showGrid={false}
               picture={user.avatarUrl}
-              noPicture={'images/profile/avatar-profile.png'}
             />
             <ImageForm
               user={user}
@@ -126,8 +125,7 @@ export default function Settingss() {
               cropShape={'rect'}
               showGrid={true}
               picture={user.coverUrl}
-              noPicture={'/images/profile/cover-profile.jpg'}
-              F />
+            />
           </div>
         </SettingItem>
         <hr />

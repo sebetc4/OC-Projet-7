@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { Formik } from 'formik'
+import { useDispatch, useSelector } from "react-redux";
+import { createPost } from '../../../../store/actions/posts.actions';
 import { AddPictureSvg } from '../../../../components'
 
 export default function NewPost() {
@@ -8,17 +9,24 @@ export default function NewPost() {
     const [text, setText] = useState('')
 
     const textareaRef = useRef()
+    const dispatch = useDispatch()
+
+    const userId = useSelector((state) => state.user.data.id)
 
     useEffect(() => {
-        console.log(text)
         textareaRef.current.style.height = "0px";
         const scrollHeight = textareaRef.current.scrollHeight;
         textareaRef.current.style.height = scrollHeight + "px";
     }, [text]);
 
 
-    const submit = (values, actions) => {
-        console.log(values)
+    const submit = (e) => {
+        e.preventDefault()
+        const formData = new FormData()
+        formData.append('post', image)
+        formData.append('text', text)
+        formData.append('userId', userId)
+        dispatch(createPost(formData))
     }
 
     return (
@@ -31,9 +39,9 @@ export default function NewPost() {
                 </>
             )}
 
-            <form className='new-post-form' onSubmit={submit}>
+            <form className='new-post-form' onSubmit={ (e) => submit(e) }>
+                
                 <label>
-
                     <textarea
                         ref={ textareaRef }
                         name='text'
@@ -41,8 +49,8 @@ export default function NewPost() {
                         placeholder='Votre publication...'
                         onChange={(e) => setText(e.target.value)}
                     />
-
                 </label>
+                
                 <label className='new-post-form__input-image' >
                     <input
                         accept="image/*"

@@ -6,9 +6,9 @@ const multer = require('../config/multer.config')
 
 router.post("/register", userCtrl.createUser)
 router.get("/", auth, userCtrl.getAllUsers);
-router.get("/:id", userCtrl.getOneUser);
-router.put("/:id", multer, userCtrl.updateUser);
-router.put("/password/:id", userCtrl.updatePassword);
+router.get("/:id", auth, userCtrl.getOneUser);
+router.put("/", auth, multer, userCtrl.updateUser);
+router.put("/password", auth, userCtrl.updatePassword);
 router.delete("/:id", userCtrl.deleteUser);
 
 module.exports = router;

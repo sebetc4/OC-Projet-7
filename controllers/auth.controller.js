@@ -30,7 +30,7 @@ exports.login = async (req, res, next) => {
                 maxAge: process.env.TOKEN_TIME_LIFE,
                 signed: true
             })
-        return res.status(200).json('logged in user')
+        return res.status(200).json('User logged in')
     } catch (err) {
         return res.status(500).send({ err })
     }
@@ -38,7 +38,7 @@ exports.login = async (req, res, next) => {
 
 exports.logout = async (req, res, next) => {
     res.cookie('jswt', '', { maxAge: 1 })
-    return res.status(200).json(`logged out user`)
+    return res.status(200).json(`User logged out`)
 }
 
 exports.checkJswt = async (req, res, nex) => {

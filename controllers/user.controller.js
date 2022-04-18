@@ -2,20 +2,22 @@
 const models = require('../models');
 const attributes = require('../utils/attributesInRes')
 const bcrypt = require("bcrypt");
+const fs = require('fs')
 
 
 // Contrôleur d'inscription
 exports.createUser = async (req, res, next) => {
     const { email, lastName, firstName, password } = req.body;
-    if (email === null || lastName === null || firstName === null || password == null) {
+    if (email === null || lastName === null || firstName === null || password == null)
         return res.status(400).send('Missing parameters');
-    }
     try {
         const newUser = await models.User.create({
             email,
             firstName,
             lastName,
-            password
+            password,
+            avatarUrl: `${req.protocol}://${req.get("host")}/images/avatar/avatar-profile.webp`,
+            coverUrl: `${req.protocol}://${req.get("host")}/images/cover/cover-profile.webp`
         })
         return res.status(201).json({ userId: newUser.id })
     } catch (err) {
@@ -25,6 +27,8 @@ exports.createUser = async (req, res, next) => {
 
 // Controleur de récupération de tous les utilisateurs
 exports.getAllUsers = async (req, res, next) => {
+    if (req.body.userId === null)
+        return res.status(400).send('Missing parameters');
     try {
         const users = await models.User.findAll({
             attributes: attributes.user
@@ -36,6 +40,8 @@ exports.getAllUsers = async (req, res, next) => {
 }
 
 exports.getOneUser = async (req, res, next) => {
+    if (req.body.userId === null)
+        return res.status(400).send('Missing parameters');
     try {
         const user = await models.User.findOne({
             where: { id: req.params.id },
@@ -51,11 +57,10 @@ exports.getOneUser = async (req, res, next) => {
 }
 
 const getImageUrl = (req) => {
-    if (req.body.origin === 'avatar') {
-        return { avatarUrl: `${req.protocol}://${req.get("host")}/images/${req.files.avatar[0].filename}` }
-    } else if (req.body.origin === 'cover') {
-        return { coverUrl: `${req.protocol}://${req.get("host")}/images/${req.files.cover[0].filename}` }
-    }
+    if (req.body.directory === 'avatar')
+        return { avatarUrl: `${req.protocol}://${req.get("host")}/images/avatar/${req.files.avatar[0].filename}` }
+    else if (req.body.directory === 'cover')
+        return { coverUrl: `${req.protocol}://${req.get("host")}/images/cover/${req.files.cover[0].filename}` }
 }
 
 const getUserObject = (req) => {
@@ -71,47 +76,59 @@ const getUserObject = (req) => {
         }
 }
 
+const deleteLastFile = (req, user) => {
+    const directory = req.body.directory
+    const filename = directory === 'avatar' ? user.avatarUrl.split(`/images/avatar/`)[1] : user.coverUrl.split(`/images/cover/`)[1]
+    if (filename !== 'avatar-profile.webp' && filename !== 'cover-profile.webp') {
+        fs.unlink(`images/${directory}/${filename}`, (err) => {
+            if (err)
+                throw err;
+        })
+    }
+}
+
 exports.updateUser = async (req, res, next) => {
+    const { userId } = req.body
+    if (userId === null) 
+        return res.status(400).send('Missing parameters');
     try {
         const user = await models.User.findOne({
-            where: { id: req.params.id },
+            where: { id: userId },
             attributes: attributes.user
         })
         if (!user) {
-            return res.status(400).send(`ID unknown ${req.params.id}`)
+            return res.status(400).send(`ID unknown ${userId}`)
         }
         const userObject = getUserObject(req)
+        req.files && deleteLastFile(req, user)
         await user.update(userObject);
         res.status(200).json({ ...userObject })
     } catch (err) {
-        return res.status(500).send({err})
+        return res.status(500).send('Unable to update user')
     }
 }
 
 exports.updatePassword = async (req, res, next) => {
-    const { password, newPassword } = req.body;
-    if (password === null || newPassword === null) {
-        return res.status(400).send('missing parameters');
-    }
+    const { userId, password, newPassword } = req.body;
+    if (userId === null || password === null || newPassword === null)
+        return res.status(400).send('Missing parameters');
     try {
         const user = await models.User.findOne({
-            where: { id: req.params.id }
+            where: { id: userId }
         })
         if (!user) {
-            return res.status(400).send(`ID unknown ${req.params.id}`)
+            return res.status(400).send(`ID unknown ${userId}`)
         }
         const validPassword = bcrypt.compareSync(password, user.password)
         if (!validPassword) {
-            return res.status(403).json({ error: "invalid password" });
+            return res.status(403).json({ error: "Invalid password" });
         }
         await user.update({ password: newPassword })
         res.status(200).json("Modification effectuée")
     } catch (err) {
-        return res.status(500).send({ err })
+        return res.status(500).send('Unable to update password')
     }
 }
-
-
 
 exports.deleteUser = async (req, res, next) => {
     try {

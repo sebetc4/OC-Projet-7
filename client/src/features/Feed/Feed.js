@@ -1,30 +1,38 @@
-import React from 'react';
-import { FromNowDate } from '../../components';
-import { NewPost } from './components';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAllPosts } from '../../store/actions/posts.actions';
+import { NewPost, Post } from './components';
 
 
 
 export default function Feeds() {
 
+	const dispatch = useDispatch()
+	const userId = useSelector((state) => state.user.data.id)
+	const posts = useSelector((state) => state.posts)
+
+	// const [allUsersId, setAllUsersId] = useState([])
+
+	useEffect(() => {
+		dispatch(getAllPosts(userId))
+	}, [])
+
+	// useEffect(() => {
+	// 	if (posts.data.lenght !== 0) {
+	// 		const allUsersId = []
+	// 		posts.data.forEach(post => !allUsersId.includes(post.userId) && allUsersId.push(post.userId))
+	// 		setAllUsersId(allUsersId)
+	// 	}
+	// }, [posts])
+
 	return (
 		<section className='feed'>
 			<NewPost />
-			<article className='feed-article'>
-				<div className='feed-article-header'>
-					<img className='feed-article-header__avatar' src='images/profile/avatar-profile.png' alt='avatar user'></img>
-					<div className='feed-article-header__infos'>
-						<p> Utilisateur Test</p>
-						<FromNowDate className='test'
-						/>
-					</div>
-				</div>
-				<div className='feed-article-text'>
-					<p>Voici le texte de mon premier article!!!!</p>
-				</div>
-				<div className='feed-article-image'>
-					<img src='https://c8.alamy.com/comp/2BXBG66/news-feed-social-media-concept-illustration-flat-design-linear-style-banner-usage-for-e-mail-newsletters-headers-blog-posts-print-and-more-2BXBG66.jpg' alt='feed' />
-				</div>
-			</article>
+			{!posts.isLoaded ? <p>Chargement...</p> : (
+				posts.data.map((post, index) => (
+					<Post key={post.id} post={post} />
+				))
+			)}
 		</section>
 	);
 }

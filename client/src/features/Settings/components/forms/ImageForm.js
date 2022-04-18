@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { CropImage } from '../../../../components';
 import { updateUser } from '../../../../store/actions/user.actions';
+import { CropImage } from '../../../../components';
+
 
 export default function ImageForm(props) {
 
@@ -16,9 +17,9 @@ export default function ImageForm(props) {
             const file = new File([cropImage], `${props.field}-${props.user.id}.jpeg`);
             const formData = new FormData()
             formData.append(props.field, file)
-            formData.append('origin', props.field)
-            console.log(photoURL)
-            dispatch(updateUser(props.user.id, formData))
+            formData.append('directory', props.field)
+            formData.append('userId', props.user.id)
+            dispatch(updateUser(formData))
         }
     }, [cropImage])
 
@@ -52,7 +53,7 @@ export default function ImageForm(props) {
                             onChange={handleChange}
                         />
                         <img
-                            src={photoURL ? photoURL : props.noPicture}
+                            src={photoURL}
                             style={{ width: 150, height: 150, cursor: 'pointer' }}
                             alt={props.field}
                         />

@@ -16,7 +16,6 @@ export default function SettingsBar() {
 
     const userAvatar = useSelector((state) => state.user.data.avatarUrl)
 
-
     const navigateToSettings = () => {
         navigate('/settings', { replace: true })
         setModalSettings(false)
@@ -26,11 +25,9 @@ export default function SettingsBar() {
 
     return (
         <div className='settings-bar'>
-
             <button className='settings-bar__button' onClick={toggleModalSettings}>
-                <img alt={'avatar de l\'ustilisateur'} src={userAvatar ? userAvatar : '/images/profile/avatar-profile.png' } />
+                <img alt={'avatar de l\'ustilisateur'} src={userAvatar} />
             </button>
-
             {modalSettings &&
                 <div className='settings-bar-modal'>
                     <button onClick={navigateToSettings} className='settings-bar-modal__button' >
@@ -45,7 +42,5 @@ export default function SettingsBar() {
                 </div>
             }
         </div >
-
-
     )
 }

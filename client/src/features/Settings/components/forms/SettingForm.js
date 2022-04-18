@@ -35,18 +35,18 @@ export default function SettingForm(props) {
     const submit = (values, actions) => {
         switch (props.action) {
             case 'updateUser':
-                dispatch(updateUser(props.userId, values))
+                dispatch(updateUser( { ...values, userId: props.userId } ))
                 break;
             case 'updatePassword':
-                axios.put(`/api/user/password/${props.userId}`, values)
+                axios.put(`/api/user/password`, { ...values, userId: props.userId })
                 break;
             case 'deleteAccount':
-                dispatch(deleteUser(props.userId, values))
+                dispatch(deleteUser(values, props.userId))
                 break;
             default:
                 break;
         }
-            actions.setSubmitting(false);
+        actions.setSubmitting(false);
     };
 
     return (
