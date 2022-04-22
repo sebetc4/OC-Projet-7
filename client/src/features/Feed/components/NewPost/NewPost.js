@@ -1,23 +1,22 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { createPost } from '../../../../store/actions/posts.actions';
-import { AddPictureSvg } from '../../../../components'
+import { AddPictureSvg, TextareaAutoResize } from '../../../../components'
 
 export default function NewPost() {
 
+    // Hooks
+    const dispatch = useDispatch()
+
+    // State
     const [image, setImage] = useState(null)
     const [text, setText] = useState('')
 
-    const textareaRef = useRef()
-    const dispatch = useDispatch()
 
-    const userId = useSelector((state) => state.user.data.id)
+    // Store
+    const user = useSelector((state) => state.user.data)
 
-    useEffect(() => {
-        textareaRef.current.style.height = "0px";
-        const scrollHeight = textareaRef.current.scrollHeight;
-        textareaRef.current.style.height = scrollHeight + "px";
-    }, [text]);
+    // Resize textarea
 
 
     const submit = (e) => {
@@ -25,8 +24,10 @@ export default function NewPost() {
         const formData = new FormData()
         formData.append('post', image)
         formData.append('text', text)
-        formData.append('userId', userId)
-        dispatch(createPost(formData))
+        formData.append('userId', user.id)
+        dispatch(createPost(formData, user))
+        setImage(null)
+        setText('')
     }
 
     return (
@@ -42,15 +43,11 @@ export default function NewPost() {
             <form className='new-post-form' onSubmit={ (e) => submit(e) }>
                 
                 <label>
-                    <textarea
-                        ref={ textareaRef }
-                        name='text'
-                        className='new-post-form__input-text'
-                        placeholder='Votre publication...'
-                        onChange={(e) => setText(e.target.value)}
+                    <TextareaAutoResize 
+                        text={text}
+                        setText={setText}
                     />
                 </label>
-                
                 <label className='new-post-form__input-image' >
                     <input
                         accept="image/*"
@@ -63,7 +60,7 @@ export default function NewPost() {
                     <AddPictureSvg />
                 </label>
                 <button
-                    className=''
+                    className='new-post-form__button'
                     type='submit'
                 >
                     Publier

@@ -16,12 +16,15 @@ export default function Profile() {
 	// Récupération du profil de l'utilisateur redirection en cas d'échec
 	useEffect(() => {
 		const handleProfilData = (data) => setProfilData(data)
-		const getProfilData = () => {
-			axios.get(`/api/user/${params.userId}`)
-				.then(res => handleProfilData(res.data))
-				.catch(() => navigate('/home', { replace: true }))
+		const getProfilData = async() => {
+			try {
+				const user = await axios.get(`/api/user/${params.userId}`)
+				handleProfilData(user.data)
+			} catch (err) {
+				navigate('/home', { replace: true })
+			}
 		}
-		userData.id === parseInt(params.userId) ? handleProfilData(userData) : getProfilData()
+		userData.id === params.userId ? handleProfilData(userData) : getProfilData()
 	}, [params.userId, userData, navigate])
 
 

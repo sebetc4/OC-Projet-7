@@ -31,8 +31,17 @@
 	}
 	&__input-image {
 		& svg {
-			cursor: pointer;
+			margin: 10px 30px;
 			width: 30px;
+			cursor: pointer;
 		}
+	}
+
+	&__button {
+		@include standart-button;
+		margin: 10px auto 0 auto;
+		display: block;
+		padding: 5px 0;
+		width: 150px;
 	}
 }

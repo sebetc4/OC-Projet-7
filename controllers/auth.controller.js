@@ -2,7 +2,7 @@
 require("dotenv").config();
 const bcrypt = require("bcrypt");
 const jswt = require("jsonwebtoken");
-const attributes = require('../utils/attributesInRes')
+const attributes = require('../utils/attributes')
 const models = require('../models');
 
 // Contrôleur de connexion

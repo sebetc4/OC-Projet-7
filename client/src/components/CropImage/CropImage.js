@@ -29,54 +29,57 @@ const CropEasy = (props) => {
   };
 
   return (
-    <StandartModal>
+    <StandartModal
+      closeClickOut={true}
+      closeModal={props.handleCancel}
+    >
       <div className='crop-image'>
         <div className='crop-image__cropper-container' >
-        <Cropper
-          image={props.photoURL}
-          crop={crop}
-          zoom={zoom}
-          rotation={rotation}
-          aspect={props.ratio}
-          cropShape={props.cropShape}
-          showGrid={props.showGrid}
-          onZoomChange={setZoom}
-          onRotationChange={setRotation}
-          onCropChange={setCrop}
-          onCropComplete={cropComplete}
-        />
+          <Cropper
+            image={props.photoURL}
+            crop={crop}
+            zoom={zoom}
+            rotation={rotation}
+            aspect={props.ratio}
+            cropShape={props.cropShape}
+            showGrid={props.showGrid}
+            onZoomChange={setZoom}
+            onRotationChange={setRotation}
+            onCropChange={setCrop}
+            onCropComplete={cropComplete}
+          />
         </div>
         <div className='crop-image__actions'>
           <div className='crop-image-action__zoom'>
             <p>Zoom: {zoomPercent(zoom)}</p>
-            <input 
+            <input
               type="range"
-              aria-labelledby="Zoom" 
-              min="1" 
-              max="3" 
-              value={zoom} 
-              className="slider-zoom" 
-              step={0.1} 
+              aria-labelledby="Zoom"
+              min="1"
+              max="3"
+              value={zoom}
+              className="slider-zoom"
+              step={0.1}
               onChange={(e) => setZoom(e.target.value)} />
           </div>
           <div className='crop-image-action__rotation'>
             <p>Rotation: {rotation + '°'}</p>
-            <input 
-              type="range" 
-              min="0" 
-              max="360" 
-              value={rotation} 
-              className="slider-rotation" 
+            <input
+              type="range"
+              min="0"
+              max="360"
+              value={rotation}
+              className="slider-rotation"
               onChange={(e) => setRotation(e.target.value)} />
           </div>
           <div className='crop-image-action__buttons'>
-          <button onClick={props.handleCancel} >
-            Annuler
-          </button>
-          <button onClick={cropImage} >
-            Valider
-          </button>
-        </div>
+            <button onClick={props.handleCancel} >
+              Annuler
+            </button>
+            <button onClick={cropImage} >
+              Valider
+            </button>
+          </div>
         </div>
 
       </div>

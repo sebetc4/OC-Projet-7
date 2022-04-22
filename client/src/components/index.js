@@ -17,5 +17,8 @@ export { default as CreationDate } from './dates/CreationDate'
 
 
 // Modals
+export { default as MenuModal } from './modals/MenuModal'
 export { default as StandartModal } from './modals/StandartModal'
+
+export { default as TextareaAutoResize } from './text/TextareaAutoResize/TextareaAutoResize'
 

@@ -35,7 +35,7 @@ export default class Button extends React.Component {
 
     calculateSizePosition() {
         // size/position
-        this.rect = this.refButton.current.getBoundingClientRect();
+        this.rect = this.refButton.current && this.refButton.current.getBoundingClientRect();
         // the movement will take place when the distance from the mouse to the center of the button is lower than this value
         this.distanceToTrigger = this.rect.width * 1.5;
     }
@@ -46,7 +46,9 @@ export default class Button extends React.Component {
     }
 
     loopEffect() {
-        if (this.refButton.current!== null || this.refText.current !== null || this.refTextinner.current !== null || this.refDecoTop.current !== null || this.refDecoBottom.current !== null) {
+        if (this.refButton.current || this.refText.current || this.refTextinner.current || this.refDecoTop.current || this.refDecoBottom.current) {
+            
+            if(this.props.deviceSize === 2) {
             // calculate the distance from the mouse to the center of the button
             const distanceMouseButton = distance(this.props.mousePos.x + window.scrollX, this.props.mousePos.y + window.scrollY, this.rect.left + this.rect.width / 2, this.rect.top + this.rect.height / 2);
             // new values for the translations and scale
@@ -74,7 +76,7 @@ export default class Button extends React.Component {
             this.refDecoTop.current.style.transform = `translate3d(${this.renderedStyles['tx'].previous}px, ${this.renderedStyles['ty'].previous}px, 0)`;
             this.refDecoBottom.current.style.transform = `translate3d(${this.renderedStyles['tx2'].previous}px, ${this.renderedStyles['ty2'].previous}px, 0)`;
             this.refText.current.style.transform = `translate3d(${this.renderedStyles['tx'].previous * 0.5}px, ${this.renderedStyles['ty'].previous * 0.5}px, 0)`;
-
+            }
             requestAnimationFrame(() => this.loopEffect());
         }
 

@@ -44,7 +44,7 @@ export const updateUser = (data) => {
             const newData = await axios.put(`/api/user`, data);
             dispatch({
                 type: UPDATE_USER,
-                playload: newData
+                playload: newData.data
             });
         } catch (err) {
             return console.log(err);

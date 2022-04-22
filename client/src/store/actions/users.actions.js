@@ -8,7 +8,7 @@ export const getAllUsers = () => {
         dispatch({
             type: GET_ALL_USERS,
             playload: {
-                data: users,
+                data: users.data,
                 isLoaded: true
             }
         });

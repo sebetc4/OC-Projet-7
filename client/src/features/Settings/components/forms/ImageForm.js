@@ -33,7 +33,7 @@ export default function ImageForm(props) {
 
     const handleCancel = () => {
         setOpenCrop(false)
-        props.picture ? setPhotoURL(props.picture) : setPhotoURL(null)
+        setPhotoURL(props.picture)
     }
 
     const handleDelete = () => {

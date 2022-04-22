@@ -1,8 +1,10 @@
 // Imports
 const models = require('../models');
-const attributes = require('../utils/attributesInRes')
+const attributes = require('../utils/attributes')
 const bcrypt = require("bcrypt");
 const fs = require('fs')
+const paths = require('../utils/paths')
+
 
 
 // Contrôleur d'inscription
@@ -16,8 +18,8 @@ exports.createUser = async (req, res, next) => {
             firstName,
             lastName,
             password,
-            avatarUrl: `${req.protocol}://${req.get("host")}/images/avatar/avatar-profile.webp`,
-            coverUrl: `${req.protocol}://${req.get("host")}/images/cover/cover-profile.webp`
+            avatarUrl: `${paths.getImagesPath(req)}/avatar/avatar-profile.webp`,
+            coverUrl: `${paths.getImagesPath(req)}/cover/cover-profile.webp`
         })
         return res.status(201).json({ userId: newUser.id })
     } catch (err) {
@@ -27,8 +29,6 @@ exports.createUser = async (req, res, next) => {
 
 // Controleur de récupération de tous les utilisateurs
 exports.getAllUsers = async (req, res, next) => {
-    if (req.body.userId === null)
-        return res.status(400).send('Missing parameters');
     try {
         const users = await models.User.findAll({
             attributes: attributes.user
@@ -40,8 +40,6 @@ exports.getAllUsers = async (req, res, next) => {
 }
 
 exports.getOneUser = async (req, res, next) => {
-    if (req.body.userId === null)
-        return res.status(400).send('Missing parameters');
     try {
         const user = await models.User.findOne({
             where: { id: req.params.id },
@@ -58,9 +56,9 @@ exports.getOneUser = async (req, res, next) => {
 
 const getImageUrl = (req) => {
     if (req.body.directory === 'avatar')
-        return { avatarUrl: `${req.protocol}://${req.get("host")}/images/avatar/${req.files.avatar[0].filename}` }
+        return { avatarUrl: `${paths.getImagesPath(req)}/avatar/${req.files.avatar[0].filename}` }
     else if (req.body.directory === 'cover')
-        return { coverUrl: `${req.protocol}://${req.get("host")}/images/cover/${req.files.cover[0].filename}` }
+        return { coverUrl: `${paths.getImagesPath(req)}/cover/${req.files.cover[0].filename}` }
 }
 
 const getUserObject = (req) => {
@@ -141,6 +139,6 @@ exports.deleteUser = async (req, res, next) => {
         await user.destroy()
         res.status(200).json("Supression effectuée")
     } catch (err) {
-        return res.status(500).send({ err })
+        return res.status(500).send('Unable to delete user')
     }
 }

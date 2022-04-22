@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 
 export default function Navbar() {
 
+  // Store
   const userId = useSelector((state) => state.user.data.id)
 
 
