@@ -8,11 +8,11 @@ module.exports = (sequelize, DataTypes) => {
   class CommentPost extends Model {
     static associate(models) {
 
-      models.Like.belongsTo(models.User, {
+      models.CommentPost.belongsTo(models.User, {
         foreignKey: 'userId',
       });
 
-      models.Like.belongsTo(models.Post, {
+      models.CommentPost.belongsTo(models.Post, {
         foreignKey: 'postId',
       });
     }

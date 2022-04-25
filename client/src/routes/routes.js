@@ -6,6 +6,8 @@ import { Feed, Header, Home, Login, Profile, Settings } from '../features'
 export default function Index() {
 
     const userIsLogged = useSelector((state) => state.user.isLogged)
+    const menuOpen = useSelector((state) => state.device.displayMobilMenu)
+
    
     return (
         <Router>
@@ -17,7 +19,7 @@ export default function Index() {
                 :
                 <>
                     <Header />
-                    <main className="main">
+                    <main className={`main ${menuOpen && 'main--active-menu'}`}>
                         <Routes>
                             <Route path='/home' element={<Home />} />
                             <Route path='/feeds' element={<Feed />} />

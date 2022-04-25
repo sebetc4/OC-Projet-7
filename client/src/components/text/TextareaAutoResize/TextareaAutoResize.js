@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 
-export default function TextareaAutoResize({text, setText}) {
+export default function TextareaAutoResize({text, setText, placeholder}) {
 
 
     const textareaRef = useRef()
@@ -17,7 +17,7 @@ export default function TextareaAutoResize({text, setText}) {
             name='text'
             value={text}
             className='textarea-auto-resize'
-            placeholder='Votre publication...'
+            placeholder={placeholder}
             onChange={(e) => setText(e.target.value)}
         />
     )

@@ -2,9 +2,12 @@ import axios from 'axios';
 
 export const CREATE_POST = 'CREATE_POST'
 export const GET_POSTS = 'GET_POSTS'
+export const MODIFY_POST = 'MODIFY_POST'
 export const DELETE_POST = 'DELETE_POST'
 export const LIKE_POST = 'LIKE_POST'
-export const CREATE_COMMENT = 'CREATE_COMMENT'
+export const CREATE_COMMENT_POST = 'CREATE_COMMENT_POST'
+export const DELETE_COMMENT_POST = 'DELETE_COMMENT_POST'
+
 
 
 
@@ -14,7 +17,7 @@ export const createPost = (data, user) => {
         const post = await axios.post(`/api/post`, data);
         dispatch({
             type: CREATE_POST,
-            playload: { ...post.data, User: { id, firstName, lastName, avatarUrl }, usersLiked: [] }
+            playload: { ...post.data, User: { id, firstName, lastName, avatarUrl }, usersLiked: [], CommentPosts: [] }
         });
     }
 }
@@ -33,34 +36,54 @@ export const getAllPosts = () => {
     }
 }
 
-export const likePost = (posts, post, postIndex, userIndex, userId, likeStatut) => {
+export const modifyPost = (data, postId, postIndex) => {
     return async (dispatch) => {
-        if (likeStatut) {
-            posts[postIndex].likes = posts[postIndex].likes + 1
-            posts[postIndex].usersLiked.push(userId)
-        } else {
-            posts[postIndex].likes = posts[postIndex].likes - 1
-            posts[postIndex].usersLiked.splice(userIndex, 1)
-        }
-        await axios.post(`/api/post/like/${post.id}`, { userId, likeStatut });
+        const newPost = await axios.put(`/api/post/${postId}`, data);
         dispatch({
-            type: LIKE_POST,
-            playload: posts,
+            type: MODIFY_POST,
+            playload: { postIndex, newPost: newPost.data }
         });
     }
 }
 
-export const createComment = () => {
-    
-}
-
-export const deletePost = (postId, posts, postIndex) => {
+export const deletePost = (postId, postIndex) => {
     return async (dispatch) => {
-        posts.splice(postIndex, 1)
         await axios.delete(`/api/post/${postId}`);
         dispatch({
             type: DELETE_POST,
-            playload: posts,
+            playload: {postIndex},
+        });
+    }
+}
+
+export const likePost = (post, postIndex, userId, userIndex, likeStatut) => {
+    return async (dispatch) => {
+        await axios.post(`/api/post/like/${post.id}`, { userId, likeStatut });
+        dispatch({
+            type: LIKE_POST,
+            playload: { postIndex, likeStatut, userId, userIndex }
+        });
+    }
+}
+
+export const createCommentPost = (postId, postIndex, user, text) => {
+    const { id, firstName, lastName, avatarUrl } = user
+    return async (dispatch) => {
+        const comment = await axios.post(`/api/comment-post/${postId}`, { userId: id, text });
+        comment.data.User = { id, firstName, lastName, avatarUrl }
+        dispatch({
+            type: CREATE_COMMENT_POST,
+            playload: { comment, postIndex }
+        });
+    }
+}
+
+export const deleteCommentPost = (commentId, commentIndex, postIndex) => {
+    return async (dispatch) => {
+        await axios.delete(`/api/comment-post/${commentId}`)
+        dispatch({
+            type: DELETE_COMMENT_POST,
+            playload: {commentIndex, postIndex}
         });
     }
 }

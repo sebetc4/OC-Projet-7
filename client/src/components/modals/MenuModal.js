@@ -1,26 +1,27 @@
 import React, {createRef} from 'react'
 
-export default function MenuModal(props) {
+export default function MenuModal({children, closeModal}) {
 
         // Ref
         const modalRef = createRef()
 
     const checkIfOutModal = (e) => {
-        if (modalRef.current && modalRef.current === e.target) {
-            props.closeModal()
+        console.log('test')
+        if (modalRef.current && modalRef.current.contains(e.target)) {
+            closeModal()
         }
-
     }
 
     return (
         <>
             <div
                 ref={modalRef}
-                className='menu-modal'
                 onClick={checkIfOutModal}
+                className='menu-modal'
             >
-                {props.children}
             </div>
+            {children}
+
         </>
     )
 

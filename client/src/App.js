@@ -4,7 +4,6 @@ import Routes from "./routes/routes";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, loadedUser } from "./store/actions/user.actions";
-import { getAllUsers } from "./store/actions/users.actions";
 import { getDeviceSize } from "./store/actions/device.actions";
 
 const App = () => {

@@ -1,13 +1,19 @@
 import React from 'react'
 import { Formik } from 'formik'
 import { SearchThinSvg } from '../../../../components';
+import axios from 'axios'
 
 export default function SearchBar() {
 
     const submit = (values, actions) => {
-        console.log('Recherche')
+        const query =
+        '?' +
+        Object.keys(values)
+            .map(k => `${k}=${values[k]}&`)
+            .join('');
+        axios.get(`/api/search/${query}`)
      }
-
+     
     return (
         <div className='search-bar-container'>
             <Formik onSubmit={submit} initialValues={{ query: '' }}>

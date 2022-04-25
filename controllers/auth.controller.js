@@ -16,7 +16,7 @@ exports.login = async (req, res, next) => {
             where: { email }
         })
         if (!user) {
-            return res.status(404).json({ error: "user not found" });
+            return res.status(403).json({ error: `User not found ${email}` });
         }
         const validPassword = bcrypt.compareSync(password, user.password)
         if (!validPassword) {
@@ -47,7 +47,10 @@ exports.checkJswt = async (req, res, nex) => {
         const userId = decodedToken.userId;
         const user = await models.User.findOne({
             where: { id: userId },
-            attributes: attributes.jswt
+            attributes: attributes.jswt,
+            include: {
+                model: models.Post
+            }
         })
         return res.status(200).json({user: user})
     } catch {

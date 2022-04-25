@@ -16,7 +16,7 @@ export default function Profile() {
 	// Récupération du profil de l'utilisateur redirection en cas d'échec
 	useEffect(() => {
 		const handleProfilData = (data) => setProfilData(data)
-		const getProfilData = async() => {
+		const getProfilData = async () => {
 			try {
 				const user = await axios.get(`/api/user/${params.userId}`)
 				handleProfilData(user.data)
@@ -48,6 +48,9 @@ export default function Profile() {
 					<h3 className='profile-bio__title'>Ma biographie:</h3>
 					<p className='profile-bio__text'>{profilData.bio ? profilData.bio : 'Briographie vide...'}</p>
 				</div>
+			</div>
+			<div className='profile-user-post'>
+				<h3 className='profile-user-post__title'>Mes posts:</h3>
 			</div>
 		</section>
 

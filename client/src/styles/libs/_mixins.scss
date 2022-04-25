@@ -107,3 +107,33 @@
 		@include standart-button;
 	}
 }
+
+ @mixin menu-modal {
+	width: 200px;
+	position: absolute;
+	right: -10px;
+	bottom: 5px;
+	transform: translateY(100%);
+	background: $grey-color;
+	border-radius: 5px;
+	box-shadow: $box-shadow-element;
+
+	&__button {
+		width: 100%;
+		font-size: 14px;
+		font-weight: 500;
+		padding: 10px;
+		border: none;
+		background: none;
+		cursor: pointer;
+	
+		& span {
+			padding-left: 20px;
+		}
+	}
+
+	&__hr {
+		width: 80%;
+		margin: 0 auto;
+	}
+ }

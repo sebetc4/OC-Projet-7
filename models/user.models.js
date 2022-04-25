@@ -8,17 +8,20 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      models.User.hasMany(models.Post);
+      models.User.hasMany(models.Post, {
+        onDelete: 'cascade',
+        hooks:true
+      });
       models.User.belongsToMany(models.Post, {
         through: models.Like,
         foreignKey: 'userId',
         as: 'postsLiked'
       }),
-      models.User.belongsToMany(models.Post, {
-        through: models.CommentPost,
+      models.User.hasMany(models.CommentPost, {
+        onDelete: 'cascade',
         foreignKey: 'userId',
-        as: 'postsCommented'
-      });
+        hooks:true
+      })
     }
   }
   User.init({

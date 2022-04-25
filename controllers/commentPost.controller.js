@@ -1,10 +1,13 @@
+const models = require('../models');
+
 exports.createComment = async (req, res, next) => {
     const { userId, text } = req.body
+    const postId = req.params.id
     if (!userId)
         return res.status(400).send('Missing parameters');
     try {
         const post = await models.Post.findOne({
-            where: { id: req.params.id }
+            where: { id: postId }
         })
         if (!post)
             return res.status(404).send(`Post id unknown ${req.params.id}`)
@@ -13,9 +16,25 @@ exports.createComment = async (req, res, next) => {
         })
         if (!user)
             return res.status(404).send(`User id unknown ${userId}`)
-        await post.addPostsCommented(user, {text})
-        return res.status(201).json('create comment')
+        const comment = await models.CommentPost.create({
+            text,
+            userId,
+            postId
+        })
+        return res.status(201).json(comment)
     } catch (err) {
-        return res.status(500).json('Unable to create post')
+        return res.status(500).json(err)
+    }
+}
+
+exports.deleteComment = async (req, res, next) => {
+    try {
+        const comment = await models.CommentPost.findOne({
+            where: { id: req.params.id }
+        })
+        await comment.destroy()
+        res.status(200).json("Comment deletion is done")
+    } catch (err) {
+        return res.status(500).send('Unable to delete comment')
     }
 }

@@ -4,9 +4,10 @@
 	box-sizing: border-box;
 }
 
-body, html {
+body,
+html {
 	margin: 0;
-	font-family: 'Anek Odia', sans-serif;
+	font-family: sans-serif;
 	font-size: 16px;
 	position: relative;
 	background-color: $page-background;
@@ -16,4 +17,18 @@ body, html {
 
 .main {
 	padding-top: $header-height;
+	transition: 0.3s;
+	z-index: 0;
+
+	&.main--active-menu {
+		
+		margin-left: 70px;
+		transform: perspective(1000px) rotateY(-15deg);
+	}
+}
+
+@media screen and (max-width: $media-mobil) {
+	.main {
+		padding-top: 0;
+	}
 }

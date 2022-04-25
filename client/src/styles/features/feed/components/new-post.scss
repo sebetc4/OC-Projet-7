@@ -11,37 +11,6 @@
 		font-size: 25px;
         margin-bottom: 25px;
 	}
-
-	&__image {
-		height: 200px;
-        margin-bottom: 25px;
-	}
 }
 
-.new-post-form {
-	@include center-width($width: 80%);
-	&__input-text {
-		overflow: hidden;
-		padding: 20px 5px;
-		display: block;
-		font-size: 16px;
-		resize: none;
-		bottom: 0;
-		width: 100%;
-	}
-	&__input-image {
-		& svg {
-			margin: 10px 30px;
-			width: 30px;
-			cursor: pointer;
-		}
-	}
 
-	&__button {
-		@include standart-button;
-		margin: 10px auto 0 auto;
-		display: block;
-		padding: 5px 0;
-		width: 150px;
-	}
-}

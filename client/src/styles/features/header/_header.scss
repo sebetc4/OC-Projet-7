@@ -1,11 +1,13 @@
 // Header
 @import './components/search-bar';
 @import './components/navbar';
-@import './components/settings-bar';
+@import './components/right-menu';
+@import './components/mobil-menu';
 
 .header {
     width: 100%;
     position: fixed;
+    z-index: 9999;
     height: $header-height;
     display: flex;
     padding: 0 30px;
