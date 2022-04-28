@@ -1,7 +1,8 @@
 const models = require('../models');
 
 exports.createComment = async (req, res, next) => {
-    const { userId, text } = req.body
+    const { text } = req.body
+    const { userId } = req.auth
     const postId = req.params.id
     if (!userId)
         return res.status(400).send('Missing parameters');
@@ -28,10 +29,13 @@ exports.createComment = async (req, res, next) => {
 }
 
 exports.deleteComment = async (req, res, next) => {
+    const { userId, isAdmin } = req.auth
     try {
         const comment = await models.CommentPost.findOne({
             where: { id: req.params.id }
         })
+        if (userId !== comment.userId && !isAdmin)
+            return res.status(405).send('Not allowed!')
         await comment.destroy()
         res.status(200).json("Comment deletion is done")
     } catch (err) {

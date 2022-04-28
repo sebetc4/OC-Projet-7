@@ -52,10 +52,10 @@ export const updateUser = (data) => {
     }
 }
 
-export const deleteUser = (data, userId) => {
+export const deleteUser = (data) => {
     return async (dispatch) => {
         try {
-            await axios.delete(`/api/user/${userId}`, data);
+            await axios.delete(`/api/user/`);
             dispatch({ type: DELETE_USER });
         } catch (err) {
             return console.log(err);

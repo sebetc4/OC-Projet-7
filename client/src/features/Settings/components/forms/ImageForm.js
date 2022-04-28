@@ -4,21 +4,20 @@ import { updateUser } from '../../../../store/actions/user.actions';
 import { CropImage } from '../../../../components';
 
 
-export default function ImageForm(props) {
+export default function ImageForm({ picture, user, field, ratio, cropShape, showGrid }) {
 
     const dispatch = useDispatch();
 
     const [cropImage, setCropImage] = useState(null)
-    const [photoURL, setPhotoURL] = useState(props.picture);
+    const [photoURL, setPhotoURL] = useState(picture);
     const [openCrop, setOpenCrop] = useState(false);
 
     useEffect(() => {
         if (cropImage) {
-            const file = new File([cropImage], `${props.field}-${props.user.id}.jpeg`);
+            const file = new File([cropImage], `${field}-${user.id}.jpeg`);
             const formData = new FormData()
-            formData.append(props.field, file)
-            formData.append('directory', props.field)
-            formData.append('userId', props.user.id)
+            formData.append(field, file)
+            formData.append('directory', field)
             dispatch(updateUser(formData))
         }
     }, [cropImage])
@@ -33,7 +32,7 @@ export default function ImageForm(props) {
 
     const handleCancel = () => {
         setOpenCrop(false)
-        setPhotoURL(props.picture)
+        setPhotoURL(picture)
     }
 
     const handleDelete = () => {
@@ -46,8 +45,8 @@ export default function ImageForm(props) {
                     <label>
                         <input
                             accept="image/*"
-                            id={props.field}
-                            name={props.field}
+                            id={field}
+                            name={field}
                             type="file"
                             style={{ display: 'none' }}
                             onChange={handleChange}
@@ -55,7 +54,7 @@ export default function ImageForm(props) {
                         <img
                             src={photoURL}
                             style={{ width: 150, height: 150, cursor: 'pointer' }}
-                            alt={props.field}
+                            alt={field}
                         />
                     </label>
                 </div>
@@ -67,9 +66,9 @@ export default function ImageForm(props) {
                 setPhotoURL={setPhotoURL}
                 setCropImage={setCropImage}
                 handleCancel={handleCancel}
-                ratio={props.ratio}
-                cropShape={props.cropShape}
-                showGrid={props.showGrid}
+                ratio={ratio}
+                cropShape={cropShape}
+                showGrid={showGrid}
             />}
         </>
 

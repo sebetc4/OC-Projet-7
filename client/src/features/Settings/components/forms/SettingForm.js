@@ -6,7 +6,7 @@ import { updateUser, deleteUser } from '../../../../store/actions/user.actions';
 import axios from 'axios';
 
 
-export default function SettingForm(props) {
+export default function SettingForm({action, validationSchemas, inputs, initialValues}) {
 
     const dispatch = useDispatch();
 
@@ -30,18 +30,18 @@ export default function SettingForm(props) {
         return <p className='settings-item-form__error'> {props.children} </p>;
     };
 
-    const settingsSchema = Yup.object().shape(props.validationSchemas);
+    const settingsSchema = Yup.object().shape(validationSchemas);
 
     const submit = (values, actions) => {
-        switch (props.action) {
+        switch (action) {
             case 'updateUser':
-                dispatch(updateUser( { ...values, userId: props.userId } ))
+                dispatch(updateUser( { ...values } ))
                 break;
             case 'updatePassword':
-                axios.put(`/api/user/password`, { ...values, userId: props.userId })
+                axios.put(`/api/user/password`, { ...values })
                 break;
             case 'deleteAccount':
-                dispatch(deleteUser(values, props.userId))
+                dispatch(deleteUser(values))
                 break;
             default:
                 break;
@@ -52,21 +52,21 @@ export default function SettingForm(props) {
     return (
         <Formik
             onSubmit={submit}
-            initialValues={props.initialValues}
+            initialValues={initialValues}
             validationSchema={settingsSchema}
             validateOnBlur={true}
             validateOnChange={false}
         >
             {({ handleSubmit, isSubmitting }) => (
                 <form className='settings-item-form' onSubmit={handleSubmit}>
-                    {props.inputs.map((input) => (
+                    {inputs.map((input) => (
                         <div key={input.name} className="settings-item-form__label-input-container">
                             <Field name={input.name} component={customInput} type={input.type} placeholder={input.placeholder} />
                             <ErrorMessage name={input.name} component={customError} />
                         </div>
                     ))}
                     <button type="submit" className="settings-item-form__button" disabled={isSubmitting}>
-                        {`${props.action === 'deleteAccount' ? 'Supprimer' : 'Modifier'}`}
+                        {`${action === 'deleteAccount' ? 'Supprimer' : 'Modifier'}`}
                     </button>
                 </form>
             )}

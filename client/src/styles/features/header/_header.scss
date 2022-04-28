@@ -7,12 +7,12 @@
 .header {
     width: 100%;
     position: fixed;
-    z-index: 9999;
+    z-index: 9998;
     height: $header-height;
     display: flex;
     padding: 0 30px;
     background-color: $section-background;
-    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: $box-shadow-header;
 
     &__components--left, .header__components--right {
         width: 35%;

@@ -1,0 +1,80 @@
+.post-comment-card {
+	margin-bottom: 20px;
+	display: flex;
+	border-bottom: thin solid rgba(0, 0, 0, 0.12);
+}
+
+.post-comment-card-left {
+	width: 100px;
+	display: flex;
+	align-items: center;
+
+	p {
+		font-size: 12px;
+	}
+}
+
+.post-comment-card-center {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	span {
+		border-left: thin solid rgba(0, 0, 0, 0.12);
+		width: 1px;
+		flex-grow: 1;
+	}
+
+	&__avatar {
+		box-shadow: $box-shadow-avatar;
+		padding: 1px;
+		background-color: $primary-color;
+		margin: 5px 0;
+
+		img {
+			border-radius: 50%;
+		}
+	}
+}
+
+.post-comment-card-right {
+	flex: 1;
+	margin-left: 20px;
+}
+
+.post-comment-card-right-content {
+	margin-top: 10px;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	&__author-name-text-container {
+
+		a {
+			@include link-style;
+			display: block;
+			font-weight: 600;
+			font-size: 14px;
+		}
+
+		p {
+			max-width: 400px;
+			margin: 10px 0 20px 0;
+			white-space: pre-wrap;
+			word-wrap: break-word;
+			font-size: 13px;
+		}
+	}
+
+	&__settings-container {
+		position: relative;
+	}
+}
+
+.post-comment-card-settings {
+	@include menu-modal;
+	transform: translateX(-100%);
+	top: 0;
+	left: 0;
+}

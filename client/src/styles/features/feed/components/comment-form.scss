@@ -1,0 +1,32 @@
+.post-comment-form-author-name {
+        @include link-style;
+        margin-bottom: 10px ;
+        display: block;
+        font-weight: 600;
+        font-size: 14px;
+}
+
+.post-comment-form-formulary {
+	textarea {
+        width: 400px;
+		display: block;
+		font-family: 'Open Sans', sans-serif;
+        font-size: 13px;
+		padding: 5px 10px;
+		resize: none;
+		border: none;
+		background-color: transparent;
+		border: thin solid rgba(0, 0, 0, 0.12);
+		border-radius: 5px;
+	}
+
+    &__submit {
+        width: 400px;
+        display: flex;
+        justify-content: center;
+
+        button {
+            margin: 10px 0;
+        }
+    }
+}

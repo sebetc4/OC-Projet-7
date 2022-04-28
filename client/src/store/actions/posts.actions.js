@@ -13,11 +13,11 @@ export const DELETE_COMMENT_POST = 'DELETE_COMMENT_POST'
 
 export const createPost = (data, user) => {
     return async (dispatch) => {
-        const { id, firstName, lastName, avatarUrl } = user
+        const { firstName, lastName, avatarUrl } = user
         const post = await axios.post(`/api/post`, data);
         dispatch({
             type: CREATE_POST,
-            playload: { ...post.data, User: { id, firstName, lastName, avatarUrl }, usersLiked: [], CommentPosts: [] }
+            playload: { ...post.data, User: { firstName, lastName, avatarUrl }, usersLiked: [], CommentPosts: [] }
         });
     }
 }
@@ -58,7 +58,7 @@ export const deletePost = (postId, postIndex) => {
 
 export const likePost = (post, postIndex, userId, userIndex, likeStatut) => {
     return async (dispatch) => {
-        await axios.post(`/api/post/like/${post.id}`, { userId, likeStatut });
+        await axios.post(`/api/post/like/${post.id}`, { likeStatut });
         dispatch({
             type: LIKE_POST,
             playload: { postIndex, likeStatut, userId, userIndex }
@@ -69,7 +69,7 @@ export const likePost = (post, postIndex, userId, userIndex, likeStatut) => {
 export const createCommentPost = (postId, postIndex, user, text) => {
     const { id, firstName, lastName, avatarUrl } = user
     return async (dispatch) => {
-        const comment = await axios.post(`/api/comment-post/${postId}`, { userId: id, text });
+        const comment = await axios.post(`/api/comment-post/${postId}`, { text });
         comment.data.User = { id, firstName, lastName, avatarUrl }
         dispatch({
             type: CREATE_COMMENT_POST,

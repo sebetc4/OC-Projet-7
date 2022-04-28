@@ -1,3 +1,3 @@
-export { default as NewPost } from './NewPost/NewPost'
-export { default as Post } from './Post/Post'
-export { default as PostForm } from './forms/FormPost'
+export { default as CreatePost } from './CreatePost/CreatePost'
+export { default as PostCard } from './PostCard/PostCard'
+export { default as PostForm } from './PostForm/PostForm'

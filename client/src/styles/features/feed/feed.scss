@@ -1,8 +1,8 @@
-@import './components/new-post.scss';
-@import './components/post.scss';
-@import './components/post-menu.scss';
+@import './components/create-post.scss';
+@import './components/post-card.scss';
 @import './components/post-form.scss';
-
+@import './components/comment-card.scss';
+@import './components/comment-form.scss';
 
 .feed {
     @include center-width($width: $width-main-section);

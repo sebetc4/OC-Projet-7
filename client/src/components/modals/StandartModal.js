@@ -1,6 +1,6 @@
 import React, { useEffect, createRef } from 'react'
 
-export default function Modal(props) {
+export default function Modal({closeModal, closeClickOut, children}) {
 
     // Ref
     const modalRef = createRef()
@@ -13,8 +13,8 @@ export default function Modal(props) {
 
     // Check if the click is out the modal
     const checkIfOutModal = (e) => {
-        if (modalRef.current && modalRef.current === e.target) {
-            props.closeModal()
+        if (closeClickOut && modalRef.current && modalRef.current === e.target) {
+            closeModal()
         }
     }
 
@@ -23,9 +23,9 @@ export default function Modal(props) {
             <div
                 ref={modalRef}
                 className='standart-modal'
-                onClick={props.closeClickOut && checkIfOutModal}
+                onClick={checkIfOutModal}
             >
-                {props.children}
+                {children}
             </div>
         </>
     )

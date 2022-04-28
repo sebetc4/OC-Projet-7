@@ -1,9 +1,14 @@
 .navbar__nav-link {
-    font-size: $header-bottons-size;
-    color: $grey-color-dark;
-    padding: 0 20px;
+	padding: 0 20px;
 
-    &.active {
-        color: $secondary-color
-    }
+	button svg {
+		color: $grey-color-dark;
+	}
+
+	&.active {
+        button svg{
+            color: $secondary-color;
+
+        }
+	}
 }

@@ -1,153 +1,39 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { firstNameLastNameValidation, emailValidation, bioValidation, passwordValidation, deleteAccountValidation } from './components/forms/utils/validationSchemas'
-import { SettingItem, SettingForm, ImageForm } from './components'
+import React, { useState } from 'react'
 
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
 
-
+import { AccountSettings, ProfileSettings } from './components'
 
 export default function Settingss() {
 
-  const user = useSelector((state) => state.user.data)
+  const [value, setValue] = useState('1');
+
+  const handleChange = (e, newValue) => {
+    setValue(newValue);
+  };
 
   return (
     <div className='settings'>
-      <section className='settings-section'>
-        <h2 className='settings-section__title'>Paramètres du compte</h2>
-        <SettingItem title={'Modification du nom et prénom'} >
-          <SettingForm
-            userId={user.id}
-            inputs={[{
-              name: 'firstName',
-              type: 'text',
-              placeholder: 'Prénom'
-            }, {
-              name: 'lastName',
-              type: 'text',
-              placeholder: 'Nom'
-            }]}
-            initialValues={
-              {
-                firstName: user.firstName,
-                lastName: user.lastName
-              }
-            }
-            validationSchemas={firstNameLastNameValidation}
-            action='updateUser'
-          />
-        </SettingItem>
-        <hr />
-        <SettingItem title={'Modification de l\'adresse email'} >
-          <SettingForm
-            userId={user.id}
-            inputs={[{
-              name: 'email',
-              type: 'email',
-              placeholder: 'Email'
-            }]}
-            initialValues={
-              {
-                email: user.email,
-              }
-            }
-            validationSchemas={emailValidation}
-            action='updateUser'
-          />
-        </SettingItem>
-        <hr />
-        <SettingItem title={'Modification du mot de passe'} >
-          <SettingForm
-            userId={user.id}
-            inputs={[{
-              name: 'password',
-              type: 'password',
-              placeholder: 'Ancien mot de passe'
-            }, {
-              name: 'newPassword',
-              type: 'password',
-              placeholder: 'Nouveau mot de passe'
-            }, {
-              name: 'confirmNewPassword',
-              type: 'password',
-              placeholder: 'Confirmation du nouveau mot de passe'
-            }]}
-            initialValues={
-              {
-                password: '',
-                newPassword: '',
-                confirmNewPassword: ''
-              }
-            }
-            validationSchemas={passwordValidation}
-            action='updatePassword'
-          />
-        </SettingItem>
-        <hr />
-        <SettingItem title={'Suppression du compte'} >
-          <SettingForm
-            userId={user.id}
-            inputs={[{
-              name: 'password',
-              type: 'password',
-              placeholder: 'Mot de passe'
-            }, {
-              name: 'confirmPassword',
-              type: 'password',
-              placeholder: 'Confirmation du mot de passe'
-            }]}
-            initialValues={
-              {
-                password: '',
-                confirmPassword: ''
-              }
-            }
-            validationSchemas={deleteAccountValidation}
-            action='deleteAccount'
-          />
-        </SettingItem>
-      </section>
-      <section className='settings-section'>
-        <h2 className='settings-section__title'>Paramètres du profil</h2>
-        <SettingItem title={'Modification des images'} >
-          <div className='settings-section-pictures' >
-            <ImageForm
-              user={user}
-              field={'avatar'}
-              ratio={1}
-              cropShape={'round'}
-              showGrid={false}
-              picture={user.avatarUrl}
-            />
-            <ImageForm
-              user={user}
-              field={'cover'}
-              ratio={2.375}
-              cropShape={'rect'}
-              showGrid={true}
-              picture={user.coverUrl}
-            />
-          </div>
-        </SettingItem>
-        <hr />
-        <SettingItem title={'Modification de la biographie'} >
-          <SettingForm
-            userId={user.id}
-            inputs={[{
-              name: 'bio',
-              type: 'text',
-              placeholder: 'Bio'
-            }]}
-            initialValues={
-              {
-                bio: `${user.bio ? user.bio : ''}`,
-              }
-            }
-            validationSchemas={bioValidation}
-            action='updateUser'
-          />
-        </SettingItem>
-        <hr />
-      </section>
+      <TabContext value={value}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <TabList onChange={handleChange} aria-label="lab API tabs example">
+            <Tab label="Paramètres de compte" value="1" />
+            <Tab label="Paramètres de profil" value="2" />
+            <Tab label="Autre" value="3" />
+          </TabList>
+        </Box>
+        <TabPanel value="1">
+          <AccountSettings />
+        </TabPanel>
+        <TabPanel value="2">
+          <ProfileSettings />
+        </TabPanel>
+        <TabPanel value="3">Autre</TabPanel>
+      </TabContext>
     </div>
   )
 }

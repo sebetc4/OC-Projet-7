@@ -23,7 +23,8 @@
 	}
 }
 
-
 .right-menu-modal {
-	@include menu-modal
+	@include menu-modal;
+	right: 0px;
+	bottom: 5px;
 }

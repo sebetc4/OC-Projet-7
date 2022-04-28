@@ -3,13 +3,12 @@ const attributes = require('../utils/attributes')
 const paths = require('../utils/paths')
 const fs = require('fs')
 
-
-
 // Create constroller
 exports.createPost = async (req, res, next) => {
-    const { userId, text } = req.body
+    const { userId } = req.auth
+    const { text } = req.body
     const imageUrl = Object.keys(req.files).length !== 0 ? `${paths.getImagesPath(req)}/post/${req.files.post[0].filename}` : null
-    if (!userId)
+    if (!text && !imageUrl)
         return res.status(400).send('Missing parameters');
     try {
         const newPost = await models.Post.create({
@@ -22,7 +21,6 @@ exports.createPost = async (req, res, next) => {
         return res.status(500).json('Unable to create post')
     }
 }
-
 
 // Get controller
 exports.getAllPost = async (req, res, next) => {
@@ -46,15 +44,12 @@ exports.getAllPost = async (req, res, next) => {
                 }
             }]
         })
-        console.log(posts)
         return res.status(200).json(posts)
     } catch (err) {
         return res.status(500).send('Unable to get all posts')
     }
 }
 
-
-// Modify controller
 const deleteLastFile = (req, post) => {
     fs.unlink(`images/post/${post.imageUrl.split(`/images/post/`)[1]}`, (err) => {
         if (err)
@@ -72,19 +67,22 @@ const getPostObject = (req, updateImage) => {
         }
 }
 
-
+// Modify controller
 exports.modifyPost = async (req, res, next) => {
-    const { userId, text, updateImage } = req.body
+    const { userId, isAdmin } = req.auth
+    const { text, updateImage } = req.body
     const postId = req.params.id
-    if (!userId)
+    if (!postId || !text && !req.files)
         return res.status(400).send('Missing parameters');
     try {
         const post = await models.Post.findOne({
-            where: { id: postId}, 
+            where: { id: postId },
         })
         if (!post) {
             return res.status(404).send(`Post Id unknown ${postId}`)
         }
+        if (userId !== post.UserId && !isAdmin)
+            return res.status(405).send('Not allowed!')
         const postObject = getPostObject(req, updateImage)
         updateImage && deleteLastFile(req, post)
         await post.update(postObject);
@@ -97,10 +95,16 @@ exports.modifyPost = async (req, res, next) => {
 
 // Delete controller
 exports.deletePost = async (req, res, next) => {
+    const { userId, isAdmin } = req.auth
+    const postId = req.params.id
+    if (!postId)
+        return res.status(400).send('Missing parameters');
     try {
         const post = await models.Post.findOne({
-            where: { id: req.params.id }
+            where: { id: postId }
         })
+        if (userId !== post.UserId && !isAdmin)
+            return res.status(405).send('Not allowed!')
         await post.destroy()
         res.status(200).json("Deletion post is done")
     } catch (err) {
@@ -124,17 +128,18 @@ const setDislike = async (post, user) => {
     })
 }
 
-
 exports.likePost = async (req, res, next) => {
-    const { userId, likeStatut } = req.body
-    if (!userId || likeStatut == null)
+    const { likeStatut } = req.body
+    const { userId } = req.auth
+    const postId = req.params.id
+    if (!postId || likeStatut == null)
         return res.status(400).send('Missing parameters');
     try {
         const post = await models.Post.findOne({
-            where: { id: req.params.id }
+            where: { id: postId }
         })
         if (!post)
-            return res.status(404).send(`Post id unknown ${req.params.id}`)
+            return res.status(404).send(`Post id unknown ${postId}`)
         const user = await models.User.findOne({
             where: { id: userId }
         })

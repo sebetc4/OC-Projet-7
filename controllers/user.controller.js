@@ -13,7 +13,7 @@ exports.createUser = async (req, res, next) => {
     if (email === null || lastName === null || firstName === null || password == null)
         return res.status(400).send('Missing parameters');
     try {
-        const newUser = await models.User.create({
+        await models.User.create({
             email,
             firstName,
             lastName,
@@ -21,7 +21,7 @@ exports.createUser = async (req, res, next) => {
             avatarUrl: `${paths.getImagesPath(req)}/avatar/avatar-profile.webp`,
             coverUrl: `${paths.getImagesPath(req)}/cover/cover-profile.webp`
         })
-        return res.status(201).json({ userId: newUser.id })
+        return res.status(201).json('User creation is done')
     } catch (err) {
         return res.status(500).json({ path: err.errors[0].path, error: err.errors[0].message })
     }
@@ -40,17 +40,19 @@ exports.getAllUsers = async (req, res, next) => {
 }
 
 exports.getOneUser = async (req, res, next) => {
+    const userTargetId = req.params.id
+    if (userTargetId)
+        return res.status(400).send('Missing parameters');
     try {
         const user = await models.User.findOne({
-            where: { id: req.params.id },
+            where: { id: userId },
             attributes: attributes.user,
             include: {
                 model: models.Post
             }
         })
-        if (!user) {
-            return res.status(404).send(`User id unknown ${req.params.id}`)
-        }
+        if (!user)
+            return res.status(404).send(`User id unknown ${userTargetId}`)
         return res.status(200).json(user)
     } catch (err) {
         return res.status(500).send('Unable to get user')
@@ -90,17 +92,16 @@ const deleteLastFile = (req, user) => {
 }
 
 exports.updateUser = async (req, res, next) => {
-    const { userId } = req.body
-    if (userId === null) 
-        return res.status(400).send('Missing parameters');
+    const { userId, isAdmin } = req.auth
     try {
         const user = await models.User.findOne({
             where: { id: userId },
             attributes: attributes.user
         })
-        if (!user) {
+        if (!user)
             return res.status(404).send(`User id unknown ${userId}`)
-        }
+        if (userId !== user.id && !isAdmin)
+            return res.status(405).send('Not allowed!')
         const userObject = getUserObject(req)
         req.files && deleteLastFile(req, user)
         await user.update(userObject);
@@ -111,8 +112,9 @@ exports.updateUser = async (req, res, next) => {
 }
 
 exports.updatePassword = async (req, res, next) => {
-    const { userId, password, newPassword } = req.body;
-    if (userId === null || password === null || newPassword === null)
+    const { userId } = req.auth
+    const { password, newPassword } = req.body;
+    if (!password || !newPassword)
         return res.status(400).send('Missing parameters');
     try {
         const user = await models.User.findOne({
@@ -135,12 +137,13 @@ exports.updatePassword = async (req, res, next) => {
 
 // Delete controller
 exports.deleteUser = async (req, res, next) => {
+    const userId = req.auth.userId
     try {
         const user = await models.User.findOne({
-            where: { id: req.params.id }
+            where: { id: userId }
         })
         if (!user) {
-            return res.status(404).send(`User id unknown ${req.params.id}`)
+            return res.status(404).send(`User id unknown ${req.userId}`)
         }
         await user.destroy()
         res.status(200).json("User deletion is done")
