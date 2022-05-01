@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 export default function Header() {
 
-  const deviceSize = useSelector((state) => state.device.size)
+  const deviceSize = useSelector((state) => state.app.deviceSize)
 
 
   return (

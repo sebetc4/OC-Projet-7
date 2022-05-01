@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from "react-redux";
 import { MenuModal } from '../../../../../../../../components'
-import { deleteCommentPost, deletePost } from '../../../../../../../../store/actions/posts.actions';
+import { deleteCommentPost } from '../../../../../../../../store/actions/posts.actions';
 
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';

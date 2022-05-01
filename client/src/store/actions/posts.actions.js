@@ -2,14 +2,12 @@ import axios from 'axios';
 
 export const CREATE_POST = 'CREATE_POST'
 export const GET_POSTS = 'GET_POSTS'
-export const MODIFY_POST = 'MODIFY_POST'
+export const UPDATE_POST = 'UPDATE_POST'
 export const DELETE_POST = 'DELETE_POST'
 export const LIKE_POST = 'LIKE_POST'
 export const CREATE_COMMENT_POST = 'CREATE_COMMENT_POST'
+export const UPDATE_COMMENT_POST = 'UPDATE_COMMENT_POST'
 export const DELETE_COMMENT_POST = 'DELETE_COMMENT_POST'
-
-
-
 
 export const createPost = (data, user) => {
     return async (dispatch) => {
@@ -36,11 +34,11 @@ export const getAllPosts = () => {
     }
 }
 
-export const modifyPost = (data, postId, postIndex) => {
+export const updatePost = (data, postId, postIndex) => {
     return async (dispatch) => {
         const newPost = await axios.put(`/api/post/${postId}`, data);
         dispatch({
-            type: MODIFY_POST,
+            type: UPDATE_POST,
             playload: { postIndex, newPost: newPost.data }
         });
     }
@@ -51,7 +49,7 @@ export const deletePost = (postId, postIndex) => {
         await axios.delete(`/api/post/${postId}`);
         dispatch({
             type: DELETE_POST,
-            playload: {postIndex},
+            playload: { postIndex },
         });
     }
 }
@@ -78,12 +76,22 @@ export const createCommentPost = (postId, postIndex, user, text) => {
     }
 }
 
+export const updateCommentPost = (commentId, commentIndex, postIndex, text) => {
+    return async (dispatch) => {
+        await axios.put(`/api/comment-post/${commentId}`, { text });
+        dispatch({
+            type: UPDATE_COMMENT_POST,
+            playload: { commentIndex, postIndex, text }
+        });
+    }
+}
+
 export const deleteCommentPost = (commentId, commentIndex, postIndex) => {
     return async (dispatch) => {
         await axios.delete(`/api/comment-post/${commentId}`)
         dispatch({
             type: DELETE_COMMENT_POST,
-            playload: {commentIndex, postIndex}
+            playload: { commentIndex, postIndex }
         });
     }
 }

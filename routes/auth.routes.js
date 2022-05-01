@@ -4,6 +4,6 @@ const router = express.Router();
 
 router.post("/login", authCtrl.login);
 router.get("/logout", authCtrl.logout);
-router.get("/check-jswt", authCtrl.checkJswt)
+router.get("/", authCtrl.auth)
 
 module.exports = router;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse, faUser, faSquarePollHorizontal, faGear, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import { toglleDisplayMenuMobile } from "../../../../store/actions/device.actions";
+import { toglleDisplayMenuMobile } from "../../../../store/actions/app.actions";
 import { logoutUser } from "../../../../store/actions/user.actions";
 import { useSelector, useDispatch } from 'react-redux';
 

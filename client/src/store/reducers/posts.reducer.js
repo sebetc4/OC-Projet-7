@@ -1,4 +1,4 @@
-import { CREATE_POST, GET_POSTS, LIKE_POST, MODIFY_POST, DELETE_POST, CREATE_COMMENT_POST, DELETE_COMMENT_POST } from "../actions/posts.actions";
+import { CREATE_POST, GET_POSTS, LIKE_POST, UPDATE_POST, DELETE_POST, CREATE_COMMENT_POST, DELETE_COMMENT_POST, UPDATE_COMMENT_POST } from "../actions/posts.actions";
 
 const postsDefaultState = {
     data: [],
@@ -13,7 +13,7 @@ export default function postsReducer(state = postsDefaultState, action) {
         case GET_POSTS:
             return { ...state, data: action.playload, isLoaded: true }
 
-        case MODIFY_POST: {
+        case UPDATE_POST: {
             const data = state.data.map((post, postIndex) => {
                 if (postIndex === action.playload.postIndex)
                     return { ...post, ...action.playload.newPost }
@@ -44,6 +44,12 @@ export default function postsReducer(state = postsDefaultState, action) {
             const { comment, postIndex } = action.playload
             const data = [...state.data]
             data[postIndex].CommentPosts.push(comment.data)
+            return { ...state, data }
+        }
+        case UPDATE_COMMENT_POST: {
+            const { commentIndex, postIndex, text } = action.playload
+            const data = [ ...state.data ]
+            data[commentIndex].CommentPosts[postIndex].text = text
             return { ...state, data }
         }
         case DELETE_COMMENT_POST: {

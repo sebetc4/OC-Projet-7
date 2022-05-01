@@ -1,9 +1,7 @@
-const Sequelize = require('sequelize');
+const { Sequelize, Model } = require('sequelize');
 
 'use strict';
-const {
-  Model
-} = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Post extends Model {
     static associate(models) {
@@ -20,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       models.Post.hasMany(models.CommentPost, {
         onDelete: 'cascade',
         foreignKey: 'postId',
-        hooks:true
+        hooks: true
       })
     }
   }
@@ -33,7 +31,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     imageUrl: {
       type: DataTypes.STRING
-    }, text: {
+    },
+    videoUrl: {
+      type: DataTypes.STRING
+    },
+     text: {
       type: DataTypes.STRING
     },
     likes: {
@@ -45,6 +47,5 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Post',
   });
-
   return Post;
 };

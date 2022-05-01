@@ -1,17 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import { createPost, modifyPost } from '../../../../store/actions/posts.actions';
 
-import IconButton from '@mui/material/IconButton';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
-import Divider from '@mui/material/Divider';
-import CloseIcon from '@mui/icons-material/Close';
 
-export default function PostForm
-    ({ type, post, postIndex, initialValueText, initialValueImage, closeModal }) {
+import { PostFormActions, PostFormHeader, PostFormMedia, PostFormVideoInput } from './components';
+import { createPost, updatePost } from '../../../../store/actions/posts.actions';
+
+
+export default function PostForm({ type, post, postIndex, initialValueText, initialValueImage, closeModal }) {
 
     // Hooks
     const dispatch = useDispatch()
@@ -19,11 +16,14 @@ export default function PostForm
 
 
     // State
+    const [text, setText] = useState(initialValueText)
     const [updateImage, setUpdateImage] = useState(false)
     const [image, setImage] = useState(initialValueImage ? initialValueImage : null)
-    const [submitDisabled, setSubmitDisabled] = useState(true)
     const [file, setFile] = useState(null)
-    const [text, setText] = useState(initialValueText)
+    const [videoUrl, setVideoUrl] = useState(null)
+    const [video, setVideo] = useState(null)
+    const [displayVideoInput, setDisplayVideoInput] = useState(false)
+    const [submitDisabled, setSubmitDisabled] = useState(true)
 
     // Store
     const user = useSelector((state) => state.user.data)
@@ -38,26 +38,37 @@ export default function PostForm
 
     // Chech if text and file are empty
     useEffect(() => {
-        if (text || image)
+        if (text || image || videoUrl) {
             setSubmitDisabled(false)
+        }
         else
             setSubmitDisabled(true)
-    }, [text, image])
+    }, [text, image, videoUrl])
 
     // Set focus on textarea
     useEffect(() => {
         textareaRef && textareaRef.current.focus()
     }, [textareaRef])
 
+    const handleDeleteImage = () => {
+        (type === 'modify') && setUpdateImage(true)
+        setImage(null)
+        setFile(null)
+    }
+
+    const handleVideoUrl = () => setVideoUrl(video)
+
+    const toggleDisplayVideoInput = () => setDisplayVideoInput(!displayVideoInput)
+
     const submit = (e) => {
         e.preventDefault()
         const formData = new FormData()
         formData.append('post', file)
         formData.append('text', text)
-        formData.append('userId', user.id)
+        formData.append('video', videoUrl)
         updateImage && formData.append('updateImage', true)
         if (type === 'modify') {
-            dispatch(modifyPost(formData, post.id, postIndex))
+            dispatch(updatePost(formData, post.id, postIndex))
         } else {
             dispatch(createPost(formData, user))
         }
@@ -66,17 +77,10 @@ export default function PostForm
 
     return (
         <form className='post-form' onSubmit={submit}>
-            <div className='post-form-header'>
-                <div> </div>
-                <h2>{`${type === 'modify' ? 'Modifier la' : 'Ajouter une'} publication`}</h2>
-                <IconButton
-                    color="warning"
-                    aria-label="Annuler"
-                    onClick={closeModal}
-                >
-                    <CloseIcon color='error' fontSize='medium' />
-                </IconButton>
-            </div>
+            <PostFormHeader
+                type={type}
+                closeModal={closeModal}
+            />
             <label>
                 <TextareaAutosize
                     ref={textareaRef}
@@ -89,53 +93,20 @@ export default function PostForm
                     placeholder='Votre publication...'
                 />
             </label>
-            {image && (
-                <div className='post-form-image'>
-                    <img
-                        alt='post'
-                        src={image}
-                    />
-                </div >
-            )}
-
-            <div className='post-form-actions' >
-                <Divider />
-                <div className='post-form-actions__buttons' >
-                    <label>
-                        <input
-                            title="Type search term here"
-                            accept="image/*"
-                            id='input-post-image'
-                            name='input-post-image'
-                            type="file"
-                            style={{ display: 'none' }}
-                            onChange={(e) => setFile(e.target.files[0])}
-                        />
-                        <Button
-                            variant="text"
-                            color="primary"
-                            component="span"
-                            startIcon={<PhotoCamera />}>
-                            {`${image ? 'Modifier l\'' : 'Ajouter une '}image`}
-                        </Button>
-                    </label>
-                    {image && (
-                        <Button
-                            color="warning"
-                            startIcon={<DeleteIcon />}
-                            onClick={() => {
-                                setImage(null)
-                                setFile(null)
-                            }}
-                        >
-                            Supprimer l'image
-
-                        </Button>
-                    )}
-                </div>
-
-                <Divider />
-            </div>
+            <PostFormMedia
+                image={image}
+                video={video}
+            />
+            <PostFormActions
+                image={image}
+                setFile={setFile}
+                handleDeleteImage={handleDeleteImage}
+                toggleDisplayVideoInput={toggleDisplayVideoInput}
+            />
+            <PostFormVideoInput 
+                setVideo={setVideo}
+                handleVideoUrl={handleVideoUrl}
+            />
             <div className='post-form-submit'>
                 <Button
                     disabled={submitDisabled}

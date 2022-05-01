@@ -6,7 +6,6 @@ export default function MenuModal({children, closeModal}) {
         const modalRef = createRef()
 
     const checkIfOutModal = (e) => {
-        console.log('test')
         if (modalRef.current && modalRef.current.contains(e.target)) {
             closeModal()
         }

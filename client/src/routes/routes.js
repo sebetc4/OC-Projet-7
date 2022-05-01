@@ -6,7 +6,7 @@ import { Feed, Header, Home, Login, Profile, Settings } from '../features'
 export default function Index() {
 
     const userIsLogged = useSelector((state) => state.user.isLogged)
-    const menuOpen = useSelector((state) => state.device.displayMobilMenu)
+    const menuOpen = useSelector((state) => state.app.displayMobilMenu)
 
    
     return (

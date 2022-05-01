@@ -3,21 +3,43 @@ import axios from 'axios';
 export const GET_USER = 'GET_USER'
 export const LOGIN_USER = 'LOGIN_USER'
 export const LOGOUT_USER = 'LOGOUT_USER'
-export const LOADED_USER = 'LOADED_USER'
 export const UPDATE_USER = 'UPDATE_USER'
 export const DELETE_USER = 'DELETE_USER'
 
 
-export const getUser = (user) => {
+export const getUser = () => {
     return async (dispatch) => {
-        dispatch({
-            type: GET_USER,
-            playload: {
-                data: user,
-                isLogged: true,
-                isLoaded: true
+        try {
+            const user = await axios.get('/api/auth')
+            if (user.data.user) {
+                dispatch({
+                    type: GET_USER,
+                    playload: {
+                        data: user.data.user,
+                        isLogged: true,
+                        isLoaded: true
+                    }
+                });
+            } else {
+                dispatch({
+                    type: GET_USER,
+                    playload: {
+                        data: null,
+                        isLogged: false,
+                        isLoaded: true
+                    }
+                });
             }
-        });
+        } catch {
+            dispatch({
+                type: GET_USER,
+                playload: {
+                    data: null,
+                    isLogged: false,
+                    isLoaded: true
+                }
+            });
+        }
     }
 }
 
@@ -32,11 +54,7 @@ export const logoutUser = () => {
     }
 }
 
-export const loadedUser = () => {
-    return (dispatch) => {
-        dispatch({ type: LOADED_USER })
-    }
-}
+
 
 export const updateUser = (data) => {
     return async (dispatch) => {
@@ -52,7 +70,7 @@ export const updateUser = (data) => {
     }
 }
 
-export const deleteUser = (data) => {
+export const deleteUser = () => {
     return async (dispatch) => {
         try {
             await axios.delete(`/api/user/`);

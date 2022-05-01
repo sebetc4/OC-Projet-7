@@ -1,22 +1,27 @@
 import React, { useState } from 'react'
-import { createCommentPost } from '../../../../../../../../store/actions/posts.actions';
+import { createCommentPost, updateCommentPost } from '../../../../../../store/actions/posts.actions';
 import { useDispatch } from "react-redux";
 
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 
-export default function CommentForm({ postId, postIndex, user, textareaRef, toggleDisplayNewComment }) {
+export default function CommentForm({ type, initialValueText, postId, postIndex, commentId, commentIndex, user, textareaRef, toggleDisplayForm }) {
 
     const dispatch = useDispatch()
 
-    const [text, setText] = useState('')
+    const [text, setText] = useState(initialValueText)
 
     const submit = (e) => {
         e.preventDefault()
-        dispatch(createCommentPost(postId, postIndex, user, text))
-        setText('')
-        toggleDisplayNewComment()
+        if (type === 'modify') {
+            dispatch(updateCommentPost(commentId, commentIndex, postIndex, text))
+        }
+        else {
+            dispatch(createCommentPost(postId, postIndex, user, text))
+            setText('')
+            toggleDisplayForm()
+        }
     }
 
     return (
@@ -46,7 +51,7 @@ export default function CommentForm({ postId, postIndex, user, textareaRef, togg
                         size="small"
                         variant="contained"
                         endIcon={<SendIcon />}>
-                        Commenter
+                        {type === 'modify' ? 'Modifier' : 'Commenter'}
                     </Button>
                 </div>
             </form>

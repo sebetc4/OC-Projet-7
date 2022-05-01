@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux";
-import axios from "axios";
 import { a as aw, useSpring as useSpringWeb } from '@react-spring/web'
 import { GroupomaniaTextSvg, StandartModal } from '../../components';
 import { SignInForm, SignUpForm, ThreeCanvas, MagneticButton } from './components';
 import { getUser } from "../../store/actions/user.actions";
-import { getAllUsers } from "../../store/actions/users.actions";
 import { useSelector } from "react-redux";
 
 
@@ -27,7 +25,7 @@ export default function Login() {
 	const [modalState, setModalState] = useState(0)
 
 	// Store
-	const deviceSize = useSelector((state) => state.device.size)
+	const deviceSize = useSelector((state) => state.app.deviceSize)
 
 	const colors = [
 		[0, 0, 80],
@@ -41,7 +39,6 @@ export default function Login() {
 
 	const springyGradient = hsl.to((h, s, l) => `radial-gradient(hsl(${h}, ${s * 0.7}%, ${l}%), hsl(${h},${s * 0.4}%, ${l * 0.2}%))`)
 
-
 	const handleMousePosition = e => {
 		if (modalState === 0 && deviceSize === 2) {
 			setMousePos({
@@ -52,14 +49,7 @@ export default function Login() {
 	}
 
 	const handleSignIn = async () => {
-		try {
-			const resJswt = await axios.get('/api/auth/check-jswt')
-			dispatch(getUser(resJswt.data.user))
-			dispatch(getAllUsers())
-			navigate('/home')
-		} catch (err) {
-			console.log('Non connecté')
-		}
+			dispatch(getUser())
 	}
 
 	return (

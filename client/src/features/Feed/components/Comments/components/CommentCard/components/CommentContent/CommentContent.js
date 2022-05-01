@@ -9,9 +9,6 @@ import CommentSettings from '../CommentSettings/CommentSettings';
 
 export default function CommentContent({ postIndex, comment, commentIndex, user, toggleDisplayModifyComment }) {
 
-    // Hooks
-    const dispatch = useDispatch()
-
     // State
     const [userIsAuthorOrAdmin, setUserIsAuthorOrAdmin] = useState(false)
     const [displayCommentSettings, setDisplayCommentSettings] = useState(false)
@@ -30,7 +27,6 @@ export default function CommentContent({ postIndex, comment, commentIndex, user,
                 <NavLink to={`/profile/${comment.userId}`}>
                     {`${comment.User.firstName} ${comment.User.lastName}`}
                 </NavLink>
-                {/* <button onClick={handleDelete}>Supprimer</button> */}
                 <p>{comment.text}</p>
             </div>
             <div>

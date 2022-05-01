@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 
 import { useDispatch, useSelector } from "react-redux";
 import { likePost } from '../../../../store/actions/posts.actions';
-import { PostContent, PostActions, PostHeader, Comments } from './components';
-import { PostForm } from '../index';
+import { PostContent, PostActions, PostHeader } from './components';
+import { Comments, PostForm } from '../index'
 import { StandartModal } from '../../../../components';
 
 export default function PostCard({ post, postIndex }) {

@@ -1,29 +1,38 @@
-const Sequelize = require('sequelize');
 const bcrypt = require("bcrypt");
+const { Sequelize, Model } = require('sequelize');
 
 'use strict';
-const {
-  Model
-} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       models.User.hasMany(models.Post, {
         onDelete: 'cascade',
-        hooks:true
+        hooks: true
       });
       models.User.belongsToMany(models.Post, {
         through: models.Like,
         foreignKey: 'userId',
         as: 'postsLiked'
       }),
-      models.User.hasMany(models.CommentPost, {
-        onDelete: 'cascade',
-        foreignKey: 'userId',
-        hooks:true
-      })
+        models.User.hasMany(models.CommentPost, {
+          onDelete: 'cascade',
+          foreignKey: 'userId',
+          hooks: true
+        })
+    }
+
+    checkPassword = (password) => {
+      if (!bcrypt.compareSync(password, this.password)) {
+        throw { message: "Invalid password" };
+      }
+    }
+
+    checkAllow = (targetId) => {
+      if (this.id !== targetId && !this.isAdmin)
+        throw { message: 'Not allowed!' }
     }
   }
+
   User.init({
     id: {
       type: Sequelize.UUID,
@@ -88,15 +97,15 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'User',
   });
 
+
   const hashPassword = async (user) => {
     if (user.password) {
       const salt = await bcrypt.genSalt(10);
       user.password = bcrypt.hashSync(user.password, salt);
     }
   }
-
   User.beforeCreate(hashPassword)
   User.beforeUpdate(hashPassword)
-
+ 
   return User;
 };
