@@ -1,10 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, forwardRef } from 'react'
+
+import Dialog from '@mui/material/Dialog';
+import Slide from '@mui/material/Slide';
 
 import { useDispatch, useSelector } from "react-redux";
 import { likePost } from '../../../../store/actions/posts.actions';
 import { PostContent, PostActions, PostHeader } from './components';
 import { Comments, PostForm } from '../index'
-import { StandartModal } from '../../../../components';
+
+const Transition = forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 export default function PostCard({ post, postIndex }) {
 
@@ -64,22 +70,24 @@ export default function PostCard({ post, postIndex }) {
                 />
             </article>
 
-            {displayModifyPost &&
-                <StandartModal
+            <Dialog
+                onClose={toggleDisplayModifyPost}
+                open={displayModifyPost}
+                maxWidth={'xl'}
+                TransitionComponent={Transition}
+                scroll={'body'}
+            >
+                <PostForm
+                    type={'modify'}
+                    post={post}
                     closeModal={toggleDisplayModifyPost}
-                    closeClickOut={false}
-                >
-                    <PostForm
-                        type={'modify'}
-                        post={post}
-                        closeModal={toggleDisplayModifyPost}
-                        postIndex={postIndex}
-                        initialValueText={post.text}
-                        initialValueImage={post.imageUrl}
-                    />
-                </StandartModal>
+                    postIndex={postIndex}
+                    initialValueText={post.text}
+                    initialValueImage={post.imageUrl}
+                    initialValueVideoUrl={post.videoUrl}
+                />
+            </Dialog>
 
-            }
         </>
 
     )

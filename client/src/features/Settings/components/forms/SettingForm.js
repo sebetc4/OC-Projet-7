@@ -1,9 +1,26 @@
 import React from 'react'
 import { useDispatch } from "react-redux";
-import { Formik, Field, ErrorMessage } from "formik";
+import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { updateUser, deleteUser } from '../../../../store/actions/user.actions';
+import { updateUser } from '../../../../store/actions/user.actions';
 import axios from 'axios';
+
+
+const customInput = ({ field, form, ...props }) => {
+    return (
+        <>
+            <label className='settings-item-form__label' htmlFor={field.name}>{`${props.placeholder}:`}</label>
+            <input
+                {...field}
+                {...props}
+                className={`settings-item-form__input ${form.errors[field.name] && form.touched[field.name]
+                    ? 'error'
+                    : ''}`
+                }
+            />
+        </>
+    );
+};
 
 
 export default function SettingForm({action, validationSchemas, inputs, initialValues}) {
@@ -39,9 +56,6 @@ export default function SettingForm({action, validationSchemas, inputs, initialV
                 break;
             case 'updatePassword':
                 axios.put(`/api/user/password`, { ...values })
-                break;
-            case 'deleteAccount':
-                dispatch(deleteUser(values))
                 break;
             default:
                 break;

@@ -1,5 +1,5 @@
 export const SET_DEVICE_SIZE = 'SET_DEVICE_SIZE'
-export const TOGGLE_DISPLAY_MENU_MOBIL= 'TOGGLE_DISPLAY_MENU_MOBIL'
+export const SET_DISPLAY_MOBILE_MENU = 'SET_DISPLAY_MOBILE_MENU'
 
 export const setDeviceSize = (deviceSize) => {
     return (dispatch) => {
@@ -10,10 +10,11 @@ export const setDeviceSize = (deviceSize) => {
     }
 }
 
-export const toglleDisplayMenuMobile = () => {
+export const setDisplayMobileMenu = (state) => {
     return (dispatch) => {
         dispatch({
-            type: TOGGLE_DISPLAY_MENU_MOBIL,
+            type: SET_DISPLAY_MOBILE_MENU,
+            playload: state
         });
     }
 }

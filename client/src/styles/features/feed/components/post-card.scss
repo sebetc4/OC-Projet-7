@@ -70,6 +70,11 @@
 			max-height: 400px;
 		}
 	}
+	&__video-container {
+		display: flex;
+		justify-content: center;
+		background-color: black;
+	}
 }
 
 .post-card-actions {
@@ -90,4 +95,17 @@
 
 .post-card__comments {
 	@include center-width($width: $width-content-main-section);
+}
+
+@media screen and (max-width: $media-mobile ) {
+	.post-card-content {
+		&__image-container {
+
+			& img {
+				max-width: 100%;
+				display: block;
+				max-height: auto;
+			}
+		}
+	}
 }

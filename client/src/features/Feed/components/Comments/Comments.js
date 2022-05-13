@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 
-import { Avatar } from '@mui/material'
-import { CommentCard, CommentForm, CreateComment } from './components'
+import { CommentCard, CreateComment } from './components'
 import Collapse from '@mui/material/Collapse';
 
 export default function Comments({ post, postIndex, user, displayNewComment, toggleDisplayNewComment }) {

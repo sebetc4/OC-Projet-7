@@ -1,27 +1,35 @@
 import * as THREE from "three";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useSpring as useSpringThree } from '@react-spring/three'
 
 
-export default function Texture(props) {
+export default function Texture({mouseOnOneButton}) {
+
+    const [indexColor, setIndexColor] = useState(0)
+
     // Load the noise textures
     const heightMap = useTexture("./three/noise.jpg");
     const displacementMap = useTexture("./three/noise3D.jpg");
     heightMap.minFilter = displacementMap.minFilter = THREE.NearestFilter;
     displacementMap.wrapS = displacementMap.wrapT = THREE.RepeatWrapping;
 
-
     const options = [
       [356, 75, 57],
       [240, 70, 60],
-      [240, 70, 60]
-      ]
+    ]
+
+    useEffect(() => {
+      if (mouseOnOneButton)
+        setIndexColor(1)
+      else
+        setIndexColor(0)
+    }, [mouseOnOneButton])
 
     const { timeOffset } = useSpringThree({
-      hsl: options[props.mouseOnButton],
-      timeOffset: props.mouseOnButton * 0.2,
+      hsl: options[indexColor],
+      timeOffset: indexColor * 0.2,
       config: { tension: 50 },
       onChange: ({ value: { hsl } }) => {
         const [h, s, l] = hsl

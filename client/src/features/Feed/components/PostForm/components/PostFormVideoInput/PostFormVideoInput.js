@@ -1,34 +1,48 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import TextField from '@mui/material/TextField';
 
 import { Button } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
 
-export default function PostFormVideoInput({ setVideo, handleVideoUrl }) {
+export default function PostFormVideoInput({ video, setVideo, setVideoUrl, toggleDisplayVideoInput }) {
+
+    const textFieldRef = useRef()
 
     const [addVideoDisabled, setAddVideoDisabled] = useState(true)
 
-    const handleVideo = (e) => {
-        const url = e.target.value
-        if (url.includes('https://www.youtube') || url.includes('https://youtube')) {
-            let video = url.replace('watch?v=', 'embed/').split('&')[0]
-            setVideo(video)
+    useEffect(() => {
+        if (video.includes('https://www.youtube') || video.includes('https://youtube')) {
             setAddVideoDisabled(false)
-        } else
+        } else {
             setAddVideoDisabled(true)
+        }
+    }, [video])
+
+    const handleVideo = (e) => setVideo(e.target.value)
+
+    const handleAddVideo = () => {
+        setVideoUrl(video.replace('watch?v=', 'embed/').split('&')[0])
+        toggleDisplayVideoInput()
     }
 
     return (
-        <div>
+        <div className='post-form-video-input'>
             <TextField
+                ref={textFieldRef}
+                className='post-form-video-input__input-container'
                 id='post-video-input'
+                sx={{ width: '100%' }}
                 size='small'
                 label='URL de la vidéo youtube'
                 variant="outlined"
+                value={video}
                 onChange={handleVideo}
             />
             <Button
-                onClick={handleVideoUrl}
+                startIcon={<AddIcon />}
+                size='small'
+                onClick={handleAddVideo}
                 variant="contained"
                 disabled={addVideoDisabled}
             >

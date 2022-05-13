@@ -20,8 +20,8 @@ export default function CommentForm({ type, initialValueText, postId, postIndex,
         else {
             dispatch(createCommentPost(postId, postIndex, user, text))
             setText('')
-            toggleDisplayForm()
         }
+        toggleDisplayForm()
     }
 
     return (

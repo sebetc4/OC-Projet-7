@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function PostFormMedia({image, video}) {
+export default function PostFormMedia({ image, videoUrl }) {
     return (
         <>
             {image && (
@@ -11,16 +11,18 @@ export default function PostFormMedia({image, video}) {
                     />
                 </div >
             )}
-            {video &&
-                <iframe
-                    width="560"
-                    height="315"
-                    src={video}
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                />
+            {videoUrl &&
+                <div className='post-form-video'>
+                    <iframe
+                        width="560"
+                        height="315"
+                        src={videoUrl}
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                    />
+                </div>
             }
         </>
     )

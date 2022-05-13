@@ -6,10 +6,14 @@
 	box-sizing: border-box;
 }
 
+html {
+	overflow-y: scroll;
+}
+
 body,
 html {
 	margin: 0;
-	font-family: 'Open Sans', sans-serif;	
+	font-family: 'Open Sans', sans-serif;
 	font-size: 16px;
 	position: relative;
 	background-color: $page-background;
@@ -23,14 +27,7 @@ html {
 	z-index: 0;
 
 	&.main--active-menu {
-		
 		margin-left: 70px;
 		transform: perspective(1000px) rotateY(-15deg);
-	}
-}
-
-@media screen and (max-width: $media-mobil) {
-	.main {
-		padding-top: 0;
 	}
 }

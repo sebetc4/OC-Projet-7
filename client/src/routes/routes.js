@@ -1,14 +1,14 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import { useSelector } from 'react-redux'
-import { Feed, Header, Home, Login, Profile, Settings } from '../features'
+import { Feed, Header, Home, Login, Profile, Settings, Search } from '../features'
 
 
 export default function Index() {
 
     const userIsLogged = useSelector((state) => state.user.isLogged)
-    const menuOpen = useSelector((state) => state.app.displayMobilMenu)
+    const displayMobileMenu = useSelector((state) => state.app.displayMobileMenu)
 
-   
+
     return (
         <Router>
             {!userIsLogged ?
@@ -19,8 +19,11 @@ export default function Index() {
                 :
                 <>
                     <Header />
-                    <main className={`main ${menuOpen && 'main--active-menu'}`}>
+                    <main className={`main ${displayMobileMenu && 'main--active-menu'}`}>
                         <Routes>
+                            <Route path='/search' >
+                                <Route path=':query' element={<Search />} />
+                            </Route>
                             <Route path='/home' element={<Home />} />
                             <Route path='/feeds' element={<Feed />} />
                             <Route path='/profile' >

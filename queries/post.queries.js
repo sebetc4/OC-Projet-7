@@ -1,11 +1,14 @@
 const { Post, User, CommentPost } = require('../models');
 const attributes = require('../utils/attributes')
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
-exports.createPost = async (UserId, text, imageUrl) => {
+exports.createPost = async (UserId, text, imageUrl, videoUrl) => {
     const newPost = await Post.create({
         UserId,
         text,
         imageUrl,
+        videoUrl
     })
     if (newPost)
         return newPost
@@ -13,7 +16,7 @@ exports.createPost = async (UserId, text, imageUrl) => {
         throw { message: `Internal Server Error` }
 }
 
-exports.getOnePostWhereIdAllAttributes = async (id) => {
+exports.findOnePostWhereIdAllAttributes = async (id) => {
     const post = await Post.findOne({
         where: { id },
     })
@@ -23,7 +26,7 @@ exports.getOnePostWhereIdAllAttributes = async (id) => {
         throw { message: `Post id unknown` }
 }
 
-exports.getAllPostsUserAndCommentRestrictedAttributes = async () => {
+exports.findAllPostsUserAndCommentRestrictedAttributes = async () => {
     const posts = await Post.findAll({
         include: [{
             model: User,
@@ -46,4 +49,17 @@ exports.getAllPostsUserAndCommentRestrictedAttributes = async () => {
     return posts
 }
 
+exports.findAllPostsWhereQueryAllAttributes = async (query) => {
+    const posts = await Post.findAll({
+        where: {
+            text: {
+                [Op.like]: `%${query}%`
+            }
+        }
+    })
+    if (posts)
+        return posts
+    else
+        return null
+};
 

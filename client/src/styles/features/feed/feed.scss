@@ -9,4 +9,8 @@
 }
 
 
-
+@media screen and (max-width: $media-mobile ) {
+	.feed {
+        max-width: 100%;
+    }
+}

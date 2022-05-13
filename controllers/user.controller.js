@@ -34,9 +34,9 @@ const getUserObject = (req, email, firstName, lastName, password, bio) => {
 
 exports.updateUser = async (req, res, next) => {
     const user = req.user
-    const { email, firstName, lastName, password, bio } = req.body
+    const { files, email, firstName, lastName, password, bio } = req.body
     try {
-        if (!req.files && !firstName && !lastName && !password && !bio) throw { message: 'Missing parameters' }
+        if (!files && !email && !firstName && !lastName && !password && !bio) throw { message: 'Missing parameters' }
         const userObject = getUserObject(req, email, firstName, lastName, password, bio)
         req.files && deleteLastUserImage(req, user)
         await user.update(userObject);
@@ -54,18 +54,6 @@ exports.updatePassword = async (req, res, next) => {
         user.checkPassword(password, user.password)
         await user.update({ password: newPassword })
         res.status(200).json("Password update is done")
-    } catch (err) {
-        next(err)
-    }
-}
-
-exports.checkPassword = async (req, res, next) => {
-    const user = req.user
-    const { password } = req.body;
-    try {
-        if (!newPassword) throw { message: 'Missing parameters' }
-        user.checkPassword(password, user.password)
-        res.status(200).json("Password is true")
     } catch (err) {
         next(err)
     }

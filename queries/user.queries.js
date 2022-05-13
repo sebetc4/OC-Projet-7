@@ -1,9 +1,12 @@
-const { User, Post } = require('../models');
+const { User, Post, Todo } = require('../models');
 const { getNewUserAvatarPath, getNewUserCoverPath } = require('../utils/pathFile')
 const attributes = require('../utils/attributes')
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
 
 exports.createUser = async (req, email, firstName, lastName, password) => {
-    const newUser =  User.create({
+    const newUser = User.create({
         email,
         firstName,
         lastName,
@@ -29,9 +32,10 @@ exports.findOneUserAndPostWhereIdRestrictedAttributes = async (id) => {
         throw { message: `User id unknown` }
 }
 
-exports.findOneUserWhereIdAllAttributes = async (id) => {
+exports.findOneUserAndTodoWhereIdAllAttributes = async (id) => {
     const user = await User.findOne({
-        where: { id }
+        where: { id },
+        include: { model: Todo }
     })
     if (user)
         return user
@@ -47,5 +51,29 @@ exports.findOneUserWhereEmailAllAttributes = async (email) => {
     if (user)
         return user
     else
-        throw { message: `User id unknown` }
+        throw { message: `Email unknown` }
 }
+
+exports.findAllUsersWhereQueryRestrictedAttributes = async (query) => {
+    const users = await User.findAll({
+        where: {
+            [Op.or]: [
+                {
+                    firstName: {
+                        [Op.like]: `%${query}%`
+                    }
+                },
+                {
+                    lastName: {
+                        [Op.like]: `%${query}%`
+                    }
+                }
+            ]
+
+        }
+    })
+    if (users)
+        return users
+    else
+        return null
+};

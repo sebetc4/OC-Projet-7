@@ -8,17 +8,21 @@ module.exports = (sequelize, DataTypes) => {
       models.User.hasMany(models.Post, {
         onDelete: 'cascade',
         hooks: true
-      });
+      })
       models.User.belongsToMany(models.Post, {
         through: models.Like,
         foreignKey: 'userId',
         as: 'postsLiked'
-      }),
-        models.User.hasMany(models.CommentPost, {
-          onDelete: 'cascade',
-          foreignKey: 'userId',
-          hooks: true
-        })
+      })
+      models.User.hasMany(models.CommentPost, {
+        onDelete: 'cascade',
+        foreignKey: 'userId',
+        hooks: true
+      })
+      models.User.hasMany(models.Todo, {
+        onDelete: 'cascade',
+        hooks: true
+      })
     }
 
     checkPassword = (password) => {
@@ -106,6 +110,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.beforeCreate(hashPassword)
   User.beforeUpdate(hashPassword)
- 
+
   return User;
 };

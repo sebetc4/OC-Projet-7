@@ -14,12 +14,10 @@ export default function postsReducer(state = postsDefaultState, action) {
             return { ...state, data: action.playload, isLoaded: true }
 
         case UPDATE_POST: {
-            const data = state.data.map((post, postIndex) => {
-                if (postIndex === action.playload.postIndex)
-                    return { ...post, ...action.playload.newPost }
-                else
-                    return post
-            })
+            const {postIndex, newPost} = action.playload
+            const data = [ ...state.data ]
+            const lastData = data[postIndex]
+            data[postIndex] = {...lastData, ...newPost}
             return { ...state, data }
         }
         case DELETE_POST: {
@@ -49,7 +47,7 @@ export default function postsReducer(state = postsDefaultState, action) {
         case UPDATE_COMMENT_POST: {
             const { commentIndex, postIndex, text } = action.playload
             const data = [ ...state.data ]
-            data[commentIndex].CommentPosts[postIndex].text = text
+            data[postIndex].CommentPosts[commentIndex].text = text
             return { ...state, data }
         }
         case DELETE_COMMENT_POST: {

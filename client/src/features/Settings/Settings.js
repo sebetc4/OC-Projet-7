@@ -32,7 +32,9 @@ export default function Settingss() {
         <TabPanel value="2">
           <ProfileSettings />
         </TabPanel>
-        <TabPanel value="3">Autre</TabPanel>
+        <TabPanel value="3">
+          Autre
+        </TabPanel>
       </TabContext>
     </div>
   )

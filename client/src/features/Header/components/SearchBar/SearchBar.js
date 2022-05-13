@@ -1,19 +1,24 @@
 import React from 'react'
 import { Formik } from 'formik'
+import { useNavigate } from "react-router-dom";
+
 import { SearchThinSvg } from '../../../../components';
 import axios from 'axios'
 
 export default function SearchBar() {
 
+    const navigate = useNavigate()
+
     const submit = (values, actions) => {
-        const query =
-        '?' +
-        Object.keys(values)
+        const query = Object
+            .keys(values)
             .map(k => `${k}=${values[k]}&`)
             .join('');
-        axios.get(`/api/search/${query}`)
-     }
-     
+
+        navigate(`/search/${query}`, { replace: true })
+        // axios.get(`/api/search/${query}`)
+    }
+
     return (
         <div className='search-bar-container'>
             <Formik onSubmit={submit} initialValues={{ query: '' }}>

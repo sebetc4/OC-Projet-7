@@ -1,8 +1,8 @@
 import React from 'react';
+import {Todos} from './components';
 
 export default function Home() {
-
 	return (
-		<div>Page d'acceuil</div>
+		<Todos />
 	)
 }

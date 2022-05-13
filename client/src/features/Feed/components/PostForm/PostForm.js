@@ -2,13 +2,14 @@ import React, { useEffect, useState, useRef } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 
 import Button from '@mui/material/Button';
+import Collapse from '@mui/material/Collapse';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 
 import { PostFormActions, PostFormHeader, PostFormMedia, PostFormVideoInput } from './components';
 import { createPost, updatePost } from '../../../../store/actions/posts.actions';
 
 
-export default function PostForm({ type, post, postIndex, initialValueText, initialValueImage, closeModal }) {
+export default function PostForm({ type, post, postIndex, initialValueText, initialValueImage, closeModal, initialValueVideoUrl }) {
 
     // Hooks
     const dispatch = useDispatch()
@@ -20,8 +21,8 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
     const [updateImage, setUpdateImage] = useState(false)
     const [image, setImage] = useState(initialValueImage ? initialValueImage : null)
     const [file, setFile] = useState(null)
-    const [videoUrl, setVideoUrl] = useState(null)
-    const [video, setVideo] = useState(null)
+    const [video, setVideo] = useState('')
+    const [videoUrl, setVideoUrl] = useState(initialValueVideoUrl)
     const [displayVideoInput, setDisplayVideoInput] = useState(false)
     const [submitDisabled, setSubmitDisabled] = useState(true)
 
@@ -56,21 +57,27 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
         setFile(null)
     }
 
-    const handleVideoUrl = () => setVideoUrl(video)
+    const handleDeleteVideo = () => {
+        setVideo('')
+        setVideoUrl('')
+    }
 
     const toggleDisplayVideoInput = () => setDisplayVideoInput(!displayVideoInput)
 
     const submit = (e) => {
         e.preventDefault()
         const formData = new FormData()
-        formData.append('post', file)
         formData.append('text', text)
-        formData.append('video', videoUrl)
+        file && formData.append('post', file)
+        videoUrl && formData.append('video', videoUrl)
         updateImage && formData.append('updateImage', true)
         if (type === 'modify') {
             dispatch(updatePost(formData, post.id, postIndex))
         } else {
             dispatch(createPost(formData, user))
+            handleDeleteVideo()
+            handleDeleteImage()
+            setText('')
         }
         closeModal()
     }
@@ -95,18 +102,30 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
             </label>
             <PostFormMedia
                 image={image}
-                video={video}
+                videoUrl={videoUrl}
             />
             <PostFormActions
                 image={image}
+                video={video}
+                videoUrl={videoUrl}
                 setFile={setFile}
                 handleDeleteImage={handleDeleteImage}
                 toggleDisplayVideoInput={toggleDisplayVideoInput}
+                handleDeleteVideo={handleDeleteVideo}
+                displayVideoInput={displayVideoInput}
             />
-            <PostFormVideoInput 
-                setVideo={setVideo}
-                handleVideoUrl={handleVideoUrl}
-            />
+            <Collapse
+                timeout={500}
+                orientation="vertical"
+                in={displayVideoInput}
+            >
+                <PostFormVideoInput
+                    video={video}
+                    setVideo={setVideo}
+                    setVideoUrl={setVideoUrl}
+                    toggleDisplayVideoInput={toggleDisplayVideoInput}
+                />
+            </Collapse>
             <div className='post-form-submit'>
                 <Button
                     disabled={submitDisabled}

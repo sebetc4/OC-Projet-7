@@ -1,18 +1,34 @@
 import { useFrame } from "@react-three/fiber";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Model from "./components/Model";
 import Texture from "./components/Texture";
 
 
-export default function Logo({ mousePos, mouseOnButton, deviceSize }) {
+export default function Logo({ mouseOnOneButton, deviceSize, allModalsAreClose }) {
 
     // Hooks
     const myMesh = useRef();
+
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
 
     let cursorPos = {
         axeX: 0,
         axeY: 0,
     };
+
+    useEffect(() => {
+        const handleMousePosition = (e) => {
+            setMousePos({
+                x: e.clientX,
+                y: e.clientY
+            })
+        }
+        if (allModalsAreClose && deviceSize === 2)
+            window.addEventListener('mousemove', handleMousePosition)
+        else
+            window.removeEventListener('mousemove', handleMousePosition)
+        return () => window.removeEventListener('mousemove', handleMousePosition)
+    }, [allModalsAreClose, deviceSize])
 
     useFrame((state) => {
         cursorPos.axeX = deviceSize === 2 ? (mousePos.x - window.innerWidth / 2) / (window.innerWidth / 2) : 0;
@@ -29,7 +45,7 @@ export default function Logo({ mousePos, mouseOnButton, deviceSize }) {
             <mesh ref={myMesh}>
                 <Texture
                     attach="material"
-                    mouseOnButton={mouseOnButton}
+                    mouseOnOneButton={mouseOnOneButton}
                 />
                 <Model />
             </mesh>

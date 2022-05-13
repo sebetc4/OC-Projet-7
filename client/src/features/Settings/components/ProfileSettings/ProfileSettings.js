@@ -9,6 +9,8 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+import { FirstNameLastNameForm } from './components'
+
 export default function ProfileSettings() {
 
     const user = useSelector((state) => state.user.data)
@@ -28,28 +30,13 @@ export default function ProfileSettings() {
                         id="panel1bh-header"
                     >
                         <Typography sx={{ width: '50', flexShrink: 0 }}>
-                            Nom et prènom
+                            Prénom et nom
                         </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <SettingForm
-                            inputs={[{
-                                name: 'firstName',
-                                type: 'text',
-                                placeholder: 'Prénom'
-                            }, {
-                                name: 'lastName',
-                                type: 'text',
-                                placeholder: 'Nom'
-                            }]}
-                            initialValues={
-                                {
-                                    firstName: user.firstName,
-                                    lastName: user.lastName
-                                }
-                            }
-                            validationSchemas={firstNameLastNameValidation}
-                            action='updateUser'
+                        <FirstNameLastNameForm
+                            user={user}
+                            closeAccordion={() => setExpanded(false)}
                         />
                     </AccordionDetails>
                 </Accordion>

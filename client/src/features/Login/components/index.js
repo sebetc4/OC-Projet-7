@@ -1,4 +1,4 @@
-export { default as SignInForm } from './forms/SignInForm'
-export { default as SignUpForm } from './forms/SignUpForm'
+export { default as SignInForm } from './SignInForm/SignInForm'
+export { default as SignUpForm } from './SignUpForm/SignUpForm'
 export { default as ThreeCanvas } from './ThreeCanvas/ThreeCanvas'
 export { default as MagneticButton } from './MagneticButton/MagneticButton'

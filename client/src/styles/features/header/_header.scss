@@ -7,7 +7,7 @@
 .header {
     width: 100%;
     position: fixed;
-    z-index: 9998;
+    z-index: 99;
     height: $header-height;
     display: flex;
     padding: 0 30px;
@@ -30,18 +30,38 @@
     }
 
     &__components--right {
-        width: 35%;
-        height: 100%;
-        display: flex;
-        align-items: center;
         flex: 1;
         justify-content: flex-end;
     
     }
 }
 
-.header-logo {
-    width: 50px;
-    fill: $primary-color
+.header-components-left {
+    &__logo{
+        width: 50px;
+        fill: $primary-color
+    }
+
+    &__button-container{
+        width: 90px;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        button {
+            display: block;
+        }
+    }
+}
+
+@media screen and (max-width: $media-tablette ) {
+	.header {
+        padding: 0;
+
+        &__components--left{
+            width: 100%;
+        }
+    }
 }
 

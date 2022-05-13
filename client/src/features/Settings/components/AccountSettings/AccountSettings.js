@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 
 import Accordion from '@mui/material/Accordion';
@@ -7,8 +7,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-import { emailValidation, passwordValidation, deleteAccountValidation } from '../forms/utils/validationSchemas'
-import { SettingForm } from '../index'
+import { PasswordForm, EmailForm, DeleteAccountForm } from './components';
 
 export default function AccountSettings() {
 
@@ -25,7 +24,9 @@ export default function AccountSettings() {
     return (
         <section className='settings-section'>
             <div>
-                <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+                <Accordion
+                    expanded={expanded === 'panel1'}
+                    onChange={handleChange('panel1')}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1bh-content"
@@ -36,19 +37,9 @@ export default function AccountSettings() {
                         </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <SettingForm
-                            inputs={[{
-                                name: 'email',
-                                type: 'email',
-                                placeholder: 'Email'
-                            }]}
-                            initialValues={
-                                {
-                                    email: user.email,
-                                }
-                            }
-                            validationSchemas={emailValidation}
-                            action='updateUser'
+                        <EmailForm
+                            user={user}
+                            closeAccordion={() => setExpanded(false)}
                         />
                     </AccordionDetails>
                 </Accordion>
@@ -63,29 +54,9 @@ export default function AccountSettings() {
                         </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <SettingForm
-                            inputs={[{
-                                name: 'password',
-                                type: 'password',
-                                placeholder: 'Ancien mot de passe'
-                            }, {
-                                name: 'newPassword',
-                                type: 'password',
-                                placeholder: 'Nouveau mot de passe'
-                            }, {
-                                name: 'confirmNewPassword',
-                                type: 'password',
-                                placeholder: 'Confirmation du nouveau mot de passe'
-                            }]}
-                            initialValues={
-                                {
-                                    password: '',
-                                    newPassword: '',
-                                    confirmNewPassword: ''
-                                }
-                            }
-                            validationSchemas={passwordValidation}
-                            action='updatePassword'
+                        <PasswordForm
+                            user={user}
+                            closeAccordion={() => setExpanded(false)}
                         />
                     </AccordionDetails>
                 </Accordion>
@@ -100,24 +71,8 @@ export default function AccountSettings() {
                         </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <SettingForm
-                            inputs={[{
-                                name: 'password',
-                                type: 'password',
-                                placeholder: 'Mot de passe'
-                            }, {
-                                name: 'confirmPassword',
-                                type: 'password',
-                                placeholder: 'Confirmation du mot de passe'
-                            }]}
-                            initialValues={
-                                {
-                                    password: '',
-                                    confirmPassword: ''
-                                }
-                            }
-                            validationSchemas={deleteAccountValidation}
-                            action='deleteAccount'
+                        <DeleteAccountForm
+                            closeAccordion={() => setExpanded(false)}
                         />
                     </AccordionDetails>
                 </Accordion>

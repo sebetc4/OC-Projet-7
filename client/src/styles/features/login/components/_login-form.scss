@@ -1,0 +1,81 @@
+.login-form-modal {
+	.MuiPaper-root {
+		background: rgba(255, 255, 255, 0.9);
+		border-radius: 15px;
+		box-shadow: 5px 5px 20px 0 #000;
+	}
+}
+
+.login-form-modal-content {
+	width: 350px;
+	padding: 30px;
+
+	&--confirm {
+		width: 500px;
+	}
+
+	&__title {
+		position: relative;
+		margin-bottom: 25px;
+		color: black;
+		font-size: 30px;
+		font-weight: bold;
+
+		&::after {
+			content: '';
+			position: absolute;
+			left: 0;
+			bottom: -6px;
+			width: 30px;
+			height: 3px;
+			background: $primary-color;
+		}
+	}
+
+	&__text {
+		color: black;
+	}
+
+	&__link {
+		display: inline-block;
+		color: $secondary-color;
+		margin-left: 10px;
+		cursor: pointer;
+		font-weight: bold;
+		transition: 0.3s ease;
+	}
+}
+
+.login-form {
+	&__button-container {
+		margin: 5px 0 20px 0;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+
+		&--confirm {
+			margin: 20px 0 0
+		}
+	}
+}
+
+.login-form-row {
+	margin-top: 5px;
+	height: 72px;
+
+	&__input {
+		display: block;
+		margin: 25px 0;
+		width: 100%;
+	}
+
+	.MuiTextField-root {
+		.css-19mk8g1-MuiInputBase-root-MuiFilledInput-root {
+			box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+		}
+	}
+
+	.MuiFilledInput-root {
+		box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+	}
+}

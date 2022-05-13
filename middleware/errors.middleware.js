@@ -1,5 +1,5 @@
 module.exports = ((err, req, res, next) => {
-    if (err.name === "SequelizeValidationError")
+    if (err.name === "SequelizeValidationError" || err.name === 'SequelizeUniqueConstraintError')
         sequelizeErrors(err, res)
     else if (err.message)
         othersErrors(err, res)
@@ -17,11 +17,15 @@ const othersErrors = (err, res) => {
         case 'Unauthorized':
             res.status(401).json('Unauthorized')
         case 'Invalid password':
-            res.status(403).json({ path: 'password', message: 'Invalid password' })
+            res.status(403).json({ path: 'password', error: 'Mot de passe invalide' })
         case 'Post already liked':
             res.status(403).json('Post already liked')
         case 'Post already not liked':
             res.status(403).json('Post already not liked');
+        case 'Image and video in same post is not allowed':
+            res.status(403).json('Image and video in same post is not allowed');
+        case 'Email unknown':
+            res.status(403).json({path: 'email', error: 'Adresse mail inconnue'});
         case 'User id unknown':
             res.status(404).send(`User id unknown`)
         case `Post id unknown`:

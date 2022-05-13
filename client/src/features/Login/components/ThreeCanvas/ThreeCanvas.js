@@ -3,15 +3,15 @@ import { Environment, ContactShadows } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import Logo from "./Logo/Logo";
 
-export default function CanvasLogo({ mouseOnButton, mousePos, deviceSize }) {
-
+export default function CanvasLogo({ mouseOnOneButton, deviceSize, allModalsAreClose }) {
+  
     return (
         <Canvas className="login-canvas-logo" camera={{ position: [0, 0, 2] }}>
             <Suspense fallback={null}>
                 <Logo
-                    mousePos={mousePos}
-                    mouseOnButton={mouseOnButton}
+                    mouseOnOneButton={mouseOnOneButton}
                     deviceSize={deviceSize}
+					allModalsAreClose={allModalsAreClose}
                 />
                 <ContactShadows
                     position={[0, -0.8, 0]}

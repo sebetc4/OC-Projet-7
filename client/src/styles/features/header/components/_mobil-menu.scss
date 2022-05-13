@@ -4,6 +4,7 @@
 
 .mobil-menu {
 	position: fixed;
+	z-index: 9;
 	display: flex;
 	top: 0;
 	left: 0;
@@ -11,12 +12,11 @@
 	height: 0;
 	border-width: 0px;
 	border-style: solid;
-	border-color: #333;
+	border-color: $section-background;
 	background-color: rgba(0,0,0,0);
 	backface-visibility: hidden;
 	-webkit-transition: border-width 0.3s, background-color 0.3s, height 0s 0.3s;
 	transition: border-width 0.3s, background-color 0.3s, height 0s 0.3s;
-	z-index: 9999;
 }
 
 .mobil-menu.mobil-menu-open {
@@ -36,73 +36,7 @@
 	height: 100%;
 }
 
-.mobil-menu-trigger {
-    background-color: transparent;
-    border: none;
-	position: fixed;
-	top: 15px;
-	left: 20px;
-	display: block;
-	width: 50px;
-	height: 50px;
-	cursor: pointer;
-}
 
-.mobil-menu-trigger span {
-	position: absolute;
-	top: 50%;
-	left: 0;
-	display: block;
-	width: 100%;
-	height: 4px;
-	margin-top: -2px;
-	background-color: $primary-color;
-	font-size: 0px;
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	-webkit-transition: background-color 0.3s;
-	transition: background-color 0.3s;
-}
-
-.mobil-menu-open .mobil-menu-trigger span {
-	background-color: transparent;
-}
-
-.mobil-menu-trigger span:before,
-.mobil-menu-trigger span:after {
-	position: absolute;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: $primary-color;
-	content: '';
-	-webkit-transition: -webkit-transform 0.3s;
-	transition: transform 0.3s;
-}
-
-.mobil-menu-trigger span:before {
-	-webkit-transform: translateY(-250%);
-	transform: translateY(-250%);
-}
-
-.mobil-menu-trigger span:after {
-	-webkit-transform: translateY(250%);
-	transform: translateY(250%);
-}
-
-.mobil-menu-open .mobil-menu-trigger span:before {
-	-webkit-transform: translateY(0) rotate(45deg);
-	transform: translateY(0) rotate(45deg);
-}
-
-.mobil-menu-open .mobil-menu-trigger span:after {
-	-webkit-transform: translateY(0) rotate(-45deg);
-	transform: translateY(0) rotate(-45deg);
-}
 
 .mobil-menu ul {
 	position: fixed;

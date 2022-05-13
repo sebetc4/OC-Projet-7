@@ -1,17 +1,18 @@
 import axios from 'axios';
+import { getTodos } from './todos.actions';
 
 export const GET_USER = 'GET_USER'
 export const LOGIN_USER = 'LOGIN_USER'
 export const LOGOUT_USER = 'LOGOUT_USER'
 export const UPDATE_USER = 'UPDATE_USER'
-export const DELETE_USER = 'DELETE_USER'
-
 
 export const getUser = () => {
     return async (dispatch) => {
         try {
-            const user = await axios.get('/api/auth')
+            const user = await axios.get('/api/auth');
             if (user.data.user) {
+                dispatch(getTodos(user.data.user.Todos))
+                delete user.data.user.Todos
                 dispatch({
                     type: GET_USER,
                     playload: {
@@ -19,7 +20,7 @@ export const getUser = () => {
                         isLogged: true,
                         isLoaded: true
                     }
-                });
+                })
             } else {
                 dispatch({
                     type: GET_USER,
@@ -54,29 +55,11 @@ export const logoutUser = () => {
     }
 }
 
-
-
 export const updateUser = (data) => {
-    return async (dispatch) => {
-        try {
-            const newData = await axios.put(`/api/user`, data);
-            dispatch({
-                type: UPDATE_USER,
-                playload: newData.data
-            });
-        } catch (err) {
-            return console.log(err);
-        }
-    }
-}
-
-export const deleteUser = () => {
-    return async (dispatch) => {
-        try {
-            await axios.delete(`/api/user/`);
-            dispatch({ type: DELETE_USER });
-        } catch (err) {
-            return console.log(err);
-        }
+    return (dispatch) => {
+        dispatch({
+            type: UPDATE_USER,
+            playload: data
+        });
     }
 }
