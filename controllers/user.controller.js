@@ -1,4 +1,4 @@
-const { getModifyUserImagePath } = require('../utils/pathFile')
+const { getModifyUserImagePath, getInitialPath } = require('../utils/pathFile')
 const { createUser, findOneUserAndPostWhereIdRestrictedAttributes } = require('../queries/user.queries')
 const { deleteLastUserImage } = require('../utils/deleteFile');
 
@@ -25,19 +25,19 @@ exports.getOneUser = async (req, res, next) => {
 }
 
 // Get user's object for updateUser
-const getUserObject = (req, email, firstName, lastName, password, bio) => {
+const getUserObject = (req, email, firstName, lastName, bio) => {
     return req.files ? (
         getModifyUserImagePath(req)
     ) :
-        { email, firstName, lastName, password, bio }
+        { email, firstName, lastName, bio }
 }
 
 exports.updateUser = async (req, res, next) => {
     const user = req.user
-    const { files, email, firstName, lastName, password, bio } = req.body
+    const { email, firstName, lastName, bio } = req.body
     try {
-        if (!files && !email && !firstName && !lastName && !password && !bio) throw { message: 'Missing parameters' }
-        const userObject = getUserObject(req, email, firstName, lastName, password, bio)
+        if (!req.files && !email && !firstName && !lastName && bio == null) throw { message: 'Missing parameters' }
+        const userObject = getUserObject(req, email, firstName, lastName, bio)
         req.files && deleteLastUserImage(req, user)
         await user.update(userObject);
         res.status(200).json({ ...userObject })
@@ -58,6 +58,29 @@ exports.updatePassword = async (req, res, next) => {
         next(err)
     }
 }
+
+exports.deleteUser = async (req, res, next) => {
+    const user = req.user
+    try {
+        await user.destroy()
+        res.status(200).json("User deletion is done")
+    } catch (err) {
+        next(err)
+    }
+}
+
+exports.resetImage = async (req, res, next) => {
+    const user = req.user
+    try {
+        deleteLastUserImage(req, user)
+        const imageUrl = getInitialPath(req)
+        await user.update(imageUrl)
+        res.status(200).json(imageUrl)
+    } catch (err) {
+        next(err)
+    }
+}
+
 
 exports.deleteUser = async (req, res, next) => {
     const user = req.user

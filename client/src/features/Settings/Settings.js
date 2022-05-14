@@ -21,9 +21,9 @@ export default function Settingss() {
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
-            <Tab label="Paramètres de compte" value="1" />
-            <Tab label="Paramètres de profil" value="2" />
-            <Tab label="Autre" value="3" />
+            <Tab className='settings-tab' label="Paramètres de compte" value="1" />
+            <Tab className='settings-tab' label="Paramètres de profil" value="2" />
+            <Tab className='settings-tab' label="Autre" value="3" />
           </TabList>
         </Box>
         <TabPanel value="1">

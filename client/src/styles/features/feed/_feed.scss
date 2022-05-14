@@ -1,0 +1,22 @@
+@import './components/create-post.scss';
+@import './components/post-card.scss';
+@import './components/post-form.scss';
+@import './components/comment-card.scss';
+@import './components/comment-form.scss';
+
+.feed {
+    @include center-width($width: $feed-width-desktop);
+}
+
+.feed-button-more-container{
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+
+@media screen and (max-width: $media-mobile ) {
+	.feed {
+        max-width: 100%;
+    }
+}

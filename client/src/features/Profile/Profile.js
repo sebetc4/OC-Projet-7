@@ -1,66 +1,59 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector } from 'react-redux'
 import axios from "axios";
-import { CreationDate } from '../../components';
+import { ProfileHeader, ProfileUserInformation, ProfileUserBio, ProfileComments, ProfileUserPosts } from './components';
 
 
 export default function Profile() {
 
-	const [profilData, setProfilData] = useState({})
+	const [profileData, setProfileData] = useState(null)
+	const [profileDataIsLoaded, setProfileDataIsLoaded] = useState(false)
 
 	const params = useParams();
 	const navigate = useNavigate()
-	const userData = useSelector((state) => state.user.data)
 
-	// Récupération du profil de l'utilisateur redirection en cas d'échec
 	useEffect(() => {
-		const handleProfilData = (data) => setProfilData(data)
-		const getProfilData = async () => {
+		const getProfileData = async () => {
 			try {
 				const user = await axios.get(`/api/user/${params.userId}`)
-				handleProfilData(user.data)
+				setProfileData(user.data)
+				setProfileDataIsLoaded(true)
 			} catch (err) {
 				navigate('/home', { replace: true })
 			}
 		}
-		userData.id === params.userId ? handleProfilData(userData) : getProfilData()
-	}, [params.userId, userData, navigate])
-
+		getProfileData()
+	}, [])
 
 	return (
-		<section className='profile'>
-			<div className='profile__cover-image'>
-				<img
-					alt='Couverture de la page de profil'
-					src={profilData.coverUrl}
-				/>
-			</div>
-			<div className='profile-general-information'>
-				<div className='profile-general-information__avatar'>
-					<img
-						alt={'avatar de l\'ustilisateur'}
-						src={profilData.avatarUrl}
-					/>
-				</div>
-				<h3 className='profile-general-information__name' >{`${profilData.firstName} ${profilData.lastName}`}</h3>
-			</div>
-			<div className='profile-secondary-information'>
-				<div className='profile-informations'>
-					<h3 className='profile-informations__title'>Mes informations:</h3>
-					<div className='profile-informations__text'>
-						<p >{'Membre depuis le '}<CreationDate date={profilData.createdAt} /></p>
-					</div>
-				</div>
-				<div className='profile-bio'>
-					<h3 className='profile-bio__title'>Ma biographie:</h3>
-					<p className='profile-bio__text'>{profilData.bio ? profilData.bio : 'Briographie vide...'}</p>
-				</div>
-			</div>
-			<div className='profile-user-post'>
-				<h3 className='profile-user-post__title'>Mes posts:</h3>
-			</div>
-		</section>
-
+		<>
+			{
+				profileDataIsLoaded ?
+					<section className='profile'>
+						<ProfileHeader
+							profileData={profileData}
+						/>
+						<div className='profile-row-1-2'>
+							<div className='profile-row-1-2__column-1'>
+								<ProfileUserInformation
+									profileData={profileData}
+								/>
+								<ProfileUserBio
+									profileData={profileData}
+								/>
+							</div>
+							<div className='profile-row-1-2__column-2'>
+								<ProfileComments />
+							</div>
+						</div>
+						<div className='profile-row-3'>
+							<ProfileUserPosts
+								profileData={profileData}
+							/>
+						</div>
+					</section > :
+					<p>Chargement...</p>
+			}
+		</>
 	)
 }

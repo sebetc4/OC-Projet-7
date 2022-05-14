@@ -11,7 +11,14 @@ exports.getModifyUserImagePath = (req) => {
     else if (req.body.directory === 'cover')
         return { coverUrl: getModifyUserCoverPath(req) }
 }
+exports.getInitialPath = (req) => {
+    if (req.body.directory === 'avatar')
+        return { avatarUrl: `${getImagesPath(req)}/avatar/avatar-profile.webp` }
+    else if (req.body.directory === 'cover')
+        return { coverUrl: `${getImagesPath(req)}/cover/cover-profile.webp` }
+}
 
+// Post's images path
 exports.getNewPostImagePath = (req) => Object.keys(req.files).length !== 0 ? `${getImagesPath(req)}/post/${req.files.post[0].filename}` : null
-
 exports.getModifyPostImagePath = (req) => req.files.post ? `${getImagesPath(req)}/post/${req.files.post[0].filename}` : null
+

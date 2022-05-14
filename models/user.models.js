@@ -85,9 +85,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     avatarUrl: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     coverUrl: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     bio: DataTypes.STRING,
 

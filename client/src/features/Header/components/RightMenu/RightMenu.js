@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux'
 import { logoutUser } from "../../../../store/actions/user.actions";
-import MenuModal from '../../../../components/modals/MenuModal';
+import MenuModal from '../../../../components/modals/MenuModal/MenuModal';
 
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';

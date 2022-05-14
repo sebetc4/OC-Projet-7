@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { firstNameLastNameValidation, bioValidation } from '../forms/utils/validationSchemas'
-import { SettingForm, ImageForm } from '../index'
 
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -9,7 +7,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-import { FirstNameLastNameForm } from './components'
+import { FirstNameLastNameForm, ProfileImageForm, BiographyForm } from './components'
 
 export default function ProfileSettings() {
 
@@ -51,23 +49,9 @@ export default function ProfileSettings() {
                         </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <div className='settings-section-pictures' >
-                            <ImageForm
-                                field={'avatar'}
-                                ratio={1}
-                                cropShape={'round'}
-                                showGrid={false}
-                                picture={user.avatarUrl}
-                            />
-                            <ImageForm
-                                user={user}
-                                field={'cover'}
-                                ratio={2.375}
-                                cropShape={'rect'}
-                                showGrid={true}
-                                picture={user.coverUrl}
-                            />
-                        </div>
+                        <ProfileImageForm
+                            user={user}
+                        />
                     </AccordionDetails>
                 </Accordion>
                 <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
@@ -81,19 +65,9 @@ export default function ProfileSettings() {
                         </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <SettingForm
-                            inputs={[{
-                                name: 'bio',
-                                type: 'text',
-                                placeholder: 'Bio'
-                            }]}
-                            initialValues={
-                                {
-                                    bio: `${user.bio ? user.bio : ''}`,
-                                }
-                            }
-                            validationSchemas={bioValidation}
-                            action='updateUser'
+                        <BiographyForm
+                            user={user}
+                            closeAccordion={() => setExpanded(false)}
                         />
                     </AccordionDetails>
                 </Accordion>

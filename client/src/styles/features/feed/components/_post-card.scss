@@ -1,0 +1,111 @@
+.post-card {
+	margin: $margin-between-main-elements;
+	padding: $padding-main-element;
+	box-shadow: $box-shadow-main-element;
+	border-radius: $border-radius-main-element;
+	background-color: $grey-background;
+}
+
+.post-card-header {
+	@include center-width($width: $feed-width-content-desktop);
+	display: flex;
+	align-items: center;
+
+	&__avatar {
+		box-shadow: $box-shadow-avatar;
+		padding: 1px;
+		background-color: $primary-color;
+		margin: 5px 0;
+
+		img {
+			border-radius: 50%;
+		}
+	}
+
+	&__infos {
+		margin-left: 20px;
+		a {
+			@include link-style;
+			display: block;
+			font-weight: 500;
+		}
+		p {
+			margin-top: 5px;
+			font-size: 13px;
+		}
+	}
+
+	&__settings-button-container {
+		position: relative;
+		height: 100%;
+		flex: 1;
+		justify-content: flex-end;
+		align-items: center;
+		display: flex;
+	}
+}
+
+.post-card-settings {
+	@include menu-modal;
+	transform: none;
+	right: 40px;
+	top: 0;
+}
+
+.post-card-content {
+	&__text-container {
+		@include center-width($width: $feed-width-content-desktop);
+		margin: 20px auto;
+		white-space: pre-wrap;
+		word-wrap: break-word;
+	}
+
+	&__image-container {
+		background-color: black;
+		display: flex;
+		justify-content: center;
+
+		& img {
+			display: block;
+			max-height: 400px;
+		}
+	}
+	&__video-container {
+		display: flex;
+		justify-content: center;
+		background-color: black;
+	}
+}
+
+.post-card-actions {
+	@include center-width($width: 90%);
+
+	&__divider-top {
+		transform: translateY(50%);
+	}
+
+	&__divider-bottom {
+		transform: translateY(-50%);
+	}
+
+	button {
+		width: 50%;
+	}
+}
+
+.post-card__comments {
+	@include center-width($width: $feed-width-content-desktop);
+}
+
+@media screen and (max-width: $media-mobile ) {
+	.post-card-content {
+		&__image-container {
+
+			& img {
+				max-width: 100%;
+				display: block;
+				max-height: auto;
+			}
+		}
+	}
+}

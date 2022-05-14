@@ -1,73 +1,103 @@
 .profile {
-	@include center-width($width: 1024px);
+	@include center-width($width: $profile-width-desktop);
+}
 
+.profile-row-1-2 {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.profile-row-1-2__column-1, .profile-row-1-2__column-2 {
+	width: 50%;
+}
+
+.profile-header {
 	&__cover-image {
 		width: 100%;
-		height: 420px;
+		height: 436px;
 		border-radius: 0 0 5px 5px;
+		overflow: hidden;
 		box-shadow: $box-shadow-main-element;
+
 		img {
 			width: 100%;
-			height: 420px;
+			height: 436px;
 			object-fit: cover;
 		}
 	}
-}
 
-.profile-general-information {
-	display: flex;
-	align-items: center;
-	@include center-width($width: $width-text-main-section);
-
-	&__avatar {
-		transform: translateY(-25%);
-		width: 150px;
-		height: 150px;
-		padding: 3px;
+	&__general-information {
+		@include center-width($width: $profile-width-content-desktop);
 		display: flex;
-		overflow: hidden;
-		border-radius: 50%;
-		background-color: $primary-color;
-		box-shadow: $box-shadow-main-element;
+		align-items: center;
+		margin: -50px auto 20px auto;
+
+
 		img {
-			width: 100%;
+			width: 150px;
+			height: 150px;
+			padding: 3px;
+			display: flex;
+			overflow: hidden;
 			border-radius: 50%;
+			background-color: $primary-color;
+			box-shadow: $box-shadow-avatar;
+		}
+
+		h2 {
+			margin: 20px 0 0 20px;
+			font-size: 24px;
+			font-weight: bold;
 		}
 	}
-
-    &__name {
-        padding-left: 10px;
-        font-size: 30px;
-        font-weight: bold;
-    }
-
-	&__registration-date {
-		flex: 1;
-		display: flex;
-		justify-content: flex-end
-	}
 }
 
-.profile-secondary-information{
-	display: flex;
-	justify-content: space-around;
-	padding-bottom: 50px;
-}
-
-.profile-bio, .profile-informations {
-	@include main-section-box;
-	width: 45%;
-	border-radius: 10px;
+.profile-comments, .profile-user-information, .profile-user-bio, .profile-user-posts {
+	margin: 20px;
+	padding: 20px;
+	background-color: $white-background;
 	box-shadow: $box-shadow-main-element;
+	border-radius: $border-radius-main-element;
 
 	&__title {
-		@include center-width($width: $width-text-main-section);
-		font-size: 25px;
+		font-size: 18px;
 		font-weight: bold;
-	}
+		position: relative;
+		margin-bottom: 15px;
 
-    &__text {
-		@include center-width($width: $width-text-main-section);
-		margin-top: 20px;
+		&::after {
+			content: '';
+			position: absolute;
+			left: 0;
+			bottom: -5px;
+			width: 20px;
+			height: 2px;
+			background: $primary-color;
+		}
 	}
 }
+
+@media screen and (max-width: $media-tablette ) {
+	.profile {
+        max-width: 100%;
+    }
+
+	.profile-header {
+		&__cover-image {
+			width: 100%;
+			height: 43vw;
+			border-radius: 0 0 5px 5px;
+			overflow: hidden;
+			box-shadow: $box-shadow-main-element;
+	
+			img {
+				width: 100%;
+				height: 43vw;
+				object-fit: cover;
+			}
+		}
+	}
+}
+
+

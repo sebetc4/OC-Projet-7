@@ -14,10 +14,9 @@ body,
 html {
 	margin: 0;
 	font-family: 'Open Sans', sans-serif;
-	font-size: 16px;
+	font-size: 14px;
 	position: relative;
 	background-color: $page-background;
-	// background: radial-gradient(rgb(250, 137, 137), hsl(0, 22%, 31%));
 	min-height: 100vh;
 }
 
@@ -27,7 +26,7 @@ html {
 	z-index: 0;
 
 	&.main--active-menu {
-		margin-left: 70px;
+		margin-left: 10vw;
 		transform: perspective(1000px) rotateY(-15deg);
 	}
 }

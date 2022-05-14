@@ -17,8 +17,9 @@ export { default as CreationDate } from './dates/CreationDate'
 
 
 // Modals
-export { default as MenuModal } from './modals/MenuModal'
-export { default as StandartModal } from './modals/StandartModal'
+export { default as MenuModal } from './modals/MenuModal/MenuModal'
 export { default as ConfirmModal } from './modals/ConfirmModal/ConfirmModal'
 
+export { default as SmallPosts} from './SmallPosts/SmallPosts'
 
+export { default as Loader } from './Loader/Loader'

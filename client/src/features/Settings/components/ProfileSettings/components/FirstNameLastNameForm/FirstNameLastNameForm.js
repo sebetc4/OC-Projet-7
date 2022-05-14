@@ -12,6 +12,8 @@ import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 
 export default function EmailForm({ user, closeAccordion }) {
+    
+    // Hooks
     const dispatch = useDispatch();
 
     // State
@@ -50,7 +52,7 @@ export default function EmailForm({ user, closeAccordion }) {
             validateOnBlur={true}
             validateOnChange={true}
         >
-            {({ handleSubmit, isSubmitting, errors, isValid, touched, values }) => (
+            {({ handleSubmit, isSubmitting, errors, isValid, values }) => (
                 <Form
                     onSubmit={handleSubmit}
                     className='settings-form'
