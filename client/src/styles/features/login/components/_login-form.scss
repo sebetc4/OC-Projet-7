@@ -14,21 +14,23 @@
 		width: 500px;
 	}
 
-	&__title {
-		position: relative;
-		margin-bottom: 25px;
-		color: black;
-		font-size: 30px;
-		font-weight: bold;
+	&__header {
+		h2 {
+			position: relative;
+			margin-bottom: 25px;
+			color: black;
+			font-size: 30px;
+			font-weight: bold;
 
-		&::after {
-			content: '';
-			position: absolute;
-			left: 0;
-			bottom: -6px;
-			width: 30px;
-			height: 3px;
-			background: $primary-color;
+			&::after {
+				content: '';
+				position: absolute;
+				left: 0;
+				bottom: -6px;
+				width: 30px;
+				height: 3px;
+				background: $primary-color;
+			}
 		}
 	}
 
@@ -54,7 +56,7 @@
 		justify-content: center;
 
 		&--confirm {
-			margin: 20px 0 0
+			margin: 20px 0 0;
 		}
 	}
 }
@@ -77,5 +79,62 @@
 
 	.MuiFilledInput-root {
 		box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+	}
+}
+
+@media screen and (max-width: $media-mobile) {
+	.login-form-modal {
+		.MuiPaper-root {
+			background: rgba(255, 255, 255, 0.9);
+			border-radius: 0;
+			display: flex;
+			align-items: center;
+		}
+	}
+
+	.login-form-modal-content {
+		width: 100%;
+
+		&--confirm {
+			width: 100%;
+		}
+
+		&__header {
+			margin-top: 20px;
+			margin-bottom: 60px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+
+			h2 {
+				font-size: 35px;
+			}
+		}
+	}
+
+	.login-form {
+		height: 70vh;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+
+		&__button-container {
+			margin: 30px 0 50px 0;
+
+			&--confirm {
+				margin: 30px 0 0;
+			}
+		}
+	}
+
+	.login-form-row {
+		margin-top: 25px;
+		height: 72px;
+
+		&__input {
+			display: block;
+			margin: 25px 0;
+			width: 100%;
+		}
 	}
 }

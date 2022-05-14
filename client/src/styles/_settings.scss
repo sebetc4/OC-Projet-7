@@ -30,3 +30,10 @@ html {
 		transform: perspective(1000px) rotateY(-15deg);
 	}
 }
+
+@media screen and (max-width: $media-mobile) {
+	body,
+	html {
+		font-size: 16px;
+	}
+}

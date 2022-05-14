@@ -5,6 +5,8 @@ import { Button, TextField } from '@mui/material';
 import * as Yup from "yup";
 
 import customPasswordInput from "../utils/customPasswordInput";
+import { IconButton } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function FormSignIn(props) {
 
@@ -21,7 +23,7 @@ export default function FormSignIn(props) {
     });
 
     const submit = (values, actions) => {
-            axios.post(`api/user/register`, values)
+        axios.post(`api/user/register`, values)
             .then((res) => {
                 props.handleLogin(res.data.userId)
                 actions.setSubmitting(false);
@@ -36,7 +38,19 @@ export default function FormSignIn(props) {
 
     return (
         <div className="login-form-modal-content">
-            <h2 className="login-form-modal-content__title">Inscription</h2>
+            <div className="login-form-modal-content__header">
+                <h2>Connexion</h2>
+                {
+                    props.deviceSize === 0 &&
+                    <IconButton
+                        onClick={props.closeModal}
+                        color='error'
+                        size="large"
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                }
+            </div>
             <Formik
                 onSubmit={submit}
                 initialValues={{ firstName: '', lastName: '', email: '', password: '' }}
@@ -60,41 +74,41 @@ export default function FormSignIn(props) {
                             />
                         </div>
                         <div className="login-form-row">
-                        <Field
-                            className='login-form-row__input'
-                            error={touched.lastName && !!errors.lastName}
-                            as={TextField}
-                            variant='filled'
-                            name={'lastName'}
-                            type={'text'}
-                            size="small"
-                            label={'Nom'}
-                            helperText={<ErrorMessage name={'lastName'} />}
-                        />
+                            <Field
+                                className='login-form-row__input'
+                                error={touched.lastName && !!errors.lastName}
+                                as={TextField}
+                                variant='filled'
+                                name={'lastName'}
+                                type={'text'}
+                                size="small"
+                                label={'Nom'}
+                                helperText={<ErrorMessage name={'lastName'} />}
+                            />
                         </div>
                         <div className="login-form-row">
-                        <Field
-                            className='login-form-row__input'
-                            error={touched.email && !!errors.email}
-                            as={TextField}
-                            variant='filled'
-                            name={'email'}
-                            type={'email'}
-                            size="small"
-                            label={'Adresse mail'}
-                            helperText={<ErrorMessage name={'email'} />}
-                        />
+                            <Field
+                                className='login-form-row__input'
+                                error={touched.email && !!errors.email}
+                                as={TextField}
+                                variant='filled'
+                                name={'email'}
+                                type={'email'}
+                                size="small"
+                                label={'Adresse mail'}
+                                helperText={<ErrorMessage name={'email'} />}
+                            />
                         </div>
                         <div className="login-form-row">
-                        <Field
-                            className='login-form-row__input'
-                            name={'password'}
-                            label={'Mot de passe'}
-                            component={customPasswordInput}
-                            error={!!errors.password && touched.password}
-                            showPassword={showPassword}
-                            toggleShowPassword={toggleShowPassword}
-                        />
+                            <Field
+                                className='login-form-row__input'
+                                name={'password'}
+                                label={'Mot de passe'}
+                                component={customPasswordInput}
+                                error={!!errors.password && touched.password}
+                                showPassword={showPassword}
+                                toggleShowPassword={toggleShowPassword}
+                            />
                         </div>
                         <div className='login-form__button-container'>
                             <Button

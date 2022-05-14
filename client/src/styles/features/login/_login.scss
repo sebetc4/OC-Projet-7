@@ -12,7 +12,7 @@
 	overflow: hidden;
 }
 
-.login-canvas-logo {
+.login-three-cenvas {
 	position: absolute !important;
 	top: 0;
 }
@@ -40,3 +40,34 @@
 	justify-content: space-between;
 	align-items: center;
 }
+
+@media screen and (max-width: $media-mobile ) {
+
+	.login-svg {
+        max-width: 100%;
+		margin: 0 30px;
+    }
+
+	.login-button-container {
+		width: 75%;
+		height: 30%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+}
+
+@media screen and (max-width: 500px ) {
+
+	.login-three-cenvas {
+		height: 160vw !important;
+	}
+
+	.login-button-container {
+		height: 40%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+}
+

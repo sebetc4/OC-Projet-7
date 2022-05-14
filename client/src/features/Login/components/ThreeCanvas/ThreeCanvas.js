@@ -6,7 +6,7 @@ import Logo from "./Logo/Logo";
 export default function CanvasLogo({ mouseOnOneButton, deviceSize, allModalsAreClose }) {
   
     return (
-        <Canvas className="login-canvas-logo" camera={{ position: [0, 0, 2] }}>
+        <Canvas className="login-three-cenvas" camera={{ position: [0, 0, 2] }}>
             <Suspense fallback={null}>
                 <Logo
                     mouseOnOneButton={mouseOnOneButton}

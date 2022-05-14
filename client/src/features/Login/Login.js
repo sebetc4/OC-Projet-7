@@ -2,9 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { a as aw, useSpring as useSpringWeb } from '@react-spring/web'
 import { GroupomaniaTextSvg } from '../../components';
-import { SignInForm, SignUpForm, ThreeCanvas, MagneticButton } from './components';
+import { SignInForm, SignUpForm, ThreeCanvas, MagneticButton, ConfirmSignIn } from './components';
 import { getUser } from "../../store/actions/user.actions";
-import { Dialog, Slide, Button } from '@mui/material';
+import { Dialog, Slide } from '@mui/material';
+
+
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const options = [
 	[0, 0, 80],
@@ -28,6 +31,7 @@ export default function Login() {
 
 	// Hooks
 	const dispatch = useDispatch();
+	const fullScreen = useMediaQuery('(max-width:768px)');
 
 	// State
 	const [indexColor, setIndexColor] = useState(0)
@@ -119,13 +123,18 @@ export default function Login() {
 					open={showSignInForm}
 					onClose={() => { setShowSignInForm(false) }}
 					TransitionComponent={TransitionRight}
+					fullScreen={fullScreen}
 				>
 					<SignInForm
+						deviceSize={deviceSize}
 						handleModal={() => {
 							setShowSignInForm(false)
 							setShowSignUpForm(true)
 						}}
 						handleLogin={handleSignIn}
+						closeModal={() => {
+							setShowSignInForm(false)
+						}}
 					/>
 				</Dialog >
 
@@ -134,8 +143,10 @@ export default function Login() {
 					open={showSignUpForm}
 					onClose={() => setShowSignUpForm(false)}
 					TransitionComponent={TransitionLeft}
+					fullScreen={fullScreen}
 				>
 					<SignUpForm
+						deviceSize={deviceSize}
 						handleModal={() => {
 							setShowSignInForm(true)
 							setShowSignUpForm(false)
@@ -144,27 +155,26 @@ export default function Login() {
 							setShowSignUpForm(false)
 							setShowConfirmSignUpForm(true)
 						}}
+						closeModal={() => {
+							setShowSignUpForm(false)
+						}}
 					/>
 				</Dialog>
 				<Dialog
-					open={showConfirmSignUpForm}
+					// open={showConfirmSignUpForm}
+					open={true}
 					onClose={() => setShowConfirmSignUpForm(false)}
 					closeModal={() => setShowConfirmSignUpForm(false)}
+					fullScreen={fullScreen}
 				>
-					<div className='login-form-modal-content login-form-modal-content--confirm'>
-						<h2 className="login-form-modal-content__title">Bienvenue parmi nous!</h2>
-						<p className="login-form-modal-content__text">Pour accéder au contenu du site merci de vous connecter.</p>
-						<div className='login-form__button-container login-form__button-container--confirm'>
-							<Button
-								variant='contained'
-								onClick={() => {
-									setShowSignInForm(true)
-									setShowConfirmSignUpForm(false)
-								}} >
-								Connexion
-							</Button>
-						</div>
-					</div>
+					<ConfirmSignIn
+						deviceSize={deviceSize}
+						handleModal={() => {
+							setShowSignInForm(true)
+							setShowConfirmSignUpForm(false)
+						}}
+						closeModal={() => setShowConfirmSignUpForm(false)}
+					/>
 				</Dialog>
 			</div>
 		</aw.div>
