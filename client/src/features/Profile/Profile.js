@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { ProfileHeader, ProfileUserInformation, ProfileUserBio, ProfileComments, ProfileUserPosts } from './components';
+import { Loader } from '../../components';
 
 
 export default function Profile() {
@@ -52,7 +53,7 @@ export default function Profile() {
 							/>
 						</div>
 					</section > :
-					<p>Chargement...</p>
+					<Loader />
 			}
 		</>
 	)

@@ -4,6 +4,7 @@ import Routes from "./routes/routes";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "./store/actions/user.actions";
 import { setDeviceSize, setDisplayMobileMenu } from "./store/actions/app.actions";
+import { Loader } from "./components";
 
 
 
@@ -40,7 +41,9 @@ const App = () => {
 
     return (
         <>
-            {userIsLoaded ? <Routes /> : <p>Chargement...</p>}
+            {userIsLoaded ? <Routes /> :
+                <Loader />
+            }
         </>
     )
 }
