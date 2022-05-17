@@ -12,6 +12,9 @@
 	align-items: center;
 
 	&__avatar {
+		height: 50px;
+		width: 50px;
+		border-radius: 50%;
 		box-shadow: $box-shadow-avatar;
 		padding: 1px;
 		background-color: $primary-color;
@@ -68,6 +71,7 @@
 		& img {
 			display: block;
 			max-height: 400px;
+			max-width: 90%;
 		}
 	}
 	&__video-container {

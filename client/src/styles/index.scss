@@ -16,13 +16,17 @@
 @import './features/login/login';
 @import './features/profile/profile';
 @import './features/settings/settings';
-@import './features/feed/feed.scss';
+@import './features/feed/feed';
+@import './features/home/home';
+@import './features/chat-tech-dep/chat-tech-dep';
+@import './features/search/search';
 
 
 // Components
 @import './components/crop-image/crop-image';
 @import './components/modals/menu-modal';
 @import './components/loader/loader';
+@import './components/small-posts/small-post-card'
 
 
 

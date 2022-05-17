@@ -1,0 +1,26 @@
+.home {
+	@include center-width($width: $profile-width-desktop);
+	display: flex;
+	justify-content: space-between;
+}
+
+.home-column-1,
+.home-column-2 {
+	width: 48%;
+}
+
+.home-todos {
+	width: 100%;
+	margin-top: 30px;
+	background-color: $white-background;
+	box-shadow: $box-shadow-main-element;
+	border-radius: $border-radius-main-element;
+}
+
+.home-todos {
+	padding: 20px;
+
+	&__title {
+		@include title-section;
+	}
+}

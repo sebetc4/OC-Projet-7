@@ -26,7 +26,6 @@ export default function Feed() {
 	}, [])
 
 	useEffect(() => {
-		console.log(allPosts)
 		if (allPosts) setPostsList(allPosts.data.slice(0, postsListLength))
 	}, [allPosts, postsListLength])
 

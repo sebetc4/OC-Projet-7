@@ -23,3 +23,5 @@ export { default as ConfirmModal } from './modals/ConfirmModal/ConfirmModal'
 export { default as SmallPosts} from './SmallPosts/SmallPosts'
 
 export { default as Loader } from './Loader/Loader'
+
+export { default as FollowIcon } from './FollowIcon/FollowIcon'

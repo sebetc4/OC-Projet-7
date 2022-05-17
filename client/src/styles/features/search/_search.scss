@@ -1,0 +1,62 @@
+.search {
+	@include center-width($width: $profile-width-desktop);
+
+	&__title {
+		margin: 30px;
+		font-size: 30px;
+		text-align: center;
+	}
+
+	&__columns {
+		display: flex;
+		justify-content: space-between;
+	}
+}
+
+.search-posts,
+.search-users {
+	width: 48%;
+	padding: 20px;
+	background-color: $white-background;
+	box-shadow: $box-shadow-main-element;
+	border-radius: $border-radius-main-element;
+
+	&__title {
+		@include title-section;
+	}
+}
+
+.user-card {
+	display: flex;
+	background-color: $grey-background;
+	box-shadow: $box-shadow-main-element;
+	padding: 10px 20px;
+	border-radius: 25px;
+
+	&__avatar {
+		height: 50px;
+		width: 50px;
+		border-radius: 50%;
+		box-shadow: $box-shadow-avatar;
+		padding: 1px;
+		background-color: $primary-color;
+		margin: 5px 0;
+	}
+
+	&__infos {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+		margin-left: 20px;
+		p {
+			margin-top: 5px;
+			font-size: 16px;
+		}
+	}
+
+	&__actions {
+		display: flex;
+		flex-direction: column;
+	}
+}

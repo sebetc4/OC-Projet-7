@@ -114,8 +114,13 @@
 	color: #fff;
 }
 
-@media screen and (max-height: 31.125em) {
-	.mobil-menu ul li a:before {
-		font-size: 32px;
+@media screen and (max-width: $media-small-screen) {
+	.mobil-menu.mobil-menu-open {
+		border-width: 0px 0px 0px 70px;
+	}
+
+	.mobil-menu ul {
+		width: 70px;
 	}
 }
+

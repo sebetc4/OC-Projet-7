@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { ProfileHeader, ProfileUserInformation, ProfileUserBio, ProfileComments, ProfileUserPosts } from './components';
+import { ProfileHeader, ProfileUserInformation, ProfileUserBio, ProfileUserPosts } from './components';
 import { Loader } from '../../components';
 
 
@@ -44,13 +44,10 @@ export default function Profile() {
 								/>
 							</div>
 							<div className='profile-row-1-2__column-2'>
-								<ProfileComments />
-							</div>
-						</div>
-						<div className='profile-row-3'>
 							<ProfileUserPosts
 								profileData={profileData}
 							/>
+							</div>
 						</div>
 					</section > :
 					<Loader />

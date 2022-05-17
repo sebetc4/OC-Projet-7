@@ -1,14 +1,17 @@
 import React from 'react'
 
-import { PostCard } from './components'
+import { SmallPostCard } from './components'
 
-export default function SmallPostList({ profileData }) {
+export default function SmallPostList({ type, posts, user }) {
   return (
     <>
       {
-        profileData.Posts && profileData.Posts.map((post, index) => (
-          <PostCard key={post.id} post={post} profileData={profileData} />
-        ))
+        posts && posts.map((post, index) => (
+          <SmallPostCard
+            key={post.id}
+            post={post}
+            user={type === 'search' ? post.User : user} />
+      ))
       }
     </>
   )

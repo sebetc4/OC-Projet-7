@@ -24,7 +24,24 @@ exports.findOneUserAndPostWhereIdRestrictedAttributes = async (id) => {
     const user = await User.findOne({
         where: { id },
         attributes: attributes.user,
-        include: { model: Post }
+        include: [
+            { model: Post },
+            {
+                model: User,
+                as: 'followers',
+                attributes: attributes.userFollowed,
+                through: {
+                    attributes: [],
+                }
+            },
+            {
+                model: User,
+                as: 'following',
+                attributes: attributes.userFollowed,
+                through: {
+                    attributes: [],
+                }
+            }]
     })
     if (user)
         return user
@@ -35,7 +52,16 @@ exports.findOneUserAndPostWhereIdRestrictedAttributes = async (id) => {
 exports.findOneUserAndTodoWhereIdAllAttributes = async (id) => {
     const user = await User.findOne({
         where: { id },
-        include: { model: Todo }
+        include: [
+            { model: Todo },
+            {
+                model: User,
+                as: 'following',
+                attributes: attributes.userFollowed,
+                through: {
+                    attributes: [],
+                }
+            }]
     })
     if (user)
         return user
@@ -47,7 +73,6 @@ exports.findOneUserWhereEmailAllAttributes = async (email) => {
     const user = await User.findOne({
         where: { email }
     })
-    console.log(user)
     if (user)
         return user
     else
@@ -69,8 +94,25 @@ exports.findAllUsersWhereQueryRestrictedAttributes = async (query) => {
                     }
                 }
             ]
-
-        }
+        },
+        attributes: attributes.userInSearch,
+        include: [
+            {
+                model: User,
+                as: 'followers',
+                attributes: attributes.userFollowed,
+                through: {
+                    attributes: [],
+                }
+            },
+            {
+                model: User,
+                as: 'following',
+                attributes: attributes.userFollowed,
+                through: {
+                    attributes: [],
+                }
+            }]
     })
     if (users)
         return users

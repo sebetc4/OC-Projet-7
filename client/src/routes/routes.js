@@ -1,10 +1,12 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import { useSelector } from 'react-redux'
-import { Feed, Header, Home, Login, Profile, Settings, Search } from '../features'
+
+import { Feed, Header, Home, Login, Profile, Settings, Search, ChatTechDep } from '../features'
 
 
 export default function Index() {
 
+    // Store
     const userIsLogged = useSelector((state) => state.user.isLogged)
     const displayMobileMenu = useSelector((state) => state.app.displayMobileMenu)
 
@@ -32,6 +34,7 @@ export default function Index() {
                             <Route path='/settings' element={<Settings />} />
                             <Route path='*' element={<Navigate to={`/home`} replace />} />
                         </Routes>
+                        <ChatTechDep />
                     </main>
                 </>
             }

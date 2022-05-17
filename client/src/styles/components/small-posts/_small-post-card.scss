@@ -1,0 +1,87 @@
+.small-post-card {
+	margin: 20px auto;
+	padding: 10px;
+	box-shadow: $box-shadow-main-element;
+	border-radius: $border-radius-main-element;
+	background-color: $grey-background;
+}
+
+.small-post-card-header {
+	@include center-width($width: $feed-width-content-desktop);
+	display: flex;
+	align-items: center;
+
+	&__avatar {
+		box-shadow: $box-shadow-avatar;
+		padding: 1px;
+		background-color: $primary-color;
+		margin: 5px 0;
+
+		img {
+			border-radius: 50%;
+		}
+	}
+
+	&__infos {
+		margin-left: 20px;
+		a {
+			@include link-style;
+			display: block;
+			font-weight: 500;
+		}
+		p {
+			margin-top: 5px;
+			font-size: 11px;
+		}
+	}
+
+	&__settings-button-container {
+		position: relative;
+		height: 100%;
+		flex: 1;
+		justify-content: flex-end;
+		align-items: center;
+		display: flex;
+	}
+}
+
+.small-post-card-content {
+	&__text-container {
+		@include center-width($width: $feed-width-content-desktop);
+		margin: 15px auto;
+		white-space: pre-wrap;
+		word-wrap: break-word;
+	}
+
+	&__image-container {
+		background-color: black;
+		display: flex;
+		justify-content: center;
+
+		& img {
+			display: block;
+			max-width: 90%;
+			max-height: 200px;
+		}
+	}
+	&__video-container {
+		display: flex;
+		justify-content: center;
+		background-color: black;
+
+		iframe {
+			max-width: 100%;
+		}
+	}
+
+	&__like {
+		margin-top: 10px;
+	}
+}
+
+@media screen and (max-width: $media-small-screen) {
+	.small-post-card {
+		padding: 10px 0;
+		border-radius: 0;
+	}
+}

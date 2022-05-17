@@ -23,9 +23,8 @@ export default function PostHeader({ post, postIndex, user, toggleDisplayModifyP
 
     return (
         <div className='post-card-header'>
-            <Avatar
+            <img
                 className='post-card-header__avatar'
-                sx={{ width: 50, height: 50 }}
                 src={post.User.avatarUrl}
                 alt={`Avatar de ${post.User.firstName} ${post.User.lastName}`}
             />
@@ -33,7 +32,7 @@ export default function PostHeader({ post, postIndex, user, toggleDisplayModifyP
                 <NavLink to={`/profile/${post.UserId}`}>
                     {`${post.User.firstName} ${post.User.lastName}`}
                 </NavLink>
-                <FromNowDate date={post.createdAt} />
+                <FromNowDate date={post.createdAt} update={post.updatedAt}/>
             </div>
             {userIsAuthorOrAdmin &&
                 <div className='post-card-header__settings-button-container'

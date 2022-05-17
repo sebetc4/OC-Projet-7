@@ -3,12 +3,18 @@
 
 	button svg {
 		color: $grey-color-dark;
+		font-size: 38px;
 	}
 
 	&.active {
         button svg{
             color: $secondary-color;
-
         }
+	}
+}
+
+@media screen and (max-width: $media-tablette) {
+	.navbar__nav-link {
+		padding: 0;
 	}
 }

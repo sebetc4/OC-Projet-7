@@ -57,7 +57,7 @@
 	}
 }
 
-@media screen and (max-width: 500px ) {
+@media screen and (max-width: $media-small-screen ) {
 
 	.login-three-cenvas {
 		height: 160vw !important;

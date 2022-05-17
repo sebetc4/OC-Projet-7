@@ -23,6 +23,7 @@
 		"hamburger-react": "^2.5.0",
 		"react": "^17.0.2",
 		"react-dom": "^17.0.2",
+		"react-draggable": "^4.4.5",
 		"react-easy-crop": "^4.1.4",
 		"react-redux": "^7.2.8",
 		"react-router-dom": "^6.2.2",

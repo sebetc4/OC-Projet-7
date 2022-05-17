@@ -13,6 +13,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { IconButton } from '@mui/material';
 
 
 export default function SettingsBar() {
@@ -34,15 +35,16 @@ export default function SettingsBar() {
     return (
         <div className='right-menu'>
 
-            <button
+            <IconButton
                 className='right-menu__button'
                 onClick={toggleDisplayModalSettings}
+                color='primary'
             >
                 <img
                     alt={'avatar de l\'ustilisateur'}
                     src={userAvatar}
                 />
-            </button>
+            </IconButton>
             {displayModalSettings &&
                 <MenuModal
                     closeModal={toggleDisplayModalSettings}>

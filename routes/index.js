@@ -7,6 +7,8 @@ const postRoutes = require("./post.routes")
 const commentPostRoutes = require("./commentPost.routes")
 const searchRoutes = require("./search.routes")
 const todoRoutes = require("./todo.routes")
+const chatAIRoutes = require("./chatAI.routes")
+const followRoutes = require("./follow.routes")
 
 
 // Static routes
@@ -20,6 +22,9 @@ router.use("/api/post", postRoutes);
 router.use("/api/todo", todoRoutes);
 router.use("/api/comment-post", commentPostRoutes);
 router.use("/api/search", searchRoutes);
+router.use('/api/chat-ai/', chatAIRoutes)
+router.use('/api/follow/', followRoutes)
+
 
 // Front route
 router.get('*', (req, res) => {

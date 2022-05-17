@@ -7,7 +7,6 @@ exports.createComment = async (req, res, next) => {
     const postId = req.params.id
     try {
         const comment = await createComment(text, user.id, postId)
-        console.log(comment)
         return res.status(201).json(comment)
     } catch (err) {
         next(err)
@@ -34,7 +33,6 @@ exports.deleteComment = async (req, res, next) => {
     const commentId = req.params.id
     try {
         const comment = await getOneCommentPostWhereIdAllAttributes(commentId)
-        console.log(comment)
         user.checkAllow(comment.userId)
         await comment.destroy()
         res.status(200).json("Comment deletion is done")

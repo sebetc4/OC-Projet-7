@@ -8,7 +8,7 @@ const postsDefaultState = {
 export default function postsReducer(state = postsDefaultState, action) {
     switch (action.type) {
         case CREATE_POST:
-            return { ...state, data: [...state.data, action.playload] }
+            return { ...state, data: [action.playload, ...state.data] }
 
         case GET_POSTS:
             return { ...state, data: action.playload, isLoaded: true }

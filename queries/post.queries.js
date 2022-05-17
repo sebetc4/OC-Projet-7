@@ -28,6 +28,7 @@ exports.findOnePostWhereIdAllAttributes = async (id) => {
 
 exports.findAllPostsUserAndCommentRestrictedAttributes = async () => {
     const posts = await Post.findAll({
+        order: [['updatedAt', 'DESC']],
         include: [{
             model: User,
             attributes: attributes.userInPost
@@ -55,7 +56,11 @@ exports.findAllPostsWhereQueryAllAttributes = async (query) => {
             text: {
                 [Op.like]: `%${query}%`
             }
-        }
+        },
+        include: [{
+            model: User,
+            attributes: attributes.userInPost
+        }],
     })
     if (posts)
         return posts

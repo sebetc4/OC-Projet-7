@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { getTodos } from './todos.actions';
+import { getUsersFollowed } from './usersFollowed.actions';
+
 
 export const GET_USER = 'GET_USER'
 export const LOGIN_USER = 'LOGIN_USER'
@@ -12,7 +14,9 @@ export const getUser = () => {
             const user = await axios.get('/api/auth');
             if (user.data.user) {
                 dispatch(getTodos(user.data.user.Todos))
+                dispatch(getUsersFollowed(user.data.user.following))
                 delete user.data.user.Todos
+                delete user.data.user.followings
                 dispatch({
                     type: GET_USER,
                     playload: {

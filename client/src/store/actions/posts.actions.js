@@ -56,7 +56,7 @@ export const deletePost = (postId, postIndex) => {
 
 export const likePost = (post, postIndex, userId, userIndex, likeStatut) => {
     return async (dispatch) => {
-        await axios.post(`/api/post/like/${post.id}`, { likeStatut });
+        await axios.put(`/api/post/like/${post.id}`, { likeStatut });
         dispatch({
             type: LIKE_POST,
             playload: { postIndex, likeStatut, userId, userIndex }

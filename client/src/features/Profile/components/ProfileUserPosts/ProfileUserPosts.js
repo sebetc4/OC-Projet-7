@@ -7,7 +7,9 @@ export default function ProfileUserPosts({profileData}) {
         <div className='profile-user-posts'>
             <h3 className='profile-user-posts__title'>Posts:</h3>
             <SmallPosts
-                profileData={profileData}
+                type='profile'
+                posts={profileData.Posts}
+                user={profileData}
             />
         </div>
     )

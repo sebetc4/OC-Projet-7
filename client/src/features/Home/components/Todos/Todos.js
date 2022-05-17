@@ -3,6 +3,7 @@ import { AddTodo, Filter, TodoList } from './components'
 import { createTodo, toggleTodo, deleteTodo, setFilter, visibilityFilters } from '../../../../store/actions/todos.actions';
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux";
+import { Divider } from '@mui/material';
 
 export default function Todo() {
 
@@ -15,6 +16,7 @@ export default function Todo() {
   // Store
   const allTodos = useSelector(state => state.todos.data)
   const filter = useSelector(state => state.todos.filter)
+
   const dispatchCreateTodo = (todo) => dispatch(createTodo(todo))
   const dispatchSetFilter = (filter) => dispatch(setFilter(filter))
   const dispatchToggleTodo = (index, todoId) => dispatch(toggleTodo(index, todoId))
@@ -38,28 +40,22 @@ export default function Todo() {
   }, [allTodos, filter])
 
   return (
-    <div className="container p-5">
-      <h4>Ajouter une todo</h4>
-      <hr className="my-4" />
+    <div className="home-todos">
+      <h2 className='home-todos__title'>Vos tâches</h2>
+      <Filter
+        filter={filter}
+        dispatchSetFilter={dispatchSetFilter}
+      />
+      <Divider />
+      <TodoList
+        todoList={todoList}
+        dispatchToggleTodo={dispatchToggleTodo}
+        dispatchDeleteTodo={dispatchDeleteTodo}
+      />
+      <Divider />
       <AddTodo
         dispatchCreateTodo={dispatchCreateTodo}
       />
-      <hr className="my-4" />
-      <div className="card">
-        <div className="card-header d-flex flex-row align-items-center">
-          <span className="flex-fill">Todo list</span>
-          <Filter 
-          dispatchSetFilter={dispatchSetFilter}
-          />
-        </div>
-        <div className="card-body">
-          <TodoList
-            todoList={todoList}
-            dispatchToggleTodo={dispatchToggleTodo}
-            dispatchDeleteTodo={dispatchDeleteTodo}
-          />
-        </div>
-      </div>
     </div>
   )
 }

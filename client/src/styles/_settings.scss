@@ -6,10 +6,6 @@
 	box-sizing: border-box;
 }
 
-html {
-	overflow-y: scroll;
-}
-
 body,
 html {
 	margin: 0;
@@ -24,10 +20,9 @@ html {
 	padding-top: $header-height;
 	transition: 0.3s;
 	z-index: 0;
-
 	&.main--active-menu {
 		margin-left: 10vw;
-		transform: perspective(1000px) rotateY(-15deg);
+		transform: perspective(1200px) rotateY(-12deg);
 	}
 }
 

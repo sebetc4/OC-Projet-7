@@ -6,7 +6,6 @@ exports.login = async (req, res, next) => {
     if (!email || !password) throw { message: 'Missing parameters' }
     try {
         const user = await findOneUserWhereEmailAllAttributes(email)
-        console.log('tessssttttttttt')
         user.checkPassword(password)
         req.login(user.id)
         return res.status(200).json('User logged in')

@@ -23,10 +23,21 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'cascade',
         hooks: true
       })
+      models.User.belongsToMany(models.User, {
+        foreignKey: 'userId',
+        as: 'followers',
+        through: 'UsersFollowers'
+      })
+      models.User.belongsToMany(models.User, {
+        foreignKey: 'followerId',
+        as: 'following',
+        through: 'UsersFollowers'
+      })
     }
 
     checkPassword = (password) => {
       if (!bcrypt.compareSync(password, this.password)) {
+        console.log(bcrypt.compareSync(password, this.password))
         throw { message: "Invalid password" };
       }
     }

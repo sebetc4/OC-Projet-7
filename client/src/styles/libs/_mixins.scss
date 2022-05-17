@@ -15,6 +15,23 @@
 	color: $secondary-color-dark;
 }
 
+@mixin title-section {
+	font-size: 18px;
+	font-weight: bold;
+	position: relative;
+	margin-bottom: 25px;
+
+	&::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		bottom: -5px;
+		width: 20px;
+		height: 2px;
+		background: $primary-color;
+	}
+}
+
 @mixin menu-modal {
 	z-index: 10000;
 	position: absolute;

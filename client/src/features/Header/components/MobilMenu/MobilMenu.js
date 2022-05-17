@@ -1,30 +1,37 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useSelector, useDispatch } from 'react-redux';
-import { logoutUser } from '../../../../store/actions/user.actions';
 
+import { IconButton } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
 import PersonIcon from '@mui/icons-material/Person';
-import IconButton from '@mui/material/IconButton';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
+
+import { logoutUser } from '../../../../store/actions/user.actions';
 
 
 export default function MobilMenu({ toggleDisplayMobileMenu, displayMobileMenu }) {
 
+    // Hooks
     const dispatch = useDispatch()
 
+
+    // State
     const userId = useSelector((state) => state.user.data.id)
 
+
     useEffect(() => {
-        if (displayMobileMenu)
+        if (displayMobileMenu) {
             document.body.style.overflow = 'hidden';
-        else
+        }
+        else {
             document.body.style.overflow = 'unset'
+        }
         return () => document.body.style.overflow = 'unset';
     }, [displayMobileMenu])
+
     return (
         <nav id="mobil-menu" className={`mobil-menu ${displayMobileMenu ? 'mobil-menu-open' : 'mobil-menu-close'}`}>
             <ul>

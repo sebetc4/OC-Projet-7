@@ -163,7 +163,6 @@ export default function Login() {
 				<Dialog
 					open={showConfirmSignUpForm}
 					onClose={() => setShowConfirmSignUpForm(false)}
-					closeModal={() => setShowConfirmSignUpForm(false)}
 					fullScreen={fullScreen}
 				>
 					<ConfirmSignIn

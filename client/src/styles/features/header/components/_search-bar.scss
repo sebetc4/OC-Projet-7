@@ -39,8 +39,8 @@
 		cursor: pointer;
 
 		& svg {
-			height: 22px;
-			width: 22px;
+			height: 25px;
+			width: 25px;
 			fill: $grey-color-dark;
 		}
 	}
@@ -56,5 +56,14 @@
 		transform: scaleX(0);
 		transform-origin: bottom right;
 		transition: ease-in-out 0.4s;
+	}
+}
+
+@media screen and (max-width: $media-small-screen ) {
+	.search-bar-container {
+		width: 100%;
+		margin-left: 0;
+		display: flex;
+		justify-content: center;
 	}
 }

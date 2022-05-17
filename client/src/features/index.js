@@ -5,5 +5,6 @@ export { default as Settings } from './Settings/Settings'
 export { default as Header } from  './Header/Header'
 export { default as Feed } from  './Feed/Feed'
 export { default as Search } from  './Search/Search'
+export { default as ChatTechDep} from './ChatTechDep/ChatTechDep'
 
 
