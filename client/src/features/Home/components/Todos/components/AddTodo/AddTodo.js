@@ -1,15 +1,14 @@
 import React from 'react'
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import TextField from '@mui/material/TextField';
-import { Button } from '@mui/material';
 
+import { IconButton, TextField } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
-
-export default function AddTodo({dispatchCreateTodo}) {
+export default function AddTodo({ dispatchCreateTodo }) {
 
     const todoSchema = Yup.object().shape({
-        todo: Yup.string().required("Champ requis"),
+        todo: Yup.string().min(1).max(30, 'Trop long').required("Champ requis"),
     });
 
     const submit = (values, actions) => {
@@ -28,23 +27,33 @@ export default function AddTodo({dispatchCreateTodo}) {
             validateOnBlur={true}
             validateOnChange={true}
         >
-            {({ handleSubmit, isSubmitting, errors }) => (
-                <Form onSubmit={handleSubmit}>
+            {({ handleSubmit, isSubmitting, errors, isValid, values }) => (
+                <Form
+                    className='todos-add'
+                    onSubmit={handleSubmit}
+                >
                     <Field
-                        error={errors.firstName}
+                        className='todos-add__input'
+                        error={errors.todo}
                         as={TextField}
                         variant='outlined'
                         name={'todo'}
                         type={'text'}
                         size="small"
-                        label={'Todo'}
+                        label={'Nouvelle tâche'}
                         helperText={<ErrorMessage name={'todo'} />}
                     />
-                    <Button
-                        type="submit"
-                        disabled={isSubmitting}>
-                        Ajouter
-                    </Button>
+                    <div className='todos-add__button'>
+                        <IconButton
+                            onClick={handleSubmit}
+                            component="span"
+                            size='large'
+                            color='primary'
+                            disabled={isSubmitting && !isValid }
+                        >
+                            <AddIcon />
+                        </IconButton>
+                    </div>
                 </Form>
             )}
         </Formik>

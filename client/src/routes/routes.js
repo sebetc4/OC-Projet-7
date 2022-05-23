@@ -8,7 +8,7 @@ export default function Index() {
 
     // Store
     const userIsLogged = useSelector((state) => state.user.isLogged)
-    const displayMobileMenu = useSelector((state) => state.app.displayMobileMenu)
+    const app = useSelector((state) => state.app)
 
 
     return (
@@ -21,7 +21,7 @@ export default function Index() {
                 :
                 <>
                     <Header />
-                    <main className={`main ${displayMobileMenu && 'main--active-menu'}`}>
+                    <main className={`main ${app.displayMobileMenu && 'main--active-menu'}`}>
                         <Routes>
                             <Route path='/search' >
                                 <Route path=':query' element={<Search />} />
@@ -32,9 +32,14 @@ export default function Index() {
                                 <Route path=':userId' element={<Profile />} />
                             </Route>
                             <Route path='/settings' element={<Settings />} />
+                            {
+                                app.deviceSize !== 2 && <Route path='/chat' element={<ChatTechDep />} />
+                            }
                             <Route path='*' element={<Navigate to={`/home`} replace />} />
                         </Routes>
-                        <ChatTechDep />
+                        {app.deviceSize === 2 &&
+                            <ChatTechDep />
+                        }
                     </main>
                 </>
             }

@@ -1,4 +1,4 @@
-const { Post, User, CommentPost } = require('../models');
+const { Post, User, Comment } = require('../models');
 const attributes = require('../utils/attributes')
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
@@ -26,9 +26,14 @@ exports.findOnePostWhereIdAllAttributes = async (id) => {
         throw { message: `Post id unknown` }
 }
 
-exports.findAllPostsUserAndCommentRestrictedAttributes = async () => {
+exports.findAllPostsUserAndCommentRestrictedAttributes = async (offset, limit) => {
     const posts = await Post.findAll({
-        order: [['updatedAt', 'DESC']],
+        offset: (!isNaN(offset)) ? offset : null,
+        limit: (!isNaN(limit)) ? limit : null,
+        order: [
+            ['updatedAt', 'DESC'],
+            [Comment, 'createdAt', 'DESC']
+        ],
         include: [{
             model: User,
             attributes: attributes.userInPost
@@ -40,7 +45,7 @@ exports.findAllPostsUserAndCommentRestrictedAttributes = async () => {
                 attributes: [],
             }
         }, {
-            model: CommentPost,
+            model: Comment,
             include: {
                 model: User,
                 attributes: attributes.userInPost
@@ -57,6 +62,7 @@ exports.findAllPostsWhereQueryAllAttributes = async (query) => {
                 [Op.like]: `%${query}%`
             }
         },
+        order: [['updatedAt', 'DESC']],
         include: [{
             model: User,
             attributes: attributes.userInPost

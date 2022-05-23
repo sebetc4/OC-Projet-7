@@ -1,63 +1,104 @@
-import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllPosts } from '../../store/actions/posts.actions';
-import { CreatePost, PostCard } from './components';
+import { fetchPosts, resetPosts } from '../../store/actions/posts.actions';
+import { CreatePost, PostCard, PostError } from './components';
 
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Button, CircularProgress } from '@mui/material';
+import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
+
 import { Loader } from '../../components';
 
-
 export default function Feed() {
+
+	// Params
+	const nbPostsDisplay = 5
 
 	// Hooks
 	const dispatch = useDispatch()
 
-	// State
-	const [postsList, setPostsList] = useState(null)
-	const [postsListLength, setPostsListLength] = useState(5)
-
 	// Store
-	const allPosts = useSelector((state) => state.posts)
+	const posts = useSelector((state) => state.posts)
 
-	// Get all posts
+	// State
+	const [postsIsLoading, setPostsIsLoading] = useState(false)
+	const [postsListLength, setPostsListLength] = useState(nbPostsDisplay)
+
+	// Get initial posts
 	useEffect(() => {
-		dispatch(getAllPosts())
-	}, [])
+		dispatch(resetPosts())
+		dispatch(fetchPosts(0, nbPostsDisplay))
+		return () => {
+			dispatch(resetPosts())
+		}
+	}, [dispatch])
+
+	// Get more posts
+	useEffect(() => {
+		if (postsListLength !== nbPostsDisplay) {
+			dispatch(fetchPosts(postsListLength - nbPostsDisplay, nbPostsDisplay))
+			setPostsIsLoading(false)
+		}
+	}, [postsListLength, dispatch])
 
 	useEffect(() => {
-		if (allPosts) setPostsList(allPosts.data.slice(0, postsListLength))
-	}, [allPosts, postsListLength])
+		if (postsIsLoading)
+			setPostsListLength(postsListLength + nbPostsDisplay)
+	}, [postsIsLoading])
 
-	const addPostsListsLength = () => setPostsListLength(postsListLength + 5)
+	useEffect(() => {
+		if (!posts.allPostsFetch)
+			window.addEventListener('scroll', loadMorePost)
+		else
+			window.removeEventListener('scroll', loadMorePost)
+		return () => window.removeEventListener('scroll', loadMorePost)
+	}, [posts.allPostsFetch])
+
+	const loadMorePost = () => {
+		if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+			setPostsIsLoading(true)
+		}
+	}
+
+	const goToTopPage = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
 	return (
-		<>
-			{!allPosts.isLoaded ?
-				<Loader /> :
-				(
-					<section className='feed'>
-						<CreatePost />
+
+		<section className='feed'>
+
+			{posts.isLoaded && posts.type === 'feed' ?
+				<>
+					<CreatePost />
+					{
+						posts.data.length !== 0 && posts.data.map((post, index) => (
+							<PostCard
+								key={post.id}
+								post={post}
+								postIndex={index}
+							/>
+						))
+					}
+					<div className='feed-bottom'>
 						{
-							postsList && postsList.map((post, index) => (
-								<PostCard key={post.id} post={post} postIndex={index} />
-							))
+							postsIsLoading && <CircularProgress />
 						}
 						{
-							allPosts.data.length > postsListLength &&
-							<div className='feed-button-more-container'>
-								<Button
-									size="large"
-									endIcon={<ExpandMoreIcon />}
-									onClick={addPostsListsLength}
-								>
-									Afficher plus
-								</Button>
-							</div>
+							posts.allPostsFetch &&
+							<Button
+								onClick={goToTopPage}
+								endIcon={<ArrowBackIosRoundedIcon />}
+							>
+								Fin des posts. Remonter la page
+							</Button>
 						}
-					</section>
-				)
+					</div>
+				</>
+
+				:
+				<Loader />
 			}
-		</>
+			<PostError 
+				error={posts.error}
+			/>
+		</section>
 	);
 }

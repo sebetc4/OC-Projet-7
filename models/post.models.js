@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'postId',
         as: 'usersLiked'
       });
-      models.Post.hasMany(models.CommentPost, {
+      models.Post.hasMany(models.Comment, {
         onDelete: 'cascade',
         foreignKey: 'postId',
         hooks: true
@@ -37,11 +37,6 @@ module.exports = (sequelize, DataTypes) => {
     },
      text: {
       type: DataTypes.STRING
-    },
-    likes: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0
     }
   }, {
     sequelize,

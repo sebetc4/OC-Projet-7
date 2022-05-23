@@ -6,9 +6,8 @@ import axios from 'axios'
 import { Box, Tab, Tabs } from '@mui/material';
 import { TabContext, TabPanel } from '@mui/lab';
 
-import { Loader } from '../../components';
-import SmallPostList from '../../components/SmallPosts/SmallPosts';
-import { UsersList } from './components';
+import { Loader, UserCardList } from '../../components';
+import SmallPostList from '../../components/SmallPostsList/SmallPostsList';
 
 
 export default function Search() {
@@ -19,11 +18,11 @@ export default function Search() {
     // Store
     const deviceSize = useSelector((state) => state.app.deviceSize)
 
+    // State
     const [value, setValue] = useState('1');
     const [postsResult, setPostsResult] = useState(null)
     const [usersResult, setUsersResult] = useState(null)
     const [resultLoaded, setResultLoaded] = useState(false)
-
 
     const handleChange = (e, newValue) => {
         setValue(newValue);
@@ -43,36 +42,40 @@ export default function Search() {
             {
                 !resultLoaded ?
                     <Loader /> :
-                    <section className='search'>
+                    <div className='search'>
                         <h1 className='search__title'>Réslultat de la recherche "{params.query.split('query=')[1].replace('&', ' ').slice(0, -1)}"</h1>
                         {
-                            deviceSize !== 0 ?
-                                <div className='search__columns'>
-                                    <div className='search-posts'>
-                                        <h2 className='search-posts__title'>
-                                            Les posts
-                                        </h2>
-                                        {
-                                            postsResult.length !== 0 ?
-                                                <SmallPostList
-                                                    type='search'
-                                                    posts={postsResult}
-                                                /> :
-                                                <p>Aucun post pour votre recherche</p>
-                                        }
+                            deviceSize === 2 ?
+                                <div className='search-columns'>
+                                    <div className='search-columns__column-1'>
+                                        <section className='search-posts'>
+                                            <h2 className='search-posts__title'>
+                                                Les posts
+                                            </h2>
+                                            {
+                                                postsResult.length !== 0 ?
+                                                    <SmallPostList
+                                                        type='search'
+                                                        posts={postsResult}
+                                                    /> :
+                                                    <p>Aucun post pour votre recherche</p>
+                                            }
+                                        </section>
                                     </div>
-                                    <div className='search-users'>
-                                        <h2 className='search-users__title'>
-                                            Les utilisateurs
-                                        </h2>
-                                        {
-                                            usersResult.length !== 0 ?
-                                                <UsersList
-                                                    type='search'
-                                                    users={usersResult}
-                                                /> :
-                                                <p>Aucun utilisateur pour votre recherche</p>
-                                        }
+                                    <div className='search-columns__column-2'>
+                                        <section className='search-users'>
+                                            <h2 className='search-users__title'>
+                                                Les utilisateurs
+                                            </h2>
+                                            {
+                                                usersResult.length !== 0 ?
+                                                    <UserCardList
+                                                        users={usersResult}
+
+                                                    /> :
+                                                    <p>Aucun utilisateur pour votre recherche</p>
+                                            }
+                                        </section>
                                     </div>
                                 </div> :
                                 <TabContext value={value}>
@@ -87,12 +90,28 @@ export default function Search() {
                                         </Tabs>
                                     </Box>
                                     <TabPanel value="1">
+                                        {
+                                            postsResult.length !== 0 ?
+                                                <SmallPostList
+                                                    type='search'
+                                                    posts={postsResult}
+                                                /> :
+                                                <p>Aucun post pour votre recherche</p>
+                                        }
                                     </TabPanel>
                                     <TabPanel value="2">
+                                        {
+                                            usersResult.length !== 0 ?
+                                                <UserCardList
+                                                    users={usersResult}
+
+                                                /> :
+                                                <p>Aucun utilisateur pour votre recherche</p>
+                                        }
                                     </TabPanel>
                                 </TabContext>
                         }
-                    </section>
+                    </div>
             }
         </>
     )

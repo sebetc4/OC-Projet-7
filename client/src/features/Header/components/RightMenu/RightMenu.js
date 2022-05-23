@@ -18,12 +18,15 @@ import { IconButton } from '@mui/material';
 
 export default function SettingsBar() {
 
-    const [displayModalSettings, setDisplayModalSettings] = useState(false)
+    // Store
+    const userAvatar = useSelector((state) => state.user.data.avatarUrl)
 
+    // Hooks
     const dispatch = useDispatch();
     const navigate = useNavigate()
 
-    const userAvatar = useSelector((state) => state.user.data.avatarUrl)
+    // State
+    const [displayModalSettings, setDisplayModalSettings] = useState(false)
 
     const navigateToSettings = () => {
         navigate('/settings', { replace: true })

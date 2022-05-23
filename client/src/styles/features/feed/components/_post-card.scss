@@ -97,19 +97,64 @@
 	}
 }
 
-.post-card__comments {
+.post-card-badges {
+	@include center-width($width: $feed-width-content-mobile);
+	margin: 10px auto;
+	display: flex;
+	justify-content: space-between;
+
+	&__item {
+		margin-right: 15px;
+		svg {
+			height: 20px;
+		}
+
+		.css-106c1u2-MuiBadge-badge {
+			height: 18px;
+			min-width: 18px;
+			font-size: 12px;
+			border-radius: 50%;
+		}
+	}
+}
+
+.post-card-comments {
 	@include center-width($width: $feed-width-content-desktop);
 }
 
-@media screen and (max-width: $media-mobile ) {
-	.post-card-content {
-		&__image-container {
+.post-card-comments-bottom {
+	display: flex;
+	justify-content: center;
 
+	button {
+		font-size: 10px;
+	}
+}
+
+@media screen and (max-width: $media-mobile) {
+	.post-card-header {
+		@include center-width($width: $feed-width-content-mobile);
+	}
+
+	.post-card-content {
+		&__text-container {
+			@include center-width($width: $feed-width-content-mobile);
+		}
+
+		&__image-container {
 			& img {
 				max-width: 100%;
 				display: block;
 				max-height: auto;
 			}
 		}
+	}
+	.post-card-actions {
+		width: 100%;
+	}
+
+	.post-card-comments {
+		@include center-width($width: $feed-width-content-mobile);
+		margin-top: 20px;
 	}
 }

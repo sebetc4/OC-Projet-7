@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch } from "react-redux";
 import { MenuModal } from '../../../../../../../../components'
-import { deleteCommentPost } from '../../../../../../../../store/actions/posts.actions';
+import { deleteComment } from '../../../../../../../../store/actions/posts.actions';
 
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
@@ -17,7 +17,7 @@ export default function CommentSettings({ closeModal, commentId, commentIndex, p
 
     const dispatch = useDispatch()
 
-    const handleDeleteComment = () => dispatch(deleteCommentPost(commentId, commentIndex, postIndex))
+    const handleDeleteComment = () => dispatch(deleteComment(commentId, commentIndex, postIndex))
 
     return (
         <MenuModal closeModal={closeModal}>

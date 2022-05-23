@@ -1,11 +1,25 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+
+import { Collapse, Button } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import { CommentCard, CreateComment } from './components'
-import Collapse from '@mui/material/Collapse';
 
 export default function Comments({ post, postIndex, user, displayNewComment, toggleDisplayNewComment }) {
 
+    // Params
+    const nbPostsDisplay = 3
+
+    // Hooks
     const textareaRef = useRef()
+
+    // State 
+    const [commentList, setCommentList] = useState([])
+    const [commentListLength, setCommentListLength] = useState(nbPostsDisplay)
+
+    useEffect(() => {
+        if (post.Comments) setCommentList(post.Comments.slice(0, commentListLength))
+    }, [post.Comments, post.Comments.length, commentListLength])
 
     // Set focus on textarea with timeout
     useEffect(() => {
@@ -16,37 +30,52 @@ export default function Comments({ post, postIndex, user, displayNewComment, tog
         return () => clearTimeout(timer);
     }, [displayNewComment])
 
-    return (
-        <ul className='post-card__comments'>
-            <Collapse
-                timeout={500}
-                orientation="vertical"
-                in={displayNewComment}
-            >
-                <li>
-                   <CreateComment 
-                   post={post}
-                   postIndex={postIndex} 
-                   user={user} 
-                   textareaRef={textareaRef} 
-                   toggleDisplayNewComment={toggleDisplayNewComment}
-                   /> 
-                </li>
-            </Collapse>
+    const addCommentsInList = () => { setCommentListLength(commentListLength + nbPostsDisplay) }
 
-            {post.CommentPosts.length !== 0 && post.CommentPosts.map((comment, index) => (
-                <li
-                    key={comment.id}
+    return (
+        <>
+            <ul className='post-card-comments'>
+                <Collapse
+                    timeout={500}
+                    orientation="vertical"
+                    in={displayNewComment}
                 >
-                    <CommentCard
-                    comment={comment}
-                    commentIndex={index}
-                    post={post}
-                    postIndex={postIndex}
-                    user={user}
-                    />
-                </li>
-            ))}
-        </ul>
+                    <li>
+                        <CreateComment
+                            post={post}
+                            postIndex={postIndex}
+                            user={user}
+                            textareaRef={textareaRef}
+                            toggleDisplayNewComment={toggleDisplayNewComment}
+                        />
+                    </li>
+                </Collapse>
+
+                {commentList && commentList.map((comment, index) => (
+                    <li
+                        key={comment.id}
+                    >
+                        <CommentCard
+                            comment={comment}
+                            commentIndex={index}
+                            post={post}
+                            postIndex={postIndex}
+                            user={user}
+                        />
+                    </li>
+                ))}
+            </ul>
+            <div className='post-card-comments-bottom'>
+                {commentListLength < post.Comments.length &&
+                    <Button
+                        size="large"
+                        endIcon={<ExpandMoreIcon />}
+                        onClick={addCommentsInList}
+                    >
+                        Afficher plus de commentaires
+                    </Button>
+                }
+            </div>
+        </>
     )
 }

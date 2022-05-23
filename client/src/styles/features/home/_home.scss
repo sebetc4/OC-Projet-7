@@ -1,26 +1,33 @@
+@import './components/todos';
+
 .home {
 	@include center-width($width: $profile-width-desktop);
-	display: flex;
-	justify-content: space-between;
+	margin-top: 10px;
 }
 
-.home-column-1,
-.home-column-2 {
-	width: 48%;
+.home-columns {
+	@include features-columns-desktop;
 }
 
-.home-todos {
-	width: 100%;
-	margin-top: 30px;
-	background-color: $white-background;
-	box-shadow: $box-shadow-main-element;
-	border-radius: $border-radius-main-element;
+.home-todos,
+.home-news {
+	@include features-section;
 }
 
-.home-todos {
-	padding: 20px;
+@media screen and (max-width: $media-tablette) {
+	.home {
+		max-width: 95%;
+	}
+}
 
-	&__title {
-		@include title-section;
+@media screen and (max-width: $media-mobile) {
+	.home-columns {
+		@include features-columns-mobile;
+	}
+}
+
+@media screen and (max-width: $media-small-screen) {
+	.home {
+		max-width: 100%;
 	}
 }

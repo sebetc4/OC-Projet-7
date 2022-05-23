@@ -1,7 +1,7 @@
-const { CommentPost } = require('../models');
+const { Comment } = require('../models');
 
 exports.createComment = async (text, userId, postId) => {
-    const newComment = await CommentPost.create({
+    const newComment = await Comment.create({
         text,
         userId,
         postId
@@ -12,8 +12,8 @@ exports.createComment = async (text, userId, postId) => {
         throw { message: `Internal Server Error` }
 }
 
-exports.getOneCommentPostWhereIdAllAttributes = async (id) => {
-    const comment = await CommentPost.findOne({
+exports.getOneCommentWhereIdAllAttributes = async (id) => {
+    const comment = await Comment.findOne({
         where: { id }
     })
     if (comment)

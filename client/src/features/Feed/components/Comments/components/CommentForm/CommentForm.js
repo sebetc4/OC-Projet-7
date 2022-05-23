@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { createCommentPost, updateCommentPost } from '../../../../../../store/actions/posts.actions';
+import { createComment, updateComment } from '../../../../../../store/actions/posts.actions';
 import { useDispatch } from "react-redux";
 
 import TextareaAutosize from '@mui/base/TextareaAutosize';
@@ -15,10 +15,10 @@ export default function CommentForm({ type, initialValueText, postId, postIndex,
     const submit = (e) => {
         e.preventDefault()
         if (type === 'modify') {
-            dispatch(updateCommentPost(commentId, commentIndex, postIndex, text))
+            dispatch(updateComment(commentId, commentIndex, postIndex, text))
         }
         else {
-            dispatch(createCommentPost(postId, postIndex, user, text))
+            dispatch(createComment(postId, postIndex, user, text))
             setText('')
         }
         toggleDisplayForm()

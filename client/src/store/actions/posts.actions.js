@@ -1,97 +1,256 @@
 import axios from 'axios';
 
-export const CREATE_POST = 'CREATE_POST'
-export const GET_POSTS = 'GET_POSTS'
-export const UPDATE_POST = 'UPDATE_POST'
-export const DELETE_POST = 'DELETE_POST'
-export const LIKE_POST = 'LIKE_POST'
-export const CREATE_COMMENT_POST = 'CREATE_COMMENT_POST'
-export const UPDATE_COMMENT_POST = 'UPDATE_COMMENT_POST'
-export const DELETE_COMMENT_POST = 'DELETE_COMMENT_POST'
+export const RESET_POSTS = 'RESET_POSTS'
 
-export const createPost = (data, user) => {
-    return async (dispatch) => {
-        const { firstName, lastName, avatarUrl } = user
-        const post = await axios.post(`/api/post`, data);
-        dispatch({
-            type: CREATE_POST,
-            playload: { ...post.data, User: { firstName, lastName, avatarUrl }, usersLiked: [], CommentPosts: [] }
-        });
+export const CREATE_POST = 'CREATE_POST'
+export const CREATE_POST_SUCCESS = 'CREATE_POST_SUCCESS'
+
+export const FETCH_POSTS = 'GET_POSTS'
+export const FETCH_POSTS_SUCCESS = 'FETCH_POSTS_SUCCESS'
+export const ALL_POSTS_FETCH = 'ALL_POSTS_FETCH'
+
+export const UPDATE_POST = 'UPDATE_POST'
+export const UPDATE_POST_SUCCESS = 'UPDATE_POST_SUCCESS'
+
+export const DELETE_POST = 'DELETE_POST'
+export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS'
+
+export const LIKE_POST = 'LIKE_POST'
+export const LIKE_POST_SUCCESS = 'LIKE_POST_SUCCESS'
+
+export const CREATE_COMMENT = 'CREATE_COMMENT'
+export const CREATE_COMMENT_SUCCESS = 'CREATE_COMMENT_SUCCESS'
+
+export const UPDATE_COMMENT = 'UPDATE_COMMENT'
+export const UPDATE_COMMENT_SUCCESS = 'UPDATE_COMMENT_SUCCESS'
+
+export const DELETE_COMMENT = 'DELETE_COMMENT'
+export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS'
+
+export const POSTS_ERROR = 'POSTS_ERROR'
+
+
+export const resetPosts = () => {
+    return {
+        type: RESET_POSTS,
+        playload: ''
     }
 }
 
-export const getAllPosts = () => {
+export const createPost = (data, user) => {
     return async (dispatch) => {
-        const posts = await axios.get(`/api/post`);
-        posts.data.forEach((post, index) => {
-            const usersLiked = post.usersLiked.map(user => user.id);
-            posts.data[index].usersLiked = usersLiked
-        });
-        dispatch({
-            type: GET_POSTS,
-            playload: posts.data,
-        });
+        try {
+            const post = await axios.post(`/api/posttt`, data);
+            dispatch(createPostSuccess(post.data, user));
+        } catch {
+            dispatch(createPostError())
+        }
+    }
+}
+
+export const createPostSuccess = (post, user) => {
+    const { firstName, lastName, avatarUrl } = user
+    return {
+        type: CREATE_POST_SUCCESS,
+        playload: { ...post, User: { firstName, lastName, avatarUrl }, usersLiked: [], Comments: [] }
+    }
+}
+
+export const createPostError = () => {
+    return {
+        type: POSTS_ERROR,
+        playload: 'Echec lors de l\'ajout du post'
+    }
+}
+
+export const fetchPosts = (count, nbPostsInRes) => {
+    return async (dispatch) => {
+        try {
+            const posts = await axios.get(`/api/post/?offset=${count}&limit=${nbPostsInRes}`);
+            posts.data.forEach((post, index) => {
+                const usersLiked = post.usersLiked.map(user => user.id);
+                posts.data[index].usersLiked = usersLiked
+            });
+            if (posts.data.length === nbPostsInRes)
+                dispatch(fetchPostsSucess(posts.data, 'feed', false));
+            else
+                dispatch(fetchPostsSucess(posts.data, 'feed', true));
+        } catch {
+            dispatch(fetchPostsError())
+        }
+    }
+}
+
+export const fetchPostsSucess = (posts, type, allPostsFetch) => {
+    if (!allPostsFetch)
+        return {
+            type: FETCH_POSTS_SUCCESS,
+            playload: { posts, type }
+        };
+    else
+        return {
+            type: ALL_POSTS_FETCH,
+            playload: { posts, type }
+        };
+}
+
+export const fetchPostsError = () => {
+    return {
+        type: POSTS_ERROR,
+        playload: 'Echec lors de la récupération des posts.'
     }
 }
 
 export const updatePost = (data, postId, postIndex) => {
     return async (dispatch) => {
-        const newPost = await axios.put(`/api/post/${postId}`, data);
-        dispatch({
-            type: UPDATE_POST,
-            playload: { postIndex, newPost: newPost.data }
-        });
+        try {
+            const newPost = await axios.put(`/api/post/${postId}`, data);
+            dispatch(updatePostSuccess(postIndex, newPost.data));
+        } catch {
+            updatePostError()
+        }
+    }
+}
+
+export const updatePostSuccess = (postIndex, newPost) => {
+    return {
+        type: UPDATE_POST_SUCCESS,
+        playload: { postIndex, newPost }
+    }
+}
+
+export const updatePostError = () => {
+    return {
+        type: POSTS_ERROR,
+        playload: 'Echec lors de la modification du post.'
     }
 }
 
 export const deletePost = (postId, postIndex) => {
     return async (dispatch) => {
-        await axios.delete(`/api/post/${postId}`);
-        dispatch({
-            type: DELETE_POST,
-            playload: { postIndex },
-        });
+        try {
+            await axios.delete(`/api/post/${postId}`);
+            dispatch(deletePostSuccess(postIndex));
+        } catch {
+
+        }
+    }
+}
+
+export const deletePostSuccess = (postIndex) => {
+    return {
+        type: DELETE_POST_SUCCESS,
+        playload: postIndex,
+    }
+}
+
+export const deletePostError = () => {
+    return {
+        type: POSTS_ERROR,
+        playload: 'Echec lors de la supression du post.'
     }
 }
 
 export const likePost = (post, postIndex, userId, userIndex, likeStatut) => {
     return async (dispatch) => {
-        await axios.put(`/api/post/like/${post.id}`, { likeStatut });
-        dispatch({
-            type: LIKE_POST,
-            playload: { postIndex, likeStatut, userId, userIndex }
-        });
+        try {
+            await axios.put(`/api/post/like/${post.id}`, { likeStatut });
+            dispatch(likePostSuccess(postIndex, userId, userIndex, likeStatut));
+        } catch {
+
+        }
     }
 }
 
-export const createCommentPost = (postId, postIndex, user, text) => {
+export const likePostSuccess = (postIndex, userId, userIndex, likeStatut) => {
+    return {
+        type: LIKE_POST_SUCCESS,
+        playload: { postIndex, likeStatut, userId, userIndex }
+    };
+}
+
+export const likePostError = () => {
+    return {
+        type: POSTS_ERROR,
+        playload: 'Echec lors du like / dislike.'
+    }
+}
+
+export const createComment = (postId, postIndex, user, text) => {
+    return async (dispatch) => {
+        try {
+            const comment = await axios.post(`/api/comment/${postId}`, { text });
+            dispatch(createCommentPostSuccess(user, comment.data, postIndex))
+        } catch {
+            dispatch(createCommentError())
+        }
+
+    }
+}
+
+export const createCommentPostSuccess = (user, comment, postIndex) => {
     const { id, firstName, lastName, avatarUrl } = user
-    return async (dispatch) => {
-        const comment = await axios.post(`/api/comment-post/${postId}`, { text });
-        comment.data.User = { id, firstName, lastName, avatarUrl }
-        dispatch({
-            type: CREATE_COMMENT_POST,
-            playload: { comment, postIndex }
-        });
+    comment.User = { id, firstName, lastName, avatarUrl }
+    return {
+        type: CREATE_COMMENT_SUCCESS,
+        playload: { comment, postIndex }
+    };
+}
+
+export const createCommentError = () => {
+    return {
+        type: POSTS_ERROR,
+        playload: 'Echec lors de l\'ajout du commentaire.'
     }
 }
 
-export const updateCommentPost = (commentId, commentIndex, postIndex, text) => {
+export const updateComment = (commentId, commentIndex, postIndex, text) => {
     return async (dispatch) => {
-        await axios.put(`/api/comment-post/${commentId}`, { text });
-        dispatch({
-            type: UPDATE_COMMENT_POST,
-            playload: { commentIndex, postIndex, text }
-        });
+        try {
+            await axios.put(`/api/comment/${commentId}`, { text });
+            dispatch(updateCommentSuccess(commentIndex, postIndex, text))
+        } catch {
+            updateCommentError()
+        }
     }
 }
 
-export const deleteCommentPost = (commentId, commentIndex, postIndex) => {
+export const updateCommentSuccess = (commentIndex, postIndex, text) => {
+    return {
+        type: UPDATE_COMMENT_SUCCESS,
+        playload: { commentIndex, postIndex, text }
+    };
+}
+
+export const updateCommentError = () => {
+    return {
+        type: POSTS_ERROR,
+        playload: 'Echec lors de la modification du commentaire.'
+    }
+}
+
+
+export const deleteComment = (commentId, commentIndex, postIndex) => {
     return async (dispatch) => {
-        await axios.delete(`/api/comment-post/${commentId}`)
-        dispatch({
-            type: DELETE_COMMENT_POST,
-            playload: { commentIndex, postIndex }
-        });
+        try {
+            await axios.delete(`/api/comment/${commentId}`)
+            dispatch(deleteCommentSuccess(commentIndex, postIndex))
+        } catch {
+            dispatch(deleteCommentError)
+        }
+    }
+}
+
+export const deleteCommentSuccess = (commentIndex, postIndex) => {
+    return {
+        type: DELETE_COMMENT_SUCCESS,
+        playload: { commentIndex, postIndex }
+    }
+}
+
+export const deleteCommentError = () => {
+    return {
+        type: POSTS_ERROR,
+        playload: 'Echec lors de la supression du commentaire.'
     }
 }

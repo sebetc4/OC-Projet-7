@@ -8,6 +8,7 @@ import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
 import PersonIcon from '@mui/icons-material/Person';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
+import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
 
 import { logoutUser } from '../../../../store/actions/user.actions';
 
@@ -72,10 +73,21 @@ export default function MobilMenu({ toggleDisplayMobileMenu, displayMobileMenu }
                     <NavLink to={`/settings`} className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
                         <IconButton
                             color="primary"
-                            aria-label="upload picture"
+                            aria-label="Paramètres"
                             onClick={toggleDisplayMobileMenu}
                         >
                             <SettingsIcon fontSize="large" />
+                        </IconButton>
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to={`/chat`} className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
+                        <IconButton
+                            color="primary"
+                            aria-label="Paramètres"
+                            onClick={toggleDisplayMobileMenu}
+                        >
+                            <HeadsetMicIcon fontSize="large" />
                         </IconButton>
                     </NavLink>
                 </li>

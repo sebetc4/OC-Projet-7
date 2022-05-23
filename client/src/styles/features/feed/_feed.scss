@@ -6,12 +6,30 @@
 
 .feed {
     @include center-width($width: $feed-width-desktop);
+    min-height: calc(100vh - $header-height);
 }
 
-.feed-button-more-container{
+.feed-bottom {
+    margin: 30px 0;
     display: flex;
     justify-content: center;
-    margin: 30px 0;
+
+    button {
+        font-size: 12px;
+        color: $grey-color-dark;
+
+        svg {
+            transform: rotate(90deg);
+            height: 15px;
+        }
+    }
+}
+
+.feed-error {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 }
 
 

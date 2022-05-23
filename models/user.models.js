@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'userId',
         as: 'postsLiked'
       })
-      models.User.hasMany(models.CommentPost, {
+      models.User.hasMany(models.Comment, {
         onDelete: 'cascade',
         foreignKey: 'userId',
         hooks: true
@@ -34,16 +34,17 @@ module.exports = (sequelize, DataTypes) => {
         through: 'UsersFollowers'
       })
     }
-
     checkPassword = (password) => {
       if (!bcrypt.compareSync(password, this.password)) {
-        console.log(bcrypt.compareSync(password, this.password))
         throw { message: "Invalid password" };
       }
     }
-
     checkAllow = (targetId) => {
       if (this.id !== targetId && !this.isAdmin)
+        throw { message: 'Not allowed!' }
+    }
+    checkIsAdmin = () => {
+      if (!this.isAdmin)
         throw { message: 'Not allowed!' }
     }
   }

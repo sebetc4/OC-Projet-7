@@ -33,6 +33,9 @@ export default function Login() {
 	const dispatch = useDispatch();
 	const fullScreen = useMediaQuery('(max-width:768px)');
 
+	// Store
+	const deviceSize = useSelector(state => state.app.deviceSize)
+
 	// State
 	const [indexColor, setIndexColor] = useState(0)
 
@@ -46,9 +49,6 @@ export default function Login() {
 	const [mouseOnOneButton, setMouseOnOneButton] = useState(false)
 
 	const [showTextSvg, setShowTextSvg] = useState(true)
-
-	// Store
-	const deviceSize = useSelector(state => state.app.deviceSize)
 
 	// Color
 	const { hsl } = useSpringWeb({

@@ -1,11 +1,13 @@
 .profile {
 	@include center-width($width: $profile-width-desktop);
+	min-height: calc(100vh - $header-height);
+	margin-bottom: 30px;
 }
 
 .profile-header {
 	&__cover-image {
 		width: 100%;
-		height: 436px;
+		max-height: 436px;
 		border-radius: 0 0 5px 5px;
 		overflow: hidden;
 		box-shadow: $box-shadow-main-element;
@@ -21,9 +23,7 @@
 .profile-header-content {
 	@include center-width($width: $profile-width-content-desktop);
 	display: flex;
-	align-content: stretch;
 	margin: 20px auto;
-
 
 	&__avatar {
 		width: 150px;
@@ -38,7 +38,7 @@
 	}
 }
 
-.profile-header-content-infos{
+.profile-header-content-infos {
 	margin-left: 30px;
 	display: flex;
 	flex-direction: column;
@@ -50,71 +50,66 @@
 		font-weight: bold;
 	}
 
-	&__follow-text {
-
+	&__followers {
+		img {
+			cursor: pointer;
+		}
 	}
 }
 
-.profile-row-1-2 {
-	width: 100%;
+.profile-header-content-follow-button-container {
+	flex: 1;
 	display: flex;
-	justify-content: space-around;
+	justify-content: flex-end;
+	align-items: center;
 }
 
-.profile-row-1-2__column-1,
-.profile-row-1-2__column-2 {
-	width: 46%;
+.profile-columns {
+	@include features-columns-desktop;
 }
 
 .profile-user-information,
 .profile-user-bio,
 .profile-user-posts {
-	margin-top: 20px;
-	padding: 20px;
-	background-color: $white-background;
-	box-shadow: $box-shadow-main-element;
-	border-radius: $border-radius-main-element;
-
-	&__title {
-		@include title-section;
-	}
+	@include features-section;
 }
 
 @media screen and (max-width: $media-tablette) {
 	.profile {
-		max-width: 100%;
+		max-width: 95%;
 	}
 
 	.profile-header {
 		&__cover-image {
 			width: 100%;
-			height: 43vw;
-			border-radius: 0 0 5px 5px;
-			overflow: hidden;
-			box-shadow: $box-shadow-main-element;
+			height: auto;
 
 			img {
 				width: 100%;
-				height: 43vw;
+				height: auto;
 				object-fit: cover;
 			}
+		}
+	}
+	.profile-header-content {
+		&__avatar {
+			width: 120px;
+			height: 120px;
 		}
 	}
 }
 
 @media screen and (max-width: $media-mobile) {
-	.profile-row-1-2 {
-		width: 100%;
-		flex-direction: column;
-	}
-
-	.profile-row-1-2__column-1,
-	.profile-row-1-2__column-2 {
-		width: 100%;
+	.profile-columns {
+		@include features-columns-mobile;
 	}
 }
 
 @media screen and (max-width: $media-small-screen) {
+	.profile {
+		max-width: 100%;
+	}
+
 	.profile-header {
 		&__general-information {
 			margin: -40px auto 0 auto;

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom';
-import { useDispatch } from "react-redux";
 
-import IconButton from '@mui/material/IconButton';
+import { IconButton } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import CommentSettings from '../CommentSettings/CommentSettings';
 
+import { CommentSettings } from '../index';
+import { FromNowDate } from '../../../../../../../../components'
 
-export default function CommentContent({ postIndex, comment, commentIndex, user, toggleDisplayModifyComment }) {
+export default function CommentContent({ postIndex, comment, commentIndex, user, toggleDisplayModifyComment, deviceSize }) {
 
     // State
     const [userIsAuthorOrAdmin, setUserIsAuthorOrAdmin] = useState(false)
@@ -27,6 +27,14 @@ export default function CommentContent({ postIndex, comment, commentIndex, user,
                 <NavLink to={`/profile/${comment.userId}`}>
                     {`${comment.User.firstName} ${comment.User.lastName}`}
                 </NavLink>
+                {
+                    deviceSize === 0 &&
+                    <FromNowDate
+                        withoutAgo={true}
+                        date={comment.createdAt}
+                    />
+                }
+
                 <p>{comment.text}</p>
             </div>
             <div>

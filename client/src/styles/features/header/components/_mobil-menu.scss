@@ -4,7 +4,7 @@
 
 .mobil-menu {
 	position: fixed;
-	z-index: 9;
+	z-index: -10;
 	display: flex;
 	top: 0;
 	left: 0;
@@ -21,6 +21,7 @@
 
 .mobil-menu.mobil-menu-open {
 	height: 100%;
+	z-index: 9;
 	border-width: 0px 0px 0px 90px;
 	background-color: rgba(0,0,0,0.3);
 	-webkit-transition: border-width 0.3s, background-color 0.3s;
@@ -79,11 +80,16 @@
 }
 
 .mobil-menu ul li:nth-child(4) { 
+	-webkit-transform: translate3d(-100%,0,0);
+	transform: translate3d(-100%,0,0);
+}
+
+.mobil-menu ul li:nth-child(5) { 
 	-webkit-transform: translate3d(-100%,-100%,0);
 	transform: translate3d(-100%,-100%,0);
 }
 
-.mobil-menu ul li:nth-child(5) { 
+.mobil-menu ul li:nth-child(6) { 
 	-webkit-transform: translate3d(-100%,-200%,0);
 	transform: translate3d(-100%,-200%,0);
 }

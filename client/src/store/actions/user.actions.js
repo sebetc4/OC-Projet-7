@@ -60,10 +60,8 @@ export const logoutUser = () => {
 }
 
 export const updateUser = (data) => {
-    return (dispatch) => {
-        dispatch({
-            type: UPDATE_USER,
-            playload: data
-        });
+    return {
+        type: UPDATE_USER,
+        playload: data
     }
 }

@@ -1,61 +1,74 @@
-import { CREATE_POST, GET_POSTS, LIKE_POST, UPDATE_POST, DELETE_POST, CREATE_COMMENT_POST, DELETE_COMMENT_POST, UPDATE_COMMENT_POST } from "../actions/posts.actions";
+import { RESET_POSTS, CREATE_POST_SUCCESS, FETCH_POSTS_SUCCESS, ALL_POSTS_FETCH, LIKE_POST_SUCCESS, UPDATE_POST_SUCCESS, DELETE_POST_SUCCESS, CREATE_COMMENT_SUCCESS, DELETE_COMMENT_SUCCESS, UPDATE_COMMENT_SUCCESS, POSTS_ERROR } from "../actions/posts.actions";
 
 const postsDefaultState = {
     data: [],
-    isLoaded: false
+    type: '',
+    isLoaded: false,
+    allPostsFetch: false,
+    error: null,
 }
 
 export default function postsReducer(state = postsDefaultState, action) {
     switch (action.type) {
-        case CREATE_POST:
-            return { ...state, data: [action.playload, ...state.data] }
-
-        case GET_POSTS:
-            return { ...state, data: action.playload, isLoaded: true }
-
-        case UPDATE_POST: {
-            const {postIndex, newPost} = action.playload
-            const data = [ ...state.data ]
+        case RESET_POSTS: {
+            return postsDefaultState
+        }
+        case CREATE_POST_SUCCESS: {
+            const post = action.playload
+            return { ...state, data: [post, ...state.data] }
+        }
+        case FETCH_POSTS_SUCCESS: {
+            const {posts, type} = action.playload
+            return { ...state, data: [...state.data, ...posts], type, isLoaded: true, allPostsFetch: false, error: false }
+        }
+        case ALL_POSTS_FETCH: {
+            const {posts, type} = action.playload
+            return { ...state, data: [...state.data, ...posts], type, isLoaded: true, allPostsFetch: true, error: false }
+        }
+        case UPDATE_POST_SUCCESS: {
+            const { postIndex, newPost } = action.playload
+            const data = [...state.data]
             const lastData = data[postIndex]
-            data[postIndex] = {...lastData, ...newPost}
+            data[postIndex] = { ...lastData, ...newPost }
             return { ...state, data }
         }
-        case DELETE_POST: {
-            const { postIndex } = action.playload
+        case DELETE_POST_SUCCESS: {
+            const postIndex = action.playload
             const data = [...state.data]
             data.splice(postIndex, 1)
             return { ...state, data }
         }
-        case LIKE_POST: {
+        case LIKE_POST_SUCCESS: {
             const { postIndex, likeStatut, userId, userIndex } = action.playload
             const data = [...state.data]
-            if (likeStatut) {
-                data[postIndex].likes = state.data[postIndex].likes + 1
+            if (likeStatut)
                 data[postIndex].usersLiked.push(userId)
-            } else {
-                data[postIndex].likes = state.data[postIndex].likes - 1
+            else
                 data[postIndex].usersLiked.splice(userIndex, 1)
-            }
             return { ...state, data }
         }
-        case CREATE_COMMENT_POST: {
+        case CREATE_COMMENT_SUCCESS: {
             const { comment, postIndex } = action.playload
             const data = [...state.data]
-            data[postIndex].CommentPosts.push(comment.data)
+            data[postIndex].Comments.unshift(comment)
             return { ...state, data }
         }
-        case UPDATE_COMMENT_POST: {
+        case UPDATE_COMMENT_SUCCESS: {
             const { commentIndex, postIndex, text } = action.playload
-            const data = [ ...state.data ]
-            data[postIndex].CommentPosts[commentIndex].text = text
+            const data = [...state.data]
+            data[postIndex].Comments[commentIndex].text = text
             return { ...state, data }
         }
-        case DELETE_COMMENT_POST: {
+        case DELETE_COMMENT_SUCCESS: {
             const { commentIndex, postIndex } = action.playload
             const data = [...state.data]
-            data[postIndex].CommentPosts.splice(commentIndex, 1)
+            data[postIndex].Comments.splice(commentIndex, 1)
             return { ...state, data }
         }
+        case POSTS_ERROR: {
+            const error = action.playload
+            return { ...state, error }
+        } 
         default:
             return state;
     }

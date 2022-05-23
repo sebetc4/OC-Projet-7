@@ -5,19 +5,19 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class CommentPost extends Model {
+  class Comment extends Model {
     static associate(models) {
 
-      models.CommentPost.belongsTo(models.User, {
+      models.Comment.belongsTo(models.User, {
         foreignKey: 'userId',
       });
 
-      models.CommentPost.belongsTo(models.Post, {
+      models.Comment.belongsTo(models.Post, {
         foreignKey: 'postId',
       });
     }
   }
-  CommentPost .init({
+  Comment .init({
     id: {
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4,
@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
   },
     {
       sequelize,
-      modelName: 'CommentPost',
+      modelName: 'Comment',
     });
-  return CommentPost;
+  return Comment;
 };

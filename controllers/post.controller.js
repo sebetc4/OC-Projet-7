@@ -18,8 +18,10 @@ exports.createPost = async (req, res, next) => {
 }
 
 exports.getAllPosts = async (req, res, next) => {
+    const offset  = parseInt(req.query.offset);
+    const limit   = parseInt(req.query.limit);
     try {
-        const posts = await findAllPostsUserAndCommentRestrictedAttributes()
+        const posts = await findAllPostsUserAndCommentRestrictedAttributes(offset, limit)
         return res.status(200).json(posts)
     } catch (err) {
         next(err)
@@ -84,12 +86,10 @@ exports.likePost = async (req, res, next) => {
             case 0:
                 if (!alreadyLike) throw { message: 'Post already not liked' }
                 await post.removeUsersLiked(user.id)
-                await post.decrement('likes')
                 return res.status(200).json('Dislike is done')
             case 1:
                 if (alreadyLike) throw { message: 'Post already liked' }
                 await post.addUsersLiked(user.id)
-                await post.increment('likes')
                 return res.status(200).json('Like is done')
             default:
                 throw { message: 'Unable to like or dislike' }

@@ -8,7 +8,7 @@ import { Loader } from "./components";
 
 
 
-const App = () => {
+export default function App() {
 
     // Hooks
     const dispatch = useDispatch();
@@ -19,16 +19,28 @@ const App = () => {
 
     // Set device size in the store
     useLayoutEffect(() => {
+        // const handleResize = () => {
+        //     if (window.innerWidth < 768 && deviceSize !== 0) {
+        //         dispatch(setDeviceSize(0))
+        //     } else if (window.innerWidth >= 768 && window.innerWidth < 1025 && deviceSize !== 1) {
+        //         dispatch(setDeviceSize(1))
+        //     } else if (window.innerWidth >= 1025 && deviceSize !== 2) {
+        //         dispatch(setDeviceSize(2))
+        //         dispatch(setDisplayMobileMenu(false))
+        //     }
+        // }
+        
         const handleResize = () => {
-            if (window.innerWidth < 768 && deviceSize !== 0) {
+            if (window.innerWidth < 768) {
                 dispatch(setDeviceSize(0))
-            } else if (window.innerWidth >= 768 && window.innerWidth < 1025 && deviceSize !== 1) {
+            } else if (window.innerWidth >= 768 && window.innerWidth < 1025) {
                 dispatch(setDeviceSize(1))
-            } else if (window.innerWidth >= 1025 && deviceSize !== 2) {
+            } else if (window.innerWidth >= 1025) {
                 dispatch(setDeviceSize(2))
                 dispatch(setDisplayMobileMenu(false))
             }
         }
+
         handleResize()
         window.addEventListener('resize', handleResize)
         return function cleanup() { window.removeEventListener('resize', handleResize) }
@@ -47,4 +59,3 @@ const App = () => {
         </>
     )
 }
-export default App;

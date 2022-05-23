@@ -18,7 +18,6 @@ export default function Header() {
 
   const toggleDisplayMobileMenu = () => dispatch(setDisplayMobileMenu(!displayMobileMenu))
 
-
   return (
     <>
       <header className='header'>

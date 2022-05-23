@@ -29,7 +29,6 @@ export const addUserFollowed = (userId, data) => {
 
 export const deleteUserFollowed = (userId, index) => {
     return async (dispatch) => {
-        console.log(userId)
         await axios.delete(`/api/follow/${userId}`);
         dispatch({
             type: DELETE_USER_FOLLOWED,

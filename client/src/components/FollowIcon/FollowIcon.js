@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 
 
-import { Chip } from '@mui/material';
+import { Fab } from '@mui/material';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import PersonRemoveAlt1Icon from '@mui/icons-material/PersonRemoveAlt1';
 import { addUserFollowed, deleteUserFollowed } from '../../store/actions/usersFollowed.actions';
 
-export default function FollowIcon({ user }) {
+export default function FollowIcon({ user, handleFollow, handleUnfollow }) {
 
     const [userIsFollowed, setUserIsFollowed] = useState(false)
     const [indexInUsersFollowed, setIndexInUsersFollowed] = useState(null)
@@ -37,22 +37,26 @@ export default function FollowIcon({ user }) {
         }
     }, [usersFollowed, user])
 
-    const handleFollow = () => {
+    const toggleFollow = () => {
         if (userIsFollowed) {
             dispatch(deleteUserFollowed(user.id, indexInUsersFollowed))
+            handleUnfollow()
         }
         else {
             const { id, firstName, lastName, avatarUrl } = user
             dispatch(addUserFollowed(user.id, { id, firstName, lastName, avatarUrl }))
+            handleFollow()
         }
     }
 
     return (
-        <Chip
-            icon={userIsFollowed ? <PersonRemoveAlt1Icon /> : <PersonAddAlt1Icon />}
-            label={userIsFollowed ? 'Se désabonner' : 'S\'abonner'}
-            variant="outlined"
-            onClick={handleFollow}
-        />
+        <Fab
+            variant="extended"
+            onClick={toggleFollow}
+            color='primary'
+        >
+            {userIsFollowed ? <PersonRemoveAlt1Icon sx={{ mr: 1.5 }} /> : <PersonAddAlt1Icon sx={{ mr: 1.5 }} />}
+            {userIsFollowed ? 'Se désabonner' : 'S\'abonner'}
+        </Fab>
     )
 }

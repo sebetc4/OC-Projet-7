@@ -1,0 +1,111 @@
+.todos-filter {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+
+	button {
+		padding: 5px 20px;
+		border-bottom: none;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+}
+
+.todos-item {
+	margin: 5px 30px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+
+	&__text {
+		flex: 1;
+		margin-left: 20px;
+		font-family: 'Gloria Hallelujah', cursive;
+	}
+
+	&__input {
+		display: none;
+	}
+
+	&__check {
+		cursor: pointer;
+		position: relative;
+		margin: auto;
+		width: 18px;
+		height: 18px;
+		-webkit-tap-highlight-color: transparent;
+		transform: translate3d(0, 0, 0);
+
+		&::before {
+			content: '';
+			position: absolute;
+			top: -15px;
+			left: -15px;
+			width: 48px;
+			height: 48px;
+			border-radius: 50%;
+			background: rgba(#223254, 0.03);
+			opacity: 0;
+			transition: opacity 0.2s ease;
+		}
+
+		svg {
+			position: relative;
+			z-index: 1;
+			fill: none;
+			stroke-linecap: round;
+			stroke-linejoin: round;
+			stroke: #c8ccd4;
+			stroke-width: 1.5;
+			transform: translate3d(0, 0, 0);
+			transition: all 0.2s ease;
+
+			path {
+				stroke-dasharray: 60;
+				stroke-dashoffset: 0;
+			}
+			polyline {
+				stroke-dasharray: 22;
+				stroke-dashoffset: 66;
+			}
+		}
+		&:hover {
+			&:before {
+				opacity: 1;
+			}
+			svg {
+				stroke: #42a5f5;
+			}
+		}
+	}
+}
+
+.todos-item__input:checked + .todos-item__check {
+	svg {
+		stroke: #388e3c;
+	}
+	path {
+		stroke-dashoffset: 60;
+		transition: all 0.3s linear;
+	}
+
+	polyline {
+		stroke-dashoffset: 42;
+		transition: all 0.2s linear;
+		transition-delay: 0.15s;
+	}
+}
+
+.todos-add {
+	margin: 20px 30px 0 30px;
+	display: flex;
+	align-items: center;
+
+	&__input {
+		flex: 1;
+	}
+
+	&__button {
+		margin-left: 20px;
+	}
+}

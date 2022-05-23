@@ -10,13 +10,14 @@ export default function Todo() {
   // Hooks
   const dispatch = useDispatch();
 
-  // State
-  const [todoList, setTodoList] = useState([])
-
   // Store
   const allTodos = useSelector(state => state.todos.data)
   const filter = useSelector(state => state.todos.filter)
 
+  // State
+  const [todoList, setTodoList] = useState([])
+
+  // Dispatch
   const dispatchCreateTodo = (todo) => dispatch(createTodo(todo))
   const dispatchSetFilter = (filter) => dispatch(setFilter(filter))
   const dispatchToggleTodo = (index, todoId) => dispatch(toggleTodo(index, todoId))
@@ -49,6 +50,7 @@ export default function Todo() {
       <Divider />
       <TodoList
         todoList={todoList}
+        allTodos={allTodos}
         dispatchToggleTodo={dispatchToggleTodo}
         dispatchDeleteTodo={dispatchDeleteTodo}
       />
