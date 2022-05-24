@@ -1,4 +1,4 @@
-const { User, Post, Todo } = require('../models');
+const { User, Post, Todo, Comment } = require('../models');
 const { getNewUserAvatarPath, getNewUserCoverPath } = require('../utils/pathFile')
 const attributes = require('../utils/attributes')
 const Sequelize = require('sequelize');
@@ -25,7 +25,23 @@ exports.findOneUserAndPostWhereIdRestrictedAttributes = async (id) => {
         where: { id },
         attributes: attributes.user,
         include: [
-            { model: Post },
+            {
+                model: Post,
+                include: [{
+                    model: User,
+                    as: 'usersLiked',
+                    attributes: ['id'],
+                    through: {
+                        attributes: [],
+                    }
+                }, {
+                    model: Comment,
+                    include: {
+                        model: User,
+                        attributes: attributes.userInPost
+                    }
+                }]
+            },
             {
                 model: User,
                 as: 'followers',

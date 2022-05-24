@@ -1,0 +1,126 @@
+.profile-header {
+	&__cover-image {
+		width: 100%;
+		height: 436px;
+
+		img {
+			width: 100%;
+			height: 436px;
+			object-fit: cover;
+			box-shadow: $box-shadow-cover;
+			border-radius: 0 0 5px 5px;
+		}
+	}
+}
+
+.profile-header-content {
+	@include center-width($width: $profile-width-content-desktop);
+	display: flex;
+	margin: 20px auto 10px auto;
+
+	&__avatar {
+		width: 150px;
+		height: 150px;
+		margin-top: -50px;
+		padding: 3px;
+		display: flex;
+		overflow: hidden;
+		border-radius: 50%;
+		background-color: $primary-color;
+		box-shadow: $box-shadow-avatar;
+	}
+}
+
+.profile-header-content-infos {
+	margin-left: 30px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: flex-start;
+
+	&__name {
+		font-size: 24px;
+		font-weight: bold;
+	}
+
+	&__followers {
+		img {
+			cursor: pointer;
+		}
+	}
+}
+
+.profile-header-content-follow-button-container {
+	flex: 1;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+
+	button {
+		z-index: 0;
+	}
+}
+
+@media screen and (max-width: $media-tablette) {
+
+	.profile-header {
+		&__cover-image {
+			width: 100%;
+			height: auto;
+
+			img {
+				width: 100%;
+				height: auto;
+				object-fit: cover;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: $media-mobile) {
+
+	.profile-header {
+		&__cover-image {
+			img {
+				border-radius: 0;
+			}
+		}
+	}
+
+	.profile-header-content {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.profile-header-content-infos {
+		margin: 20px 0 0 0;
+
+		&__name {
+			width: 100%;
+			text-align: center;
+		}
+
+		&__follow-text {
+			margin: 10px 0;
+		}
+
+		&__followers {
+			img {
+				cursor: pointer;
+			}
+		}
+	}
+
+	.profile-header-content-follow-button-container {
+		margin-top: 20px;
+	}
+}
+
+@media screen and (max-width: $media-small-screen) {
+	.profile-header-content {
+		&__avatar {
+			width: 120px;
+			height: 120px;
+		}
+	}
+}

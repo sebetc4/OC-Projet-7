@@ -7,7 +7,7 @@ import { Box, Tab, Tabs } from '@mui/material';
 import { TabContext, TabPanel } from '@mui/lab';
 
 import { Loader, UserCardList } from '../../components';
-import SmallPostList from '../../components/SmallPostsList/SmallPostsList';
+// import SmallPostList from '../../components/SmallPostsList/SmallPostsList';
 
 
 export default function Search() {
@@ -52,14 +52,14 @@ export default function Search() {
                                             <h2 className='search-posts__title'>
                                                 Les posts
                                             </h2>
-                                            {
+                                            {/* {
                                                 postsResult.length !== 0 ?
                                                     <SmallPostList
                                                         type='search'
                                                         posts={postsResult}
                                                     /> :
                                                     <p>Aucun post pour votre recherche</p>
-                                            }
+                                            } */}
                                         </section>
                                     </div>
                                     <div className='search-columns__column-2'>
@@ -90,14 +90,14 @@ export default function Search() {
                                         </Tabs>
                                     </Box>
                                     <TabPanel value="1">
-                                        {
+                                        {/* {
                                             postsResult.length !== 0 ?
                                                 <SmallPostList
                                                     type='search'
                                                     posts={postsResult}
                                                 /> :
                                                 <p>Aucun post pour votre recherche</p>
-                                        }
+                                        } */}
                                     </TabPanel>
                                     <TabPanel value="2">
                                         {

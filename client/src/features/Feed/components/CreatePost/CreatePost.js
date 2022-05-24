@@ -1,12 +1,8 @@
 import React, { useState, forwardRef } from 'react'
-import { PostForm } from '../index'
+import { PostForm } from '../../../../components/PostList/components'
 
 import AddIcon from '@mui/icons-material/Add';
-import Fab from '@mui/material/Fab';
-import Dialog from '@mui/material/Dialog';
-import Slide from '@mui/material/Slide';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
+import { Fab, Dialog, Slide, useMediaQuery } from '@mui/material';
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -14,11 +10,11 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 export default function CreatePost() {
 
-    const theme = useTheme();
+    // Hooks
+	const fullScreen = useMediaQuery('(max-width:768px)');
 
+    // State
     const [displayCreatePost, setDisplayCreatePost] = useState(false)
-
-    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     const toggleDisplayCreatePost = () => setDisplayCreatePost(!displayCreatePost)
 

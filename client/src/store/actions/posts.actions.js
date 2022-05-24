@@ -40,7 +40,7 @@ export const resetPosts = () => {
 export const createPost = (data, user) => {
     return async (dispatch) => {
         try {
-            const post = await axios.post(`/api/posttt`, data);
+            const post = await axios.post(`/api/post`, data);
             dispatch(createPostSuccess(post.data, user));
         } catch {
             dispatch(createPostError())

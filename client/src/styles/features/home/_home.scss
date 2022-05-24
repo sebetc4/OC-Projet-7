@@ -11,7 +11,7 @@
 
 .home-todos,
 .home-news {
-	@include features-section;
+	@include features-section-desktop;
 }
 
 @media screen and (max-width: $media-tablette) {
@@ -23,6 +23,11 @@
 @media screen and (max-width: $media-mobile) {
 	.home-columns {
 		@include features-columns-mobile;
+	}
+
+	.home-todos,
+	.home-news {
+		@include features-section-mobile;
 	}
 }
 

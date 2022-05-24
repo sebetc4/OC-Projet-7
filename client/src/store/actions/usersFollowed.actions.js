@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const GET_USERS_FOLLOWED = 'GET_FOLLOWING'
+export const SET_USERS_FOLLOWED = 'GET_FOLLOWING'
 export const ADD_USER_FOLLOWED = 'ADD_FOLLOWING'
 export const DELETE_USER_FOLLOWED = 'DELETE_USER_FOLLOWED'
 
@@ -10,9 +10,9 @@ export const visibilityFilters = {
     SHOW_ACTIVE: 'SHOW_ACTIVE'
 }
 
-export const getUsersFollowed = (usersFollowed) => {
+export const setUsersFollowed = (usersFollowed) => {
     return {
-        type: GET_USERS_FOLLOWED,
+        type: SET_USERS_FOLLOWED,
         payload: usersFollowed
     }
 }

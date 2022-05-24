@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPosts, resetPosts } from '../../store/actions/posts.actions';
-import { CreatePost, PostCard, PostError } from './components';
+import { CreatePost } from './components';
 
 import { Button, CircularProgress } from '@mui/material';
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 
-import { Loader } from '../../components';
+import { Loader, PostList } from '../../components';
 
 export default function Feed() {
 
@@ -68,15 +68,10 @@ export default function Feed() {
 			{posts.isLoaded && posts.type === 'feed' ?
 				<>
 					<CreatePost />
-					{
-						posts.data.length !== 0 && posts.data.map((post, index) => (
-							<PostCard
-								key={post.id}
-								post={post}
-								postIndex={index}
-							/>
-						))
-					}
+					<PostList
+						type ='feed'
+						posts={posts.data}
+					/>
 					<div className='feed-bottom'>
 						{
 							postsIsLoading && <CircularProgress />
@@ -96,9 +91,6 @@ export default function Feed() {
 				:
 				<Loader />
 			}
-			<PostError 
-				error={posts.error}
-			/>
 		</section>
 	);
 }

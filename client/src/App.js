@@ -1,8 +1,9 @@
 import "./styles/index.scss";
 import React, { useEffect, useLayoutEffect } from "react";
-import Routes from "./routes/routes";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "./store/actions/user.actions";
+
+import Routes from "./routes/routes";
+import { fetchUserData } from "./store/actions/user.actions";
 import { setDeviceSize, setDisplayMobileMenu } from "./store/actions/app.actions";
 import { Loader } from "./components";
 
@@ -17,43 +18,34 @@ export default function App() {
     const userIsLoaded = useSelector(state => state.user.isLoaded)
     const deviceSize = useSelector(state => state.app.deviceSize)
 
+    // Check auth
+    useEffect(() => {
+        dispatch(fetchUserData())
+    }, [])
+    
     // Set device size in the store
     useLayoutEffect(() => {
-        // const handleResize = () => {
-        //     if (window.innerWidth < 768 && deviceSize !== 0) {
-        //         dispatch(setDeviceSize(0))
-        //     } else if (window.innerWidth >= 768 && window.innerWidth < 1025 && deviceSize !== 1) {
-        //         dispatch(setDeviceSize(1))
-        //     } else if (window.innerWidth >= 1025 && deviceSize !== 2) {
-        //         dispatch(setDeviceSize(2))
-        //         dispatch(setDisplayMobileMenu(false))
-        //     }
-        // }
-        
         const handleResize = () => {
-            if (window.innerWidth < 768) {
+            if (window.innerWidth < 769 && deviceSize !== 0) {
                 dispatch(setDeviceSize(0))
-            } else if (window.innerWidth >= 768 && window.innerWidth < 1025) {
+            } else if (window.innerWidth >= 769 && window.innerWidth < 1025 && deviceSize !== 1) {
                 dispatch(setDeviceSize(1))
-            } else if (window.innerWidth >= 1025) {
+            } else if (window.innerWidth >= 1025 && deviceSize !== 2) {
                 dispatch(setDeviceSize(2))
                 dispatch(setDisplayMobileMenu(false))
             }
         }
-
         handleResize()
+        window.removeEventListener('resize', handleResize)
         window.addEventListener('resize', handleResize)
-        return function cleanup() { window.removeEventListener('resize', handleResize) }
-    }, [])
-
-    // Check Auth
-    useEffect(() => {
-        dispatch(getUser())
-    }, [])
+        return () => { window.removeEventListener('resize', handleResize) }
+    }, [deviceSize, dispatch])
 
     return (
         <>
-            {userIsLoaded ? <Routes /> :
+            {userIsLoaded ?
+                <Routes />
+                :
                 <Loader />
             }
         </>

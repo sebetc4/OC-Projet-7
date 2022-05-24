@@ -1,4 +1,4 @@
-import { ADD_USER_FOLLOWED, DELETE_USER_FOLLOWED, GET_USERS_FOLLOWED } from "../actions/usersFollowed.actions"
+import { ADD_USER_FOLLOWED, DELETE_USER_FOLLOWED, SET_USERS_FOLLOWED } from "../actions/usersFollowed.actions"
 
 const usersFollowedDefaultState = {
     data: [],
@@ -6,7 +6,7 @@ const usersFollowedDefaultState = {
 
 export default function usersFollowedReducer(state = usersFollowedDefaultState, action) {
     switch (action.type) {
-        case GET_USERS_FOLLOWED: {
+        case SET_USERS_FOLLOWED: {
             const data = action.payload
             return {
                 data

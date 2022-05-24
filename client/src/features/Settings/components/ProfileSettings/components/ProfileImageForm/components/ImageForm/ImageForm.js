@@ -1,15 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, forwardRef } from "react";
 import { useDispatch } from "react-redux";
 import axios from 'axios';
 import { CropImage } from "../../../../../../../../components";
 import { updateUser } from "../../../../../../../../store/actions/user.actions";
 import { Dialog } from '@mui/material';
 
-import { Fab, Tooltip, Zoom } from '@mui/material';
+import { Fab, Tooltip, Zoom, useMediaQuery, Slide } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+
+const Transition = forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 export default function ImageForm({ picture, user, field, ratio, cropShape, showGrid }) {
 
+    // Hooks
+    const fullScreen = useMediaQuery('(max-width:768px)');
     const dispatch = useDispatch();
 
     const [cropImage, setCropImage] = useState(null)
@@ -19,7 +25,7 @@ export default function ImageForm({ picture, user, field, ratio, cropShape, show
 
     const [formIsSubmitting, setFormIsSubmitting] = useState(false)
 
-    // onSubmit cropImage
+    // onSubmit
     useEffect(() => {
         const submitNewImage = async () => {
             setFormIsSubmitting(true)
@@ -35,6 +41,7 @@ export default function ImageForm({ picture, user, field, ratio, cropShape, show
         if (cropImage) submitNewImage()
     }, [cropImage])
 
+    // Check if avatar and cover are original images
     useEffect(() => {
         if (photoURL.includes('avatar/avatar-profile.webp') || photoURL.includes('cover/cover-profile.webp'))
             setOriginalImage(true)
@@ -100,6 +107,12 @@ export default function ImageForm({ picture, user, field, ratio, cropShape, show
             <Dialog
                 open={openCrop}
                 onClose={handleCancel}
+                TransitionComponent={Transition}
+                fullScreen={fullScreen}
+                keepMounted
+                maxWidth={'xl'}
+                scroll={'body'}
+
             >
                 <CropImage
                     setFormIsSubmitting={setFormIsSubmitting}

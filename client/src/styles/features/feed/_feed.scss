@@ -1,8 +1,4 @@
 @import './components/create-post.scss';
-@import './components/post-card.scss';
-@import './components/post-form.scss';
-@import './components/comment-card.scss';
-@import './components/comment-form.scss';
 
 .feed {
     @include center-width($width: $feed-width-desktop);
@@ -24,14 +20,6 @@
         }
     }
 }
-
-.feed-error {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-}
-
 
 @media screen and (max-width: $media-mobile ) {
 	.feed {

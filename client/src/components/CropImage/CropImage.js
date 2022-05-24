@@ -1,6 +1,9 @@
-import { Button, CircularProgress, Slider } from '@mui/material';
 import React, { useState } from 'react';
 import Cropper from 'react-easy-crop';
+
+import CloseIcon from '@mui/icons-material/Close';
+import { Button, CircularProgress, Slider,IconButton } from '@mui/material';
+
 import getCroppedImg from './utils/scripts';
 
 const CropEasy = (props) => {
@@ -32,6 +35,18 @@ const CropEasy = (props) => {
     return (
 
         <div className='crop-image'>
+            <div className='crop-image-header'>
+                <h2>Recadrer l'image</h2>
+                <div className='post-form-header__button-container'>
+                    <IconButton
+                        color="error"
+                        aria-label="Annuler"
+                        // onClick={}
+                    >
+                        <CloseIcon color='error' fontSize='medium' />
+                    </IconButton>
+                </div>
+            </div>
             <div className='crop-image-cropper-container'>
                 <Cropper
                     image={props.photoURL}
@@ -69,17 +84,17 @@ const CropEasy = (props) => {
                         onChange={(e) => setRotation(e.target.value)}
                     />
                 </div>
-                <div className='crop-image-action__button'>
-                    {!props.formIsSubmitting ?
-                        <Button
-                            variant='outlined'
-                            onClick={cropImage}
-                        >
-                            Valider
-                        </Button> :
-                        <CircularProgress />
-                    }
-                </div>
+            </div>
+            <div className='crop-image-bottom'>
+                {!props.formIsSubmitting ?
+                    <Button
+                        variant='outlined'
+                        onClick={cropImage}
+                    >
+                        Valider
+                    </Button> :
+                    <CircularProgress />
+                }
             </div>
         </div>
     );

@@ -14,7 +14,7 @@
 
 .search-posts,
 .search-users {
-	@include features-section
+	@include features-section-desktop;
 }
 
 @media screen and (max-width: $media-tablette) {

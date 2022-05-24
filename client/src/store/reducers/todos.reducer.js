@@ -1,27 +1,31 @@
-import { CREATE_TODO, DELETE_TODO, GET_TODOS, SET_FILTER, TOGGLE_TODO } from "../actions/todos.actions";
+import { CREATE_TODO_SUCCESS, DELETE_TODO_SUCCESS, SET_TODOS, SET_FILTER, TOGGLE_TODO_SUCCESS, RESET_TODOS, TODOS_ERROR } from "../actions/todos.actions";
 
 const todosDefaultState = {
     data: [],
     filter: 'SHOW_ALL',
+    error: null
 }
 
 export default function todosReducer(state = todosDefaultState, action) {
     switch (action.type) {
-        case GET_TODOS: {
+        case RESET_TODOS: {
+            return todosDefaultState
+        }
+        case SET_TODOS: {
             const todos = action.payload
             return {
                 ...state,
                 data: todos
             }
         }
-        case CREATE_TODO: {
+        case CREATE_TODO_SUCCESS: {
             const newTodo = action.payload
             return {
                 ...state,
                 data: [...state.data, newTodo]
             }
         }
-        case DELETE_TODO: {
+        case DELETE_TODO_SUCCESS: {
             const index = action.payload
             const data = [...state.data]
             data.splice(index, 1)
@@ -37,7 +41,7 @@ export default function todosReducer(state = todosDefaultState, action) {
                 filter
             }
         }
-        case TOGGLE_TODO: {
+        case TOGGLE_TODO_SUCCESS: {
             const index = action.payload
             const data = [...state.data]
             data[index].done = !data[index].done
@@ -46,7 +50,12 @@ export default function todosReducer(state = todosDefaultState, action) {
                 data
             }
         }
-        default:
+        case TODOS_ERROR: {
+            const error = action.playload
+            return { ...state, error }
+        }
+        default: {
             return state;
+        }
     }
 }

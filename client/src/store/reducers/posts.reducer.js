@@ -30,13 +30,13 @@ export default function postsReducer(state = postsDefaultState, action) {
             const data = [...state.data]
             const lastData = data[postIndex]
             data[postIndex] = { ...lastData, ...newPost }
-            return { ...state, data }
+            return { ...state, data, error: false }
         }
         case DELETE_POST_SUCCESS: {
             const postIndex = action.playload
             const data = [...state.data]
             data.splice(postIndex, 1)
-            return { ...state, data }
+            return { ...state, data, error: false }
         }
         case LIKE_POST_SUCCESS: {
             const { postIndex, likeStatut, userId, userIndex } = action.playload
@@ -45,25 +45,25 @@ export default function postsReducer(state = postsDefaultState, action) {
                 data[postIndex].usersLiked.push(userId)
             else
                 data[postIndex].usersLiked.splice(userIndex, 1)
-            return { ...state, data }
+            return { ...state, data, error: false }
         }
         case CREATE_COMMENT_SUCCESS: {
             const { comment, postIndex } = action.playload
             const data = [...state.data]
             data[postIndex].Comments.unshift(comment)
-            return { ...state, data }
+            return { ...state, data, error: false }
         }
         case UPDATE_COMMENT_SUCCESS: {
             const { commentIndex, postIndex, text } = action.playload
             const data = [...state.data]
             data[postIndex].Comments[commentIndex].text = text
-            return { ...state, data }
+            return { ...state, data, error: false }
         }
         case DELETE_COMMENT_SUCCESS: {
             const { commentIndex, postIndex } = action.playload
             const data = [...state.data]
             data[postIndex].Comments.splice(commentIndex, 1)
-            return { ...state, data }
+            return { ...state, data, error: false }
         }
         case POSTS_ERROR: {
             const error = action.playload

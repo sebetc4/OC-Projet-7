@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-d
 import { useSelector } from 'react-redux'
 
 import { Feed, Header, Home, Login, Profile, Settings, Search, ChatTechDep } from '../features'
+import { Errors } from "../components";
 
 
 export default function Index() {
@@ -40,6 +41,7 @@ export default function Index() {
                         {app.deviceSize === 2 &&
                             <ChatTechDep />
                         }
+                        <Errors />
                     </main>
                 </>
             }

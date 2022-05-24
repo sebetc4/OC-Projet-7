@@ -1,0 +1,82 @@
+.post-form {
+	width: 650px;
+	@include standart-modal-desktop;
+}
+
+.post-form-textarea {
+	@include center-width($width: $feed-width-content-desktop);
+	display: block;
+	font-family: 'Open Sans', sans-serif;
+	padding: 8.5px 14px;
+	resize: none;
+	border: none;
+	background-color: transparent;
+	border: thin solid rgba(0, 0, 0, 0.12);
+	border-radius: 5px;
+}
+
+.post-form-image {
+	margin: 20px 0;
+	display: flex;
+	justify-content: center;
+	background-color: black;
+
+	& img {
+		display: block;
+		max-width: 100%;
+		max-height: 300px;
+	}
+}
+
+.post-form-video {
+	margin: 20px 0;
+	display: flex;
+	justify-content: center;
+	background-color: black;
+}
+
+.post-form-actions {
+	@include center-width($width: 90%);
+	margin: 20px auto 0 auto;
+
+	&__buttons {
+		display: flex;
+		justify-content: space-around;
+	}
+}
+
+.post-form-video-input {
+	@include center-width($width: $feed-width-content-desktop);
+	margin: 0 auto;
+	padding: 20px 10px 0 10px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	&__input-container {
+		max-width: 350px;
+	}
+}
+
+@media screen and (max-width: $media-mobile) {
+	.post-form {
+		@include standart-modal-mobile;
+	}
+	
+	.post-form-actions {
+		width: 100%;
+		margin: 40px auto 0 auto;
+	}
+}
+
+@media screen and (max-width: $media-small-screen) {
+	.post-form {
+		@include standart-modal-small-screen
+	}
+
+	.post-form-actions {
+		&__buttons {
+			text-align: center;
+		}
+	}
+}

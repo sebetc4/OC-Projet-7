@@ -17,12 +17,11 @@ export default function Profile() {
 
 	// Store
 	const user = useSelector((state) => state.user.data)
+	const posts = useSelector((state) => state.posts)
 
 	// State
 	const [profileData, setProfileData] = useState(null)
 	const [profileDataIsLoaded, setProfileDataIsLoaded] = useState(false)
-	const [userPostsList, setUserPostsList] = useState([])
-	const [userPostsListLength, setUserPostsListLength] = useState(3)
 
 	// Fetch profileData
 	useEffect(() => {
@@ -84,6 +83,7 @@ export default function Profile() {
 							<div className='profile-columns__column-2'>
 								<ProfileUserPosts
 									profileData={profileData}
+									posts={posts.data}
 								/>
 							</div>
 						</div>

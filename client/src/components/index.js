@@ -20,10 +20,12 @@ export { default as CreationDate } from './dates/CreationDate'
 export { default as MenuModal } from './modals/MenuModal/MenuModal'
 export { default as ConfirmModal } from './modals/ConfirmModal/ConfirmModal'
 
-export { default as SmallPostsList} from './SmallPostsList/SmallPostsList'
+export { default as PostList} from './PostList/PostList'
 
 export { default as Loader } from './Loader/Loader'
 
 export { default as FollowIcon } from './FollowIcon/FollowIcon'
 
 export { default as UserCardList } from './UserCardList/UserCardList'
+
+export { default as Errors } from './Errors/Errors'

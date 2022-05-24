@@ -1,6 +1,6 @@
 import React from 'react'
 import { GroupomaniaLogoSvg } from '../../components'
-import { Navbar, SearchBar, RightMenu, MobilMenu } from './components'
+import { Navbar, SearchBar, RightMenu, MobileMenu } from './components'
 import { useSelector, useDispatch } from 'react-redux';
 import { setDisplayMobileMenu } from '../../store/actions/app.actions';
 
@@ -44,7 +44,7 @@ export default function Header() {
           </>
         }
       </header>
-      <MobilMenu
+      <MobileMenu
         displayMobileMenu={displayMobileMenu}
         toggleDisplayMobileMenu={toggleDisplayMobileMenu}
       />

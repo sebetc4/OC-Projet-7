@@ -1,24 +1,24 @@
 import axios from 'axios';
-import { getTodos } from './todos.actions';
-import { getUsersFollowed } from './usersFollowed.actions';
+import { setTodos } from './todos.actions';
+import { setUsersFollowed } from './usersFollowed.actions';
 
 
-export const GET_USER = 'GET_USER'
+export const FETCH_USER_DATA = 'FETCH_USER_DATA'
 export const LOGIN_USER = 'LOGIN_USER'
 export const LOGOUT_USER = 'LOGOUT_USER'
 export const UPDATE_USER = 'UPDATE_USER'
 
-export const getUser = () => {
+export const fetchUserData = () => {
     return async (dispatch) => {
         try {
             const user = await axios.get('/api/auth');
             if (user.data.user) {
-                dispatch(getTodos(user.data.user.Todos))
-                dispatch(getUsersFollowed(user.data.user.following))
+                dispatch(setTodos(user.data.user.Todos))
+                dispatch(setUsersFollowed(user.data.user.following))
                 delete user.data.user.Todos
                 delete user.data.user.followings
                 dispatch({
-                    type: GET_USER,
+                    type: FETCH_USER_DATA,
                     playload: {
                         data: user.data.user,
                         isLogged: true,
@@ -27,7 +27,7 @@ export const getUser = () => {
                 })
             } else {
                 dispatch({
-                    type: GET_USER,
+                    type: FETCH_USER_DATA,
                     playload: {
                         data: null,
                         isLogged: false,
@@ -37,7 +37,7 @@ export const getUser = () => {
             }
         } catch {
             dispatch({
-                type: GET_USER,
+                type: FETCH_USER_DATA,
                 playload: {
                     data: null,
                     isLogged: false,

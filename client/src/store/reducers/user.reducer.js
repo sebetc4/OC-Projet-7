@@ -1,4 +1,4 @@
-import { GET_USER, LOGOUT_USER, UPDATE_USER } from '../actions/user.actions'
+import { FETCH_USER_DATA, LOGOUT_USER, UPDATE_USER } from '../actions/user.actions'
 
 const userDefaultState = {
     data: {},
@@ -8,7 +8,7 @@ const userDefaultState = {
 
 export default function userReducer(state = userDefaultState, action) {
     switch (action.type) {
-        case GET_USER:
+        case FETCH_USER_DATA:
             return action.playload
         case LOGOUT_USER:
             return { ...userDefaultState, isLoaded: true }

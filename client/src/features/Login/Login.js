@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { a as aw, useSpring as useSpringWeb } from '@react-spring/web'
 import { GroupomaniaTextSvg } from '../../components';
 import { SignInForm, SignUpForm, ThreeCanvas, MagneticButton, ConfirmSignIn } from './components';
-import { getUser } from "../../store/actions/user.actions";
+import { fetchUserData } from "../../store/actions/user.actions";
 import { Dialog, Slide } from '@mui/material';
 
 
@@ -82,7 +82,7 @@ export default function Login() {
 		}
 	}, [mouseOnSignInButton, mouseOnSignUpButton])
 
-	const handleSignIn = () => dispatch(getUser())
+	const handleSignIn = () => dispatch(fetchUserData())
 
 	return (
 		<aw.div style={{ background: springyGradient }} >
