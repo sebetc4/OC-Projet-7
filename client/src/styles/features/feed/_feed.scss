@@ -19,6 +19,11 @@
             height: 15px;
         }
     }
+
+    p {
+        margin-top: 40px;
+        font-size: 18px;
+    }
 }
 
 @media screen and (max-width: $media-mobile ) {

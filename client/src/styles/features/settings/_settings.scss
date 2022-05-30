@@ -1,7 +1,6 @@
 .settings {
 	@include center-width($width: $settings-width-desktop);
 	min-height: calc(100vh - $header-height);
-	background-color: $white-background;
 	padding-top: 30px;
 }
 
@@ -16,41 +15,51 @@
 	flex-direction: column;
 
 	&__button-container {
+		margin-bottom: 10px;
 		display: flex;
 		justify-content: center;
 	}
+}
 
-	.settings-form-row {
-		margin: 0 0 20px 0;
+.settings-form-row {
+	margin-bottom: 20px;
 
-		&--double-inputs {
-			width: 100%;
-			display: flex;
-			justify-content: space-between;
-		}
+	&--double-inputs {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+	}
 
-		&__inputs {
-			width: 45%;
-		}
+	&__inputs {
+		width: 45%;
 	}
 }
 
-.settings-form-images {
+.settings-profile-images {
 	@include center-width($width: 90%);
 	display: flex;
 	justify-content: space-between;
 	margin-bottom: 25px;
+}
 
-	&__form {
-		position: relative;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
+.settings-profile-images-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 
 	&__title {
 		margin-bottom: 10px;
 		font-weight: 600;
+	}
+
+	&__label {
+		position: relative;
+
+		button {
+			position: absolute;
+			right: 0;
+			bottom: 0;
+		}
 	}
 
 	&__avatar {
@@ -62,41 +71,69 @@
 
 	&__cover {
 		width: 352px;
-		height: 150px;
+		max-width: 100%;
+		height: auto;
 		cursor: pointer;
-	}
-
-	button {
-		position: absolute;
-		right: 0;
-		bottom: 0;
 	}
 }
 
 .settings-form-textarea {
-	@include center-width($width: 80%);
-	display: block;
-	font-family: 'Open Sans', sans-serif;
-	padding: 8.5px 14px;
-	resize: none;
-	border: none;
-	background-color: transparent;
-	border: thin solid rgba(0, 0, 0, 0.12);
-	border-radius: 5px;
-}
+	@include textarea;
+	margin-bottom: 20px;
 
-.settings-form-textarea-counter {
-	@include center-width($width: 79%);
-	margin-top: 10px;
-	font-size: 12px;
-
-	&--error {
-		color: red
+	&__input {
+		width: 100%;
 	}
 }
 
-@media screen and (max-width: $media-mobile ) {
+@media screen and (max-width: $media-mobile) {
 	.settings {
-        max-width: 100%;
-    }
+		max-width: 100%;
+	}
+
+	.settings-section {
+		padding: 24px 10px !important;
+
+		.MuiTypography-body1 {
+		}
+	}
+	.settings-form {
+		.settings-form-row {
+			margin: 0;
+			display: flex;
+			justify-content: center;
+
+			&--double-inputs {
+				flex-direction: column;
+				align-items: center;
+			}
+
+			&__inputs {
+				margin-bottom: 20px;
+				width: 80%;
+			}
+		}
+	}
+
+	.settings-profile-images {
+		flex-direction: column;
+	}
+
+	.settings-profile-images-form {
+		margin-bottom: 40px;
+	}
+}
+
+@media screen and (max-width: $media-small-screen) {
+	.settings-form {
+		.settings-form-row {
+			&__inputs {
+				width: 100%;
+			}
+		}
+	}
+
+	.settings-section {
+		padding: 24px 5px !important;
+	}
 }

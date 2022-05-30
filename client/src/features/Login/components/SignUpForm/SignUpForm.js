@@ -38,7 +38,7 @@ export default function FormSignIn(props) {
 
     return (
         <div className="login-form-modal-content">
-            <div className="login-form-modal-content__header">
+            <div className="login-form-modal-content__top">
                 <h2>Connexion</h2>
                 {
                     props.deviceSize === 0 &&

@@ -19,34 +19,34 @@ export default function TodoItem({ todo, allTodos, dispatchToggleTodo, dispatchD
 
     return (
         <li className='todos-item'>
-            <div>
+            <div className='todos-item-input'>
                 <input
-                    className='todos-item__input'
                     id={todo.id}
                     type="checkbox"
                     checked={todo.done}
                     onChange={() => dispatchToggleTodo(index, todo.id)}
                 />
-                <label htmlFor={todo.id} className="todos-item__check">
+                <label htmlFor={todo.id} className="todos-item-input__check">
                     <svg width="18px" height="18px" viewBox="0 0 18 18">
                         <path d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"></path>
                         <polyline points="1 9 7 14 15 4"></polyline>
                     </svg>
                 </label>
             </div>
-            <p
-                className='todos-item__text'
-            >{todo.name}
-            </p>
-            <IconButton
-                component="span"
-                color='error'
-                size='large'
-                onClick={() => dispatchDeleteTodo(index, todo.id)}
-            >
-                <DeleteOutlineOutlinedIcon
-                />
-            </IconButton>
+            <div className='todos-item-text'>
+                <p>{todo.name}</p>
+            </div>
+            <div className='todos-item-delete'>
+                <IconButton
+                    component="span"
+                    color='error'
+                    size='large'
+                    onClick={() => dispatchDeleteTodo(index, todo.id)}
+                >
+                    <DeleteOutlineOutlinedIcon
+                    />
+                </IconButton>
+            </div>
         </li>
     )
 }

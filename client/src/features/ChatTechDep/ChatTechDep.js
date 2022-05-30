@@ -13,12 +13,14 @@ import { LoaderMessage, TechMessage, UserMessage } from './components';
 
 export default function ChatTechDep() {
 
+    // Hooks
+    const chatBoxContentRef = useRef()
+
     // Store
     const user = useSelector((state) => state.user.data)
     const deviceSize = useSelector(state => state.app.deviceSize)
 
-    const chatBoxContentRef = useRef()
-
+    // State
     const [showChatBox, setShowChatBox] = useState(false)
     const [sendMessage, setSendMessage] = useState(`Human: Bonjour je m'appelle ${user.firstName} ${user.lastName}, j'ai un problème.\nAI:Bonjour, je travail au service technique de Groumpomania comment puis-je vous aider?`)
     const [messageList, setMessageList] = useState([`Bonjour ${user.firstName}, comment puis-je vous aider?`])
@@ -32,30 +34,28 @@ export default function ChatTechDep() {
             .required(),
     });
 
+    // Scrool bottom when new message
     useEffect(() => {
-        chatBoxContentRef.current && chatBoxContentRef.current.scrollTo({ top: chatBoxContentRef.current.scrollHeight, behavior: "smooth" })
+        chatBoxContentRef.current?.scrollTo({ top: chatBoxContentRef.current.scrollHeight, behavior: "smooth" })
     }, [messageList, resIsLoading])
 
+    // Fetch AI response
     useEffect(() => {
+        const addMessageToList = async (message) => {
+            message.replace('Human:', '').replace('AI:', '').replace('\n', '')
+            setMessageList(prev => [...prev, message])
+        }
         const fetchResponse = async () => {
             setResIsLoading(true)
             const message = `${sendMessage}Human:${userMessage}\nAI:`
-            const res = await axios.post(`/api/chat-ai/`, { message })
+            const res = await axios.post(`/api/open-ai/`, { message })
             setSendMessage(sendMessage + message + res.data + '\n')
             setResIsLoading(false)
             addMessageToList(res.data)
         }
         if (userMessage) fetchResponse()
-    }, [userMessage])
+    }, [userMessage, sendMessage])
 
-    useEffect(() => {
-
-    })
-
-    const addMessageToList = async (message) => {
-        message.replace('Human:', '').replace('AI:', '').replace('\n', '')
-        setMessageList([...messageList, message])
-    }
 
     const submit = (values, actions) => {
         const mess = values.message
@@ -90,8 +90,8 @@ export default function ChatTechDep() {
                 >
                     <div className='chat-tech-dep-box'>
                         <div
-                            className="chat-tech-dep-box-header"
-                            id="chat-tech-dep-box-header"
+                            className="chat-tech-dep-box-top"
+                            id="chat-tech-dep-box-top"
                         >
                             <h2>Service technique</h2>
                             {deviceSize === 2 &&

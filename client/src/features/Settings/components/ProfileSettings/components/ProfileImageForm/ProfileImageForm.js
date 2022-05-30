@@ -3,7 +3,7 @@ import { ImageForm } from './components'
 
 export default function ProfileImageForm({user}) {
   return (
-    <div className='settings-form-images'>
+    <div className='settings-profile-images'>
       <ImageForm
         user={user}
         field={'avatar'}

@@ -33,6 +33,15 @@ module.exports = (sequelize, DataTypes) => {
         as: 'following',
         through: 'UsersFollowers'
       })
+      models.User.hasMany(models.Conversation, {
+        foreignKey: 'firstUserId',
+      });
+      models.User.hasMany(models.Conversation, {
+        foreignKey: 'secondUserId',
+      });
+      models.User.hasMany(models.Message, {
+        foreignKey: 'senderId',
+      });
     }
     checkPassword = (password) => {
       if (!bcrypt.compareSync(password, this.password)) {
@@ -48,7 +57,6 @@ module.exports = (sequelize, DataTypes) => {
         throw { message: 'Not allowed!' }
     }
   }
-
   User.init({
     id: {
       type: Sequelize.UUID,

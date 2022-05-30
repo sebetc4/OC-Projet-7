@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { findOneUserAndTodoWhereIdAllAttributes } = require('../queries/user.queries')
+const { findOneUserTodoAndFollowWhereId } = require('../queries/user.queries')
 
 const jwt = require("jsonwebtoken");
 
@@ -13,7 +13,7 @@ const extractJwtToken = async (req, res) => {
     if (req.signedCookies.jwt) {
         try {
             const decodedToken = jwt.verify(req.signedCookies.jwt, process.env.TOKEN_SECRET);
-            const user = await findOneUserAndTodoWhereIdAllAttributes(decodedToken.userId)
+            const user = await findOneUserTodoAndFollowWhereId(decodedToken.userId)
             return user
         } catch (err) {
             res.clearCookie('jwt')

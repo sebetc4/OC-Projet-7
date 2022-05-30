@@ -6,7 +6,7 @@ import React from 'react'
 export default function ConfirmSignIn({ deviceSize, closeModal, handleModal }) {
     return (
         <div className='login-form-modal-content login-form-modal-content--confirm'>
-            <div className="login-form-modal-content__header">
+            <div className="login-form-modal-content__top">
                 <h2>Bienvenue!</h2>
                 {
                     deviceSize === 0 &&

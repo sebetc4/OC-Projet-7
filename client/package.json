@@ -33,6 +33,7 @@
 		"redux-logger": "^3.0.6",
 		"redux-thunk": "^2.4.1",
 		"sass": "^1.49.9",
+		"socket.io-client": "^4.5.1",
 		"three": "^0.138.3",
 		"web-vitals": "^2.1.4",
 		"yup": "^0.32.11"

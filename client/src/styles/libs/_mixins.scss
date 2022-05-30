@@ -76,11 +76,11 @@
 	}
 }
 
-@mixin standart-modal-desktop {
+@mixin standard-modal-desktop {
 	padding-bottom: 20px;
 	background-color: $grey-background;
 
-	&-header {
+	&-top {
 		position: relative;
 		width: 100%;
 		display: flex;
@@ -106,12 +106,12 @@
 	}
 }
 
-@mixin standart-modal-mobile {
+@mixin standard-modal-mobile {
 	width: 100%;
 	min-height: 100vh;
 	padding-bottom: 40px;
 
-	&-header {
+	&-top {
 		h2 {
 			margin: 40px 0;
 			font-size: 25px;
@@ -133,8 +133,8 @@
 	}
 }
 
-@mixin standart-modal-small-screen {
-	&-header {
+@mixin standard-modal-small-screen {
+	&-top {
 		width: 100%;
 		display: flex;
 		justify-content: center;
@@ -153,12 +153,35 @@
 }
 
 @mixin textarea {
-	display: block;
-	font-family: 'Open Sans', sans-serif;
-	padding: 8.5px 14px;
-	resize: none;
-	border: none;
-	background-color: transparent;
-	border: thin solid rgba(0, 0, 0, 0.12);
-	border-radius: 5px;
+	&__label {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap; /* added line */
+		border: 0;
+	}
+	
+	&__input {
+		display: block;
+		font-family: 'Open Sans', sans-serif;
+		padding: 8.5px 14px;
+		resize: none;
+		border: none;
+		background-color: transparent;
+		border: thin solid rgba(0, 0, 0, 0.12);
+		border-radius: 5px;
+	}
+
+	&__counter {
+		margin: 10px 0 0 10px;
+		font-size: 12px;
+
+		&--error {
+			color: red;
+		}
+	}
 }

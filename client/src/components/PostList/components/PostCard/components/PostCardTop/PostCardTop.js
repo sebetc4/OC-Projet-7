@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom';
-import { FromNowDate } from '../../../../../../components';
+import { FromNowDate } from '../../../../..';
 import { PostCardSettings } from './components';
 
 import IconButton from '@mui/material/IconButton';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
-export default function PostcardHeader({ type, author, post, postIndex, user, toggleShowModifyPost }) {
+export default function PostCardTop({ type, author, post, postIndex, user, toggleShowModifyPost }) {
 
     // State
     const [userIsAuthorOrAdmin, setUserIsAuthorOrAdmin] = useState(false)
@@ -21,23 +21,23 @@ export default function PostcardHeader({ type, author, post, postIndex, user, to
     const toggleDisplayPostSettings = () => setDisplayPostSettings(!displayPostSettings)
 
     return (
-        <div className={`post-card-header ${type === 'feed' ? '' : 'post-card-header--small'}`}>
+        <div className={`post-card-top ${type === 'feed' ? '' : 'post-card-top--small'}`}>
             {
                 type !== 'profile' ?
                     <NavLink to={`/profile/${author.id}`}>
                         <img
-                            className='post-card-header__avatar'
+                            className='post-card-top__avatar'
                             src={author.avatarUrl}
                             alt={`Avatar de ${author.firstName} ${author.lastName}`}
                         />
                     </NavLink> :
                     <img
-                        className='post-card-header__avatar'
+                        className='post-card-top__avatar'
                         src={author.avatarUrl}
                         alt={`Avatar de ${author.firstName} ${author.lastName}`}
                     />
             }
-            <div className='post-card-header__infos'>
+            <div className='post-card-top__infos'>
                 {
                     type !== 'profile' ?
                         <NavLink to={`/profile/${author.id}`}>
@@ -50,7 +50,7 @@ export default function PostcardHeader({ type, author, post, postIndex, user, to
                 <FromNowDate date={post.createdAt} update={post.updatedAt} />
             </div>
             {userIsAuthorOrAdmin &&
-                <div className='post-card-header__settings-button-container'
+                <div className='post-card-top__settings-button-container'
                 >
                     <IconButton
                         onClick={toggleDisplayPostSettings}

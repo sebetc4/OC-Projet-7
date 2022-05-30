@@ -67,10 +67,6 @@ export const fetchPosts = (count, nbPostsInRes) => {
     return async (dispatch) => {
         try {
             const posts = await axios.get(`/api/post/?offset=${count}&limit=${nbPostsInRes}`);
-            posts.data.forEach((post, index) => {
-                const usersLiked = post.usersLiked.map(user => user.id);
-                posts.data[index].usersLiked = usersLiked
-            });
             if (posts.data.length === nbPostsInRes)
                 dispatch(fetchPostsSucess(posts.data, 'feed', false));
             else
@@ -81,7 +77,12 @@ export const fetchPosts = (count, nbPostsInRes) => {
     }
 }
 
-export const fetchPostsSucess = (posts, type, allPostsFetch) => {
+export const fetchPostsSucess = (data, type, allPostsFetch) => {
+    const posts = data.map((post, index) => {
+        const usersLiked = post.usersLiked.map(user => user.id);
+        post.usersLiked = usersLiked
+        return post
+    });
     if (!allPostsFetch)
         return {
             type: FETCH_POSTS_SUCCESS,

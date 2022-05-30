@@ -9,7 +9,7 @@ import customPasswordInput from '../utils/customPasswordInput'
 import { ConfirmModal } from '../../../../../../components';
 
 
-export default function PasswordForm({closeAccordion}) {
+export default function PasswordForm({ closeAccordion }) {
 
     // State
     const [showPassword, setShowPassword] = useState(false)
@@ -61,6 +61,7 @@ export default function PasswordForm({closeAccordion}) {
 
                     <div className='settings-form-row'>
                         <Field
+                            className='settings-form-row__inputs'
                             name={'password'}
                             label={'Mot de passe'}
                             component={customPasswordInput}
@@ -72,6 +73,7 @@ export default function PasswordForm({closeAccordion}) {
 
                     <div className='settings-form-row settings-form-row--double-inputs'>
                         <Field
+                            className='settings-form-row__inputs'
                             name={'newPassword'}
                             label={'Nouveau mot de passe'}
                             component={customPasswordInput}

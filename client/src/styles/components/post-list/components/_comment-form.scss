@@ -1,34 +1,33 @@
-.post-comment-form-author-name {
-        @include link-style;
-        margin-bottom: 10px ;
-        display: block;
-        font-weight: 600;
-        font-size: 14px;
-}
-
-.post-comment-form-formulary {
-	textarea { 
-        @include textarea;
-        width: 100%;
-
+.comment-form {
+	&__author-name {
+		@include link-style;
+		margin-bottom: 10px;
+		display: block;
+		font-weight: 600;
+		font-size: 14px;
 	}
 
-    &__submit {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-
-        button {
-            margin: 10px 0;
-        }
-    }
+	&__button-container {
+		width: 100%;
+        margin: 20px 0;
+		display: flex;
+		justify-content: center;
+	}
 }
 
+.comment-form-textarea {
+	@include textarea;
+
+	&__input {
+		width: 100%;
+		font-size: 13px;
+	}
+}
 
 @media screen and (max-width: $media-mobile) {
-    .post-comment-form-formulary {
-        textarea {
-            width: 100%;
-        }
-    }
+	.comment-form-formulary {
+		textarea {
+			width: 100%;
+		}
+	}
 }

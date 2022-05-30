@@ -14,14 +14,14 @@ export default function CreatePost() {
 	const fullScreen = useMediaQuery('(max-width:768px)');
 
     // State
-    const [displayCreatePost, setDisplayCreatePost] = useState(false)
+    const [showCreatePost, setShowCreatePost] = useState(false)
 
-    const toggleDisplayCreatePost = () => setDisplayCreatePost(!displayCreatePost)
+    const toggleShowCreatePost = () => setShowCreatePost(!showCreatePost)
 
     return (
         <div className='create-post'>
             <Fab
-                onClick={toggleDisplayCreatePost}
+                onClick={toggleShowCreatePost}
                 color="primary"
                 variant="extended"
             >
@@ -29,7 +29,8 @@ export default function CreatePost() {
                 Ajouter une publication
             </Fab>
             <Dialog
-                open={displayCreatePost}
+                open={showCreatePost}
+                onClose={toggleShowCreatePost}
                 TransitionComponent={Transition}
                 fullScreen={fullScreen}
                 keepMounted
@@ -37,7 +38,7 @@ export default function CreatePost() {
                 scroll={'body'}
             >
                 <PostForm
-                    closeModal={toggleDisplayCreatePost}
+                    closeModal={toggleShowCreatePost}
                     initialValueText={''}
                     initialValueVideoUrl={null}
                 />

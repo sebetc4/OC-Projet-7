@@ -6,8 +6,7 @@ export { default as GroupomaniaTextSvg } from './svg/groupomania/GroupomaniaText
 export { default as GroupomaniaLogoSvg } from './svg/groupomania/GroupomaniaLogoSvg'
 
 export { default as SearchThinSvg } from './svg/icons/SearchThinSvg'
-export { default as AddPictureSvg } from './svg/icons/AddPictureSvg'
-
+export { default as ChatSvg } from './svg/icons/ChatSvg'
 
 export { default as CropImage } from './CropImage/CropImage'
 

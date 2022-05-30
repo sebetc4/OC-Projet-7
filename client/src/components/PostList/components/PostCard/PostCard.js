@@ -5,7 +5,7 @@ import { Dialog, Slide, useMediaQuery } from '@mui/material';
 
 import { likePost } from '../../../../store/actions/posts.actions';
 import { Comments, PostForm } from '../index'
-import { PostCardActions, PostCardContent, PostCardHeader } from './components';
+import { PostCardActions, PostCardContent, PostCardTop } from './components';
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -46,7 +46,7 @@ export default function PostCard({ type, post, postIndex, author }) {
     return (
         <>
             <article className='post-card'>
-                <PostCardHeader
+                <PostCardTop
                     type={type}
                     author={author}
                     post={post}

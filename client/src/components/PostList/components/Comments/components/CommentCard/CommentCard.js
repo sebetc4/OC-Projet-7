@@ -20,28 +20,28 @@ export default function CommentCard({ type, comment, commentIndex, post, postInd
     const toggleShowModifyComment = () => setShowModifyComment(!showModifyComment)
 
     return (
-        <article className='post-comment-card'>
+        <article className='comment-card'>
             {
                 (deviceSize !== 0 && type === 'feed') &&
-                <div className='post-comment-card-left'>
+                <div className='comment-card-left'>
                     <FromNowDate
                         withoutAgo={true}
                         date={comment.createdAt}
                     />
                 </div >
             }
-            <div className='post-comment-card-center'>
+            <div className='comment-card-center'>
                 <span />
                 <NavLink to={`/profile/${comment.userId}`}>
                     <img
-                        className='post-comment-card-center__avatar'
+                        className='comment-card-center__avatar'
                         src={comment.User.avatarUrl}
                         alt={`Avatar de ${comment.User.firstName} ${comment.User.lastName}`}
                     />
                 </NavLink>
                 <span />
             </div>
-            <div className='post-comment-card-right'>
+            <div className='comment-card-right'>
                 {!showModifyComment ?
                     <CommentContent
                         key={comment.id}
@@ -55,7 +55,7 @@ export default function CommentCard({ type, comment, commentIndex, post, postInd
                     /> :
                     <CommentForm
                         type={'modify'}
-                        toggleShowForm={toggleShowModifyComment}
+                        toggleShowCommentForm={toggleShowModifyComment}
                         initialValueText={comment.text}
                         textareaRef={textareaRef}
                         commentId={comment.id}

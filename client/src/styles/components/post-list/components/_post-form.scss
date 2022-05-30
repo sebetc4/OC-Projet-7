@@ -1,18 +1,15 @@
 .post-form {
 	width: 650px;
-	@include standart-modal-desktop;
+	@include standard-modal-desktop;
 }
 
 .post-form-textarea {
 	@include center-width($width: $feed-width-content-desktop);
-	display: block;
-	font-family: 'Open Sans', sans-serif;
-	padding: 8.5px 14px;
-	resize: none;
-	border: none;
-	background-color: transparent;
-	border: thin solid rgba(0, 0, 0, 0.12);
-	border-radius: 5px;
+	@include textarea;
+	margin: 10px auto 30px auto;
+	&__input {
+		width: 100%;
+	}
 }
 
 .post-form-image {
@@ -60,7 +57,7 @@
 
 @media screen and (max-width: $media-mobile) {
 	.post-form {
-		@include standart-modal-mobile;
+		@include standard-modal-mobile;
 	}
 	
 	.post-form-actions {
@@ -71,7 +68,7 @@
 
 @media screen and (max-width: $media-small-screen) {
 	.post-form {
-		@include standart-modal-small-screen
+		@include standard-modal-small-screen
 	}
 
 	.post-form-actions {

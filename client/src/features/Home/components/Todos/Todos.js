@@ -51,6 +51,7 @@ export default function Todo() {
       <TodoList
         todoList={todoList}
         allTodos={allTodos}
+        filter={filter}
         dispatchToggleTodo={dispatchToggleTodo}
         dispatchDeleteTodo={dispatchDeleteTodo}
       />

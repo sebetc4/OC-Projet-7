@@ -11,19 +11,25 @@
 	}
 }
 
-.todos-item {
-	margin: 5px 30px;
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-
-	&__text {
-		flex: 1;
-		margin-left: 20px;
+.todos-list {
+	&__no-todo-text {
+		margin: 20px 0;
+		text-align: center;
 		font-family: 'Gloria Hallelujah', cursive;
 	}
+}
 
-	&__input {
+.todos-item {
+	width: 100%;
+	padding: 0 10px;
+	display: flex;
+	align-items: center;
+}
+
+.todos-item-input {
+	margin-left: 10px;
+	
+	input {
 		display: none;
 	}
 
@@ -80,7 +86,16 @@
 	}
 }
 
-.todos-item__input:checked + .todos-item__check {
+.todos-item-text {
+	flex: 1;
+	margin-left: 20px;
+	white-space: pre-wrap;
+	word-break: break-word;
+	overflow-wrap: anywhere;
+	font-family: 'Gloria Hallelujah', cursive;
+}
+
+.todos-item-input input:checked + .todos-item-input__check {
 	svg {
 		stroke: #388e3c;
 	}

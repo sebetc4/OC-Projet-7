@@ -3,9 +3,9 @@ import { Formik } from 'formik'
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
+import { IconButton } from '@mui/material';
 
 import { SearchThinSvg } from '../../../../components';
-import { IconButton } from '@mui/material';
 
 export default function SearchBar() {
 
@@ -19,10 +19,7 @@ export default function SearchBar() {
     });
 
     const submit = (values, actions) => {
-        const query = Object
-            .keys(values)
-            .map(k => `${k}=${values[k]}&`)
-            .join('');
+        const query = values.query.replaceAll(' ', '+')
         navigate(`/search/${query}`, { replace: true })
         values.query = ''
         actions.setSubmitting(false);

@@ -1,16 +1,19 @@
 import React, { useState } from 'react'
+import { useSelector } from "react-redux";
 
-import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import Tabs from '@mui/material/Tabs';
-import TabPanel from '@mui/lab/TabPanel';
+
+import { Box, Tab, Tabs } from '@mui/material';
+import { TabPanel, TabContext } from '@mui/lab';
 
 import { AccountSettings, ProfileSettings } from './components'
 import { Divider } from '@mui/material';
 
 export default function Settingss() {
 
+  // Store
+  const deviceSize = useSelector(state => state.app.deviceSize)
+
+  // State
   const [value, setValue] = useState('1');
 
   const handleChange = (e, newValue) => {
@@ -20,21 +23,35 @@ export default function Settingss() {
   return (
     <div className='settings'>
       <TabContext value={value}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Box
+          sx={{ borderBottom: 1, borderColor: 'divider' }}
+        >
           <Divider />
-          <Tabs 
-          centered
-          onChange={handleChange} 
-          value={value}
+          <Tabs
+            centered
+            onChange={handleChange}
+            value={value}
           >
-            <Tab className='settings-tab' label="Paramètres de compte" value="1" />
-            <Tab className='settings-tab' label="Paramètres de profil" value="2" />
+            <Tab
+              className='settings-tab'
+              label={`${deviceSize === 0 ? 'Compte' : 'Paramètres de compte'}`}
+              value="1" />
+            <Tab 
+            className='settings-tab' 
+            label={`${deviceSize === 0 ? 'Profil' : 'Paramètres de profil'}`}
+            value="2" />
           </Tabs>
         </Box>
-        <TabPanel value="1">
+        <TabPanel
+          className='settings-section'
+          value="1"
+        >
           <AccountSettings />
         </TabPanel>
-        <TabPanel value="2">
+        <TabPanel
+          value="2"
+          className='settings-section'
+        >
           <ProfileSettings />
         </TabPanel>
       </TabContext>

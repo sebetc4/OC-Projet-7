@@ -1,49 +1,62 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios'
 
 import { Box, Tab, Tabs } from '@mui/material';
 import { TabContext, TabPanel } from '@mui/lab';
 
 import { Loader, UserCardList } from '../../components';
-// import SmallPostList from '../../components/SmallPostsList/SmallPostsList';
+import { resetPosts, fetchPostsSucess } from '../../store/actions/posts.actions';
+import SearchPosts from './components/SearchPost/SearchPosts';
+import SearchUsers from './components/SearchUsers/SearchUsers';
 
 
 export default function Search() {
 
     // Hooks
     const params = useParams();
+    const dispatch = useDispatch()
 
     // Store
     const deviceSize = useSelector((state) => state.app.deviceSize)
+    const posts = useSelector((state) => state.posts)
 
     // State
     const [value, setValue] = useState('1');
-    const [postsResult, setPostsResult] = useState(null)
     const [usersResult, setUsersResult] = useState(null)
-    const [resultLoaded, setResultLoaded] = useState(false)
+    const [resultsLoaded, setResultsLoaded] = useState(false)
 
     const handleChange = (e, newValue) => {
         setValue(newValue);
     };
 
+    // Fetch results
     useEffect(() => {
         const getResult = async () => {
-            const results = await axios.get(`/api/search/?${params.query}`)
-            setPostsResult(results.data.posts)
+            const results = await axios.get(`/api/search/?query=${params.query}`)
+            dispatch(fetchPostsSucess(results.data.posts, 'search', true))
             setUsersResult(results.data.users)
-            setResultLoaded(true)
         }
         getResult()
-    }, [params.query])
+        return () => dispatch(resetPosts())
+    }, [params.query, dispatch])
+
+    // Check if results loaded
+    useEffect(() => {
+        if (posts.type === 'search' && usersResult)
+            setResultsLoaded(true)
+        else
+            setResultsLoaded(false)
+    }, [posts, usersResult])
+
     return (
         <>
             {
-                !resultLoaded ?
+                !resultsLoaded ?
                     <Loader /> :
                     <div className='search'>
-                        <h1 className='search__title'>Réslultat de la recherche "{params.query.split('query=')[1].replace('&', ' ').slice(0, -1)}"</h1>
+                        <h1 className='search__title'>Réslultat de la recherche "{params.query}"</h1>
                         {
                             deviceSize === 2 ?
                                 <div className='search-columns'>
@@ -52,14 +65,9 @@ export default function Search() {
                                             <h2 className='search-posts__title'>
                                                 Les posts
                                             </h2>
-                                            {/* {
-                                                postsResult.length !== 0 ?
-                                                    <SmallPostList
-                                                        type='search'
-                                                        posts={postsResult}
-                                                    /> :
-                                                    <p>Aucun post pour votre recherche</p>
-                                            } */}
+                                            <SearchPosts
+                                                posts={posts.data}
+                                            />
                                         </section>
                                     </div>
                                     <div className='search-columns__column-2'>
@@ -67,14 +75,9 @@ export default function Search() {
                                             <h2 className='search-users__title'>
                                                 Les utilisateurs
                                             </h2>
-                                            {
-                                                usersResult.length !== 0 ?
-                                                    <UserCardList
-                                                        users={usersResult}
-
-                                                    /> :
-                                                    <p>Aucun utilisateur pour votre recherche</p>
-                                            }
+                                            <SearchUsers
+                                                users={usersResult}
+                                            />
                                         </section>
                                     </div>
                                 </div> :

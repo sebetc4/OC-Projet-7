@@ -1,5 +1,6 @@
 .search {
 	@include center-width($width: $profile-width-desktop);
+	margin-bottom: 30px;
 
 	&__title {
 		margin: 30px 0;
@@ -15,6 +16,12 @@
 .search-posts,
 .search-users {
 	@include features-section-desktop;
+}
+
+.search-posts-bottom {
+	margin-top: 20px;
+	display: flex;
+	justify-content: center;
 }
 
 @media screen and (max-width: $media-tablette) {

@@ -1,5 +1,5 @@
 .crop-image{
-    @include standart-modal-desktop;
+    @include standard-modal-desktop;
     width: 600px;
     position: relative;
 }
@@ -26,12 +26,12 @@
 
 @media screen and (max-width: $media-mobile) {
 	.crop-image {
-		@include standart-modal-mobile;
+		@include standard-modal-mobile;
 	}
 }
 
 @media screen and (max-width: $media-small-screen) {
 	.crop-image {
-		@include standart-modal-small-screen
+		@include standard-modal-small-screen
 	}
 }

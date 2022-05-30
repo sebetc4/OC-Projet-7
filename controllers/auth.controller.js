@@ -1,11 +1,11 @@
-const { findOneUserWhereEmailAllAttributes } = require('../queries/user.queries')
+const { findOneUserWhereEmail } = require('../queries/user.queries')
 
 // Contrôleur de connexion
 exports.login = async (req, res, next) => {
     const { email, password } = req.body
     if (!email || !password) throw { message: 'Missing parameters' }
     try {
-        const user = await findOneUserWhereEmailAllAttributes(email)
+        const user = await findOneUserWhereEmail(email)
         user.checkPassword(password)
         req.login(user.id)
         return res.status(200).json('User logged in')

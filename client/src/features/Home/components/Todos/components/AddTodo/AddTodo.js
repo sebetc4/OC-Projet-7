@@ -8,7 +8,7 @@ import AddIcon from '@mui/icons-material/Add';
 export default function AddTodo({ dispatchCreateTodo }) {
 
     const todoSchema = Yup.object().shape({
-        todo: Yup.string().min(1).max(30, 'Trop long').required("Champ requis"),
+        todo: Yup.string().min(1, 'Trop court').max(50, 'Trop long').required("Champ requis"),
     });
 
     const submit = (values, actions) => {
@@ -34,7 +34,7 @@ export default function AddTodo({ dispatchCreateTodo }) {
                 >
                     <Field
                         className='todos-add__input'
-                        error={errors.todo}
+                        error={!!errors.todo}
                         as={TextField}
                         variant='outlined'
                         name={'todo'}
@@ -49,7 +49,7 @@ export default function AddTodo({ dispatchCreateTodo }) {
                             component="span"
                             size='large'
                             color='primary'
-                            disabled={isSubmitting && !isValid }
+                            disabled={ !(!isSubmitting && isValid && values.todo !== '') }
                         >
                             <AddIcon />
                         </IconButton>

@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import { useSelector } from 'react-redux'
 
-import { Feed, Header, Home, Login, Profile, Settings, Search, ChatTechDep } from '../features'
+import { Feed, Header, Home, Login, Profile, Settings, Search, ChatTechDep, Chat } from '../features'
 import { Errors } from "../components";
 
 
@@ -22,7 +22,7 @@ export default function Index() {
                 :
                 <>
                     <Header />
-                    <main className={`main ${app.displayMobileMenu && 'main--active-menu'}`}>
+                    <main className={`main ${app.displayMobileMenu ? 'main--active-menu' : ''}`}>
                         <Routes>
                             <Route path='/search' >
                                 <Route path=':query' element={<Search />} />
@@ -33,8 +33,9 @@ export default function Index() {
                                 <Route path=':userId' element={<Profile />} />
                             </Route>
                             <Route path='/settings' element={<Settings />} />
+                            <Route path='/chat' element={<Chat />} />
                             {
-                                app.deviceSize !== 2 && <Route path='/chat' element={<ChatTechDep />} />
+                                app.deviceSize !== 2 && <Route path='/chat-tech-dep' element={<ChatTechDep />} />
                             }
                             <Route path='*' element={<Navigate to={`/home`} replace />} />
                         </Routes>

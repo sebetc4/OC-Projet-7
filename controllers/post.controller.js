@@ -1,5 +1,5 @@
 const { getNewPostImagePath, getModifyPostImagePath } = require('../utils/pathFile')
-const { createPost, findAllPostsUserAndCommentRestrictedAttributes, findOnePostWhereIdAllAttributes } = require('../queries/post.queries')
+const { createPost, findAllPostsUserLikeAndComment, findOnePostWhereId } = require('../queries/post.queries')
 const { deleteLastPostImage } = require('../utils/deleteFile')
 
 
@@ -21,7 +21,7 @@ exports.getAllPosts = async (req, res, next) => {
     const offset  = parseInt(req.query.offset);
     const limit   = parseInt(req.query.limit);
     try {
-        const posts = await findAllPostsUserAndCommentRestrictedAttributes(offset, limit)
+        const posts = await findAllPostsUserLikeAndComment(offset, limit)
         return res.status(200).json(posts)
     } catch (err) {
         next(err)
@@ -47,7 +47,7 @@ exports.updatePost = async (req, res, next) => {
     const postId = req.params.id
     try {
         if (!postId || !text && !req.files.post) throw { message: 'Missing parameters' }
-        const post = await findOnePostWhereIdAllAttributes(postId)
+        const post = await findOnePostWhereId(postId)
         user.checkAllow(post.UserId)
         const postObject = getPostObject(req, text, videoUrl, updateImage)
         if ((postObject.imageUrl && post.videoUrl) || (postObject.videoUrl && post.imageUrl)) throw { message: 'Image and video in same post is not allowed' }
@@ -64,7 +64,7 @@ exports.deletePost = async (req, res, next) => {
     const postId = req.params.id
     try {
         if (!postId) throw { message: 'Missing parameters' }
-        const post = await findOnePostWhereIdAllAttributes(postId)
+        const post = await findOnePostWhereId(postId)
         user.checkAllow(post.UserId)
         post.imageUrl && deleteLastPostImage(post)
         await post.destroy()
@@ -80,7 +80,7 @@ exports.likePost = async (req, res, next) => {
     const postId = req.params.id
     try {
         if (!postId || likeStatut == null) throw { message: 'Missing parameters' }
-        const post = await findOnePostWhereIdAllAttributes(postId)
+        const post = await findOnePostWhereId(postId)
         const alreadyLike = await post.hasUsersLiked(user.id)
         switch (likeStatut) {
             case 0:

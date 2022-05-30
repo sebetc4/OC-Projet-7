@@ -35,4 +35,11 @@
 	.home {
 		max-width: 100%;
 	}
+
+	.home-todos {
+		padding: 20px 0;
+		&__title {
+			margin-left: 20px;
+		}
+	}
 }

@@ -11,6 +11,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import HeadsetMicIcon from '@mui/icons-material/HeadsetMic';
 
 import { logoutUser } from '../../../../store/actions/user.actions';
+import { ChatSvg } from '../../../../components';
 
 
 export default function MobilMenu({ toggleDisplayMobileMenu, displayMobileMenu }) {
@@ -70,6 +71,17 @@ export default function MobilMenu({ toggleDisplayMobileMenu, displayMobileMenu }
                     </NavLink>
                 </li>
                 <li>
+                    <NavLink to={`/chat`} className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
+                        <IconButton
+                            color="primary"
+                            aria-label="Paramètres"
+                            onClick={toggleDisplayMobileMenu}
+                        >
+                            <ChatSvg />
+                        </IconButton>
+                    </NavLink>
+                </li>
+                <li>
                     <NavLink to={`/settings`} className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
                         <IconButton
                             color="primary"
@@ -81,7 +93,7 @@ export default function MobilMenu({ toggleDisplayMobileMenu, displayMobileMenu }
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to={`/chat`} className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
+                    <NavLink to={`/chat-tech-dep`} className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
                         <IconButton
                             color="primary"
                             aria-label="Paramètres"

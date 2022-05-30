@@ -26,7 +26,7 @@
 	overflow: hidden;
 }
 
-.chat-tech-dep-box-header {
+.chat-tech-dep-box-top {
 	background: #ededed;
 	height: 50px;
 	display: flex;
@@ -139,10 +139,6 @@
 	width: 100%;
 	display: flex;
 	background: #ededed;
-
-	&__arrow {
-		transform: rotate(90deg);
-	}
 }
 
 .chat-tech-dep-box-bottom-form {

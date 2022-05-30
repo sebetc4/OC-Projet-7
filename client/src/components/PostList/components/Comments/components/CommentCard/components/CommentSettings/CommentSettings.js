@@ -13,7 +13,7 @@ import ContentCut from '@mui/icons-material/ContentCut';
 import DeleteOutlineOutlined from '@mui/icons-material/DeleteOutlineOutlined';
 
 
-export default function CommentSettings({ closeModal, commentId, commentIndex, postIndex, toggleDisplayModifyComment }) {
+export default function CommentSettings({ closeModal, commentId, commentIndex, postIndex, toggleShowModifyComment }) {
 
     const dispatch = useDispatch()
 
@@ -21,12 +21,12 @@ export default function CommentSettings({ closeModal, commentId, commentIndex, p
 
     return (
         <MenuModal closeModal={closeModal}>
-            <div className='post-comment-card-settings'>
+            <div className='comment-card-settings'>
                 <Paper sx={{ width: 200 }}>
                     <MenuList>
                         <MenuItem
                             onClick={() => {
-                                toggleDisplayModifyComment()
+                                toggleShowModifyComment()
                                 closeModal()
                             }}
                         >
@@ -35,7 +35,7 @@ export default function CommentSettings({ closeModal, commentId, commentIndex, p
                             </ListItemIcon>
                             <ListItemText>Modifier</ListItemText>
                         </MenuItem>
-                        <Divider className='post-comment-card-settings__divider'/>
+                        <Divider className='comment-card-settings__divider'/>
                         <MenuItem
                             onClick={() => {
                                 handleDeleteComment()

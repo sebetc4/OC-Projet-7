@@ -1,4 +1,4 @@
-const { createComment, getOneCommentWhereIdAllAttributes } = require('../queries/comment.queries')
+const { createComment, getOneCommentWhereId } = require('../queries/comment.queries')
 
 
 exports.createComment = async (req, res, next) => {
@@ -19,7 +19,7 @@ exports.updateComment = async (req, res, next) => {
     const commentId = req.params.id
     try {
         if (!commentId || !text ) throw { message: 'Missing parameters' }
-        const comment = await getOneCommentWhereIdAllAttributes(commentId)
+        const comment = await getOneCommentWhereId(commentId)
         user.checkAllow(comment.userId)
         await comment.update({text});
         return res.status(200).json(comment)
@@ -32,7 +32,7 @@ exports.deleteComment = async (req, res, next) => {
     const user = req.user
     const commentId = req.params.id
     try {
-        const comment = await getOneCommentWhereIdAllAttributes(commentId)
+        const comment = await getOneCommentWhereId(commentId)
         user.checkAllow(comment.userId)
         await comment.destroy()
         res.status(200).json("Comment deletion is done")

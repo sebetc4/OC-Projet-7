@@ -71,39 +71,40 @@ export default function ImageForm({ picture, user, field, ratio, cropShape, show
 
     return (
         <form
-            className="settings-form-images__form"
+            className="settings-profile-images-form"
             action=''
         >
-            <h3 className="settings-form-images__title">{`${field === 'cover' ? 'Couverture' : 'Avatar'}`}</h3>
-            <Tooltip
-                TransitionComponent={Zoom}
-                title="Modifier"
-            >
-                <label>
-                    <input
-                        accept="image/*"
-                        id={field}
-                        name={field}
-                        type="file"
-                        style={{ display: 'none' }}
-                        onChange={handleChange}
-                    />
+            <h3 className="settings-profile-images-form__title">{`${field === 'cover' ? 'Couverture' : 'Avatar'}`}</h3>
+
+            <label className="settings-profile-images-form__label">
+                <input
+                    accept="image/*"
+                    id={field}
+                    name={field}
+                    type="file"
+                    style={{ display: 'none' }}
+                    onChange={handleChange}
+                />
+                <Tooltip
+                    TransitionComponent={Zoom}
+                    title="Modifier"
+                >
                     <img
-                        className={`settings-form-images__${field === 'cover' ? 'cover' : 'avatar'}`}
+                        className={`settings-profile-images-form__${field === 'cover' ? 'cover' : 'avatar'}`}
                         src={photoURL}
                         alt={field}
                     />
-                </label>
-            </Tooltip>
-            {!originalImage &&
-                <Fab
-                    size="small"
-                    aria-label="supprimer"
-                    onClick={handleDelete}
-                >
-                    <DeleteIcon />
-                </Fab>
-            }
+                </Tooltip>
+                {!originalImage &&
+                    <Fab
+                        size="small"
+                        aria-label="supprimer"
+                        onClick={handleDelete}
+                    >
+                        <DeleteIcon />
+                    </Fab>
+                }
+            </label>
             <Dialog
                 open={openCrop}
                 onClose={handleCancel}

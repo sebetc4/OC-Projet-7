@@ -7,12 +7,14 @@ const postRoutes = require("./post.routes")
 const commentRoutes = require("./comment.routes")
 const searchRoutes = require("./search.routes")
 const todoRoutes = require("./todo.routes")
-const chatAIRoutes = require("./chatAI.routes")
+const openAiRoutes = require("./openAi.routes")
 const followRoutes = require("./follow.routes")
+const conversationRoutes = require('./conversation.routes')
+const messageRoutes = require('./message.routes')
 
 
 // Static routes
-router.use(express.static(path.join(__dirname,'../client/build')))
+router.use(express.static(path.join(__dirname, '../client/build')))
 router.use('/images', express.static(path.join(__dirname, '../images')));
 
 // Back routes
@@ -22,13 +24,15 @@ router.use("/api/post", postRoutes);
 router.use("/api/comment", commentRoutes);
 router.use("/api/todo", todoRoutes);
 router.use("/api/search", searchRoutes);
-router.use('/api/chat-ai/', chatAIRoutes)
-router.use('/api/follow/', followRoutes)
+router.use('/api/open-ai', openAiRoutes)
+router.use('/api/follow', followRoutes)
+router.use('/api/conversation', conversationRoutes)
+router.use('/api/message', messageRoutes)
 
 
 // Front route
 router.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'))
-  })
-  
+  res.sendFile(path.join(__dirname, '../client/build/index.html'))
+})
+
 module.exports = router;

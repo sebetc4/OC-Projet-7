@@ -30,9 +30,9 @@ export default function AccountSettings() {
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1bh-content"
-                        id="panel1bh-header"
+                        id="panel1bh-top"
                     >
-                        <Typography sx={{ width: '50', flexShrink: 0 }}>
+                        <Typography sx={{ width: '75%', flexShrink: 0 }}>
                             Adresse email
                         </Typography>
                     </AccordionSummary>
@@ -47,9 +47,9 @@ export default function AccountSettings() {
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel2bh-content"
-                        id="panel2bh-header"
+                        id="panel2bh-top"
                     >
-                        <Typography sx={{ width: '50%', flexShrink: 0 }}>
+                        <Typography sx={{ width: '75%', flexShrink: 0 }}>
                             Mot de passe
                         </Typography>
                     </AccordionSummary>
@@ -64,9 +64,9 @@ export default function AccountSettings() {
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel3bh-content"
-                        id="panel3bh-header"
+                        id="panel3bh-top"
                     >
-                        <Typography sx={{ width: '33%', flexShrink: 0 }}>
+                        <Typography sx={{ width: '75%', flexShrink: 0 }}>
                             Supression du compte
                         </Typography>
                     </AccordionSummary>

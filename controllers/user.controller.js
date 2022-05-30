@@ -1,5 +1,5 @@
 const { getModifyUserImagePath, getInitialPath } = require('../utils/pathFile')
-const { createUser, findOneUserAndPostWhereIdRestrictedAttributes } = require('../queries/user.queries')
+const { createUser, findOneUserPostAndFollowWhereId } = require('../queries/user.queries')
 const { deleteLastUserImage } = require('../utils/deleteFile');
 
 exports.createUser = async (req, res, next) => {
@@ -17,7 +17,7 @@ exports.getOneUser = async (req, res, next) => {
     const userId = req.params.id
     try {
         if (!userId) throw { message: 'Missing parameters' }
-        const user = await findOneUserAndPostWhereIdRestrictedAttributes(userId)
+        const user = await findOneUserPostAndFollowWhereId(userId)
         return res.status(200).json(user)
     } catch (err) {
         next(err)

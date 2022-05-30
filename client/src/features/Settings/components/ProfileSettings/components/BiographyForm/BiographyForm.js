@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from "react-redux";
-import { Formik, Form } from "formik";
+import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios';
 
 
@@ -15,16 +14,19 @@ export default function BiographyForm({ user, closeAccordion }) {
     // Hooks
     const dispatch = useDispatch();
 
+    // Store
+    const deviceSize = useSelector(state => state.app.deviceSize)
+
     // State
     const [bio, setBio] = useState(user.bio ? user.bio : '')
-    const [bioLenght, setBioLenght] = useState(0)
+    const [bioLength, setBioLength] = useState(0)
     const [showConfirmModale, setShowConfirmModale] = useState(false)
     const [formIsSubmitting, setFormIsSubmitting] = useState(false)
 
     const toggleShowConfirmModale = () => setShowConfirmModale(!showConfirmModale)
 
     useEffect(() => {
-        setBioLenght(bio.length)
+        setBioLength(bio.length)
     }, [bio])
 
     const submit = async (values, actions) => {
@@ -42,53 +44,46 @@ export default function BiographyForm({ user, closeAccordion }) {
     };
 
     return (
-        <Formik
+        <form
+            className='settings-form'
             onSubmit={submit}
-            initialValues={{
-                bio: user.bio,
-            }}
-            validateOnBlur={true}
-            validateOnChange={true}
-        >
-            {({ handleSubmit }) => (
-                <Form
-                    onSubmit={handleSubmit}
-                    className='settings-form'
+            >
+            <div className='settings-form-textarea'>
+                <label className='settings-form-textarea__label' htmlFor='settings-form-textarea'>Biographie</label>
+                <TextareaAutosize
+                    id='settings-form-textarea'
+                    maxLength={500}
+                    minRows={deviceSize !== 0 ? 1 : 3}
+                    maxRows={5}
+                    className='settings-form-textarea__input'
+                    name='bio'
+                    value={bio}
+                    onFocus={(e) => e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)}
+                    onChange={(e) => setBio(e.target.value)}
+                    placeholder='Votre biographie...'
+                />
+                <p className={`settings-form-textarea__counter${bioLength >= 500 ? ' settings-form-textarea__counter--error' : ''}`}>
+                    {bioLength}/500 caractères
+                </p>
+            </div>
+            <div className='settings-form__button-container'>
+                <Button
+                    variant='contained'
+                    onClick={toggleShowConfirmModale}
+                    disabled={(bio === user.bio) || (!bio && !user.bio)}
                 >
-                    <div className='settings-form-row'>
-                        <TextareaAutosize
-                            maxLength={500}
-                            maxRows={5}
-                            className='settings-form-textarea'
-                            name='bio'
-                            value={bio}
-                            onFocus={(e) => e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)}
-                            onChange={(e) => setBio(e.target.value)}
-                            placeholder='Votre biographie...'
-                        />
-                        <p className={`settings-form-textarea-counter${bioLenght >= 500 ? ' settings-form-textarea-counter--error' : ''}`}>
-                            {bioLenght}/500 caractères
-                        </p>
-                    </div>
-                    <div className='settings-form__button-container'>
-                        <Button
-                            variant='contained'
-                            onClick={toggleShowConfirmModale}
-                            disabled={bio === user.bio}
-                        >
-                            Modifier
-                        </Button>
-                    </div>
-                    <ConfirmModal
-                        title={'Confirmer la modification de la biographie'}
-                        content={`Voulez vous vraiment modifier votre biographie?`}
-                        button='Valider'
-                        showConfirmModale={showConfirmModale}
-                        toggleShowConfirmModale={toggleShowConfirmModale}
-                        onClickConfirm={handleSubmit}
-                        isLoading={formIsSubmitting}
-                    />
-                </Form>
-            )}
-        </Formik>)
+                    Modifier
+                </Button>
+            </div>
+            <ConfirmModal
+                title={'Confirmer la modification de la biographie'}
+                content={`Voulez vous vraiment modifier votre biographie?`}
+                button='Valider'
+                showConfirmModale={showConfirmModale}
+                toggleShowConfirmModale={toggleShowConfirmModale}
+                onClickConfirm={submit}
+                isLoading={formIsSubmitting}
+            />
+        </form>
+    )
 }

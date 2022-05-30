@@ -35,13 +35,13 @@ const CropEasy = (props) => {
     return (
 
         <div className='crop-image'>
-            <div className='crop-image-header'>
+            <div className='crop-image-top'>
                 <h2>Recadrer l'image</h2>
-                <div className='post-form-header__button-container'>
+                <div className='post-form-top__button-container'>
                     <IconButton
                         color="error"
                         aria-label="Annuler"
-                        // onClick={}
+                        onClick={props.handleCancel}
                     >
                         <CloseIcon color='error' fontSize='medium' />
                     </IconButton>

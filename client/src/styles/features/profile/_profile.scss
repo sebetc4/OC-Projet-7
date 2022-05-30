@@ -1,4 +1,4 @@
-@import './components/profile-header';
+@import './components/profile-top';
 
 .profile {
 	@include center-width($width: $profile-width-desktop);
@@ -17,6 +17,7 @@
 }
 
 .profile-user-posts-bottom {
+	margin-top: 20px;
 	display: flex;
 	justify-content: center;
 }

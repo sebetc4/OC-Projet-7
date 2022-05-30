@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Collapse from '@mui/material/Collapse';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 
-import { PostFormActions, PostFormHeader, PostFormMedia, PostFormVideoInput } from './components';
+import { PostFormActions, PostFormTop, PostFormMedia, PostFormVideoInput } from './components';
 import { createPost, updatePost } from '../../../../store/actions/posts.actions';
 
 
@@ -22,6 +22,7 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
 
     // State
     const [text, setText] = useState(initialValueText)
+    const [textLength, setTextLength] = useState(0)
     const [updateImage, setUpdateImage] = useState(false)
     const [image, setImage] = useState(initialValueImage ? initialValueImage : null)
     const [file, setFile] = useState(null)
@@ -37,6 +38,11 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
             setUpdateImage(true)
         }
     }, [file])
+
+    // Set text Length
+    useEffect(() => {
+        setTextLength(text.length)
+    }, [text])
 
     // Chech if text and file are empty
     useEffect(() => {
@@ -84,24 +90,33 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
     }
 
     return (
-        <form className='post-form' onSubmit={submit}>
-            <PostFormHeader
+        <form
+            className='post-form'
+            onSubmit={submit}
+        >
+            <PostFormTop
                 type={type}
                 closeModal={closeModal}
             />
-            <label>
+            <div className='post-form-textarea'>
+                <label className='post-form-textarea__label' htmlFor='post-form-textarea'>Texte</label>
                 <TextareaAutosize
+                    id='post-form-textarea'
                     ref={textareaRef}
+                    maxLength={500}
                     minRows={deviceSize !== 0 ? 1 : 3}
                     maxRows={4}
-                    className='post-form-textarea'
+                    className='post-form-textarea__input'
                     name='text'
                     value={text}
                     onChange={(e) => setText(e.target.value)}
                     onFocus={(e) => e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)}
                     placeholder='Votre publication...'
                 />
-            </label>
+                <p className={`settings-form-textarea__counter${textLength >= 500 ? ' settings-form-textarea-counter--error' : ''}`}>
+                    {textLength}/500 caractères
+                </p>
+            </div >
             <PostFormMedia
                 image={image}
                 videoUrl={videoUrl}

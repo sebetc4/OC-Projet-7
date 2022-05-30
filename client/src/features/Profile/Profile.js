@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import axios from "axios";
 
-import { ProfileHeader, ProfileUserInformation, ProfileUserBio, ProfileUserPosts } from './components';
+import { ProfileTop, ProfileUserInformation, ProfileUserBio, ProfileUserPosts } from './components';
 import { Loader } from '../../components';
 import { resetPosts, fetchPostsSucess } from '../../store/actions/posts.actions';
 
@@ -37,10 +37,8 @@ export default function Profile() {
 			}
 		}
 		fetchProfileData()
-		return () => {
-			dispatch(resetPosts())
-		}
-	}, [navigate, params.userId])
+		return () => dispatch(resetPosts())
+	}, [navigate, params.userId, dispatch])
 
 	const handleFollow = () => {
 		const { id, firstName, lastName, avatarUrl } = user
@@ -66,7 +64,7 @@ export default function Profile() {
 			{
 				profileDataIsLoaded ?
 					<section className='profile'>
-						<ProfileHeader
+						<ProfileTop
 							profileData={profileData}
 							handleFollow={handleFollow}
 							handleUnfollow={handleUnfollow}

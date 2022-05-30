@@ -24,22 +24,29 @@ export default function ProfileUserPosts({ profileData, posts }) {
     return (
         <div className='profile-user-posts'>
             <h3 className='profile-user-posts__title'>Posts:</h3>
-            <PostList
-                type='profile'
-                posts={userPostList}
-                user={profileData}
-            />
-            <div className='profile-user-posts-bottom'>
-                {userPostListLength < posts.length &&
-                    <Button
-                        size="large"
-                        endIcon={<ExpandMoreIcon />}
-                        onClick={addUserPotsInList}
-                    >
-                        Afficher plus de posts
-                    </Button>
-                }
-            </div>
+            {
+                userPostList.length !== 0 ?
+                    <>
+                        <PostList
+                            type='profile'
+                            posts={userPostList}
+                            user={profileData}
+                        />
+                        {userPostListLength < posts.length &&
+                            <div className='profile-user-posts-bottom'>
+                                <Button
+                                    size="large"
+                                    endIcon={<ExpandMoreIcon />}
+                                    onClick={addUserPotsInList}
+                                >
+                                    Afficher plus de posts
+                                </Button>
+                            </div>
+                        }
+                    </> 
+                    :
+                    <p>Cet utilisateur n'a rien posté.</p>
+            }
         </div>
     )
 }

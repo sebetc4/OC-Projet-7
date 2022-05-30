@@ -1,12 +1,12 @@
 .post-card {
-	margin: $margin-between-main-elements;
-	padding: $padding-main-element;
+	margin-top : 20px;
+	padding: 20px;
 	box-shadow: $box-shadow-main-element;
 	border-radius: $border-radius-main-element;
 	background-color: $grey-background;
 }
 
-.post-card-header {
+.post-card-top {
 	@include center-width($width: $feed-width-content-desktop);
 	display: flex;
 	align-items: center;
@@ -161,7 +161,7 @@
 }
 
 @media screen and (max-width: $media-mobile) {
-	.post-card-header {
+	.post-card-top {
 		@include center-width($width: $feed-width-content-mobile);
 	}
 

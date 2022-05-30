@@ -48,7 +48,7 @@ export default function Comments({ type, post, postIndex, user, showNewComment, 
                             postIndex={postIndex}
                             user={user}
                             textareaRef={textareaRef}
-                            toggleDisplayNewComment={toggleShowNewComment}
+                            toggleShowNewComment={toggleShowNewComment}
                         />
                     </li>
                 </Collapse>

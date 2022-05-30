@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import updateLocale from 'dayjs/plugin/updateLocale'
@@ -52,16 +52,16 @@ const updateWithAgo = {
     yy: "%d ans"
 }
 
-export default function DateFromNow({ date, update, withoutAgo }) {
+export default function DateFromNow({ date, update, withoutUpdate, withoutAgo }) {
 
-    const dateDisplayed = (!withoutAgo && date !== update) ? update : date
+    const dateDisplayed = (!withoutAgo && date !== update && !withoutUpdate) ? update : date
 
     dayjs.extend(updateLocale)
 
     if (withoutAgo) {
         dayjs.updateLocale('fr', { relativeTime: dateWithoutAgo })
     }
-    else if (date !== update)
+    else if (!withoutUpdate && date !== update)
         dayjs.updateLocale('fr', { relativeTime: updateWithAgo })
     else
         dayjs.updateLocale('fr', { relativeTime: dateWithAgo })

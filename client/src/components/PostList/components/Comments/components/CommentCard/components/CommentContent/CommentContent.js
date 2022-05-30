@@ -7,7 +7,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { CommentSettings } from '../index';
 import { FromNowDate } from '../../../../../../../../components'
 
-export default function CommentContent({ type, postIndex, comment, commentIndex, user, toggleDisplayModifyComment, deviceSize }) {
+export default function CommentContent({ type, postIndex, comment, commentIndex, user, toggleShowModifyComment, deviceSize }) {
 
     // State
     const [userIsAuthorOrAdmin, setUserIsAuthorOrAdmin] = useState(false)
@@ -22,8 +22,8 @@ export default function CommentContent({ type, postIndex, comment, commentIndex,
     const toggleDisplayCommentSettings = () => setDisplayCommentSettings(!displayCommentSettings)
 
     return (
-        <div className='post-comment-card-right-content'>
-            <div className='post-comment-card-right-content__author-name-text-container'>
+        <div className='comment-card-right-content'>
+            <div className='comment-card-right-content__author-name-text-container'>
                 <NavLink to={`/profile/${comment.userId}`}>
                     {`${comment.User.firstName} ${comment.User.lastName}`}
                 </NavLink>
@@ -39,7 +39,7 @@ export default function CommentContent({ type, postIndex, comment, commentIndex,
             </div>
             <div>
                 {userIsAuthorOrAdmin &&
-                    <div className='post-comment-card-right-content__settings-container'>
+                    <div className='comment-card-right-content__settings-container'>
                         <IconButton
                             onClick={toggleDisplayCommentSettings}
                             color="primary"
@@ -53,7 +53,7 @@ export default function CommentContent({ type, postIndex, comment, commentIndex,
                                 commentId={comment.id}
                                 commentIndex={commentIndex}
                                 postIndex={postIndex}
-                                toggleDisplayModifyComment={toggleDisplayModifyComment}
+                                toggleShowModifyComment={toggleShowModifyComment}
                             />
                         }
                     </div>

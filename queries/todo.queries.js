@@ -11,7 +11,7 @@ exports.createTodo = async (UserId, name) => {
         throw { message: `Internal Server Error` }
 }
 
-exports.findOneTodoWhereIdAllAttributes = async (id) => {
+exports.findOneTodoWhereId = async (id) => {
     const todo = await Todo.findOne({
         where: { id },
     })

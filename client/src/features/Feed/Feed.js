@@ -69,7 +69,7 @@ export default function Feed() {
 				<>
 					<CreatePost />
 					<PostList
-						type ='feed'
+						type='feed'
 						posts={posts.data}
 					/>
 					<div className='feed-bottom'>
@@ -77,7 +77,7 @@ export default function Feed() {
 							postsIsLoading && <CircularProgress />
 						}
 						{
-							posts.allPostsFetch &&
+							(posts.allPostsFetch && posts.data.length !== 0) &&
 							<Button
 								onClick={goToTopPage}
 								endIcon={<ArrowBackIosRoundedIcon />}
@@ -85,9 +85,14 @@ export default function Feed() {
 								Fin des posts. Remonter la page
 							</Button>
 						}
+						{
+							posts.data.length === 0 &&
+							<div>
+								<p>Aucun post. Soyez le premier à partager avec vos collègues.</p>
+							</div>
+						}
 					</div>
 				</>
-
 				:
 				<Loader />
 			}

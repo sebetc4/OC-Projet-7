@@ -6,7 +6,7 @@ const Op = Sequelize.Op;
 
 
 exports.createUser = async (req, email, firstName, lastName, password) => {
-    const newUser = User.create({
+    const newUser = await User.create({
         email,
         firstName,
         lastName,
@@ -20,10 +20,14 @@ exports.createUser = async (req, email, firstName, lastName, password) => {
         throw { message: `Internal Server Error` }
 }
 
-exports.findOneUserAndPostWhereIdRestrictedAttributes = async (id) => {
+exports.findOneUserPostAndFollowWhereId = async (id) => {
     const user = await User.findOne({
         where: { id },
         attributes: attributes.user,
+        order: [
+            [Post, 'updatedAt', 'DESC'],
+            [Post, Comment, 'createdAt', 'DESC']
+        ],
         include: [
             {
                 model: Post,
@@ -65,7 +69,7 @@ exports.findOneUserAndPostWhereIdRestrictedAttributes = async (id) => {
         throw { message: `User id unknown` }
 }
 
-exports.findOneUserAndTodoWhereIdAllAttributes = async (id) => {
+exports.findOneUserTodoAndFollowWhereId = async (id) => {
     const user = await User.findOne({
         where: { id },
         include: [
@@ -85,7 +89,7 @@ exports.findOneUserAndTodoWhereIdAllAttributes = async (id) => {
         throw { message: `User id unknown` }
 }
 
-exports.findOneUserWhereEmailAllAttributes = async (email) => {
+exports.findOneUserWhereEmail = async (email) => {
     const user = await User.findOne({
         where: { email }
     })
@@ -95,7 +99,7 @@ exports.findOneUserWhereEmailAllAttributes = async (email) => {
         throw { message: `Email unknown` }
 }
 
-exports.findAllUsersWhereQueryRestrictedAttributes = async (query) => {
+exports.findAllUsersAndFollowWhereQuery = async (query) => {
     const users = await User.findAll({
         where: {
             [Op.or]: [
@@ -134,4 +138,25 @@ exports.findAllUsersWhereQueryRestrictedAttributes = async (query) => {
         return users
     else
         return null
+};
+
+exports.findAllUsersChatSearchWhereQuery = async (query) => {
+    const users = await User.findAll({
+        where: {
+            [Op.or]: [
+                {
+                    firstName: {
+                        [Op.like]: `%${query}%`
+                    }
+                },
+                {
+                    lastName: {
+                        [Op.like]: `%${query}%`
+                    }
+                }
+            ]
+        },
+        attributes: attributes.userInSearch,
+    })
+    return users
 };

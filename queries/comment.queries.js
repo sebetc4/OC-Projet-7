@@ -12,7 +12,7 @@ exports.createComment = async (text, userId, postId) => {
         throw { message: `Internal Server Error` }
 }
 
-exports.getOneCommentWhereIdAllAttributes = async (id) => {
+exports.getOneCommentWhereId = async (id) => {
     const comment = await Comment.findOne({
         where: { id }
     })

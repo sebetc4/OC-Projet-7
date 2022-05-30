@@ -3,9 +3,7 @@ import { FollowIcon } from '../../../../components'
 import { useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 
-import { Avatar, Tooltip } from '@mui/material';
-import AvatarGroup from '@mui/material/AvatarGroup';
-
+import { Avatar, Tooltip, AvatarGroup } from '@mui/material';
 
 export default function ProfileHeader({ profileData, handleFollow, handleUnfollow }) {
 
@@ -19,25 +17,25 @@ export default function ProfileHeader({ profileData, handleFollow, handleUnfollo
     const navigateToProfile = (id) => navigate(`/profile/${id}`, { replace: true })
 
     return (
-        <div className='profile-header'>
-            <div className='profile-header__cover-image' >
+        <div className='profile-top'>
+            <div className='profile-top__cover-image' >
                 <img
                     alt={`Couverture de la page de profil de ${profileData.firstName} ${profileData.lastName}`}
                     src={profileData.coverUrl}
                 />
             </div >
-            <div className='profile-header-content'>
+            <div className='profile-top-content'>
                 <img
-                    className='profile-header-content__avatar'
+                    className='profile-top-content__avatar'
                     alt={`avatar de ${profileData.firstName} 
                     ${profileData.lastName}`}
                     src={profileData.avatarUrl}
                 />
-                <div className='profile-header-content-infos'>
-                    <h2 className='profile-header-content-infos__name'>
+                <div className='profile-top-content-infos'>
+                    <h2 className='profile-top-content-infos__name'>
                         {`${profileData.firstName} ${profileData.lastName}`}
                     </h2>
-                    <p className='profile-header-content-infos__follow-text'>
+                    <p className='profile-top-content-infos__follow-text'>
                         {profileData.followers.length === 0 ?
                             'Cet utilisateur n\'est pas suivi' :
                             profileData.followers.length === 1 ?
@@ -45,7 +43,7 @@ export default function ProfileHeader({ profileData, handleFollow, handleUnfollo
                                 `Suivi par ${profileData.followers.length} personnes`
                         }
                     </p>
-                    <div className='profile-header-content-infos__followers'>
+                    <div className='profile-top-content-infos__followers'>
                         {profileData.followers.lenght !== 0 &&
                             <AvatarGroup
                                 total={profileData.followers.lenght}
@@ -75,7 +73,7 @@ export default function ProfileHeader({ profileData, handleFollow, handleUnfollo
                 </div>
                 {
                     userId !== profileData.id &&
-                    <div className='profile-header-content-follow-button-container'>
+                    <div className='profile-top-content-follow-button-container'>
                         <FollowIcon
                             user={profileData}
                             handleFollow={handleFollow}
