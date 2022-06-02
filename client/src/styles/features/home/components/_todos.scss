@@ -75,13 +75,16 @@
 				stroke-dashoffset: 66;
 			}
 		}
-		&:hover {
+		&:hover, &:focus {
 			&:before {
 				opacity: 1;
 			}
 			svg {
 				stroke: #42a5f5;
 			}
+		}
+		&:focus {
+			outline: none;
 		}
 	}
 }

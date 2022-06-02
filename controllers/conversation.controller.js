@@ -6,12 +6,12 @@ const attributes = require('../utils/attributes')
 
 exports.createConversation = async (req, res, next) => {
    const user = req.user
-   const { targetUserId } = req.body
+   const otherUserId = req.params.id
    try {
-      const userTarget = await User.findByPk(targetUserId)
+      const otherUser = await User.findByPk(otherUserId)
       const conversation = await Conversation.create({
          firstUserId: user.id,
-         secondUserId: userTarget.id
+         secondUserId: otherUser.id
       })
       return res.status(201).json(conversation)
    } catch (err) {
@@ -37,11 +37,11 @@ exports.getAllConversations = async (req, res, next) => {
             {
                model: User,
                as: 'firstUser',
-               attributes: attributes.userInPost
+               attributes: attributes.userInConversation
             }, {
                model: User,
                as: 'secondUser',
-               attributes: attributes.userInPost
+               attributes: attributes.userInConversation
             }
          ]
       })

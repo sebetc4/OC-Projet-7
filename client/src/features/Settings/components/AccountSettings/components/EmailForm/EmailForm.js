@@ -56,6 +56,7 @@ export default function EmailForm({ user, closeAccordion }) {
                 <Form onSubmit={handleSubmit} className='settings-form'>
                     <div className='settings-form-row'>
                         <Field
+                            id='settings-email-form-email-input'
                             className='settings-form-row__inputs'
                             error={touched.email && !!errors.email}
                             as={TextField}

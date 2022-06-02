@@ -17,7 +17,7 @@ export default function CommentContent({ type, postIndex, comment, commentIndex,
     useEffect(() => {
         if (comment.userId === user.id || user.isAdmin)
             setUserIsAuthorOrAdmin(true)
-    }, [])
+    }, [comment, user])
 
     const toggleDisplayCommentSettings = () => setDisplayCommentSettings(!displayCommentSettings)
 

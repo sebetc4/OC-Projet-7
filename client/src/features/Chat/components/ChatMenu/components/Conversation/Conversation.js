@@ -32,34 +32,47 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     },
 }));
 
-export default function Conversation({ userId, conversation }) {
+export default function Conversation({ userId, conversation, onlineUsersId }) {
 
-    const [userConversation, setUser] = useState(null)
-    const [userConversationIsOnline, setUserConversationIsOnline] = useState(false)
+    const [otherUser, setOtherUser] = useState(null)
+    const [otherUserIsOnline, setOtherUserIsOnline] = useState(false)
 
     useEffect(() => {
         if (conversation.firstUserId === userId)
-            setUser(conversation.secondUser)
+            setOtherUser({ ...conversation.secondUser, id: conversation.secondUserId })
         else
-            setUser(conversation.firstUser)
+            setOtherUser({ ...conversation.firstUser, id: conversation.firstUserId })
     }, [conversation, userId])
+
+    useEffect(() => {
+        if (otherUser) {
+            setOtherUserIsOnline(onlineUsersId.includes(otherUser.id))
+        }
+    }, [otherUser, onlineUsersId])
 
     return (
         <>
             {
-                userConversation &&
-                <>
-                    <StyledBadge
-                        overlap="circular"
-                        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                        variant="dot"
-                    >
+                otherUser &&
+                <> {
+                    otherUserIsOnline ?
+                        <StyledBadge
+                            overlap="circular"
+                            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                            variant="dot"
+                        >
+                            <Avatar
+                                alt={`Avatar de ${otherUser.firstName} ${otherUser.lastName}`}
+                                src={otherUser.avatarUrl}
+                            />
+                        </StyledBadge>
+                        :
                         <Avatar
-                            alt={`Avatar de ${userConversation.firstName} ${userConversation.lastName}`}
-                            src={userConversation.avatarUrl}
+                            alt={`Avatar de ${otherUser.firstName} ${otherUser.lastName}`}
+                            src={otherUser.avatarUrl}
                         />
-                    </StyledBadge>
-                    <p className='chat-menu-content-conversation__name'>{`${userConversation.firstName} ${userConversation.lastName}`}</p>
+                }
+                    <p className='chat-menu-content-conversation__name'>{`${otherUser.firstName} ${otherUser.lastName}`}</p>
                 </>
             }
         </>

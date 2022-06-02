@@ -11,10 +11,10 @@ const openAiRoutes = require("./openAi.routes")
 const followRoutes = require("./follow.routes")
 const conversationRoutes = require('./conversation.routes')
 const messageRoutes = require('./message.routes')
+const newRoutes = require('./new.routes')
 
 
 // Static routes
-router.use(express.static(path.join(__dirname, '../client/build')))
 router.use('/images', express.static(path.join(__dirname, '../images')));
 
 // Back routes
@@ -28,11 +28,15 @@ router.use('/api/open-ai', openAiRoutes)
 router.use('/api/follow', followRoutes)
 router.use('/api/conversation', conversationRoutes)
 router.use('/api/message', messageRoutes)
+router.use('/api/new', newRoutes)
 
 
 // Front route
-router.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'))
-})
+if (process.env.NODE_ENV === 'production') {
+  router.use(express.static(path.join(__dirname, '../client/build')))
+  router.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'))
+  })
+}
 
 module.exports = router;

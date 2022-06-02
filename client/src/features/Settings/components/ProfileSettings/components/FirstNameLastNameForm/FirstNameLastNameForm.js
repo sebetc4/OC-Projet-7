@@ -12,7 +12,7 @@ import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 
 export default function EmailForm({ user, closeAccordion }) {
-    
+
     // Hooks
     const dispatch = useDispatch();
 
@@ -59,6 +59,7 @@ export default function EmailForm({ user, closeAccordion }) {
                 >
                     <div className='settings-form-row settings-form-row--double-inputs'>
                         <Field
+                            id='settings-firstname-lastname-form-firstname-input'
                             className='settings-form-row__inputs'
                             error={errors.firstName}
                             as={TextField}
@@ -70,6 +71,7 @@ export default function EmailForm({ user, closeAccordion }) {
                             helperText={<ErrorMessage name={'firstName'} />}
                         />
                         <Field
+                            id='settings-firstname-lastname-form-lastname-input'
                             className='settings-form-row__inputs'
                             error={errors.lasttName}
                             as={TextField}

@@ -1,16 +1,18 @@
 @import './components/todos';
+@import './components/company-news';
 
 .home {
 	@include center-width($width: $profile-width-desktop);
 	margin-top: 10px;
+	padding-bottom: 30px;
 }
 
 .home-columns {
 	@include features-columns-desktop;
 }
 
-.home-todos,
-.home-news {
+.todos,
+.company-news {
 	@include features-section-desktop;
 }
 
@@ -25,8 +27,8 @@
 		@include features-columns-mobile;
 	}
 
-	.home-todos,
-	.home-news {
+	.todos,
+	.company-news {
 		@include features-section-mobile;
 	}
 }
@@ -36,7 +38,8 @@
 		max-width: 100%;
 	}
 
-	.home-todos {
+	.todos,
+	.company-news {
 		padding: 20px 0;
 		&__title {
 			margin-left: 20px;

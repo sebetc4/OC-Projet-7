@@ -16,7 +16,7 @@ export default function PostCardTop({ type, author, post, postIndex, user, toggl
     useEffect(() => {
         if (author.id === user.id || user.isAdmin)
             setUserIsAuthorOrAdmin(true)
-    }, [])
+    }, [author, user])
 
     const toggleDisplayPostSettings = () => setDisplayPostSettings(!displayPostSettings)
 

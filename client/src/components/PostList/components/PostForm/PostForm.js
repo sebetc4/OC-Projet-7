@@ -69,7 +69,7 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
         setVideoUrl('')
     }
 
-    const toggleShowVideoInput = () => setShowVideoInput(!showVideoInput)
+    const toggleShowVideoInput = () => setShowVideoInput(prev => !prev)
 
     const submit = (e) => {
         e.preventDefault()
@@ -77,7 +77,7 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
         formData.append('text', text)
         file && formData.append('post', file)
         videoUrl && formData.append('video', videoUrl)
-        updateImage && formData.append('updateImage', true)
+        type === 'modify' && formData.append('updateImage', updateImage)
         if (type === 'modify') {
             dispatch(updatePost(formData, post.id, postIndex))
         } else {
@@ -148,7 +148,7 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
                     disabled={submitDisabled}
                     type='submit'
                     variant="contained">
-                    {type === 'modify' ? 'Valider' : 'Poster'}
+                    {type === 'modify' ? 'Modifier' : 'Poster'}
                 </Button>
             </div>
         </form>

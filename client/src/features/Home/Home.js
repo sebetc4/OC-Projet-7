@@ -1,5 +1,5 @@
 import React from 'react';
-import { News, Todos } from './components';
+import { CompanyNews, Todos } from './components';
 
 export default function Home() {
 	return (
@@ -9,7 +9,7 @@ export default function Home() {
 					<Todos />
 				</div>
 				<div className='home-columns__column-2'>
-					<News />
+					<CompanyNews />
 				</div>
 			</div>
 

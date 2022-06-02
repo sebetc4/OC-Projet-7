@@ -22,6 +22,10 @@
     overflow-y: scroll;
 }
 
+.chat-box-message {
+    @include chat-message;
+}
+
 .chat-box-no-user {
     width: 100%;
     height: 100%;

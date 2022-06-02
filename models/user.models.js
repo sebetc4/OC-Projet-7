@@ -48,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
         throw { message: "Invalid password" };
       }
     }
-    checkAllow = (targetId) => {
+    checkIsAuthorOrAdmin= (targetId) => {
       if (this.id !== targetId && !this.isAdmin)
         throw { message: 'Not allowed!' }
     }

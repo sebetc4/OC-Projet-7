@@ -1,8 +1,10 @@
-import React from 'react'
 import dayjs from 'dayjs'
 
-export default function DateCreated(props) {
+export default function DateCreated({format, date}) {
+
+  dayjs.locale('fr')
+
   return (
-    dayjs(props.date).format('DD/MM/YYYY')
+    dayjs(date).format(format)
   )
 }

@@ -32,9 +32,9 @@ export default function ProfileHeader({ profileData, handleFollow, handleUnfollo
                     src={profileData.avatarUrl}
                 />
                 <div className='profile-top-content-infos'>
-                    <h2 className='profile-top-content-infos__name'>
+                    <h1 className='profile-top-content-infos__name'>
                         {`${profileData.firstName} ${profileData.lastName}`}
-                    </h2>
+                    </h1>
                     <p className='profile-top-content-infos__follow-text'>
                         {profileData.followers.length === 0 ?
                             'Cet utilisateur n\'est pas suivi' :

@@ -64,6 +64,7 @@ export default function FormSignIn(props) {
                                 className='login-form-row__input'
                                 error={touched.email && !!errors.email}
                                 as={TextField}
+                                id='signin-form-email-input'
                                 variant='filled'
                                 name={'email'}
                                 type={'email'}
@@ -76,6 +77,7 @@ export default function FormSignIn(props) {
                         <div className="login-form-row">
                             <Field
                                 className='login-form-row__input'
+                                id='signin-form-password-input'
                                 name={'password'}
                                 label={'Mot de passe'}
                                 component={customPasswordInput}

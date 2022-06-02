@@ -39,7 +39,7 @@ export default function FormSignIn(props) {
     return (
         <div className="login-form-modal-content">
             <div className="login-form-modal-content__top">
-                <h2>Connexion</h2>
+                <h2>Inscription</h2>
                 {
                     props.deviceSize === 0 &&
                     <IconButton
@@ -63,6 +63,7 @@ export default function FormSignIn(props) {
                         <div className="login-form-row">
                             <Field
                                 className='login-form-row__input'
+                                id='signup-form-firstname-input'
                                 error={touched.firstName && !!errors.firstName}
                                 as={TextField}
                                 variant='filled'
@@ -76,6 +77,7 @@ export default function FormSignIn(props) {
                         <div className="login-form-row">
                             <Field
                                 className='login-form-row__input'
+                                id='signup-form-lastname-input'
                                 error={touched.lastName && !!errors.lastName}
                                 as={TextField}
                                 variant='filled'
@@ -89,6 +91,7 @@ export default function FormSignIn(props) {
                         <div className="login-form-row">
                             <Field
                                 className='login-form-row__input'
+                                id='signup-form-email-input'
                                 error={touched.email && !!errors.email}
                                 as={TextField}
                                 variant='filled'
@@ -101,6 +104,7 @@ export default function FormSignIn(props) {
                         </div>
                         <div className="login-form-row">
                             <Field
+                                id='signup-form-password-input'
                                 className='login-form-row__input'
                                 name={'password'}
                                 label={'Mot de passe'}

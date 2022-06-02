@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { OnlineUserCard } from './components'
 
-export default function OnlineUsers({ onlineUsers, user }) {
+export default function OnlineUsers({ onlineUsers, user, handleOpenConversation }) {
 
     const [onlineFollowUsers, setOnlineFollowUsers] = useState([])
     const [onlineOtherUsers, setOnlineOtherUsers] = useState([])
@@ -19,8 +19,6 @@ export default function OnlineUsers({ onlineUsers, user }) {
         setOnlineFollowUsers(followingUsers)
         setOnlineOtherUsers(otherUsers)
     }, [user, onlineUsers])
-
-    console.log(onlineFollowUsers)
     return (
         <>
             <div className='chat-online-users-top'>
@@ -41,6 +39,7 @@ export default function OnlineUsers({ onlineUsers, user }) {
                                             <OnlineUserCard
                                                 key={onlineUser.userId}
                                                 onlineUser={onlineUser}
+                                                handleOpenConversation={handleOpenConversation}
                                             />
                                         )
                                     }
@@ -58,6 +57,7 @@ export default function OnlineUsers({ onlineUsers, user }) {
                                             <OnlineUserCard
                                                 key={onlineUser.userId}
                                                 onlineUser={onlineUser}
+                                                handleOpenConversation={handleOpenConversation}
                                             />
                                         )
                                     }

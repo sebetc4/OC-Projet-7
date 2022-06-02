@@ -1,0 +1,86 @@
+.company-news {
+	position: relative;
+
+	&__add-news {
+		position: absolute;
+		z-index: 0;
+		top: 15px;
+		right: 15px;
+	}
+
+	&__divider {
+		@include center-width($width: 50%);
+		margin: 30px auto !important;
+		border-color: $primary-color !important;
+	}
+}
+
+.company-news-new-list {
+	margin-top: 40px;
+}
+
+.company-new-card {
+	@include center-width($width: 90%);
+	margin-top: 30px;
+
+	&__title {
+		position: relative;
+		margin-left: 15px;
+		font-size: 18px;
+		font-weight: 500;
+
+		&::before {
+			position: absolute;
+			top: 50%;
+			left: -15px;
+			content: '';
+			width: 8px;
+			height: 8px;
+			background-color: $primary-color;
+			border-radius: 50%;	
+			transform: translateY(-50%);
+		}
+	}
+
+	&__date {
+		margin-top: 10px;
+		font-size: 12px;
+	}
+
+	&__text {
+		margin-top: 20px;
+	}
+}
+
+.company-new-form {
+	width: 650px;
+	@include standard-modal-desktop;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	&__input {
+		display: block;
+		width: 100%;
+	}
+
+	form {
+		width: 80%;
+		margin-top: 10px;
+	}
+}
+
+.company-new-form-textarea {
+	@include textarea;
+	margin-top: 20px;
+
+	&__input {
+		width: 100%;
+	}
+}
+
+.company-news-bottom {
+	margin-top: 20px;
+	display: flex;
+	justify-content: center;
+}

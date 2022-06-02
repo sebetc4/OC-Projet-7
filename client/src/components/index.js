@@ -1,6 +1,3 @@
-// Buttons
-export { default as ArrowButton } from './buttons/ArrowButton'
-
 // SVG
 export { default as GroupomaniaTextSvg } from './svg/groupomania/GroupomaniaTextSvg'
 export { default as GroupomaniaLogoSvg } from './svg/groupomania/GroupomaniaLogoSvg'

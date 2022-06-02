@@ -41,8 +41,8 @@ export default function Todo() {
   }, [allTodos, filter])
 
   return (
-    <div className="home-todos">
-      <h2 className='home-todos__title'>Vos tâches</h2>
+    <section className="todos">
+      <h2 className='todos__title'>Vos tâches</h2>
       <Filter
         filter={filter}
         dispatchSetFilter={dispatchSetFilter}
@@ -59,7 +59,7 @@ export default function Todo() {
       <AddTodo
         dispatchCreateTodo={dispatchCreateTodo}
       />
-    </div>
+    </section>
   )
 }
 

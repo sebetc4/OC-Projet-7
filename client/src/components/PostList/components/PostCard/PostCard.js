@@ -15,7 +15,7 @@ export default function PostCard({ type, post, postIndex, author }) {
 
     // Hooks
     const dispatch = useDispatch()
-	const fullScreen = useMediaQuery('(max-width:768px)');
+    const fullScreen = useMediaQuery('(max-width:768px)');
 
     // State
     const [userIndexInUsersLiked, setUserIndexInUsersLiked] = useState(-1)
@@ -30,8 +30,8 @@ export default function PostCard({ type, post, postIndex, author }) {
     // Check if user liked post
     useEffect(() => {
         setUserLiked(post.usersLiked.includes(user.id))
-        userLiked && setUserIndexInUsersLiked(post.usersLiked.indexOf(user.id))
-    }, [])
+        post.usersLiked.includes(user.id) && setUserIndexInUsersLiked(post.usersLiked.indexOf(user.id))
+    }, [post, user])
 
     const toggleLike = () => {
         const likeStatut = userLiked ? 0 : 1

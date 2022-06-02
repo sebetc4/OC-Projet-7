@@ -38,7 +38,7 @@ export default function MobilMenu({ toggleDisplayMobileMenu, displayMobileMenu }
         <nav id="mobile-menu" className={`mobile-menu ${displayMobileMenu ? 'mobile-menu--open' : 'mobile-menu--close'}`}>
             <ul>
                 <li>
-                    <NavLink to='/feeds' className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
+                    <NavLink tabIndex={-1} to='/feeds' className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
                         <IconButton
                             color="primary"
                             aria-label="Feed"
@@ -49,7 +49,7 @@ export default function MobilMenu({ toggleDisplayMobileMenu, displayMobileMenu }
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to='/home' className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
+                    <NavLink tabIndex={-1} to='/home' className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
                         <IconButton
                             color="primary"
                             aria-label="Acceuil"
@@ -60,7 +60,7 @@ export default function MobilMenu({ toggleDisplayMobileMenu, displayMobileMenu }
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to={`/profile/${userId}`} className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
+                    <NavLink tabIndex={-1} to={`/profile/${userId}`} className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
                         <IconButton
                             color="primary"
                             aria-label="Profil"
@@ -71,7 +71,7 @@ export default function MobilMenu({ toggleDisplayMobileMenu, displayMobileMenu }
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to={`/chat`} className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
+                    <NavLink tabIndex={-1} to={`/chat`} className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
                         <IconButton
                             color="primary"
                             aria-label="Paramètres"
@@ -82,7 +82,7 @@ export default function MobilMenu({ toggleDisplayMobileMenu, displayMobileMenu }
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to={`/settings`} className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
+                    <NavLink tabIndex={-1} to={`/settings`} className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
                         <IconButton
                             color="primary"
                             aria-label="Paramètres"
@@ -93,7 +93,7 @@ export default function MobilMenu({ toggleDisplayMobileMenu, displayMobileMenu }
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to={`/chat-tech-dep`} className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
+                    <NavLink tabIndex={-1} to={`/chat-tech-dep`} className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
                         <IconButton
                             color="primary"
                             aria-label="Paramètres"

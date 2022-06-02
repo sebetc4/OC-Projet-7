@@ -21,7 +21,7 @@ export default function App() {
     // Check auth
     useEffect(() => {
         dispatch(fetchUserData())
-    }, [])
+    }, [dispatch])
     
     // Set device size in the store
     useLayoutEffect(() => {

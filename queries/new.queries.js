@@ -1,23 +1,22 @@
-const { New } = require('../models');
-const Sequelize = require('sequelize');
+const { New } = require('../models')
 
 exports.createNew = async (title, text) => {
-    const newCompNew = await New.create({
+    const newNew = await New.create({
         title,
         text
     })
-    if (newCompNew)
-        return newCompNew
+    if (newNew)
+        return newNew
     else
         throw { message: `Internal Server Error` }
 }
 
-exports.findAllNewsAllAttributes = async () => {
-    const compNews = await New.findAll({
+exports.findAllNews = async () => {
+    const news = await New.findAll({
         order: [['createdAt', 'DESC']],
     })
-    if (compNews)
-        return compNews
+    if (news)
+        return news
     else
         return null
 };

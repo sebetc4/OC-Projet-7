@@ -24,10 +24,11 @@ export default function Chat() {
     const [socket, setSocket] = useState(null)
     const [conversations, setConversations] = useState([])
     const [currentChat, setCurrentChat] = useState(null)
-    const [otherUser, setOtherUser] = useState(null)
+    const [otherUserCurrentChat, setOtherUserCurrentChat] = useState(null)
     const [messages, setMessages] = useState([])
     const [messageReceivded, setMessageReceived] = useState(null)
     const [onlineUsers, setOnlineUsers] = useState([])
+    const [onlineUsersId, setOnlineUsersId] = useState([])
     const [showSearchUser, setShowSearchUser] = useState(false)
 
     // Init socket
@@ -40,15 +41,18 @@ export default function Chat() {
         if (socket) {
             socket.emit('addUser', user.id)
             socket.on('getUsers', users => {
+                const usersId = users.map(user => user.userId)
                 setOnlineUsers(users)
+                setOnlineUsersId(usersId)
+
             })
             socket.on('getMessage', data => {
                 setMessageReceived(
                     {
                         senderId: data.senderId,
                         message: data.message,
-                        User: data.User,
-                        createdAt: Date.now
+                        createdAt: data.createdAt,
+                        User: data.User
                     }
                 )
             })
@@ -83,22 +87,48 @@ export default function Chat() {
             fetchMessages()
     }, [currentChat])
 
-    // Set other user of conversation
+    // Set other user of current Chat
     useEffect(() => {
         if (currentChat) {
             if (currentChat.firstUserId === user.id)
-                setOtherUser(currentChat.secondUser)
+                setOtherUserCurrentChat({...currentChat.secondUser, id: currentChat.secondUserId} )
             else
-                setOtherUser(currentChat.firstUser)
+                setOtherUserCurrentChat({...currentChat.firstUser, id: currentChat.firstUserId})
         }
     }, [currentChat, user])
 
     // Add message received
     useEffect(() => {
-        if (messageReceivded && currentChat && otherUser.id === messageReceivded.senderId)
+        if (messageReceivded && currentChat && otherUserCurrentChat.id === messageReceivded.senderId)
             setMessages(prev => [...prev, messageReceivded])
         setMessageReceived(null)
-    }, [messageReceivded, currentChat, otherUser])
+    }, [messageReceivded, currentChat, otherUserCurrentChat])
+
+    const handleOpenConversation = async (otherUserId) => {
+        let existingConversation = false
+        let conversation = null
+        try {
+            conversations.forEach(conv => {
+                if (conv.firstUserId === otherUserId || conv.secondUserId === otherUserId) {
+                    existingConversation = true
+                    conversation = conv
+                }
+            })
+            if (!existingConversation) {
+                const newConversation = await axios.post(`/api/conversation/${otherUserId}`);
+                conversation = newConversation.data
+                conversation.firstUser = {
+                    firsName: user.firsName,
+                    lastName: user.lastName,
+                    avatarUrl: user.avatarUrl,
+
+                }
+            }
+            setCurrentChat(conversation)
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     const toggleShowSearchUser = () => setShowSearchUser(!showSearchUser)
 
@@ -110,13 +140,14 @@ export default function Chat() {
                     conversations={conversations}
                     setCurrentChat={setCurrentChat}
                     toggleShowSearchUser={toggleShowSearchUser}
+                    onlineUsersId={onlineUsersId}
                 />
             </section>
             <section className='chat-box'>
                 <ChatBox
                     socket={socket}
                     user={user}
-                    otherUser={otherUser}
+                    otherUser={otherUserCurrentChat}
                     currentChat={currentChat}
                     messages={messages}
                     setMessages={setMessages}
@@ -126,7 +157,7 @@ export default function Chat() {
                 <OnlineUsers
                     onlineUsers={onlineUsers}
                     user={user}
-
+                    handleOpenConversation={handleOpenConversation}
                 />
             </section>
             <Dialog
@@ -141,6 +172,8 @@ export default function Chat() {
                 <SearchUser
                     toggleShowSearchUser={toggleShowSearchUser}
                     user={user}
+                    handleOpenConversation={handleOpenConversation}
+                    onlineUsersId={onlineUsersId}
                 />
             </ Dialog>
         </div>

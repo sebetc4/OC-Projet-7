@@ -6,6 +6,8 @@ exports.userFollowed = [ 'id', 'firstName', 'lastName', 'avatarUrl' ]
 
 exports.userInSearch = [ 'id', 'firstName', 'lastName', 'avatarUrl' ]
 
+exports.userInConversation = [ 'firstName', 'lastName', 'avatarUrl' ]
+
 exports.userOnline = [ 'firstName', 'lastName', 'avatarUrl' ]
 
 

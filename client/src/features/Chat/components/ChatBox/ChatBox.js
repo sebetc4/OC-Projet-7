@@ -16,17 +16,12 @@ export default function ChatBox({ socket, user, currentChat, otherUser, messages
     // State
     const [newMessage, setNewMessage] = useState('')
 
-    useEffect(() => {
-
-    })
-
     // Scrool bottom when new message
     useEffect(() => {
         chatBoxContentRef.current && chatBoxContentRef.current.scrollTo({ top: chatBoxContentRef.current.scrollHeight, behavior: "smooth" })
     }, [messages])
 
     const submitNewMessage = async (e) => {
-        console.log(socket.id)
         e.preventDefault()
         try {
             const User = {
@@ -35,14 +30,14 @@ export default function ChatBox({ socket, user, currentChat, otherUser, messages
                 lastName: user.lastName,
                 avatarUrl: user.avatarUrl
             }
+            const res = await axios.post(`/api/message/${currentChat.id}`, { message: newMessage })
             socket.emit('sendMessage', {
                 senderId: user.id,
                 receiverId: otherUser.id,
                 message: newMessage,
+                createdAt: res.data.createdAt,
                 User
             })
-            const res = await axios.post(`/api/message/${currentChat.id}`, { message: newMessage })
-
             const message = {
                 ...res.data,
                 User

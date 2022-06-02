@@ -25,9 +25,9 @@ exports.getOneUser = async (req, res, next) => {
 }
 
 // Get user's object for updateUser
-const getUserObject = (req, email, firstName, lastName, bio) => {
+const getUserObject = async (req, email, firstName, lastName, bio) => {
     return req.files ? (
-        getModifyUserImagePath(req)
+        await getModifyUserImagePath(req)
     ) :
         { email, firstName, lastName, bio }
 }
@@ -35,9 +35,10 @@ const getUserObject = (req, email, firstName, lastName, bio) => {
 exports.updateUser = async (req, res, next) => {
     const user = req.user
     const { email, firstName, lastName, bio } = req.body
+    console.log(req.files)
     try {
         if (!req.files && !email && !firstName && !lastName && bio == null) throw { message: 'Missing parameters' }
-        const userObject = getUserObject(req, email, firstName, lastName, bio)
+        const userObject = await getUserObject(req, email, firstName, lastName, bio)
         req.files && deleteLastUserImage(req, user)
         await user.update(userObject);
         res.status(200).json({ ...userObject })

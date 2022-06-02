@@ -49,10 +49,10 @@ export const createPost = (data, user) => {
 }
 
 export const createPostSuccess = (post, user) => {
-    const { firstName, lastName, avatarUrl } = user
+    const { firstName, lastName, avatarUrl, id } = user
     return {
         type: CREATE_POST_SUCCESS,
-        playload: { ...post, User: { firstName, lastName, avatarUrl }, usersLiked: [], Comments: [] }
+        playload: { ...post, User: { firstName, lastName, avatarUrl, id }, usersLiked: [], Comments: [] }
     }
 }
 

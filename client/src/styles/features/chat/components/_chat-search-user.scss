@@ -1,4 +1,12 @@
 .chat-search-user {
     @include standard-modal-desktop;
-    width: 650px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
 }
+
+.chat-search-user-input {
+    width: 80%;
+}
+

@@ -18,7 +18,7 @@ export default function TodoList({ todoList, allTodos, filter, dispatchToggleTod
               dispatchDeleteTodo={dispatchDeleteTodo}
             />
             {
-              todoList.lenght !== index + 1 && <Divider />
+              todoList.length !== index + 1 && <Divider />
             }
           </div>
         )

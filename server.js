@@ -34,6 +34,12 @@ app.use(errors)
 
 io.on('connection', (socket) => socketfFatures(io, socket))
 
+if(process.env.NODE_ENV === 'production') {
+  console.log('production')
+} else {
+  console.log('development')
+}
+
 
 server.on("error", (error) => errorHandler(error, server, port));
 server.on("listening", () => listening(server, port))

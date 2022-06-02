@@ -79,7 +79,7 @@
 }
 
 .mobile-menu ul li:nth-child(3) { 
-	-webkit-transform: translate3d(-100%,0,0);
+	-webkit-transform: translate3d(-100%,100%,0);
 	transform: translate3d(-100%,0,0);
 }
 
@@ -94,6 +94,11 @@
 }
 
 .mobile-menu ul li:nth-child(6) { 
+	-webkit-transform: translate3d(-100%,-100%,0);
+	transform: translate3d(-100%,-200%,0);
+}
+
+.mobile-menu ul li:nth-child(7) { 
 	-webkit-transform: translate3d(-100%,-200%,0);
 	transform: translate3d(-100%,-200%,0);
 }

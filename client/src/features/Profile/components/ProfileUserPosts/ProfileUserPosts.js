@@ -15,11 +15,12 @@ export default function ProfileUserPosts({ profileData, posts }) {
     const [userPostList, setUserPostList] = useState([])
     const [userPostListLength, setUserPostListLength] = useState(nbPostsDisplay)
 
+    // Add posts in list
     useEffect(() => {
         if (posts) setUserPostList(posts.slice(0, userPostListLength))
     }, [posts, posts.length, userPostListLength])
 
-    const addUserPotsInList = () => setUserPostListLength(userPostListLength + nbPostsDisplay)
+    const addUserPotsInList = () => setUserPostListLength(prev => prev + nbPostsDisplay)
 
     return (
         <div className='profile-user-posts'>

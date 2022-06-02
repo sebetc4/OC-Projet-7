@@ -9,12 +9,13 @@ module.exports = (io, socket) => {
         io.emit('getUsers', users)
     })
 
-    socket.on('sendMessage', ({ senderId, receiverId, message, User }) => {
+    socket.on('sendMessage', ({ senderId, receiverId, message, createdAt, User }) => {
         const user = getUser(receiverId)
         if (user) {
             io.to(user.socketId).emit('getMessage', {
                 senderId,
                 message,
+                createdAt,
                 User
             })
         }

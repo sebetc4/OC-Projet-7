@@ -1,5 +1,5 @@
 .chat-menu-top {
-	min-height: 50px;
+	height: 50px;
 	background: #ededed;
 	display: flex;
 	align-items: center;
@@ -10,6 +10,13 @@
 	flex: 1;
 	padding: 0 40px 20px 40px;
 	overflow-y: scroll;
+	position: relative;
+
+	button {
+		position: absolute;
+		bottom: 20px;
+		right: 20px;
+	}
 }
 
 .chat-menu-content-conversation {
@@ -32,16 +39,5 @@
 
 	&:hover {
 		background-color: rgb(236, 236, 237);
-	}
-}
-
-.chat-menu-bottom {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 70px;
-
-	&__input {
-		width: 100%;
 	}
 }

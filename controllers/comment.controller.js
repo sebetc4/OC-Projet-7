@@ -20,7 +20,7 @@ exports.updateComment = async (req, res, next) => {
     try {
         if (!commentId || !text ) throw { message: 'Missing parameters' }
         const comment = await getOneCommentWhereId(commentId)
-        user.checkAllow(comment.userId)
+        user.checkIsAuthorOrAdmin(comment.userId)
         await comment.update({text});
         return res.status(200).json(comment)
     } catch (err) {
@@ -33,7 +33,7 @@ exports.deleteComment = async (req, res, next) => {
     const commentId = req.params.id
     try {
         const comment = await getOneCommentWhereId(commentId)
-        user.checkAllow(comment.userId)
+        user.checkIsAuthorOrAdmin(comment.userId)
         await comment.destroy()
         res.status(200).json("Comment deletion is done")
     } catch (err) {

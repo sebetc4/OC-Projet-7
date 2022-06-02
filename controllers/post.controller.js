@@ -1,4 +1,4 @@
-const { getNewPostImagePath, getModifyPostImagePath } = require('../utils/pathFile')
+const { getPostImagePath } = require('../utils/pathFile')
 const { createPost, findAllPostsUserLikeAndComment, findOnePostWhereId } = require('../queries/post.queries')
 const { deleteLastPostImage } = require('../utils/deleteFile')
 
@@ -7,9 +7,11 @@ exports.createPost = async (req, res, next) => {
     const user = req.user
     const { text, video: videoUrl } = req.body
     try {
-        const imageUrl = getNewPostImagePath(req)
-        if (!text && !imageUrl && !videoUrl) throw { message: 'Missing parameters' }
-        if (imageUrl && videoUrl) throw { message: 'Image and video in same post is not allowed' }
+        const imageUrl = await getPostImagePath(req)
+        if (!text && !imageUrl && !videoUrl)
+            throw { message: 'Missing parameters' }
+        if (imageUrl && videoUrl)
+            throw { message: 'Image and video in same post is not allowed' }
         const newPost = await createPost(user.id, text, imageUrl, videoUrl)
         return res.status(201).json(newPost)
     } catch (err) {
@@ -18,8 +20,8 @@ exports.createPost = async (req, res, next) => {
 }
 
 exports.getAllPosts = async (req, res, next) => {
-    const offset  = parseInt(req.query.offset);
-    const limit   = parseInt(req.query.limit);
+    const offset = parseInt(req.query.offset);
+    const limit = parseInt(req.query.limit);
     try {
         const posts = await findAllPostsUserLikeAndComment(offset, limit)
         return res.status(200).json(posts)
@@ -29,11 +31,11 @@ exports.getAllPosts = async (req, res, next) => {
 }
 
 // Get post's object for updatePost
-const getPostObject = (req, text, videoUrl, updateImage) => {
+const getPostObject = async (req, text, videoUrl, updateImage) => {
     return updateImage ? ({
         text,
         videoUrl,
-        imageUrl: getModifyPostImagePath(req)
+        imageUrl: await getPostImagePath(req)
     }) :
         {
             text,
@@ -46,12 +48,15 @@ exports.updatePost = async (req, res, next) => {
     const { text, updateImage, video: videoUrl } = req.body
     const postId = req.params.id
     try {
-        if (!postId || !text && !req.files.post) throw { message: 'Missing parameters' }
+        if (!postId || !text && !req.files.post)
+            throw { message: 'Missing parameters' }
         const post = await findOnePostWhereId(postId)
-        user.checkAllow(post.UserId)
-        const postObject = getPostObject(req, text, videoUrl, updateImage)
-        if ((postObject.imageUrl && post.videoUrl) || (postObject.videoUrl && post.imageUrl)) throw { message: 'Image and video in same post is not allowed' }
-        updateImage && post.imageUrl && deleteLastPostImage(post)
+        user.checkIsAuthorOrAdmin(post.UserId)
+        const postObject = await getPostObject(req, text, videoUrl, updateImage)
+        if ((postObject.imageUrl && post.videoUrl) || (postObject.videoUrl && post.imageUrl))
+            throw { message: 'Image and video in same post is not allowed' }
+        if (updateImage && post.imageUrl)
+            deleteLastPostImage(post)
         await post.update(postObject);
         return res.status(200).json(post)
     } catch (err) {
@@ -63,9 +68,10 @@ exports.deletePost = async (req, res, next) => {
     const user = req.user
     const postId = req.params.id
     try {
-        if (!postId) throw { message: 'Missing parameters' }
+        if (!postId)
+            throw { message: 'Missing parameters' }
         const post = await findOnePostWhereId(postId)
-        user.checkAllow(post.UserId)
+        user.checkIsAuthorOrAdmin(post.UserId)
         post.imageUrl && deleteLastPostImage(post)
         await post.destroy()
         res.status(200).json("Deletion post is done")
@@ -79,7 +85,8 @@ exports.likePost = async (req, res, next) => {
     const user = req.user
     const postId = req.params.id
     try {
-        if (!postId || likeStatut == null) throw { message: 'Missing parameters' }
+        if (!postId || likeStatut == null)
+            throw { message: 'Missing parameters' }
         const post = await findOnePostWhereId(postId)
         const alreadyLike = await post.hasUsersLiked(user.id)
         switch (likeStatut) {

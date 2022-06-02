@@ -35,6 +35,7 @@ export default function AddTodo({ dispatchCreateTodo }) {
                     <Field
                         className='todos-add__input'
                         error={!!errors.todo}
+                        id='todos-add__input'
                         as={TextField}
                         variant='outlined'
                         name={'todo'}

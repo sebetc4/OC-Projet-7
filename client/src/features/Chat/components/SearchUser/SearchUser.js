@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import axios from 'axios';
 
 import CloseIcon from '@mui/icons-material/Close';
-import { TextField, IconButton, Avatar } from '@mui/material';
+import { TextField, IconButton } from '@mui/material';
+import { SearchUserCard } from './Components';
 
-export default function SearchUser({ user, toggleShowSearchUser }) {
+export default function SearchUser({ user, toggleShowSearchUser, handleOpenConversation, onlineUsersId }) {
 
     // State
     const [resultSearch, setResultSearch] = useState([])
@@ -13,7 +14,6 @@ export default function SearchUser({ user, toggleShowSearchUser }) {
         if (e.target.value) {
             const query = `?query=${e.target.value.replaceAll(' ', '+')}`
             const result = await axios.get(`/api/search/chat-search/${query}`)
-            console.log(result.data)
             result.data = result.data.filter(userInResult => userInResult.id !== user.id)
             setResultSearch(result.data)
         } else
@@ -36,25 +36,21 @@ export default function SearchUser({ user, toggleShowSearchUser }) {
             </div>
             <TextField
                 size="small"
-                className="chat-search-user__input"
+                className="chat-search-user-input"
                 id="chat-search-user__search-input"
-                label="Rechercher un utilisateur"
+                label="Nom ou prénom de l'utilisateur"
                 onChange={fetchSearch}
                 variant="standard"
             />
             <div className="chat-search-user-content">
                 {
                     resultSearch.map(userInResult =>
-                        <div 
-                        key={userInResult.id}
-                        className='chat-online-user-card' 
-                        >
-                                <Avatar
-                                    alt={`Avatar de ${userInResult.firstName} ${userInResult.lastName}`}
-                                    src={userInResult.avatarUrl}
-                                />
-                            <p className='chat-online-user-card__name'>{`${userInResult.firstName} ${userInResult.lastName}`}</p>
-                        </div >
+                        <SearchUserCard
+                            key={userInResult.id}
+                            userInResult={userInResult}
+                            handleOpenConversation={handleOpenConversation}
+                            onlineUsersId={onlineUsersId}
+                        />
                     )
                 }
             </div>

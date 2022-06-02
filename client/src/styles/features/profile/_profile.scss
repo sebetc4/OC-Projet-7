@@ -3,7 +3,7 @@
 .profile {
 	@include center-width($width: $profile-width-desktop);
 	min-height: calc(100vh - $header-height);
-	margin-bottom: 30px;
+	padding-bottom: 30px;
 }
 
 .profile-columns {

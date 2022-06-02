@@ -32,9 +32,14 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     },
 }));
 
-export default function OnlineUserCard({ onlineUser }) {
+
+export default function OnlineUserCard({ onlineUser, handleOpenConversation }) {
+
     return (
-        <div className='chat-online-user-card' >
+        <div 
+        className='chat-online-user-card' 
+        onClick={() => handleOpenConversation(onlineUser.userId)}
+        >
             <StyledBadge
                 overlap="circular"
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}

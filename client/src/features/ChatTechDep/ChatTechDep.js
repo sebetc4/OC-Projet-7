@@ -34,33 +34,37 @@ export default function ChatTechDep() {
             .required(),
     });
 
-    // Scrool bottom when new message
+    // Scroll to chat box bottom when new message
     useEffect(() => {
-        chatBoxContentRef.current?.scrollTo({ top: chatBoxContentRef.current.scrollHeight, behavior: "smooth" })
+        chatBoxContentRef.current && chatBoxContentRef.current.scrollTo({ top: chatBoxContentRef.current.scrollHeight, behavior: "smooth" })
     }, [messageList, resIsLoading])
 
-    // Fetch AI response
+    // Split sendMessage when it's too long
     useEffect(() => {
-        const addMessageToList = async (message) => {
-            message.replace('Human:', '').replace('AI:', '').replace('\n', '')
-            setMessageList(prev => [...prev, message])
+        if (sendMessage.length > 800) {
+            console.log('newString')
+            setSendMessage(prev => prev.split('\n').splice(4).toString())
         }
+    }, [sendMessage])
+
+    // Fetch open-ai response and set state
+    useEffect(() => {
         const fetchResponse = async () => {
             setResIsLoading(true)
             const message = `${sendMessage}Human:${userMessage}\nAI:`
             const res = await axios.post(`/api/open-ai/`, { message })
-            setSendMessage(sendMessage + message + res.data + '\n')
+            setSendMessage(prev => `${prev}Human:${userMessage}\nAI:` + res.data + '\n')
             setResIsLoading(false)
-            addMessageToList(res.data)
+            setMessageList(prev => [...prev, res.data.replace('Human:', '').replace('AI:', '').replace('\n', '')])
         }
         if (userMessage) fetchResponse()
-    }, [userMessage, sendMessage])
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userMessage])
 
     const submit = (values, actions) => {
         const mess = values.message
         values.message = ''
-        setMessageList([...messageList, mess])
+        setMessageList(prev => [...prev, mess])
         setUserMessage(mess)
     };
 
@@ -142,6 +146,7 @@ export default function ChatTechDep() {
                                     >
                                         <Field
                                             className="chat-tech-dep-box-bottom-form__input"
+                                            id='chat-tech-dep-box-bottom-form__input'
                                             as={TextField}
                                             variant='standard'
                                             name={'message'}
