@@ -1,10 +1,10 @@
 import React from 'react'
-import { ImageForm } from './components'
+import { SettingsImageForm } from './components'
 
 export default function ProfileImageForm({user}) {
   return (
     <div className='settings-profile-images'>
-      <ImageForm
+      <SettingsImageForm
         user={user}
         field={'avatar'}
         ratio={1}
@@ -12,7 +12,7 @@ export default function ProfileImageForm({user}) {
         showGrid={false}
         picture={user.avatarUrl}
       />
-      <ImageForm
+      <SettingsImageForm
         user={user}
         field={'cover'}
         ratio={2.35}

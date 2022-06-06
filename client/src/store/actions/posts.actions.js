@@ -2,6 +2,8 @@ import axios from 'axios';
 
 export const RESET_POSTS = 'RESET_POSTS'
 
+export const POST_SUBMITTING = 'POST_SUBMITTING'
+
 export const CREATE_POST = 'CREATE_POST'
 export const CREATE_POST_SUCCESS = 'CREATE_POST_SUCCESS'
 
@@ -37,8 +39,16 @@ export const resetPosts = () => {
     }
 }
 
+export const postSubmitting = () => {
+    return {
+        type: POST_SUBMITTING,
+        playload: ''
+    }
+}
+
 export const createPost = (data, user) => {
     return async (dispatch) => {
+        dispatch(postSubmitting())
         try {
             const post = await axios.post(`/api/post`, data);
             dispatch(createPostSuccess(post.data, user));
@@ -104,6 +114,7 @@ export const fetchPostsError = () => {
 
 export const updatePost = (data, postId, postIndex) => {
     return async (dispatch) => {
+        dispatch(postSubmitting())
         try {
             const newPost = await axios.put(`/api/post/${postId}`, data);
             dispatch(updatePostSuccess(postIndex, newPost.data));
@@ -129,6 +140,7 @@ export const updatePostError = () => {
 
 export const deletePost = (postId, postIndex) => {
     return async (dispatch) => {
+        dispatch(postSubmitting())
         try {
             await axios.delete(`/api/post/${postId}`);
             dispatch(deletePostSuccess(postIndex));

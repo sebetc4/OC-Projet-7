@@ -1,62 +1,47 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
 import { useSelector } from "react-redux";
 
-
-import { Chip } from '@mui/material';
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
-
-import { CreationDate, FollowIcon } from '../index'
+import { UserCard } from './components';
 
 export default function UserCardList({ users }) {
 
-    // Hooks
-    const navigate = useNavigate()
+    // State
+    const [allUsers, setAllUsers] = useState([])
 
     // Store
-    const userId = useSelector(state => state.user.data.id)
+    const user = useSelector(state => state.user.data)
 
-    const navigateToProfile = (id) => {
-        navigate(`/profile/${id}`, { replace: true })
+    useEffect(() => {
+        setAllUsers(users)
+    }, [users])
+
+    const handleFollow = (cardIndex) => {
+        const { id, firstName, lastName, avatarUrl } = user
+        const newAllUsers = [...allUsers]
+        newAllUsers[cardIndex].followers.push({ id, firstName, lastName, avatarUrl })
+        setAllUsers(newAllUsers)
+    }
+
+    const handleUnfollow = (cardIndex) => {
+        let newAllUsers = [...allUsers]
+        newAllUsers[cardIndex].followers = allUsers[cardIndex].followers.filter(u => u.id !== user.id)
+        setAllUsers(newAllUsers)
     }
 
     return (
         <>
             {
-                users && users.map((user, index) => (
+                allUsers.map((userInCard, index) => (
                     <article
                         className='user-card'
-                        key={user.id}
+                        key={userInCard.id}
                     >
-                        <img
-                            className='user-card__avatar'
-                            src={user.avatarUrl}
-                            alt={`Avatar de ${user.firstName} ${user.lastName}`}
+                        <UserCard
+                            userInCard={userInCard}
+                            cardIndex={index}
+                            handleFollow={handleFollow}
+                            handleUnfollow={handleUnfollow}
                         />
-                        <div className='user-card__infos'>
-                            <p>
-                                {`${user.firstName} ${user.lastName}`}
-                            </p>
-                            <p>
-                                Inscrit le <CreationDate date={user.createdAt} />
-                            </p>
-                            <p>
-                                Suivie par {user.followers.length} personne
-                            </p>
-                        </div>
-                        <div className='user-card__actions'>
-                            {userId !== user.id &&
-                                <FollowIcon
-                                    user={user}
-                                />
-                            }
-                            <Chip
-                                icon={<AccountBoxIcon />}
-                                label={'Voir le profil'}
-                                variant="outlined"
-                                onClick={() => navigateToProfile(user.id)}
-                            />
-                        </div>
                     </article>
                 ))
             }

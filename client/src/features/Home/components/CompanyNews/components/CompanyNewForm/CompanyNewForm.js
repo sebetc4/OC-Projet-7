@@ -4,20 +4,27 @@ import axios from 'axios';
 
 import { Button, IconButton, TextField, TextareaAutosize } from '@mui/material';
 
-export default function CompanyNewForm({ type, initialTitle, initialtext, closeModal, setAllCompanyNews }) {
+export default function CompanyNewForm({ type, companyNewId, initialTitle, initialtext, closeModal, setAllCompanyNews }) {
 
+    // State
     const [title, setTitle] = useState(initialTitle)
     const [text, setText] = useState(initialtext)
 
     const submit = async (e) => {
         e.preventDefault()
         if (type === 'modify') {
-
+            const updatedCompanyNew = await axios.put(`api/company-new/${companyNewId}`, { title, text })
+            setAllCompanyNews(prev => prev.map(compNew =>
+                compNew.id === companyNewId ?
+                    updatedCompanyNew.data
+                    :
+                    compNew
+            ))
         } else {
-            const newCompanyNew = await axios.post('api/new', { title, text })
+            const newCompanyNew = await axios.post('api/company-new', { title, text })
             setAllCompanyNews(prev => [newCompanyNew.data, ...prev])
         }
-
+        closeModal()
     }
 
     return (
@@ -70,7 +77,6 @@ export default function CompanyNewForm({ type, initialTitle, initialtext, closeM
                     >
                         {type === 'modify' ? 'Modifier' : 'Ajouter'}
                     </Button>
-
                 </div>
             </form>
         </div>

@@ -19,8 +19,10 @@ exports.createMessage = async (req, res, next) => {
 }
 
 exports.getAllMessages = async (req, res, next) => {
+    const user = req.user
     const conversationId = req.params.id
     try {
+        const conversation = await Conversation.findByPk(conversationId)
         const messages = await Message.findAll({
             where: { conversationId },
             order: [['createdAt', 'ASC']],
@@ -29,6 +31,10 @@ exports.getAllMessages = async (req, res, next) => {
                 attributes: attributes.userInPost
             }]
         })
+        if (user.id === conversation.firstUserId)
+            conversation.update({ unreadMessageFirstUser: 0 })
+        else
+            conversation.update({ unreadMessageSecondUser: 0 })
         return res.status(200).json(messages)
     } catch (err) {
         next(err)

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { OnlineUserCard } from './components'
+import { ChatUserCard } from '../index'
 
-export default function OnlineUsers({ onlineUsers, user, handleOpenConversation }) {
+export default function OnlineUsers({ deviceSize, onlineUsers, user, handleOpenConversation }) {
 
+    // State
     const [onlineFollowUsers, setOnlineFollowUsers] = useState([])
     const [onlineOtherUsers, setOnlineOtherUsers] = useState([])
 
@@ -21,9 +22,13 @@ export default function OnlineUsers({ onlineUsers, user, handleOpenConversation 
     }, [user, onlineUsers])
     return (
         <>
-            <div className='chat-online-users-top'>
-                <h2>Utilisateurs en ligne</h2>
-            </div>
+            {
+                deviceSize !== 0 &&
+                <div className='chat-online-users-top'>
+                    <h2>Utilisateurs en ligne</h2>
+                </div>
+            }
+
             <div className='chat-online-users-content'>
                 {
                     (onlineFollowUsers.length !== 0 || onlineOtherUsers.length !== 0) ?
@@ -36,15 +41,21 @@ export default function OnlineUsers({ onlineUsers, user, handleOpenConversation 
                                     }
                                     {
                                         onlineFollowUsers.map(onlineUser =>
-                                            <OnlineUserCard
+                                            <article
                                                 key={onlineUser.userId}
-                                                onlineUser={onlineUser}
-                                                handleOpenConversation={handleOpenConversation}
-                                            />
+                                                className='chat-user-card'
+                                                onClick={() => handleOpenConversation({ ...onlineUser.data, id: onlineUser.userId })}
+                                            >
+                                                <ChatUserCard
+                                                    key={onlineUser.userId}
+                                                    userInCard={onlineUser.data}
+                                                    userInCardIsOnline={true}
+                                                    unreadMessages={0}
+                                                />
+                                            </article>
                                         )
                                     }
                                 </>
-
                             }
                             {
                                 onlineOtherUsers.length !== 0 &&
@@ -54,11 +65,18 @@ export default function OnlineUsers({ onlineUsers, user, handleOpenConversation 
                                     }
                                     {
                                         onlineOtherUsers.map(onlineUser =>
-                                            <OnlineUserCard
+                                            <article
                                                 key={onlineUser.userId}
-                                                onlineUser={onlineUser}
-                                                handleOpenConversation={handleOpenConversation}
-                                            />
+                                                className='chat-user-card'
+                                                onClick={() => handleOpenConversation({ ...onlineUser.data, id: onlineUser.userId })}
+                                            >
+                                                <ChatUserCard
+                                                    key={onlineUser.userId}
+                                                    userInCard={onlineUser.data}
+                                                    userInCardIsOnline={true}
+                                                    unreadMessages={0}
+                                                />
+                                            </article>
                                         )
                                     }
                                 </>

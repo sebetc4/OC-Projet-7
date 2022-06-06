@@ -8,7 +8,7 @@ export default function TodoList({ todoList, allTodos, filter, dispatchToggleTod
     <>
       <ul>
         {todoList.lenght !== 0 && todoList.map((todo, index) => (
-          <div
+          <li
             key={index + todo.name}
           >
             <TodoItem
@@ -20,7 +20,7 @@ export default function TodoList({ todoList, allTodos, filter, dispatchToggleTod
             {
               todoList.length !== index + 1 && <Divider />
             }
-          </div>
+          </li>
         )
         )}
       </ul>

@@ -11,7 +11,7 @@ const openAiRoutes = require("./openAi.routes")
 const followRoutes = require("./follow.routes")
 const conversationRoutes = require('./conversation.routes')
 const messageRoutes = require('./message.routes')
-const newRoutes = require('./new.routes')
+const companyNewRoutes = require('./companyNew.routes')
 
 
 // Static routes
@@ -28,7 +28,7 @@ router.use('/api/open-ai', openAiRoutes)
 router.use('/api/follow', followRoutes)
 router.use('/api/conversation', conversationRoutes)
 router.use('/api/message', messageRoutes)
-router.use('/api/new', newRoutes)
+router.use('/api/company-new', companyNewRoutes)
 
 
 // Front route

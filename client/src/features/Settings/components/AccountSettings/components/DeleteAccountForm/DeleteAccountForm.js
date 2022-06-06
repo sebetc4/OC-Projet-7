@@ -91,8 +91,8 @@ export default function DeleteAccountForm({closeAccordion}) {
                         </Button>
                     </div>
                     <ConfirmModal
-                        title={'Confirmation de supression de compte'}
-                        content={`Voulez vous vraiment supprimer votre compte, cette action est irréversible?`}
+                        title={'Confirmer la supression du compte'}
+                        content={`Voulez vous vraiment supprimer votre compte? Cette action est irréversible!`}
                         button='Valider'
                         showConfirmModale={showConfirmModale}
                         toggleShowConfirmModale={toggleShowConfirmModale}

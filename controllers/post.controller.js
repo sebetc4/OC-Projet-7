@@ -32,7 +32,7 @@ exports.getAllPosts = async (req, res, next) => {
 
 // Get post's object for updatePost
 const getPostObject = async (req, text, videoUrl, updateImage) => {
-    return updateImage ? ({
+    return (updateImage === 'true') ? ({
         text,
         videoUrl,
         imageUrl: await getPostImagePath(req)
@@ -55,7 +55,7 @@ exports.updatePost = async (req, res, next) => {
         const postObject = await getPostObject(req, text, videoUrl, updateImage)
         if ((postObject.imageUrl && post.videoUrl) || (postObject.videoUrl && post.imageUrl))
             throw { message: 'Image and video in same post is not allowed' }
-        if (updateImage && post.imageUrl)
+        if (updateImage === 'true' && post.imageUrl)
             deleteLastPostImage(post)
         await post.update(postObject);
         return res.status(200).json(post)

@@ -130,11 +130,11 @@
 }
 
 @media screen and (max-width: $media-small-screen) {
-	.mobile-menu.mobile-menu-open {
+	.mobile-menu.mobile-menu--open {
 		border-width: 0px 0px 0px 70px;
 	}
 
-	.mobile-menu ul {
+	.mobile-menu.mobile-menu--open ul {
 		width: 70px;
 	}
 }

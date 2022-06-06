@@ -1,18 +1,15 @@
-const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
-const { Conversation, User } = require('../models');
-const attributes = require('../utils/attributes')
-
+const { createConversation, getAllUserconversations, getOneConversation } = require('../queries/conversation.queries')
+const { findOneUserWhereId } = require('../queries/user.queries')
 
 exports.createConversation = async (req, res, next) => {
    const user = req.user
    const otherUserId = req.params.id
    try {
-      const otherUser = await User.findByPk(otherUserId)
-      const conversation = await Conversation.create({
-         firstUserId: user.id,
-         secondUserId: otherUser.id
-      })
+      const otherUser = await findOneUserWhereId(otherUserId)
+      const conversationAlreadyexist = await getOneConversation(user.id, otherUser.id)
+      if (conversationAlreadyexist)
+         throw { message: `Conersation already exist` }
+      const conversation = await createConversation(user.id, otherUser.id)
       return res.status(201).json(conversation)
    } catch (err) {
       next(err)
@@ -22,29 +19,7 @@ exports.createConversation = async (req, res, next) => {
 exports.getAllConversations = async (req, res, next) => {
    const user = req.user
    try {
-      const conversations = await Conversation.findAll({
-         where: {
-            [Op.or]: [
-               {
-                  firstUserId: user.id
-               },
-               {
-                  secondUserId: user.id
-               }
-            ]
-         },
-         include: [
-            {
-               model: User,
-               as: 'firstUser',
-               attributes: attributes.userInConversation
-            }, {
-               model: User,
-               as: 'secondUser',
-               attributes: attributes.userInConversation
-            }
-         ]
-      })
+      const conversations = await getAllUserconversations(user.id)
       return res.status(200).json(conversations)
    } catch (err) {
       next(err)

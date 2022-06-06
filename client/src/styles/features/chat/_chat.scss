@@ -2,9 +2,12 @@
 @import './components/chat-menu';
 @import './components/chat-online-users';
 @import './components/chat-search-user';
+@import './components/chat-user-card';
 
 .chat {
-	padding: 10px 0 30px 0;
+	max-width: 1600px;
+	margin: 0 auto;
+	padding-top: 10px;
 	height: calc(100vh - $header-height);
 	display: flex;
 	justify-content: space-between;
@@ -14,6 +17,8 @@
 .chat-box,
 .chat-online {
 	@include features-section-desktop;
+	min-height: 350px;
+	margin-bottom: 30px;
 	padding: 0;
 
 	h2 {
@@ -36,4 +41,44 @@
 
 .chat-online {
 	width: 27%;
+}
+
+@media screen and (max-width: $media-mobile) {
+
+	.chat {
+		padding: 0;
+		display: block;
+		position: relative;
+
+        &__search-button-container {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+        }
+
+		.MuiTab-root {
+			padding: 22px;
+		}
+
+		.MuiTabPanel-root {
+			padding: 0;
+		}
+	}
+
+	.chat-top {
+		background-color: #ededed;
+
+	}
+
+	.chat-menu,
+	.chat-box,
+	.chat-online {
+		margin: 0;
+		width: 100%;
+	}
+
+	.chat-menu,
+	.chat-online {
+		height: calc(100vh - $header-height - 62.5px);
+	}
 }

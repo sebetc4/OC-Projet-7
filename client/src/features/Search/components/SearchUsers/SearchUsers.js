@@ -43,7 +43,7 @@ export default function SearchUsers({ users }) {
             }
           </>
           :
-          <p>Aucun utilisateur pour votre recherche</p>
+          <p className='search-no-user'>Aucun utilisateur pour votre recherche</p>
       }
     </>
   )

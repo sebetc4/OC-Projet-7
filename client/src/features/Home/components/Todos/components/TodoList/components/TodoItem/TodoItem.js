@@ -18,13 +18,14 @@ export default function TodoItem({ todo, allTodos, dispatchToggleTodo, dispatchD
     }, [todo, allTodos])
 
     return (
-        <li className='todos-item'>
+        <article className='todos-item'>
             <div className='todos-item-input'>
                 <input
                     id={todo.id}
                     type="checkbox"
                     checked={todo.done}
                     onChange={() => dispatchToggleTodo(index, todo.id)}
+                    aria-label='Modifier l\état de la tâche'
                 />
                 <label tabIndex={0} htmlFor={todo.id} className="todos-item-input__check">
                     <svg width="18px" height="18px" viewBox="0 0 18 18">
@@ -42,11 +43,12 @@ export default function TodoItem({ todo, allTodos, dispatchToggleTodo, dispatchD
                     color='error'
                     size='large'
                     onClick={() => dispatchDeleteTodo(index, todo.id)}
+                    aria-label='Supprimer la tâche'
                 >
                     <DeleteOutlineOutlinedIcon
                     />
                 </IconButton>
             </div>
-        </li>
+        </article>
     )
 }

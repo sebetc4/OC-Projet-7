@@ -42,6 +42,7 @@ const CropEasy = (props) => {
                         color="error"
                         aria-label="Annuler"
                         onClick={props.handleCancel}
+                        disabled={props.formIsSubmitting}
                     >
                         <CloseIcon color='error' fontSize='medium' />
                     </IconButton>

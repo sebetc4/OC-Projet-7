@@ -51,6 +51,7 @@ export default function AddTodo({ dispatchCreateTodo }) {
                             size='large'
                             color='primary'
                             disabled={ !(!isSubmitting && isValid && values.todo !== '') }
+                            aria-label='Ajouter une todo'
                         >
                             <AddIcon />
                         </IconButton>

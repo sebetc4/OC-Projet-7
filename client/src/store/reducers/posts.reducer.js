@@ -1,9 +1,10 @@
-import { RESET_POSTS, CREATE_POST_SUCCESS, FETCH_POSTS_SUCCESS, ALL_POSTS_FETCH, LIKE_POST_SUCCESS, UPDATE_POST_SUCCESS, DELETE_POST_SUCCESS, CREATE_COMMENT_SUCCESS, DELETE_COMMENT_SUCCESS, UPDATE_COMMENT_SUCCESS, POSTS_ERROR } from "../actions/posts.actions";
+import { RESET_POSTS, CREATE_POST_SUCCESS, FETCH_POSTS_SUCCESS, ALL_POSTS_FETCH, LIKE_POST_SUCCESS, UPDATE_POST_SUCCESS, DELETE_POST_SUCCESS, CREATE_COMMENT_SUCCESS, DELETE_COMMENT_SUCCESS, UPDATE_COMMENT_SUCCESS, POSTS_ERROR, POST_SUBMITTING } from "../actions/posts.actions";
 
 const postsDefaultState = {
     data: [],
     type: '',
     isLoaded: false,
+    submitting: false,
     allPostsFetch: false,
     error: null,
 }
@@ -13,16 +14,19 @@ export default function postsReducer(state = postsDefaultState, action) {
         case RESET_POSTS: {
             return postsDefaultState
         }
+        case POST_SUBMITTING: {
+            return { ...state, submitting: true, error: false }
+        }
         case CREATE_POST_SUCCESS: {
             const post = action.playload
-            return { ...state, data: [post, ...state.data] }
+            return { ...state, data: [post, ...state.data], submitting: false, error: false }
         }
         case FETCH_POSTS_SUCCESS: {
-            const {posts, type} = action.playload
+            const { posts, type } = action.playload
             return { ...state, data: [...state.data, ...posts], type, isLoaded: true, allPostsFetch: false, error: false }
         }
         case ALL_POSTS_FETCH: {
-            const {posts, type} = action.playload
+            const { posts, type } = action.playload
             return { ...state, data: [...state.data, ...posts], type, isLoaded: true, allPostsFetch: true, error: false }
         }
         case UPDATE_POST_SUCCESS: {
@@ -30,13 +34,13 @@ export default function postsReducer(state = postsDefaultState, action) {
             const data = [...state.data]
             const lastData = data[postIndex]
             data[postIndex] = { ...lastData, ...newPost }
-            return { ...state, data, error: false }
+            return { ...state, data, submitting: false, error: false }
         }
         case DELETE_POST_SUCCESS: {
             const postIndex = action.playload
             const data = [...state.data]
             data.splice(postIndex, 1)
-            return { ...state, data, error: false }
+            return { ...state, data, submitting: false, error: false }
         }
         case LIKE_POST_SUCCESS: {
             const { postIndex, likeStatut, userId, userIndex } = action.playload
@@ -67,8 +71,8 @@ export default function postsReducer(state = postsDefaultState, action) {
         }
         case POSTS_ERROR: {
             const error = action.playload
-            return { ...state, error }
-        } 
+            return { ...state, submitting: false, error }
+        }
         default:
             return state;
     }

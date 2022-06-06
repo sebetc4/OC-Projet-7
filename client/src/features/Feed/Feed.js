@@ -42,7 +42,7 @@ export default function Feed() {
 
 	useEffect(() => {
 		if (postsIsLoading)
-			setPostsListLength(postsListLength + nbPostsDisplay)
+			setPostsListLength(prev => prev + nbPostsDisplay)
 	}, [postsIsLoading])
 
 	useEffect(() => {
@@ -87,7 +87,7 @@ export default function Feed() {
 						}
 						{
 							posts.data.length === 0 &&
-							<div>
+							<div className='feed-no-post'>
 								<p>Aucun post. Soyez le premier à partager avec vos collègues.</p>
 							</div>
 						}

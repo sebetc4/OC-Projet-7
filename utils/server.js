@@ -1,3 +1,5 @@
+require("dotenv");
+
 exports.errorHandler = (error, server, port) => {
     if (error.syscall !== "listen") {
         throw error;
@@ -33,5 +35,5 @@ exports.normalizePort = (val) => {
 exports.listening = (server, port) => {
     const address = server.address();
     const bind = typeof address === "string" ? "pipe " + address : "port " + port;
-    console.log("Listening on " + bind);
+    console.log(`Listening on ${bind} / ${process.env.NODE_ENV === 'production' ? 'prod' : 'dev'} env`);
 }

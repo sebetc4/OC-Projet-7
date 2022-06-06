@@ -6,7 +6,7 @@ import { visibilityFilters } from '../../../../../../store/actions/todos.actions
 
 export default function Filter({ dispatchSetFilter, filter }) {
 
-    const handleChange = (e, newFilter) => dispatchSetFilter(newFilter)
+    const handleChange = (e, newFilter) => newFilter && dispatchSetFilter(newFilter)
 
     return (
         <ToggleButtonGroup
@@ -16,9 +16,7 @@ export default function Filter({ dispatchSetFilter, filter }) {
             exclusive
             onChange={handleChange}
         >
-            <ToggleButton
-                value={visibilityFilters.SHOW_ALL}
-            >Tout</ToggleButton>
+            <ToggleButton value={visibilityFilters.SHOW_ALL}>Tout</ToggleButton>
             <ToggleButton value={visibilityFilters.SHOW_DONE}>Fini</ToggleButton>
             <ToggleButton value={visibilityFilters.SHOW_ACTIVE}>En cours</ToggleButton>
         </ToggleButtonGroup>

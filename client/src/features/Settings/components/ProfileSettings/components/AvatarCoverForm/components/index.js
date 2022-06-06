@@ -1,0 +1,1 @@
+export { default as SettingsImageForm } from './SettingsImageForm/SettingsImageForm'

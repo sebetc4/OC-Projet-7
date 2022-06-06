@@ -1,49 +1,44 @@
-const { User } = require('../models');
-const attributes = require('../utils/attributes')
+const { addUser, getUser, removeUser } = require('./user.socket')
+const { addConversation, addUnreadMessage, checkIfCurrentConversation, removeConversation } = require('./conversation.socket')
 
 module.exports = (io, socket) => {
-    console.log('ustilisateur connecté')
-
     socket.on('addUser', async (userId) => {
-        await addUser(userId, socket.id)
+        const users = await addUser(userId, socket.id)
         io.emit('getUsers', users)
     })
 
-    socket.on('sendMessage', ({ senderId, receiverId, message, createdAt, User }) => {
+    socket.on('sendMessage', ({ senderId, receiverId, message, convId, createdAt, User }) => {
         const user = getUser(receiverId)
         if (user) {
             io.to(user.socketId).emit('getMessage', {
                 senderId,
                 message,
                 createdAt,
+                convId,
                 User
+            })
+        }
+        if (!checkIfCurrentConversation(receiverId, convId))
+            addUnreadMessage(receiverId, convId)
+    })
+
+    socket.on('addConversation', ({ userId, convId }) => {
+        addConversation(socket.id, userId, convId)
+    })
+
+    socket.on('newConversation', ({ otherUserId, conversation }) => {
+        const user = getUser(otherUserId)
+        if (user) {
+            io.to(user.socketId).emit('getConversation', {
+                conversation
             })
         }
     })
 
     socket.on('disconnect', () => {
-        console.log('utilisateur déconnecté')
-        removeUser(socket.id)
+        const users = removeUser(socket.id)
+        removeConversation(socket.id)
         io.emit('getUsers', users)
     })
 }
 
-// User functions
-let users = []
-
-const addUser = async (userId, socketId) => {
-    const data = await User.findOne({
-        where: { id : userId },
-        attributes: attributes.userOnline,
-    })
-    if (!(users.some(user => user.userId === userId)))
-        users.push({ userId, socketId, data })
-}
-
-const removeUser = (socketId) => {
-    users = users.filter(user => user.socketId !== socketId)
-}
-
-const getUser = (userId) => {
-    return users.find(user => user.userId === userId)
-}

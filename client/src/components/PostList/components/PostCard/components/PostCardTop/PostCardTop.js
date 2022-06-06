@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom';
-import { FromNowDate } from '../../../../..';
+import { useDispatch } from "react-redux";
+import { deletePost } from '../../../../../../store/actions/posts.actions';
+
+import { ConfirmModal, FromNowDate } from '../../../../..';
 import { PostCardSettings } from './components';
 
 import IconButton from '@mui/material/IconButton';
@@ -8,9 +11,13 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 export default function PostCardTop({ type, author, post, postIndex, user, toggleShowModifyPost }) {
 
+    // Hooks
+    const dispatch = useDispatch()
+
     // State
     const [userIsAuthorOrAdmin, setUserIsAuthorOrAdmin] = useState(false)
-    const [displayPostSettings, setDisplayPostSettings] = useState(false)
+    const [showPostSettings, setShowPostSettings] = useState(false)
+    const [showDeleteConfirmModale, setShowDeleteConfirmModale] = useState(false)
 
     // Check if user is author post or admin
     useEffect(() => {
@@ -18,7 +25,12 @@ export default function PostCardTop({ type, author, post, postIndex, user, toggl
             setUserIsAuthorOrAdmin(true)
     }, [author, user])
 
-    const toggleDisplayPostSettings = () => setDisplayPostSettings(!displayPostSettings)
+    const handleDeletePost = () => dispatch(deletePost(post.id, postIndex))
+
+
+    const toggleShowPostSettings = () => setShowPostSettings(!showPostSettings)
+    const toggleShowDeleteConfirmModale = () => setShowDeleteConfirmModale(prev => !prev)
+
 
     return (
         <div className={`post-card-top ${type === 'feed' ? '' : 'post-card-top--small'}`}>
@@ -53,22 +65,29 @@ export default function PostCardTop({ type, author, post, postIndex, user, toggl
                 <div className='post-card-top__settings-button-container'
                 >
                     <IconButton
-                        onClick={toggleDisplayPostSettings}
+                        onClick={toggleShowPostSettings}
                         color="primary"
                         aria-label="Paramètres de commentaire"
                     >
                         <MoreHorizIcon />
                     </IconButton>
-                    {displayPostSettings &&
+                    {showPostSettings &&
                         <PostCardSettings
-                            closeModal={toggleDisplayPostSettings}
-                            toggleDisplayModifyPost={toggleShowModifyPost}
-                            postId={post.id}
-                            postIndex={postIndex}
+                            closeModal={toggleShowPostSettings}
+                            toggleShowModifyPost={toggleShowModifyPost}
+                            toggleShowDeleteConfirmModale={toggleShowDeleteConfirmModale}
                         />
                     }
                 </div>
             }
+                <ConfirmModal
+                    title={'Confirmer la supression du post'}
+                    content={`Voulez vous vraiment supprimer ce post?`}
+                    button='Supprimer'
+                    showConfirmModale={showDeleteConfirmModale}
+                    toggleShowConfirmModale={toggleShowDeleteConfirmModale}
+                    onClickConfirm={handleDeletePost}
+                />
         </div>
     )
 }

@@ -1,0 +1,1 @@
+export { default as CompanyNewSettings } from './CompanyNewSettings/CompanyNewSettings'

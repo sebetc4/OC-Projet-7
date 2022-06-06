@@ -20,7 +20,7 @@ export { default as PostList} from './PostList/PostList'
 
 export { default as Loader } from './Loader/Loader'
 
-export { default as FollowIcon } from './FollowIcon/FollowIcon'
+export { default as FollowButton } from './FollowButton/FollowButton'
 
 export { default as UserCardList } from './UserCardList/UserCardList'
 

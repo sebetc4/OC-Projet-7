@@ -1,3 +1,14 @@
+.chat-menu {
+	position: relative;
+
+	button {
+		position: absolute;
+		bottom: 20px;
+		right: 20px;
+		z-index: 0;
+	}
+}
+
 .chat-menu-top {
 	height: 50px;
 	background: #ededed;
@@ -10,34 +21,33 @@
 	flex: 1;
 	padding: 0 40px 20px 40px;
 	overflow-y: scroll;
-	position: relative;
+}
 
-	button {
-		position: absolute;
-		bottom: 20px;
-		right: 20px;
+.chat-menu-no-conversation {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	p {
+		padding: 10px;
+		font-size: 16px;
+		color: rgb(80, 80, 80);
+		text-align: center;
 	}
 }
 
-.chat-menu-content-conversation {
-	margin-top: 20px;
-	background-color: $grey-background;
-	border-radius: 25px;
-	display: flex;
-	align-items: center;
-	padding: 5px;
-	cursor: pointer;
-
-	img {
-		width: 50px;
-		height: 50px;
+@media screen and (max-width: $media-tablette) {
+	.chat-menu-content {
+		padding: 0 10px 20px 10px;
 	}
+}
 
-	&__name {
-		margin-left: 20px;
-	}
-
-	&:hover {
-		background-color: rgb(236, 236, 237);
+@media screen and (max-width: $media-mobile) {
+	.chat-menu-content {
+		display: flex;
+		align-items: center;
+		flex-direction: column;
 	}
 }

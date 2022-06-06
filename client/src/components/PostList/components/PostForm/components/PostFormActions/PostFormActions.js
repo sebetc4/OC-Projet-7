@@ -4,7 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import Divider from '@mui/material/Divider';
 
-export default function PostFormActions({ image, videoUrl, setFile, handleDeleteImage, toggleShowVideoInput, showVideoInput, handleDeleteVideo }) {
+export default function PostFormActions({ image, videoUrl, setFile, handleDeleteImage, toggleShowVideoInput, showVideoInput, handleDeleteVideo, submitting }) {
     return (
         <div className='post-form-actions' >
             <Divider />
@@ -27,6 +27,7 @@ export default function PostFormActions({ image, videoUrl, setFile, handleDelete
                                     color="primary"
                                     component="span"
                                     startIcon={<PhotoCamera />}
+                                    disabled={submitting}
                                 >
                                     {`${image ? 'Modifier l\'' : 'Ajouter une '}image`}
                                 </Button>
@@ -37,6 +38,7 @@ export default function PostFormActions({ image, videoUrl, setFile, handleDelete
                                 color="warning"
                                 startIcon={<DeleteIcon />}
                                 onClick={handleDeleteImage}
+                                disabled={submitting}
                             >
                                 Supprimer l'image
                             </Button>
@@ -52,6 +54,7 @@ export default function PostFormActions({ image, videoUrl, setFile, handleDelete
                                 component="span"
                                 onClick={toggleShowVideoInput}
                                 startIcon={<OndemandVideoIcon />}
+                                disabled={submitting}
                             >
                                 {`${videoUrl ? 'Modifier la ' : 'Ajouter une '}video`}
                             </Button> :
@@ -59,6 +62,7 @@ export default function PostFormActions({ image, videoUrl, setFile, handleDelete
                                 variant="text"
                                 color='warning'
                                 onClick={toggleShowVideoInput}
+                                disabled={submitting}
                             >
                                 Annuler
                             </Button>
@@ -68,6 +72,7 @@ export default function PostFormActions({ image, videoUrl, setFile, handleDelete
                                 color="warning"
                                 startIcon={<DeleteIcon />}
                                 onClick={handleDeleteVideo}
+                                disabled={submitting}
                             >
                                 Supprimer la video
                             </Button>

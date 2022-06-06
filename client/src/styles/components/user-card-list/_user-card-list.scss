@@ -1,8 +1,12 @@
 .user-card {
+	width: 100%;
+	max-width: 650px;
+	margin-bottom: 20px;
 	display: flex;
+	align-items: center;
 	background-color: $grey-background;
 	box-shadow: $box-shadow-main-element;
-	padding: 10px 20px;
+	padding: 10px;
 	border-radius: 25px;
 
 	&__avatar {
@@ -12,23 +16,85 @@
 		box-shadow: $box-shadow-avatar;
 		padding: 1px;
 		background-color: $primary-color;
-		margin: 5px 0;
-	}
-
-	&__infos {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-		margin-left: 20px;
-		p {
-			margin-top: 5px;
-			font-size: 16px;
-		}
 	}
 
 	&__actions {
+		width: 160px;
 		display: flex;
 		flex-direction: column;
+		justify-content: space-around;
+
+		button {
+			height: auto;
+			padding: 5px 16px;
+		}
+	}
+}
+
+.user-card-infos {
+	height: 100%;
+	margin-left: 20px;
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+
+	h3 {
+		font-size: 16px;
+	}
+
+	p {
+		font-size: 13px;
+	}
+
+	&__date {
+		margin: 8px 0;
+	}
+}
+
+@media screen and (max-width: $media-tablette) {
+	.user-card {
+		&__actions {
+			
+			button {
+				margin-top: 10px;
+				padding: 10px 16px;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: $media-mobile) {
+	.user-card {
+		&__actions {
+			width: 171px;
+		}
+	}
+
+	.user-card-infos {
+		p {
+			font-size: 14px;
+		}
+	}
+}
+
+@media screen and (max-width: $media-small-screen) {
+	.user-card {
+		flex-direction: column;
+		padding: 20px;
+		border-radius: 0;
+
+		&__actions {
+			margin: 20px 10px;
+		}
+	}
+
+	.user-card-infos {
+		margin-top: 20px;
+		margin-left: 0;
+		align-items: center;
+
+		&__date {
+			margin: 10px 0;
+		}
 	}
 }

@@ -4,8 +4,8 @@ import { CreationDate } from '../../../../components';
 
 export default function ProfileUserInformation({ profileData }) {
     return (
-        <div className='profile-user-information'>
-            <h3 className='profile-user-information__title'>Informations:</h3>
+        <section className='profile-user-information'>
+            <h2 className='profile-user-information__title'>Informations:</h2>
             <div className='profile-user-information__content'>
                 <p>{'Membre depuis le '}
                     <CreationDate
@@ -14,6 +14,6 @@ export default function ProfileUserInformation({ profileData }) {
                     />
                 </p>
             </div>
-        </div>
+        </section>
     )
 }

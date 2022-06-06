@@ -3,12 +3,13 @@ import axios from 'axios';
 
 import { Divider, IconButton } from '@mui/material'
 import { TextareaAutosize } from '@mui/base';
-import { Message } from './components';
-
+import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
+
+import { Message } from './components';
 import { Loader } from '../../../../components';
 
-export default function ChatBox({ socket, user, currentChat, otherUser, messages, setMessages }) {
+export default function ChatBox({ deviceSize, socket, user, currentChat, otherUser, messages, setMessages, setShowChatBox }) {
 
     // Hooks
     const chatBoxContentRef = useRef()
@@ -34,6 +35,7 @@ export default function ChatBox({ socket, user, currentChat, otherUser, messages
             socket.emit('sendMessage', {
                 senderId: user.id,
                 receiverId: otherUser.id,
+                convId: currentChat.id,
                 message: newMessage,
                 createdAt: res.data.createdAt,
                 User
@@ -63,6 +65,19 @@ export default function ChatBox({ socket, user, currentChat, otherUser, messages
                                             alt={`Avatar de ${otherUser.firstName} ${otherUser.lastName}`}
                                         />
                                         <h2>{`${otherUser.firstName} ${otherUser.lastName}`}</h2>
+                                        {
+                                            deviceSize === 0 &&
+                                            <div className='chat-box-top__button-container'>
+                                                <IconButton
+                                                    color="error"
+                                                    aria-label="Retour"
+                                                    onClick={() => setShowChatBox(false)}
+                                                >
+                                                    <CloseIcon color='error' fontSize='medium' />
+                                                </IconButton>
+                                            </div>
+                                        }
+
                                     </div >
 
                                     <div
@@ -125,8 +140,8 @@ export default function ChatBox({ socket, user, currentChat, otherUser, messages
 
                     </>
                     :
-                    <div className='chat-box-no-user'>
-                        <p>Ouvrir une conversation pour commencer à parler.</p>
+                    <div className='chat-box-no-chat'>
+                        <p>Ouvrir une conversation pour commencer à parler</p>
 
                     </div>
             }

@@ -19,11 +19,22 @@
             height: 15px;
         }
     }
+}
 
-    p {
-        margin-top: 40px;
-        font-size: 18px;
-    }
+.feed-no-post {
+	width: 100%;
+	height: 100%;
+    margin-top: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	p {
+		padding: 10px;
+		font-size: 18px;
+		color: rgb(80, 80, 80);
+		text-align: center;
+	}
 }
 
 @media screen and (max-width: $media-mobile ) {

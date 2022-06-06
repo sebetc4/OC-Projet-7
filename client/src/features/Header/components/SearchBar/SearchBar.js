@@ -46,6 +46,7 @@ export default function SearchBar() {
                         />
                         <span className='search-bar__bottom-bar' />
                         <IconButton
+                            aria-label='Rechercher'
                             className='search-bar__button'
                             type='submit'
                             color="primary"

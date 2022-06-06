@@ -48,14 +48,8 @@ export default function Profile() {
 	}
 
 	const handleUnfollow = () => {
-		const getIndex = () => {
-			for (let i in profileData.followers)
-				if (profileData.followers[i].id === user.id)
-					return i
-		}
-		const index = getIndex()
-		const followers = [...profileData.followers]
-		followers.splice(index, 1)
+		let followers = [...profileData.followers]
+		followers = followers.filter(u => u.id !== user.id)
 		setProfileData({ ...profileData, followers })
 	}
 
@@ -63,7 +57,7 @@ export default function Profile() {
 		<>
 			{
 				profileDataIsLoaded ?
-					<section className='profile'>
+					<div className='profile'>
 						<ProfileTop
 							profileData={profileData}
 							handleFollow={handleFollow}
@@ -85,7 +79,7 @@ export default function Profile() {
 								/>
 							</div>
 						</div>
-					</section > :
+					</div > :
 					<Loader />
 			}
 		</>

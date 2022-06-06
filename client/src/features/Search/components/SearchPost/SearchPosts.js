@@ -43,7 +43,7 @@ export default function SearchPosts({ posts }) {
 						}
 					</>
 					:
-					<p>Aucun post pour votre recherche</p>
+					<p className='search-no-post'>Aucun post pour votre recherche</p>
 			}
 		</>
 	)

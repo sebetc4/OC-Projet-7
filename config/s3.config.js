@@ -1,11 +1,10 @@
 require('dotenv').config()
-const fs = require('fs')
 const S3 = require('aws-sdk/clients/s3')
 
 const s3 = new S3({
-    region: 'eu-west-3',
-    accessKeyId: 'AKIA2ZJ5PBGE5MPEN3NO',
-    secretAccessKey: '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'
+    region: process.env.AWS_BUCKET_REGION,
+    accessKeyId: process.env.AWS_ACCESS_KEY,
+    secretAccessKey: process.env.AWS_SECRET_KEY
 })
 
 exports.uploadFile = (file) => {

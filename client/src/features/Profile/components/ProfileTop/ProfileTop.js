@@ -1,9 +1,10 @@
 import React from 'react'
-import { FollowIcon } from '../../../../components'
+import { FollowButton } from '../../../../components'
 import { useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 
 import { Avatar, Tooltip, AvatarGroup } from '@mui/material';
+import { ProfileImageForm } from './components';
 
 export default function ProfileHeader({ profileData, handleFollow, handleUnfollow }) {
 
@@ -11,26 +12,48 @@ export default function ProfileHeader({ profileData, handleFollow, handleUnfollo
     const navigate = useNavigate()
 
     // Store
-    const userId = useSelector(state => state.user.data.id)
+    const user = useSelector(state => state.user.data)
 
 
     const navigateToProfile = (id) => navigate(`/profile/${id}`, { replace: true })
 
     return (
-        <div className='profile-top'>
-            <div className='profile-top__cover-image' >
+        <section className='profile-top'>
+            <div className='profile-top-cover' >
                 <img
                     alt={`Couverture de la page de profil de ${profileData.firstName} ${profileData.lastName}`}
-                    src={profileData.coverUrl}
+                    src={profileData.id === user.id ? user.coverUrl : profileData.coverUrl}
                 />
+                {
+                    user.id === profileData.id &&
+                    <ProfileImageForm
+                        user={user}
+                        field={'cover'}
+                        ratio={2.35}
+                        cropShape={'rect'}
+                        showGrid={true}
+                        picture={user.coverUrl}
+                    />
+                }
             </div >
             <div className='profile-top-content'>
-                <img
-                    className='profile-top-content__avatar'
-                    alt={`avatar de ${profileData.firstName} 
-                    ${profileData.lastName}`}
-                    src={profileData.avatarUrl}
-                />
+                <div className='profile-top-content-avatar'>
+                    <img
+                        alt={`avatar de ${profileData.firstName} ${profileData.lastName}`}
+                        src={profileData.id === user.id ? user.avatarUrl : profileData.avatarUrl}
+                    />
+                    {
+                        user.id === profileData.id &&
+                        <ProfileImageForm
+                            user={user}
+                            field={'avatar'}
+                            ratio={1}
+                            cropShape={'round'}
+                            showGrid={false}
+                            picture={user.avatarUrl}
+                        />
+                    }
+                </div>
                 <div className='profile-top-content-infos'>
                     <h1 className='profile-top-content-infos__name'>
                         {`${profileData.firstName} ${profileData.lastName}`}
@@ -72,9 +95,10 @@ export default function ProfileHeader({ profileData, handleFollow, handleUnfollo
                     </div>
                 </div>
                 {
-                    userId !== profileData.id &&
+                    user.id !== profileData.id &&
                     <div className='profile-top-content-follow-button-container'>
-                        <FollowIcon
+                        <FollowButton
+                            type={'floatingButton'}
                             user={profileData}
                             handleFollow={handleFollow}
                             handleUnfollow={handleUnfollow}
@@ -82,6 +106,6 @@ export default function ProfileHeader({ profileData, handleFollow, handleUnfollo
                     </div>
                 }
             </div>
-        </div>
+        </section>
     )
 }

@@ -26,8 +26,13 @@ export default function Header() {
             <GroupomaniaLogoSvg className={'header-components-left__logo'} /> :
             <div className='header-components-left__button-container'>
               <Hamburger
+                rounded
                 toggled={displayMobileMenu}
                 toggle={toggleDisplayMobileMenu}
+                label='Menu de navigation'
+                hideOutline={false}
+
+
               />
             </div>
           }

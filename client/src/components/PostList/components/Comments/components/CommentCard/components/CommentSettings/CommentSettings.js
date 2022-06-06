@@ -1,7 +1,5 @@
 import React from 'react'
-import { useDispatch } from "react-redux";
 import { MenuModal } from '../../../../../../../../components'
-import { deleteComment } from '../../../../../../../../store/actions/posts.actions';
 
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
@@ -13,11 +11,7 @@ import ContentCut from '@mui/icons-material/ContentCut';
 import DeleteOutlineOutlined from '@mui/icons-material/DeleteOutlineOutlined';
 
 
-export default function CommentSettings({ closeModal, commentId, commentIndex, postIndex, toggleShowModifyComment }) {
-
-    const dispatch = useDispatch()
-
-    const handleDeleteComment = () => dispatch(deleteComment(commentId, commentIndex, postIndex))
+export default function CommentSettings({ closeModal, toggleShowModifyComment, toggleShowDeleteConfirmModale }) {
 
     return (
         <MenuModal closeModal={closeModal}>
@@ -38,7 +32,7 @@ export default function CommentSettings({ closeModal, commentId, commentIndex, p
                         <Divider className='comment-card-settings__divider'/>
                         <MenuItem
                             onClick={() => {
-                                handleDeleteComment()
+                                toggleShowDeleteConfirmModale()
                                 closeModal()
                             }}
                         >

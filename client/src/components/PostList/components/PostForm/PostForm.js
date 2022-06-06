@@ -7,6 +7,7 @@ import TextareaAutosize from '@mui/base/TextareaAutosize';
 
 import { PostFormActions, PostFormTop, PostFormMedia, PostFormVideoInput } from './components';
 import { createPost, updatePost } from '../../../../store/actions/posts.actions';
+import { CircularProgress } from '@mui/material';
 
 
 export default function PostForm({ type, post, postIndex, initialValueText, initialValueImage, closeModal, initialValueVideoUrl }) {
@@ -18,6 +19,7 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
 
     // Store
     const user = useSelector((state) => state.user.data)
+    const postSubmitting = useSelector((state) => state.posts.submitting)
     const deviceSize = useSelector(state => state.app.deviceSize)
 
     // State
@@ -30,6 +32,7 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
     const [videoUrl, setVideoUrl] = useState(initialValueVideoUrl)
     const [showVideoInput, setShowVideoInput] = useState(false)
     const [submitDisabled, setSubmitDisabled] = useState(true)
+    const [submitting, setSubmitting] = useState(false)
 
     // Change file
     useEffect(() => {
@@ -58,6 +61,22 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
         textareaRef && textareaRef.current.focus()
     }, [textareaRef])
 
+    // Post submitted
+    useEffect(() => {
+        if (submitting && !postSubmitting) {
+            setSubmitting(false)
+            if (type !== 'modify') {
+                setText('')
+                setImage(null)
+                setFile(null)
+                setVideo('')
+                setVideoUrl('')
+            }
+            setUpdateImage(false)
+            closeModal()
+        }
+    }, [type, submitting, postSubmitting, closeModal])
+
     const handleDeleteImage = () => {
         (type === 'modify') && setUpdateImage(true)
         setImage(null)
@@ -75,18 +94,14 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
         e.preventDefault()
         const formData = new FormData()
         formData.append('text', text)
-        file && formData.append('post', file)
-        videoUrl && formData.append('video', videoUrl)
         type === 'modify' && formData.append('updateImage', updateImage)
-        if (type === 'modify') {
+        videoUrl && formData.append('video', videoUrl)
+        file && formData.append('post', file)
+        if (type === 'modify')
             dispatch(updatePost(formData, post.id, postIndex))
-        } else {
+        else
             dispatch(createPost(formData, user))
-            handleDeleteVideo()
-            handleDeleteImage()
-            setText('')
-        }
-        closeModal()
+        setSubmitting(true)
     }
 
     return (
@@ -97,11 +112,12 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
             <PostFormTop
                 type={type}
                 closeModal={closeModal}
+                submitting={submitting}
             />
             <div className='post-form-textarea'>
-                <label className='post-form-textarea__label' htmlFor='post-form-textarea'>Texte</label>
+                <label className='post-form-textarea__label' htmlFor={type !== 'modify' ? 'post-form-textarea-new-post' : `post-form-textarea-${post.id}`}>Texte</label>
                 <TextareaAutosize
-                    id='post-form-textarea'
+                    id={type !== 'modify' ? 'post-form-textarea-new-post' : `post-form-textarea-${post.id}`}
                     ref={textareaRef}
                     maxLength={500}
                     minRows={deviceSize !== 0 ? 1 : 3}
@@ -130,6 +146,7 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
                 toggleShowVideoInput={toggleShowVideoInput}
                 handleDeleteVideo={handleDeleteVideo}
                 showVideoInput={showVideoInput}
+                submitting={submitting}
             />
             <Collapse
                 timeout={500}
@@ -137,6 +154,8 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
                 in={showVideoInput}
             >
                 <PostFormVideoInput
+                    type={type}
+                    post={post}
                     video={video}
                     setVideo={setVideo}
                     setVideoUrl={setVideoUrl}
@@ -144,12 +163,16 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
                 />
             </Collapse>
             <div className='post-form-bottom'>
-                <Button
-                    disabled={submitDisabled}
-                    type='submit'
-                    variant="contained">
-                    {type === 'modify' ? 'Modifier' : 'Poster'}
-                </Button>
+                {!submitting ?
+                    <Button
+                        disabled={submitDisabled}
+                        type='submit'
+                        variant="contained">
+                        {type === 'modify' ? 'Modifier' : 'Poster'}
+                    </Button> :
+                    <CircularProgress />
+                }
+
             </div>
         </form>
     )

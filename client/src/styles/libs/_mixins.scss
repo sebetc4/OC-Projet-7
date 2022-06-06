@@ -65,7 +65,7 @@
 }
 
 @mixin menu-modal {
-	z-index: 10000;
+	z-index: 98;
 	position: absolute;
 	transform: translateY(100%);
 
@@ -108,7 +108,8 @@
 
 @mixin standard-modal-mobile {
 	width: 100%;
-	min-height: 100vh;
+	height: 100vh;
+	min-height: 600px;
 	padding-bottom: 40px;
 
 	&-top {

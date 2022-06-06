@@ -7,7 +7,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-import { FirstNameLastNameForm, ProfileImageForm, BiographyForm } from './components'
+import { FirstNameLastNameForm, BiographyForm, AvatarCoverForm } from './components'
 
 export default function ProfileSettings() {
 
@@ -49,7 +49,7 @@ export default function ProfileSettings() {
                         </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                        <ProfileImageForm
+                        <AvatarCoverForm
                             user={user}
                         />
                     </AccordionDetails>

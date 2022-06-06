@@ -1,0 +1,39 @@
+
+.chat-user-card {
+	margin-top: 20px;
+	background-color: $grey-background;
+	border-radius: 25px;
+	display: flex;
+	align-items: center;
+	padding: 10px;
+	cursor: pointer;
+	box-shadow: $box-shadow-main-element;
+
+	img {
+		width: 50px;
+		height: 50px;
+	}
+
+	&__name {
+		margin-left: 20px;
+	}
+
+	&:hover {
+		background-color: rgb(236, 236, 237);
+	}
+
+	&__new-message {
+		flex: 1;
+		display: flex;
+		justify-content: flex-end;
+		margin: 10px 20px 0 20px;
+	}
+}
+
+@media screen and (max-width: $media-mobile) {
+	.chat-user-card {
+		width: 70%;
+		margin-top: 30px;
+		padding: 15px;
+	}
+}

@@ -12,7 +12,7 @@ const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function ImageForm({ picture, user, field, ratio, cropShape, showGrid }) {
+export default function SettingsImageForm({ picture, user, field, ratio, cropShape, showGrid }) {
 
     // Hooks
     const fullScreen = useMediaQuery('(max-width:768px)');
@@ -39,7 +39,7 @@ export default function ImageForm({ picture, user, field, ratio, cropShape, show
             setOpenCrop(false)
         }
         if (cropImage) submitNewImage()
-    }, [cropImage])
+    }, [cropImage, field, dispatch, user])
 
     // Check if avatar and cover are original images
     useEffect(() => {
@@ -72,14 +72,13 @@ export default function ImageForm({ picture, user, field, ratio, cropShape, show
     return (
         <form
             className="settings-profile-images-form"
-            action=''
         >
             <h3 className="settings-profile-images-form__title">{`${field === 'cover' ? 'Couverture' : 'Avatar'}`}</h3>
 
-            <label className="settings-profile-images-form__label">
+            <label htmlFor={`settings-profile-images-form-${field}`} className="settings-profile-images-form__label">
                 <input
                     accept="image/*"
-                    id={field}
+                    id={`settings-profile-images-form-${field}`}
                     name={field}
                     type="file"
                     style={{ display: 'none' }}

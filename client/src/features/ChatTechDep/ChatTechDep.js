@@ -42,7 +42,6 @@ export default function ChatTechDep() {
     // Split sendMessage when it's too long
     useEffect(() => {
         if (sendMessage.length > 800) {
-            console.log('newString')
             setSendMessage(prev => prev.split('\n').splice(4).toString())
         }
     }, [sendMessage])
@@ -55,7 +54,7 @@ export default function ChatTechDep() {
             const res = await axios.post(`/api/open-ai/`, { message })
             setSendMessage(prev => `${prev}Human:${userMessage}\nAI:` + res.data + '\n')
             setResIsLoading(false)
-            setMessageList(prev => [...prev, res.data.replace('Human:', '').replace('AI:', '').replace('\n', '')])
+            setMessageList(prev => [...prev, res.data.replaceAll('Human:', '').replaceAll('AI:', '').replaceAll('\n', '')])
         }
         if (userMessage) fetchResponse()
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -77,7 +76,7 @@ export default function ChatTechDep() {
                 <Fab
                     className='chat-tech-dep-button'
                     color="primary"
-                    aria-label="add"
+                    aria-label="Fermet le chat"
                     onClick={toggleShowChatBox}
                 >
                     <img
@@ -163,7 +162,7 @@ export default function ChatTechDep() {
                                         <div>
                                             <IconButton
                                                 type="submit"
-                                                aria-label="envoyer"
+                                                aria-label="Envoyer"
                                                 disabled={!(isValid && dirty && !resIsLoading)}
                                                 color='primary'
                                             >

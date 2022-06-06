@@ -5,7 +5,7 @@ import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 
-export default function PostFormVideoInput({ video, setVideo, setVideoUrl, toggleShowVideoInput }) {
+export default function PostFormVideoInput({ type, post, video, setVideo, setVideoUrl, toggleShowVideoInput }) {
 
     const textFieldRef = useRef()
 
@@ -31,7 +31,7 @@ export default function PostFormVideoInput({ video, setVideo, setVideoUrl, toggl
             <TextField
                 ref={textFieldRef}
                 className='post-form-video-input__input-container'
-                id='post-video-input'
+                id={type !== 'modify' ? 'post-video-input-new-post' : `post-video-input-${post.id}`}
                 sx={{ width: '100%' }}
                 size='small'
                 label='URL de la vidéo youtube'

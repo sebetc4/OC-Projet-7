@@ -20,6 +20,14 @@ exports.createUser = async (req, email, firstName, lastName, password) => {
         throw { message: `Internal Server Error` }
 }
 
+exports.findOneUserWhereId = async (id) => {
+    const user = User.findByPk(id)
+    if (!user)
+        throw { message: `User id unknown` }
+    else
+        return user
+}
+
 exports.findOneUserPostAndFollowWhereId = async (id) => {
     const user = await User.findOne({
         where: { id },

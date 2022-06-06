@@ -100,9 +100,9 @@ export default function FormSignIn(props) {
                 )}
             </Formik>
             <p className="login-form-modal-content__text">
-                Pas de compte?
+                Pas de compte ?
                 <span className="login-form-modal-content__link" onClick={props.handleModal}>
-                    Rejoignez nous!
+                    Rejoignez-nous !
                 </span>
             </p>
         </div>

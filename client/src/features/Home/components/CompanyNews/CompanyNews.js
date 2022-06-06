@@ -33,7 +33,7 @@ export default function CompanyNews() {
     // Fetch all nbews
     useEffect(() => {
         const fetchNews = async () => {
-            const news = await axios.get('api/new')
+            const news = await axios.get('api/company-new')
             setAllCompanyNews(news.data)
         }
         fetchNews()
@@ -64,30 +64,41 @@ export default function CompanyNews() {
                     </Fab>
                 </div>
             }
-            <ul className='company-news-new-list'>
-                {companyNewList.length !== 0 ?
-                    companyNewList.map((companyNew, index) => (
-                        <li>
-                            <article
-                                className='company-new-card'
+            {companyNewList.length !== 0 ?
+
+                <ul className='company-news-new-list'>
+                    {
+
+                        companyNewList.map((companyNew, index) => (
+                            <li
                                 key={companyNew.id}
                             >
-                                <CompanyNewCard
-                                    companyNew={companyNew}
-                                />
+                                <article
+                                    className='company-new-card'
+                                >
+                                    <CompanyNewCard
+                                        userIsAdmin={userIsAdmin}
+                                        companyNew={companyNew}
+                                        setAllCompanyNews={setAllCompanyNews}
+                                    />
+
+                                </article>
                                 {
                                     companyNewList.length !== index + 1 &&
                                     <Divider
                                         className='company-news__divider'
                                     />
                                 }
-                            </article>
-                        </li>
-                    ))
-                    :
+                            </li>
+                        ))
+                    }
+                </ul>
+                :
+                <div className='company-news-no-new'>
                     <p>Aucune nouvelle</p>
-                }
-            </ul>
+                </div>
+            }
+
             {
                 companyNewList.length < allCompanyNews.length &&
 
@@ -97,7 +108,7 @@ export default function CompanyNews() {
                         endIcon={<ExpandMoreIcon />}
                         onClick={addUserPotsInList}
                     >
-                        Afficher plus de posts
+                        Afficher plus de news
                     </Button>
                 </div>
             }

@@ -102,7 +102,7 @@ export default function PasswordForm({ closeAccordion }) {
                         </Button>
                     </div>
                     <ConfirmModal
-                        title={'Confirmation de modification de mot de passe'}
+                        title={'Confirmer la modification du mot de passe'}
                         content={`Voulez vous vraiment modifier votre mot de passe?`}
                         button='Valider'
                         showConfirmModale={showConfirmModale}

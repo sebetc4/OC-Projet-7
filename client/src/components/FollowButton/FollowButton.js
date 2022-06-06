@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 
 
-import { Fab } from '@mui/material';
+import { Button, Fab } from '@mui/material';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import PersonRemoveAlt1Icon from '@mui/icons-material/PersonRemoveAlt1';
 import { addUserFollowed, deleteUserFollowed } from '../../store/actions/usersFollowed.actions';
 
-export default function FollowIcon({ user, handleFollow, handleUnfollow }) {
+export default function FollowButton({ type, user, handleFollow, handleUnfollow }) {
 
     const [userIsFollowed, setUserIsFollowed] = useState(false)
     const [indexInUsersFollowed, setIndexInUsersFollowed] = useState(null)
@@ -50,13 +50,25 @@ export default function FollowIcon({ user, handleFollow, handleUnfollow }) {
     }
 
     return (
-        <Fab
-            variant="extended"
-            onClick={toggleFollow}
-            color='primary'
-        >
-            {userIsFollowed ? <PersonRemoveAlt1Icon sx={{ mr: 1.5 }} /> : <PersonAddAlt1Icon sx={{ mr: 1.5 }} />}
-            {userIsFollowed ? 'Se désabonner' : 'S\'abonner'}
-        </Fab>
+        <>
+            {
+                type === 'floatingButton' ?
+                    <Fab
+                        variant="extended"
+                        onClick={toggleFollow}
+                        color='primary'
+                    >
+                        {userIsFollowed ? <PersonRemoveAlt1Icon sx={{ mr: 1.5 }} /> : <PersonAddAlt1Icon sx={{ mr: 1.5 }} />}
+                        {userIsFollowed ? 'Se désabonner' : 'S\'abonner'}
+                    </Fab>
+                    :
+                    <Button
+                        startIcon={userIsFollowed ? <PersonRemoveAlt1Icon /> : <PersonAddAlt1Icon />}
+                        onClick={toggleFollow}
+                    >
+                        {userIsFollowed ? 'Se désabonner' : 'S\'abonner'}
+                    </Button>
+            }
+        </>
     )
 }

@@ -9,7 +9,6 @@ exports.getNewUserCoverPath = (req) => `${getImagesPath(req)}/cover/cover-profil
 
 const getModifyUserAvatarPath = async (req) => {
     if (process.env.NODE_ENV === 'production') {
-        console.log(req.files)
         const rep = await uploadFile(req.files.avatar[0])
         return rep.Location
     } else
@@ -27,7 +26,7 @@ exports.getModifyUserImagePath = async (req) => {
     if (req.body.directory === 'avatar')
         return { avatarUrl: await getModifyUserAvatarPath(req) }
     else if (req.body.directory === 'cover')
-        return { coverUrl: getModifyUserCoverPath(req) }
+        return { coverUrl: await getModifyUserCoverPath(req) }
 }
 
 exports.getInitialPath = (req) => {

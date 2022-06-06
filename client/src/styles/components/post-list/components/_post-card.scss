@@ -1,5 +1,5 @@
 .post-card {
-	margin-top : 20px;
+	margin-top: 20px;
 	padding: 20px;
 	box-shadow: $box-shadow-main-element;
 	border-radius: $border-radius-main-element;
@@ -83,6 +83,7 @@
 	}
 
 	&__image-container {
+		margin: 20px auto;
 		background-color: black;
 		display: flex;
 		justify-content: center;

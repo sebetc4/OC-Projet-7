@@ -6,10 +6,10 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 exports.sendMessage = async (req, res, next) => {
-
     const { message } = req.body
-
     try {
+        if (!message) 
+            throw { message: 'Missing parameters' }
         const response = await openai.createCompletion("text-davinci-002", {
             prompt: message,
             temperature: 0.9,
@@ -19,7 +19,6 @@ exports.sendMessage = async (req, res, next) => {
             presence_penalty: 0.6,
             stop: [" Human:", " AI:"],
         });
-
         res.status(200).json(response.data.choices[0].text)
     } catch (err) {
         next(err)

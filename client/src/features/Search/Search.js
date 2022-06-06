@@ -6,7 +6,7 @@ import axios from 'axios'
 import { Box, Tab, Tabs } from '@mui/material';
 import { TabContext, TabPanel } from '@mui/lab';
 
-import { Loader, UserCardList } from '../../components';
+import { Loader } from '../../components';
 import { resetPosts, fetchPostsSucess } from '../../store/actions/posts.actions';
 import SearchPosts from './components/SearchPost/SearchPosts';
 import SearchUsers from './components/SearchUsers/SearchUsers';
@@ -23,13 +23,10 @@ export default function Search() {
     const posts = useSelector((state) => state.posts)
 
     // State
-    const [value, setValue] = useState('1');
+    const [tabValue, setTabValue] = useState('1');
     const [usersResult, setUsersResult] = useState(null)
     const [resultsLoaded, setResultsLoaded] = useState(false)
 
-    const handleChange = (e, newValue) => {
-        setValue(newValue);
-    };
 
     // Fetch results
     useEffect(() => {
@@ -49,6 +46,9 @@ export default function Search() {
         else
             setResultsLoaded(false)
     }, [posts, usersResult])
+
+    const handleChange = (e, newValue) => setTabValue(newValue);
+
 
     return (
         <>
@@ -81,36 +81,26 @@ export default function Search() {
                                         </section>
                                     </div>
                                 </div> :
-                                <TabContext value={value}>
+                                <TabContext value={tabValue}>
                                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                         <Tabs
                                             centered
                                             onChange={handleChange}
-                                            value={value}
+                                            value={tabValue}
                                         >
-                                            <Tab className='settings-tab' label="Les posts" value="1" />
-                                            <Tab className='settings-tab' label="Les utilisateurs" value="2" />
+                                            <Tab className='search-tab' label="Les posts" value="1" />
+                                            <Tab className='search-tab' label="Les utilisateurs" value="2" />
                                         </Tabs>
                                     </Box>
-                                    <TabPanel value="1">
-                                        {/* {
-                                            postsResult.length !== 0 ?
-                                                <SmallPostList
-                                                    type='search'
-                                                    posts={postsResult}
-                                                /> :
-                                                <p>Aucun post pour votre recherche</p>
-                                        } */}
+                                    <TabPanel value="1" className='search-tabpanel-posts'>
+                                        <SearchPosts
+                                            posts={posts.data}
+                                        />
                                     </TabPanel>
-                                    <TabPanel value="2">
-                                        {
-                                            usersResult.length !== 0 ?
-                                                <UserCardList
-                                                    users={usersResult}
-
-                                                /> :
-                                                <p>Aucun utilisateur pour votre recherche</p>
-                                        }
+                                    <TabPanel value="2" className='search-tabpanel-users'>
+                                        <SearchUsers
+                                            users={usersResult}
+                                        />
                                     </TabPanel>
                                 </TabContext>
                         }

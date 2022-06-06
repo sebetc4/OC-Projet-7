@@ -2,6 +2,7 @@ import React from 'react'
 
 import { styled } from '@mui/material/styles';
 import { Badge, Avatar } from '@mui/material';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
@@ -32,7 +33,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
     },
 }));
 
-export default function ChatUserCard({ userInCard, userInCardIsOnline }) {
+export default function ChatUserCard({ userInCard, userInCardIsOnline, unreadMessages }) {
 
     return (
         <>
@@ -54,7 +55,14 @@ export default function ChatUserCard({ userInCard, userInCardIsOnline }) {
                         src={userInCard.avatarUrl}
                     />
             }
-            <p className='chat-menu-content-conversation__name'>{`${userInCard.firstName} ${userInCard.lastName}`}</p>
+            <p className='chat-user-card__name'>{`${userInCard.firstName} ${userInCard.lastName}`}</p>
+            {unreadMessages !== 0 &&
+                <div className='chat-user-card__new-message'>
+                    <Badge badgeContent={unreadMessages} color="primary">
+                        <ChatBubbleOutlineIcon color="action" />
+                    </Badge>
+                </div>
+            }
         </>
     )
 }

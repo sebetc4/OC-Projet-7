@@ -2,7 +2,6 @@ import React from 'react'
 import { FromNowDate } from '../../../../../../components'
 
 export default function Message({ message, userIsSender }) {
-    console.log(userIsSender)
     return (
         <div className={`chat-box-message chat-box-message--${userIsSender ? 'user' : 'other'}`}>
             <div className={`chat-box-message-content chat-box-message-content--${userIsSender ? 'user' : 'other'}`}>

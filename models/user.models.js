@@ -26,12 +26,12 @@ module.exports = (sequelize, DataTypes) => {
       models.User.belongsToMany(models.User, {
         foreignKey: 'userId',
         as: 'followers',
-        through: 'UsersFollowers'
+        through: 'Followers'
       })
       models.User.belongsToMany(models.User, {
         foreignKey: 'followerId',
         as: 'following',
-        through: 'UsersFollowers'
+        through: 'Followers'
       })
       models.User.hasMany(models.Conversation, {
         foreignKey: 'firstUserId',
@@ -48,7 +48,11 @@ module.exports = (sequelize, DataTypes) => {
         throw { message: "Invalid password" };
       }
     }
-    checkIsAuthorOrAdmin= (targetId) => {
+    hashNewPassword = async (password) => {
+      const salt = await bcrypt.genSalt(10);
+      return bcrypt.hashSync(password, salt);
+    }
+    checkIsAuthorOrAdmin = (targetId) => {
       if (this.id !== targetId && !this.isAdmin)
         throw { message: 'Not allowed!' }
     }
@@ -123,15 +127,14 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'User',
   });
 
-
   const hashPassword = async (user) => {
     if (user.password) {
       const salt = await bcrypt.genSalt(10);
       user.password = bcrypt.hashSync(user.password, salt);
     }
   }
+
   User.beforeCreate(hashPassword)
-  User.beforeUpdate(hashPassword)
 
   return User;
 };

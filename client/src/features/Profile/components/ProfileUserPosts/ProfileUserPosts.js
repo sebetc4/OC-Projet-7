@@ -23,8 +23,8 @@ export default function ProfileUserPosts({ profileData, posts }) {
     const addUserPotsInList = () => setUserPostListLength(prev => prev + nbPostsDisplay)
 
     return (
-        <div className='profile-user-posts'>
-            <h3 className='profile-user-posts__title'>Posts:</h3>
+        <section className='profile-user-posts'>
+            <h2 className='profile-user-posts__title'>Posts:</h2>
             {
                 userPostList.length !== 0 ?
                     <>
@@ -48,6 +48,6 @@ export default function ProfileUserPosts({ profileData, posts }) {
                     :
                     <p>Cet utilisateur n'a rien posté.</p>
             }
-        </div>
+        </section>
     )
 }
