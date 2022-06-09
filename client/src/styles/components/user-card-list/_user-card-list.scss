@@ -4,7 +4,6 @@
 	margin-bottom: 20px;
 	display: flex;
 	align-items: center;
-	background-color: $grey-background;
 	box-shadow: $box-shadow-main-element;
 	padding: 10px;
 	border-radius: 25px;
@@ -19,7 +18,7 @@
 	}
 
 	&__actions {
-		width: 160px;
+		width: 180px;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-around;

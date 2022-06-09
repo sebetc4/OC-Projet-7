@@ -25,13 +25,9 @@
 }
 
 .chat-box-content {
-	padding: 20px;
+	padding: 20px 30px;
 	flex: 1;
 	overflow-y: scroll;
-}
-
-.chat-box-message {
-	@include chat-message;
 }
 
 .chat-box-no-chat {
@@ -44,8 +40,16 @@
 	p {
 		padding: 10px;
 		font-size: 16px;
-		color: $text-color-grey;
+		color: $text-color-grey--light-mode;
 		text-align: center;
+	}
+}
+
+.main--dark {
+	.chat-box-no-chat {
+		p {
+			color: $text-color-grey--dark-mode;
+		}
 	}
 }
 
@@ -75,6 +79,15 @@
 
 	&__input {
 		width: 100%;
+		color: $text-color--light-mode;
+	}
+}
+
+.main--dark {
+	.chat-box-bottom-form-textarea {
+		.chat-box-bottom-form-textarea__input {
+			color: $text-color--dark-mode;
+		}
 	}
 }
 

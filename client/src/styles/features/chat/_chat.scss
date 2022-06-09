@@ -77,6 +77,11 @@
 		width: 100%;
 	}
 
+	.chat-box {
+		height: 100vh;
+		min-height: 600px;
+	}
+
 	.chat-menu,
 	.chat-online {
 		height: calc(100vh - $header-height - 62.5px);

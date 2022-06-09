@@ -4,14 +4,18 @@ import { Canvas } from "@react-three/fiber";
 import Logo from "./Logo/Logo";
 
 export default function CanvasLogo({ mouseOnOneButton, deviceSize, allModalsAreClose }) {
-  
+
     return (
         <Canvas className="login-three-cenvas" camera={{ position: [0, 0, 2] }}>
             <Suspense fallback={null}>
+                {
+                    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) &&
+                    <ambientLight />
+                }
                 <Logo
                     mouseOnOneButton={mouseOnOneButton}
                     deviceSize={deviceSize}
-					allModalsAreClose={allModalsAreClose}
+                    allModalsAreClose={allModalsAreClose}
                 />
                 <ContactShadows
                     position={[0, -0.8, 0]}

@@ -2,7 +2,7 @@ import React, { useEffect, useState, forwardRef } from 'react'
 import { useSelector } from 'react-redux';
 import axios from 'axios'
 
-import { Button, Divider, Fab, Dialog, Slide, useMediaQuery } from '@mui/material'
+import { Button, Divider, Fab, Dialog, Slide, useMediaQuery, Box } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -49,13 +49,19 @@ export default function CompanyNews() {
     const toggleShowAddCompanyNew = () => setShowAddCompanyNew(prev => !prev)
 
     return (
-        <section className="company-news">
+        <Box
+            component="section"
+            sx={{
+                backgroundColor: 'background.section',
+            }}
+            className='company-news'
+        >
             <h2 className='company-news__title'>Les news de l'entreprise</h2>
             {
                 userIsAdmin &&
                 <div className='company-news__add-news'>
                     <Fab
-                        color="primary"
+                        color="secondary"
                         size='small'
                         aria-label="Ajouter une nouvelle"
                         onClick={toggleShowAddCompanyNew}
@@ -73,7 +79,8 @@ export default function CompanyNews() {
                             <li
                                 key={companyNew.id}
                             >
-                                <article
+                                <Box
+                                    component="article"
                                     className='company-new-card'
                                 >
                                     <CompanyNewCard
@@ -82,7 +89,7 @@ export default function CompanyNews() {
                                         setAllCompanyNews={setAllCompanyNews}
                                     />
 
-                                </article>
+                                </Box>
                                 {
                                     companyNewList.length !== index + 1 &&
                                     <Divider
@@ -129,6 +136,6 @@ export default function CompanyNews() {
                     setAllCompanyNews={setAllCompanyNews}
                 />
             </ Dialog>
-        </section >
+        </Box >
     )
 }

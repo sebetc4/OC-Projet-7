@@ -38,6 +38,7 @@ export default function SearchUser({ user, toggleShowSearchUser, handleOpenConve
                 </div>
             </div>
             <TextField
+                color='secondary'
                 size="small"
                 className="chat-search-user-input"
                 id="chat-search-user__search-input"
@@ -46,29 +47,28 @@ export default function SearchUser({ user, toggleShowSearchUser, handleOpenConve
                 variant="standard"
                 value={query}
             />
-            <div className="chat-search-user-content">
+            <ul className="chat-search-user-content">
                 {
                     resultSearch.map(userInResult =>
-                        <article
+                        <li
                             key={userInResult.id}
-                            className='chat-user-card'
                             onClick={() => {
                                 handleOpenConversation(userInResult)
                                 toggleShowSearchUser()
                                 setQuery('')
                                 setResultSearch([])
                             }
-                        }
+                            }
                         >
                             <ChatUserCard
                                 userInCard={userInResult}
                                 userInCardIsOnline={onlineUsersId.includes(userInResult.id)}
                                 unreadMessages={0}
                             />
-                        </article>
+                        </li>
                     )
                 }
-            </div>
+            </ul>
         </div>
     )
 }

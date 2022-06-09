@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react'
+
+import { Box, Divider } from '@mui/material'
+
 import { ChatUserCard } from '../index'
 
 export default function OnlineUsers({ deviceSize, onlineUsers, user, handleOpenConversation }) {
@@ -24,9 +27,15 @@ export default function OnlineUsers({ deviceSize, onlineUsers, user, handleOpenC
         <>
             {
                 deviceSize !== 0 &&
-                <div className='chat-online-users-top'>
+                <Box
+                    component="div"
+                    sx={{
+                        backgroundColor: 'background.top',
+                    }}
+                    className='chat-online-users-top'
+                >
                     <h2>Utilisateurs en ligne</h2>
-                </div>
+                </Box>
             }
 
             <div className='chat-online-users-content'>
@@ -37,48 +46,52 @@ export default function OnlineUsers({ deviceSize, onlineUsers, user, handleOpenC
                                 onlineFollowUsers.length !== 0 &&
                                 <>
                                     {
-                                        onlineOtherUsers.length !== 0 && <h3>Utilisateur suivis:</h3>
+                                        onlineOtherUsers.length !== 0 && <h3>Utilisateurs suivis:</h3>
                                     }
-                                    {
-                                        onlineFollowUsers.map(onlineUser =>
-                                            <article
-                                                key={onlineUser.userId}
-                                                className='chat-user-card'
-                                                onClick={() => handleOpenConversation({ ...onlineUser.data, id: onlineUser.userId })}
-                                            >
-                                                <ChatUserCard
+                                    <ul>
+                                        {
+                                            onlineFollowUsers.map(onlineUser =>
+                                                <li
                                                     key={onlineUser.userId}
-                                                    userInCard={onlineUser.data}
-                                                    userInCardIsOnline={true}
-                                                    unreadMessages={0}
-                                                />
-                                            </article>
-                                        )
-                                    }
+                                                    onClick={() => handleOpenConversation({ ...onlineUser.data, id: onlineUser.userId })}
+                                                >
+                                                    <ChatUserCard
+                                                        userInCard={onlineUser.data}
+                                                        userInCardIsOnline={true}
+                                                        unreadMessages={0}
+                                                    />
+                                                </li>
+                                            )
+                                        }
+                                    </ul>
                                 </>
+                            }
+                            {
+                                (onlineFollowUsers.length !== 0 && onlineOtherUsers.length !== 0) &&
+                                <Divider className='chat-online-users-content__divider'/>
                             }
                             {
                                 onlineOtherUsers.length !== 0 &&
                                 <>
                                     {
-                                        onlineFollowUsers.length !== 0 && <h3>Autre utilisateur:</h3>
+                                        onlineFollowUsers.length !== 0 && <h3>Autres utilisateurs:</h3>
                                     }
-                                    {
-                                        onlineOtherUsers.map(onlineUser =>
-                                            <article
-                                                key={onlineUser.userId}
-                                                className='chat-user-card'
-                                                onClick={() => handleOpenConversation({ ...onlineUser.data, id: onlineUser.userId })}
-                                            >
-                                                <ChatUserCard
+                                    <ul>
+                                        {
+                                            onlineOtherUsers.map(onlineUser =>
+                                                <li
                                                     key={onlineUser.userId}
-                                                    userInCard={onlineUser.data}
-                                                    userInCardIsOnline={true}
-                                                    unreadMessages={0}
-                                                />
-                                            </article>
-                                        )
-                                    }
+                                                    onClick={() => handleOpenConversation({ ...onlineUser.data, id: onlineUser.userId })}
+                                                >
+                                                    <ChatUserCard
+                                                        userInCard={onlineUser.data}
+                                                        userInCardIsOnline={true}
+                                                        unreadMessages={0}
+                                                    />
+                                                </li>
+                                            )
+                                        }
+                                    </ul>
                                 </>
                             }
                         </>

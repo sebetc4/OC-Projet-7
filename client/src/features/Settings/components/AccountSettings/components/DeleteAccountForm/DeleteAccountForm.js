@@ -11,7 +11,7 @@ import { logoutUser } from '../../../../../../store/actions/user.actions';
 import { ConfirmModal } from '../../../../../../components';
 
 
-export default function DeleteAccountForm({closeAccordion}) {
+export default function DeleteAccountForm({ closeAccordion }) {
 
     // Hooks
     const dispatch = useDispatch();
@@ -83,6 +83,7 @@ export default function DeleteAccountForm({closeAccordion}) {
                     </div>
                     <div className='settings-form__button-container'>
                         <Button
+                            color='secondary'
                             variant='contained'
                             onClick={toggleShowConfirmModale}
                             disabled={!(isValid && !isSubmitting && dirty)}

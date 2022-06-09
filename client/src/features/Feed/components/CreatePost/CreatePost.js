@@ -22,7 +22,7 @@ export default function CreatePost() {
         <div className='create-post'>
             <Fab
                 onClick={toggleShowCreatePost}
-                color="primary"
+                color="secondary"
                 variant="extended"
             >
                 <AddIcon sx={{ mr: 2 }} />

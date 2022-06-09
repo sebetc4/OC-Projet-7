@@ -9,6 +9,7 @@ router.get('/:id', auth, userCtrl.getOneUser);
 router.put('/', auth, multer, userCtrl.updateUser);
 router.put('/password', auth, userCtrl.updatePassword);
 router.put('/reset-image', auth, userCtrl.resetImage)
+router.put('/toggle-dark-mode', auth, userCtrl.toggleDarkMode)
 router.delete('/', auth, userCtrl.deleteUser);
 
 module.exports = router;

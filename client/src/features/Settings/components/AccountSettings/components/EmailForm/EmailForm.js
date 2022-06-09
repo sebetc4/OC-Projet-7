@@ -56,6 +56,7 @@ export default function EmailForm({ user, closeAccordion }) {
                 <Form onSubmit={handleSubmit} className='settings-form'>
                     <div className='settings-form-row'>
                         <Field
+                            color='secondary'
                             id='settings-email-form-email-input'
                             className='settings-form-row__inputs'
                             error={touched.email && !!errors.email}
@@ -70,6 +71,7 @@ export default function EmailForm({ user, closeAccordion }) {
                     </div>
                     <div className='settings-form__button-container'>
                         <Button
+                            color='secondary'
                             variant='contained'
                             onClick={toggleShowConfirmModale}
                             disabled={!(isValid && !isSubmitting && values.email !== user.email)}

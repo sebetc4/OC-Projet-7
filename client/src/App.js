@@ -2,11 +2,14 @@ import "./styles/index.scss";
 import React, { useEffect, useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+
 import Routes from "./routes/routes";
 import { fetchUserData } from "./store/actions/user.actions";
 import { setDeviceSize, setDisplayMobileMenu } from "./store/actions/app.actions";
 import { Loader } from "./components";
-
+import { getTheme } from "./theme/theme";
 
 
 export default function App() {
@@ -17,12 +20,19 @@ export default function App() {
     // Store
     const userIsLoaded = useSelector(state => state.user.isLoaded)
     const deviceSize = useSelector(state => state.app.deviceSize)
+    const colorMode = useSelector(state => state.app.colorMode)
 
     // Check auth
     useEffect(() => {
         dispatch(fetchUserData())
     }, [dispatch])
-    
+
+    const theme = React.useMemo(
+        () =>
+            createTheme(getTheme(colorMode)),
+        [colorMode],
+    );
+
     // Set device size in the store
     useLayoutEffect(() => {
         const handleResize = () => {
@@ -42,12 +52,12 @@ export default function App() {
     }, [deviceSize, dispatch])
 
     return (
-        <>
+        <ThemeProvider theme={theme}>
             {userIsLoaded ?
                 <Routes />
                 :
                 <Loader />
             }
-        </>
+        </ThemeProvider>
     )
 }

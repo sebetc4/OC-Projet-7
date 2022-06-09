@@ -29,6 +29,7 @@ export default function PostFormVideoInput({ type, post, video, setVideo, setVid
     return (
         <div className='post-form-video-input'>
             <TextField
+                color='secondary'
                 ref={textFieldRef}
                 className='post-form-video-input__input-container'
                 id={type !== 'modify' ? 'post-video-input-new-post' : `post-video-input-${post.id}`}
@@ -40,6 +41,7 @@ export default function PostFormVideoInput({ type, post, video, setVideo, setVid
                 onChange={handleVideo}
             />
             <Button
+                color='primary'
                 startIcon={<AddIcon />}
                 size='small'
                 onClick={handleAddVideo}

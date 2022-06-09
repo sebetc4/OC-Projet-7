@@ -5,7 +5,12 @@
 	align-items: center;
 	z-index: 999;
 
-	&__button {
+	&__button-color-mode {
+		margin-right: 20px !important;
+	}
+
+	&__button-avatar {
+		display: block;
 		border: none;
 		cursor: pointer;
 		border-radius: 50%;

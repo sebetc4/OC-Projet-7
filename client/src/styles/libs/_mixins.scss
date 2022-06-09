@@ -10,11 +10,6 @@
 	list-style: none;
 }
 
-@mixin link-style {
-	text-decoration: none;
-	color: $secondary-color-dark;
-}
-
 @mixin features-columns-desktop {
 	width: 100%;
 	display: flex;
@@ -38,7 +33,6 @@
 @mixin features-section-desktop {
 	margin-top: 20px;
 	padding: 20px;
-	background-color: $white-background;
 	box-shadow: $box-shadow-main-element;
 	border-radius: $border-radius-main-element;
 
@@ -78,7 +72,6 @@
 
 @mixin standard-modal-desktop {
 	padding-bottom: 20px;
-	background-color: $grey-background;
 
 	&-top {
 		position: relative;
@@ -194,95 +187,6 @@
 
 		&--error {
 			color: red;
-		}
-	}
-}
-
-@mixin chat-message {
-	width: 100%;
-	margin-top: 10px;
-
-	&-content {
-		display: flex;
-
-		&--user {
-			justify-content: flex-end;
-		}
-	}
-
-	&-content__avatar {
-		border-radius: 50%;
-		margin: -10px 0 0 5px;
-		height: 40px;
-		width: 40px;
-
-		&--user {
-			margin: -10px 0 0 5px;
-		}
-
-		&--other-user {
-			margin: -10px 5px 0 0;
-			fill: $primary-color;
-		}
-	}
-
-	&-content__text {
-		display: inline-block;
-		font-size: 12px;
-		max-width: 70%;
-		padding: 10px;
-		position: relative;
-		box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-		margin: 5px;
-		white-space: pre-wrap;
-		word-wrap: break-word;
-
-		&::before {
-			content: '';
-			width: 0px;
-			height: 0px;
-			display: block;
-			position: absolute;
-			top: 0px;
-		}
-
-		&--user {
-			border-radius: 20px 0 20px 20px;
-			background: #bfdfff;
-
-			&::before {
-				content: '';
-				border-left: 5px solid #bfdfff;
-				border-right: 5px solid transparent;
-				border-top: 5px solid #bfdfff;
-				border-bottom: 5px solid transparent;
-				right: -10px;
-			}
-		}
-
-		&--other-user {
-			background: #ffd7da;
-			border-radius: 0 20px 20px 20px;
-
-			&::before {
-				content: '';
-				border-left: 5px solid transparent;
-				border-right: 5px solid #ebbdc0;
-				border-top: 5px solid #ebbdc0;
-				border-bottom: 5px solid transparent;
-				left: -10px;
-			}
-		}
-	}
-
-	&-bottom {
-		font-size: 10px;
-		margin: 5px 0 20px 0;
-
-		&--user {
-			p {
-				text-align: right;
-			}
 		}
 	}
 }

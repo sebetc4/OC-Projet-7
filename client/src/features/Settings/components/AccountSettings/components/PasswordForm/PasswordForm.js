@@ -94,6 +94,7 @@ export default function PasswordForm({ closeAccordion }) {
                     </div>
                     <div className='settings-form__button-container'>
                         <Button
+                            color='secondary'
                             variant='contained'
                             onClick={toggleShowConfirmModale}
                             disabled={!(isValid && !isSubmitting && dirty)}

@@ -22,7 +22,9 @@ export default function Settingss() {
 
   return (
     <div className='settings'>
-      <TabContext value={value}>
+      <TabContext
+        value={value}
+      >
         <Box
           sx={{ borderBottom: 1, borderColor: 'divider' }}
         >
@@ -31,15 +33,18 @@ export default function Settingss() {
             centered
             onChange={handleChange}
             value={value}
+            aria-label="Tabs des paramètres"
+            indicatorColor="primary"
+            textColor='secondary'
           >
             <Tab
               className='settings-tab'
               label={`${deviceSize === 0 ? 'Compte' : 'Paramètres de compte'}`}
               value="1" />
-            <Tab 
-            className='settings-tab' 
-            label={`${deviceSize === 0 ? 'Profil' : 'Paramètres de profil'}`}
-            value="2" />
+            <Tab
+              className='settings-tab'
+              label={`${deviceSize === 0 ? 'Profil' : 'Paramètres de profil'}`}
+              value="2" />
           </Tabs>
         </Box>
         <TabPanel
@@ -55,6 +60,6 @@ export default function Settingss() {
           <ProfileSettings />
         </TabPanel>
       </TabContext>
-    </div>
+    </div >
   )
 }

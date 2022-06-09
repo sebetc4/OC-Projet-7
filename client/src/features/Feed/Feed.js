@@ -74,11 +74,12 @@ export default function Feed() {
 					/>
 					<div className='feed-bottom'>
 						{
-							postsIsLoading && <CircularProgress />
+							postsIsLoading && <CircularProgress color='primary'/>
 						}
 						{
 							(posts.allPostsFetch && posts.data.length !== 0) &&
 							<Button
+								color='secondary'
 								onClick={goToTopPage}
 								endIcon={<ArrowBackIosRoundedIcon />}
 							>

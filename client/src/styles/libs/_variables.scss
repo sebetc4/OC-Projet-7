@@ -1,18 +1,33 @@
 //  Couleurs
-$primary-color: #d0535b;
-$secondary-color-dark: rgb(9, 31, 67);
-$secondary-color: rgb(62, 124, 177);
-$secondary-color-light: #81A4CD;
+$primary-color: #C8525B;
+$secondary-color--light-mode: #2b60d0;
+$secondary-color--dark-mode: #7195e1; 
 
-$page-background: rgb(240, 242, 245);
-$white-background: #ffffff;
-$grey-background: rgb(246, 246, 246);
+$nav-link-inactive: rgb(100, 100, 100);
 
-$grey-color-dark: rgb(100, 100, 100);
+$text-color--light-mode: rgba(0, 0, 0, 0.95);
+$text-color--dark-mode: #fff;
 
-$text-color-dark: rgb(0, 0, 0);
-$text-color-grey: rgb(80, 80, 80);
+$text-color-grey--light-mode: rgb(80, 80, 80);
+$text-color-grey--dark-mode: rgb(180, 180, 180);
 
+$divider-color--light-mode: rgba(0, 0, 0, 0.12);
+$divider-color--dark-mode: rgba(255, 255, 255, 0.12);
+
+$top-color--light-mode: #fff;
+$top-color--dark-mode: rgb(36, 37, 38);
+
+$chat-message-user-color--light-mode: #dbe4f7; // 90%
+$chat-message-user-color--dark-mode: #0e1f434b;
+
+$chat-message-other-user-color--light-mode: #ffd7da;
+$chat-message-other-user-color--dark-mode: #c8525c5a;
+
+$chat-card-user-hover--light-mode: rgb(236, 236, 237);
+$chat-card-user-hover--dark-mode: #4e5052;
+
+$settings-accordeon-background-color--light-mode: #fff;
+$settings-accordeon-background-color--dark-mode: rgb(61, 62, 63);
 
 // Header
 $header-height: 65px;
@@ -31,21 +46,14 @@ $feed-width-content-mobile: 90%;
 
 // Seetings
 $settings-width-desktop: 768px;
-
-
 $box-shadow-main-element: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;;
 $border-radius-main-element: 5px;
 
+// Avatar
 $box-shadow-avatar: 2px 2px 5px rgba(0, 0, 0, 0.3);
 
 // Média
 $media-small-screen: 500px;
 $media-mobile: 768px;
 $media-tablette: 1024px;
-
-
-$primary: #79C7C5;
-$secondary: #A1E2D9;
-$white: #F9FBFF;
-$dark: #777777;
 

@@ -1,13 +1,13 @@
-
 .chat-user-card {
+	width: 100%;
 	margin-top: 20px;
-	background-color: $grey-background;
 	border-radius: 25px;
 	display: flex;
 	align-items: center;
 	padding: 10px;
 	cursor: pointer;
 	box-shadow: $box-shadow-main-element;
+	transition: 0.3s;
 
 	img {
 		width: 50px;
@@ -19,7 +19,7 @@
 	}
 
 	&:hover {
-		background-color: rgb(236, 236, 237);
+		background-color: $chat-card-user-hover--light-mode;
 	}
 
 	&__new-message {
@@ -30,9 +30,17 @@
 	}
 }
 
+.main--dark {
+	.chat-user-card {
+		&:hover {
+			background-color: $chat-card-user-hover--dark-mode;
+		}
+	}
+}
+
 @media screen and (max-width: $media-mobile) {
 	.chat-user-card {
-		width: 70%;
+		width: 100%;
 		margin-top: 30px;
 		padding: 15px;
 	}

@@ -44,7 +44,6 @@ export default function Logo({ mouseOnOneButton, deviceSize, allModalsAreClose }
     return (
         <group>
             <mesh ref={myMesh}>
-
                 {deviceSize === 2 ?
                     <Texture
                         attach="material"

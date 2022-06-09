@@ -22,6 +22,7 @@ export default function MobilMenu({ toggleDisplayMobileMenu, displayMobileMenu }
 
     // State
     const userId = useSelector((state) => state.user.data.id)
+    const colorMode = useSelector((state) => state.app.colorMode)
 
 
     useEffect(() => {
@@ -35,13 +36,13 @@ export default function MobilMenu({ toggleDisplayMobileMenu, displayMobileMenu }
     }, [displayMobileMenu])
 
     return (
-        <nav id="mobile-menu" className={`mobile-menu ${displayMobileMenu ? 'mobile-menu--open' : 'mobile-menu--close'}`}>
+        <nav id="mobile-menu" className={`mobile-menu ${displayMobileMenu ? 'mobile-menu--open' : 'mobile-menu--close'} ${colorMode === 'dark' ? 'mobile-menu--dark' : ''}`}>
             <ul>
                 <li>
                     <NavLink tabIndex={-1} to='/feeds' className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
                         <IconButton
-                            color="primary"
-                            aria-label="Feed"
+                            color="secondary"
+                            aria-label="Posts"
                             onClick={toggleDisplayMobileMenu}
                         >
                             <DynamicFeedIcon fontSize='large' />
@@ -51,7 +52,7 @@ export default function MobilMenu({ toggleDisplayMobileMenu, displayMobileMenu }
                 <li>
                     <NavLink tabIndex={-1} to='/home' className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
                         <IconButton
-                            color="primary"
+                            color="secondary"
                             aria-label="Acceuil"
                             onClick={toggleDisplayMobileMenu}
                         >
@@ -62,7 +63,7 @@ export default function MobilMenu({ toggleDisplayMobileMenu, displayMobileMenu }
                 <li>
                     <NavLink tabIndex={-1} to={`/profile/${userId}`} className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
                         <IconButton
-                            color="primary"
+                            color="secondary"
                             aria-label="Profil"
                             onClick={toggleDisplayMobileMenu}
                         >
@@ -73,7 +74,7 @@ export default function MobilMenu({ toggleDisplayMobileMenu, displayMobileMenu }
                 <li>
                     <NavLink tabIndex={-1} to={`/chat`} className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
                         <IconButton
-                            color="primary"
+                            color="secondary"
                             aria-label="Paramètres"
                             onClick={toggleDisplayMobileMenu}
                         >
@@ -84,7 +85,7 @@ export default function MobilMenu({ toggleDisplayMobileMenu, displayMobileMenu }
                 <li>
                     <NavLink tabIndex={-1} to={`/settings`} className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
                         <IconButton
-                            color="primary"
+                            color="secondary"
                             aria-label="Paramètres"
                             onClick={toggleDisplayMobileMenu}
                         >
@@ -95,7 +96,7 @@ export default function MobilMenu({ toggleDisplayMobileMenu, displayMobileMenu }
                 <li>
                     <NavLink tabIndex={-1} to={`/chat-tech-dep`} className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
                         <IconButton
-                            color="primary"
+                            color="secondary"
                             aria-label="Paramètres"
                             onClick={toggleDisplayMobileMenu}
                         >
@@ -104,7 +105,11 @@ export default function MobilMenu({ toggleDisplayMobileMenu, displayMobileMenu }
                     </NavLink>
                 </li>
                 <li>
-                    <IconButton onClick={() => dispatch(logoutUser())} className='navbar__nav-link' >
+                    <IconButton
+                        color="inactiveLink"
+                        onClick={() => dispatch(logoutUser())}
+                        className='navbar__nav-link'
+                    >
                         <LogoutIcon fontSize="large" />
                     </IconButton>
                 </li>

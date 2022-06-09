@@ -71,6 +71,7 @@ export default function Comments({ type, post, postIndex, user, showNewComment, 
             <div className='post-card-comments-bottom'>
                 {commentListLength < post.Comments.length &&
                     <Button
+                        color='secondary'
                         size="large"
                         endIcon={<ExpandMoreIcon />}
                         onClick={addCommentsInList}

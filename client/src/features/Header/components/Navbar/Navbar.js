@@ -13,28 +13,36 @@ export default function Navbar() {
   // Store
   const userId = useSelector((state) => state.user.data.id)
 
-
   return (
     <div className='navbar'>
       <NavLink tabIndex={-1} to='/feeds' className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
-        <IconButton color="primary" aria-label="Posts">
+        <IconButton
+          color="secondary"
+          aria-label="Posts"
+        >
           <DynamicFeedIcon fontSize='large' />
         </IconButton>
       </NavLink>
       <NavLink tabIndex={-1} to='/home' className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
-        <IconButton color="primary" aria-label="Acceuil">
+        <IconButton
+          color="secondary"
+          aria-label="Acceuil">
           <HomeIcon fontSize='large' />
         </IconButton>
       </NavLink>
       <NavLink tabIndex={-1} to={`/profile/${userId}`} className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
-        <IconButton color="primary" aria-label="Profile">
-          <PersonIcon fontSize='large'/>
+        <IconButton
+          color="secondary"
+          aria-label="Profile">
+          <PersonIcon fontSize='large' />
         </IconButton>
       </NavLink>
       <NavLink tabIndex={-1}
-      to={`/chat`} className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
-        <IconButton color="primary" aria-label="Chat">
-          <ChatSvg/>
+        to={`/chat`} className={(navData) => navData.isActive ? 'navbar__nav-link active' : 'navbar__nav-link'}>
+        <IconButton
+          color="secondary"
+              aria-label="Chat">
+          <ChatSvg />
         </IconButton>
       </NavLink>
     </div>

@@ -24,9 +24,11 @@ const socketFatures = require('./socket')
 const io = require('socket.io')(server)
 
 const port = normalizePort(process.env.PORT || 8080);
+
 db.sequelize.sync({ force: false }).then(() => {
     console.log("Drop and re-sync db.");
 });
+
 app.set("port", port);
 
 if (process.env.NODE_ENV === 'production') {

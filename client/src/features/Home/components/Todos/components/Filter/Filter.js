@@ -11,7 +11,7 @@ export default function Filter({ dispatchSetFilter, filter }) {
     return (
         <ToggleButtonGroup
             className='todos-filter'
-            color="primary"
+            color="secondary"
             value={filter}
             exclusive
             onChange={handleChange}

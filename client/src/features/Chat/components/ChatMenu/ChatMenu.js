@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
-import { Fab } from '@mui/material';
+import { Box, Fab } from '@mui/material';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 
 import { ChatUserCard } from '../index';
@@ -8,25 +8,26 @@ import { ChatUserCard } from '../index';
 
 export default function ChatMenu({ deviceSize, setShowChatBox, user, conversations, setCurrentChat, toggleShowSearchUser, onlineUsersId }) {
 
-    useEffect(() => {
-
-    })
     return (
         <>
             {
                 deviceSize !== 0 &&
-                <div className='chat-menu-top'>
+                <Box
+                    component="div"
+                    sx={{
+                        backgroundColor: 'background.top',
+                    }}
+                    className='chat-menu-top'>
                     <h2>Vos discussions</h2>
-                </div>
+                </Box>
             }
             {
                 conversations.length !== 0 ?
-                    <div className='chat-menu-content'>
+                    <ul className='chat-menu-content'>
                         {
                             conversations.map(conversation =>
-                                <article
+                                <li
                                     key={conversation.id}
-                                    className='chat-user-card'
                                     onClick={() => {
                                         setCurrentChat(conversation)
                                         deviceSize === 0 && setShowChatBox(true)
@@ -50,10 +51,10 @@ export default function ChatMenu({ deviceSize, setShowChatBox, user, conversatio
                                             conversation.unreadMessageSecondUser
                                         }
                                     />
-                                </article>
+                                </li>
                             )
                         }
-                    </div>
+                    </ul>
                     :
                     <div className='chat-menu-no-conversation'>
                         <p>Aucune conversations</p>
@@ -62,7 +63,7 @@ export default function ChatMenu({ deviceSize, setShowChatBox, user, conversatio
             {
                 deviceSize !== 0 &&
                 <Fab
-                    color='primary'
+                    color='secondary'
                     aria-label='Rechercher un utilisateur'
                     onClick={toggleShowSearchUser}
                 >

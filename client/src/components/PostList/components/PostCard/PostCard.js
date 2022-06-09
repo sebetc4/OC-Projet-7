@@ -1,7 +1,7 @@
 import React, { useEffect, useState, forwardRef } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 
-import { Dialog, Slide, useMediaQuery } from '@mui/material';
+import { Box, Dialog, Slide, useMediaQuery } from '@mui/material';
 
 import { likePost } from '../../../../store/actions/posts.actions';
 import { Comments, PostForm } from '../index'
@@ -45,7 +45,13 @@ export default function PostCard({ type, post, postIndex, author }) {
 
     return (
         <>
-            <article className='post-card'>
+            <Box
+                component="article"
+                sx={{
+                    backgroundColor: 'background.article',
+                }}
+                className='post-card'
+            >
                 <PostCardTop
                     type={type}
                     author={author}
@@ -75,7 +81,7 @@ export default function PostCard({ type, post, postIndex, author }) {
                     showNewComment={showNewComment}
                     toggleShowNewComment={toggleShowNewComment}
                 />
-            </article>
+            </Box>
 
             <Dialog
                 onClose={toggleShowModifyPost}

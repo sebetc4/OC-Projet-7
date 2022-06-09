@@ -5,82 +5,75 @@ import { useFrame } from "@react-three/fiber";
 import { useSpring as useSpringThree } from '@react-spring/three'
 
 
-export default function Texture({mouseOnOneButton}) {
+export default function Texture({ mouseOnOneButton }) {
 
-    const [indexColor, setIndexColor] = useState(0)
+  // Params
+  const options = [
+    [356, 75, 57],
+    [240, 70, 60],
+  ]
 
-    // Load the noise textures
-    const heightMap = useTexture("./three/noise.jpg");
-    const displacementMap = useTexture("./three/noise3D.jpg");
-    heightMap.minFilter = displacementMap.minFilter = THREE.NearestFilter;
-    displacementMap.wrapS = displacementMap.wrapT = THREE.RepeatWrapping;
+  // State
+  const [indexColor, setIndexColor] = useState(0)
 
-    const options = [
-      [356, 75, 57],
-      [240, 70, 60],
-    ]
+  const heightMap = useTexture("./three/noise.jpg");
+  const displacementMap = useTexture("./three/noise3D.jpg");
+  heightMap.minFilter = displacementMap.minFilter = THREE.NearestFilter;
+  displacementMap.wrapS = displacementMap.wrapT = THREE.RepeatWrapping;
 
-    useEffect(() => {
-      if (mouseOnOneButton)
-        setIndexColor(1)
-      else
-        setIndexColor(0)
-    }, [mouseOnOneButton])
+  useEffect(() => {
+    if (mouseOnOneButton)
+      setIndexColor(1)
+    else
+      setIndexColor(0)
+  }, [mouseOnOneButton])
 
-    const { timeOffset } = useSpringThree({
-      hsl: options[indexColor],
-      timeOffset: indexColor * 0.2,
-      config: { tension: 50 },
-      onChange: ({ value: { hsl } }) => {
-        const [h, s, l] = hsl
-        uniforms.colorB.value.setHSL(h / 360, s / 100, l / 100)
-      },
-    })
+  const { timeOffset } = useSpringThree({
+    hsl: options[indexColor],
+    timeOffset: indexColor * 0.2,
+    config: { tension: 50 },
+    onChange: ({ value: { hsl } }) => {
+      const [h, s, l] = hsl
+      uniforms.colorB.value.setHSL(h / 360, s / 100, l / 100)
+    },
+  })
 
-    // Create persistent local uniforms object
-    const [uniforms] = useState(() => ({
-        time: { value: 0 },
-        colorA: { value: new THREE.Color(0, 0, 0) },
-        colorB: { value: new THREE.Color('hsl(356, 75%, 57%)') },
-        heightMap: { value: heightMap },
-        displacementMap: { value: displacementMap },
-        iterations: { value: 48 },
-        depth: { value: 0.6 },
-        smoothing: { value: 0.2 },
-        displacement: { value: 0.1 },
-    }));
+  const [uniforms] = useState(() => ({
+    time: { value: 0 },
+    colorA: { value: new THREE.Color(0, 0, 0) },
+    colorB: { value: new THREE.Color('hsl(356, 75%, 57%)') },
+    heightMap: { value: heightMap },
+    displacementMap: { value: displacementMap },
+    iterations: { value: 48 },
+    depth: { value: 0.6 },
+    smoothing: { value: 0.2 },
+    displacement: { value: 0.1 },
+  }));
 
-    // Update time uniform on each frame
-    useFrame(({ clock }) => {
-      uniforms.time.value = timeOffset.get() + clock.elapsedTime * 0.05
-    });
+  useFrame(({ clock }) => {
+    uniforms.time.value = timeOffset.get() + clock.elapsedTime * 0.05
+  });
 
-    // Add our custom bits to the MeshStandardMaterial
-    const onBeforeCompile = (shader) => {
-        // Wire up local uniform references
-        shader.uniforms = { ...shader.uniforms, ...uniforms };
-
-        // Add to top of vertex shader
-        shader.vertexShader =
-            /* glsl */ `
+  const onBeforeCompile = (shader) => {
+    shader.uniforms = { ...shader.uniforms, ...uniforms };
+    shader.vertexShader =
+      `
       varying vec3 v_pos;
       varying vec3 v_dir;
     ` + shader.vertexShader;
 
-        // Assign values to varyings inside of main()
-        shader.vertexShader = shader.vertexShader.replace(
-            /void main\(\) {/,
-            (match) =>
-                match +
-                /* glsl */ `
+    shader.vertexShader = shader.vertexShader.replace(
+      /void main\(\) {/,
+      (match) =>
+        match +
+        `
         v_dir = position - cameraPosition; // Points from camera to vertex
         v_pos = position;
         `
-        );
+    );
 
-        // Add to top of fragment shader
-        shader.fragmentShader =
-            /* glsl */ `
+    shader.fragmentShader =
+      `
       #define FLIP vec2(1., -1.)
       
       uniform vec3 colorA;
@@ -97,11 +90,10 @@ export default function Texture({mouseOnOneButton}) {
       varying vec3 v_dir;
     ` + shader.fragmentShader;
 
-        // Add above fragment shader main() so we can access common.glsl.js
-        shader.fragmentShader = shader.fragmentShader.replace(
-            /void main\(\) {/,
-            (match) =>
-                /* glsl */ `
+    shader.fragmentShader = shader.fragmentShader.replace(
+      /void main\(\) {/,
+      (match) =>
+        `
        	/**
          * @param p - Point to displace
          * @param strength - How much the map can displace the point
@@ -151,26 +143,26 @@ export default function Texture({mouseOnOneButton}) {
           return mix(colorA, colorB, totalVolume);
         }
       ` + match
-        );
+    );
 
-        shader.fragmentShader = shader.fragmentShader.replace(
-            /vec4 diffuseColor.*;/,
-            /* glsl */ `
+    shader.fragmentShader = shader.fragmentShader.replace(
+      /vec4 diffuseColor.*;/,
+      `
       vec3 rayDir = normalize(v_dir);
       vec3 rayOrigin = v_pos;
       
       vec3 rgb = marchMarble(rayOrigin, rayDir);
       vec4 diffuseColor = vec4(rgb, 1.);      
       `
-        );
-    };
-
-    return (
-        <meshStandardMaterial
-            roughness={0.1}
-            onBeforeCompile={onBeforeCompile}
-            onUpdate={(m) => (m.needsUpdate = true)}
-            customProgramCacheKey={() => onBeforeCompile.toString()}
-        />
     );
+  };
+
+  return (
+    <meshStandardMaterial
+      roughness={0.1}
+      onBeforeCompile={onBeforeCompile}
+      onUpdate={(m) => (m.needsUpdate = true)}
+      customProgramCacheKey={() => onBeforeCompile.toString()}
+    />
+  );
 }

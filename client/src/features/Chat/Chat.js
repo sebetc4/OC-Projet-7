@@ -167,7 +167,7 @@ export default function Chat() {
                     lastName: otherUser.lastName,
                     avatarUrl: otherUser.avatarUrl,
                 }
-                socket.emit('newConversation', {otherUserId: otherUser.id, conversation})
+                socket.emit('newConversation', { otherUserId: otherUser.id, conversation })
             }
             setCurrentChat(conversation)
         } catch (err) {
@@ -184,7 +184,13 @@ export default function Chat() {
             {
                 deviceSize !== 0 ?
                     <>
-                        <section className='chat-menu'>
+                        <Box
+                            component="section"
+                            sx={{
+                                backgroundColor: 'background.section',
+                            }}
+                            className='chat-menu'
+                        >
                             <ChatMenu
                                 deviceSize={deviceSize}
                                 setShowChatBox={setShowChatBox}
@@ -194,8 +200,13 @@ export default function Chat() {
                                 toggleShowSearchUser={toggleShowSearchUser}
                                 onlineUsersId={onlineUsersId}
                             />
-                        </section>
-                        <section className='chat-box'>
+                        </Box>
+                        <Box
+                            component="section"
+                            sx={{
+                                backgroundColor: 'background.section',
+                            }} className='chat-box'
+                        >
                             <ChatBox
                                 deviceSize={deviceSize}
                                 socket={socket}
@@ -205,14 +216,19 @@ export default function Chat() {
                                 messages={messages}
                                 setMessages={setMessages}
                             />
-                        </section>
-                        <section className='chat-online'>
+                        </Box>
+                        <Box
+                            component="section"
+                            sx={{
+                                backgroundColor: 'background.section',
+                            }} className='chat-online'
+                        >
                             <OnlineUsers
                                 onlineUsers={onlineUsers}
                                 user={user}
                                 handleOpenConversation={handleOpenConversation}
                             />
-                        </section>
+                        </Box>
                         <Dialog
                             open={showSearchUser}
                             onClose={toggleShowSearchUser}
@@ -233,18 +249,40 @@ export default function Chat() {
                     :
                     <>
                         <TabContext value={value}>
-                            <Box className='chat-top' sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                            <Box
+                                className='chat-top'
+                                sx={{
+                                    borderBottom: 1,
+                                    borderColor: 'divider',
+                                    backgroundColor: 'background.top'
+                                }}
+                            >
                                 <Tabs
                                     centered
                                     onChange={handleChange}
                                     value={value}
+                                    aria-label="Tabs du chat"
+                                    indicatorColor="primary"
+                                    textColor='secondary'
                                 >
-                                    <Tab className='settings-tab' label="Vos discusssions" value="1" />
-                                    <Tab className='settings-tab' label="Utilisateurs en ligne" value="2" />
+                                    <Tab
+                                        className='settings-tab'
+                                        label='Discussions'
+                                        value="1"
+                                    />
+                                    <Tab
+                                        className='settings-tab'
+                                        label="En ligne"
+                                        value="2" />
                                 </Tabs>
                             </Box>
                             <TabPanel value="1">
-                                <section className='chat-menu'>
+                                <Box
+                                    component="section"
+                                    sx={{
+                                        backgroundColor: 'background.section',
+                                    }} className='chat-menu'
+                                >
                                     <ChatMenu
                                         deviceSize={deviceSize}
                                         setShowChatBox={setShowChatBox}
@@ -254,22 +292,27 @@ export default function Chat() {
                                         toggleShowSearchUser={toggleShowSearchUser}
                                         onlineUsersId={onlineUsersId}
                                     />
-                                </section>
+                                </Box>
                             </TabPanel>
                             <TabPanel value="2">
-                                <section className='chat-online'>
+                                <Box
+                                    component="section"
+                                    sx={{
+                                        backgroundColor: 'background.section',
+                                    }} className='chat-online'
+                                >
                                     <OnlineUsers
                                         deviceSize={deviceSize}
                                         onlineUsers={onlineUsers}
                                         user={user}
                                         handleOpenConversation={handleOpenConversation}
                                     />
-                                </section>
+                                </Box>
                             </TabPanel>
                         </TabContext>
                         <div className='chat__search-button-container'>
                             <Fab
-                                color='primary'
+                                color='secondary'
                                 aria-label='Rechercher un utilisateur'
                                 onClick={toggleShowSearchUser}
                             >
@@ -286,16 +329,23 @@ export default function Chat() {
                             maxWidth={'xl'}
                             scroll={'body'}
                         >
-                            <ChatBox
-                                deviceSize={deviceSize}
-                                setShowChatBox={setShowChatBox}
-                                socket={socket}
-                                user={user}
-                                otherUser={otherUserCurrentChat}
-                                currentChat={currentChat}
-                                messages={messages}
-                                setMessages={setMessages}
-                            />
+                            <Box
+                                component="section"
+                                sx={{
+                                    backgroundColor: 'background.section',
+                                }} className='chat-box'
+                            >
+                                <ChatBox
+                                    deviceSize={deviceSize}
+                                    setShowChatBox={setShowChatBox}
+                                    socket={socket}
+                                    user={user}
+                                    otherUser={otherUserCurrentChat}
+                                    currentChat={currentChat}
+                                    messages={messages}
+                                    setMessages={setMessages}
+                                />
+                            </Box>
                         </ Dialog>
                         <Dialog
                             open={showSearchUser}

@@ -1,6 +1,3 @@
-// font
-@import url('https://fonts.googleapis.com/css2?family=Anek+Odia:wght@100;200;300;400;500;600;700;800&display=swap');
-
 // Base
 @import './base/reset';
 
@@ -9,6 +6,7 @@
 @import './libs/mixins';
 
 // General
+@import './base//typography';
 @import './settings';
 
 // Features
@@ -29,7 +27,8 @@
 @import './components/loader/loader';
 @import './components/post-list/post-list';
 @import './components/user-card-list/user-card-list';
-@import './components/errors/errrors'
+@import './components/errors/errrors';
+@import './components/chat-message/chat-message';
 
 
 

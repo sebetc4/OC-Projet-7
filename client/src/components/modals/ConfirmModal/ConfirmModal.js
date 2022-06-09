@@ -22,21 +22,31 @@ export default function ConfirmSubmitModal({ title, content, button, showConfirm
       onClose={handleOnClose}
       TransitionComponent={Transition}
     >
-      <DialogTitle id="alert-dialog-title">
+      <DialogTitle id="modal-dialog-title">
         {title}
       </DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
+        <DialogContentText id="modal-dialog-description">
           {content}
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={toggleShowConfirmModale}>Annuler</Button>
+        <Button
+          color='warning'
+          onClick={toggleShowConfirmModale}
+        >
+          Annuler
+        </Button>
         {!isLoading ?
-          <Button onClick={onClickConfirm} autoFocus>
+          <Button
+            color='secondary'
+            onClick={onClickConfirm}
+            autoFocus
+          >
             {button}
           </Button> :
-          <CircularProgress />
+          <CircularProgress color='primary'
+          />
         }
       </DialogActions>
     </Dialog>

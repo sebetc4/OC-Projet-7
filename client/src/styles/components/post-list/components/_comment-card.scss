@@ -1,7 +1,19 @@
 .comment-card {
 	margin-bottom: 20px;
 	display: flex;
-	border-bottom: thin solid rgba(0, 0, 0, 0.12);
+	border-bottom: thin solid $divider-color--light-mode;
+}
+
+.main--dark {
+	.comment-card {
+		border-bottom: thin solid $divider-color--dark-mode;
+
+		.comment-card-center {
+			span {
+				border-left: thin solid $divider-color--dark-mode;
+			}
+		}
+	}
 }
 
 .comment-card-left {
@@ -20,7 +32,7 @@
 	align-items: center;
 
 	span {
-		border-left: thin solid rgba(0, 0, 0, 0.12);
+		border-left: thin solid $divider-color--light-mode;
 		width: 1px;
 		flex-grow: 1;
 	}
@@ -54,7 +66,7 @@
 
 	&__author-name-text-container {
 		a {
-			@include link-style;
+			text-decoration: none;
 			display: block;
 			font-weight: 600;
 			font-size: 14px;

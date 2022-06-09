@@ -1,0 +1,116 @@
+.chat-message {
+	width: 100%;
+	margin-top: 10px;
+
+	&-content {
+		display: flex;
+
+		&--user {
+			justify-content: flex-end;
+		}
+	}
+
+	&-content__avatar {
+		border-radius: 50%;
+		margin: -10px 0 0 5px;
+		height: 40px;
+		width: 40px;
+
+		&--user {
+			margin: -10px 0 0 5px;
+		}
+
+		&--other-user {
+			margin: -10px 5px 0 0;
+			fill: $primary-color;
+		}
+	}
+
+	&-content__text {
+		display: inline-block;
+		font-size: 12px;
+		max-width: 70%;
+		padding: 10px;
+		position: relative;
+		box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+		margin: 5px;
+		white-space: pre-wrap;
+		word-wrap: break-word;
+
+		&::before {
+			content: '';
+			width: 0px;
+			height: 0px;
+			display: block;
+			position: absolute;
+			top: 0px;
+		}
+
+		&--user {
+			margin-right: 10px;
+			border-radius: 20px 0 20px 20px;
+			background: $chat-message-user-color--light-mode;
+
+			&::before {
+				content: '';
+				border-left: 5px solid $chat-message-user-color--light-mode;
+				border-right: 5px solid transparent;
+				border-top: 5px solid $chat-message-user-color--light-mode;
+				border-bottom: 5px solid transparent;
+				right: -11px;
+			}
+		}
+
+		&--other-user {
+			margin-left: 10px;
+			background: $chat-message-other-user-color--light-mode;
+			border-radius: 0 20px 20px 20px;
+
+			&::before {
+				content: '';
+				border-left: 5px solid transparent;
+				border-right: 5px solid $chat-message-other-user-color--light-mode;
+				border-top: 5px solid $chat-message-other-user-color--light-mode;
+				border-bottom: 5px solid transparent;
+				left: -10px;
+			}
+		}
+	}
+
+	&-bottom {
+		margin-bottom: 30px;
+
+		p {
+			font-size: 10px;
+		}
+
+		&--user {
+			p {
+				text-align: right;
+			}
+		}
+	}
+}
+.main--dark {
+	.chat-message {
+		.chat-message-content__text {
+			&--user {
+				background: $chat-message-user-color--dark-mode;
+
+				&::before {
+					border-left: 5px solid $chat-message-user-color--dark-mode;
+					border-top: 5px solid $chat-message-user-color--dark-mode;
+				}
+			}
+
+			&--other-user {
+				background: $chat-message-other-user-color--dark-mode;
+
+				&::before {
+					border-right: 5px solid $chat-message-other-user-color--dark-mode;
+					border-top: 5px solid $chat-message-other-user-color--dark-mode;
+				}
+			}
+		}
+	}
+}

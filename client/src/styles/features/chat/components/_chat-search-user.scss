@@ -16,6 +16,10 @@
 	padding: 10px;
 	overflow-y: scroll;
     width: 80%;
+
+	li {
+		width: 100%;
+	}
 }
 
 @media screen and (max-width: $media-mobile) {
@@ -28,6 +32,11 @@
         display: flex;
 		align-items: center;
 		flex-direction: column;
+
+		
+		li {
+			width: 80%;
+		}
     }
 }
 

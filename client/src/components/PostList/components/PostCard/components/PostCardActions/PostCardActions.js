@@ -18,13 +18,17 @@ export default function PostCardActions({ type, post, toggleLike, userLiked, tog
                         className='post-card-actions__divider-top'
                         textAlign="left"
                     >
-                        <Badge badgeContent={post.usersLiked.length} color="primary">
+                        <Badge 
+                            badgeContent={post.usersLiked.length} 
+                            color="secondary"
+                            >
                             <ThumbUpIcon color="action" />
                         </Badge>
                     </Divider>
                     <Button
                         variant="text"
                         onClick={toggleLike}
+                        color="secondary"
                     >
                         {userLiked ? 'J\'aime pas' : 'J\'aime'}
                     </Button>
@@ -32,6 +36,7 @@ export default function PostCardActions({ type, post, toggleLike, userLiked, tog
                         <Button
                             variant="text"
                             onClick={toggleShowNewComment}
+                            color="secondary"
                         >
                             Commenter
                         </Button> :
@@ -48,7 +53,10 @@ export default function PostCardActions({ type, post, toggleLike, userLiked, tog
                         textAlign="right"
                     >
 
-                        <Badge badgeContent={post.Comments.length} color="primary">
+                        <Badge 
+                        badgeContent={post.Comments.length} 
+                        color="secondary"
+                        >
                             <CommentIcon color="action" />
                         </Badge>
                     </Divider>
@@ -59,7 +67,7 @@ export default function PostCardActions({ type, post, toggleLike, userLiked, tog
                         <div className='post-card-badges__item'>
                             <Badge
                                 badgeContent={post.usersLiked.length}
-                                color="primary"
+                                color="secondary"
                             >
                                 <ThumbUpIcon color="action" />
                             </Badge>
@@ -67,7 +75,7 @@ export default function PostCardActions({ type, post, toggleLike, userLiked, tog
                         <div className='post-card-badges__item'>
                             <Badge
                                 badgeContent={post.Comments.length}
-                                color="primary"
+                                color="secondary"
                             >
                                 <CommentIcon color="action" />
                             </Badge>
@@ -77,12 +85,14 @@ export default function PostCardActions({ type, post, toggleLike, userLiked, tog
                     <Button
                         variant="text"
                         onClick={toggleLike}
+                        color="secondary"
                     >
                         {userLiked ? 'J\'aime pas' : 'J\'aime'}
                     </Button>
                     {!showNewComment ?
                         <Button
                             variant="text"
+                            color="secondary"
                             onClick={toggleShowNewComment}
                         >
                             Commenter

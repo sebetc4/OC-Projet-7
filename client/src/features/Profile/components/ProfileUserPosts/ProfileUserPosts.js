@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
@@ -23,7 +23,13 @@ export default function ProfileUserPosts({ profileData, posts }) {
     const addUserPotsInList = () => setUserPostListLength(prev => prev + nbPostsDisplay)
 
     return (
-        <section className='profile-user-posts'>
+        <Box
+            component="section"
+            sx={{
+                backgroundColor: 'background.section',
+            }}
+            className='profile-user-posts'
+        >
             <h2 className='profile-user-posts__title'>Posts:</h2>
             {
                 userPostList.length !== 0 ?
@@ -36,6 +42,7 @@ export default function ProfileUserPosts({ profileData, posts }) {
                         {userPostListLength < posts.length &&
                             <div className='profile-user-posts-bottom'>
                                 <Button
+                                    color='secondary'
                                     size="large"
                                     endIcon={<ExpandMoreIcon />}
                                     onClick={addUserPotsInList}
@@ -44,10 +51,12 @@ export default function ProfileUserPosts({ profileData, posts }) {
                                 </Button>
                             </div>
                         }
-                    </> 
+                    </>
                     :
-                    <p>Cet utilisateur n'a rien posté.</p>
+                    <div className='profile-user-posts__no-post'>
+                        <p>Cet utilisateur n'a rien posté.</p>
+                    </div>
             }
-        </section>
+        </Box>
     )
 }

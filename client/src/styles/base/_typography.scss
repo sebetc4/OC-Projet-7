@@ -1,10 +1,50 @@
-@import url('https://fonts.googleapis.com/css2?family=Shrikhand&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 
-.footer__title, .menu__title {
-    font-family: 'Shrikhand', cursive;
+body,
+html {
+	* {
+		font-family: 'Open Sans', sans-serif;
+		font-size: 14px;
+		line-height: 1.4em;
+	}
 }
 
-body, html {
-    font-family: 'Roboto', sans-serif;
+main {
+	p,
+	a,
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		color: $text-color--light-mode;
+	}
+}
+
+.main--dark {
+	p,
+	a,
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		color: $text-color--dark-mode;
+	}
+}
+
+.todos-list__no-todo-text,
+.todos-item-text p {
+	font-family: cursive;
+}
+
+@media screen and (max-width: $media-mobile) {
+	body,
+	html {
+		* {
+			font-size: 16px;
+		}
+	}
 }

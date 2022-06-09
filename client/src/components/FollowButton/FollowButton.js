@@ -56,13 +56,14 @@ export default function FollowButton({ type, user, handleFollow, handleUnfollow 
                     <Fab
                         variant="extended"
                         onClick={toggleFollow}
-                        color='primary'
+                        color='secondary'
                     >
                         {userIsFollowed ? <PersonRemoveAlt1Icon sx={{ mr: 1.5 }} /> : <PersonAddAlt1Icon sx={{ mr: 1.5 }} />}
                         {userIsFollowed ? 'Se désabonner' : 'S\'abonner'}
                     </Fab>
                     :
                     <Button
+                        color='secondary'
                         startIcon={userIsFollowed ? <PersonRemoveAlt1Icon /> : <PersonAddAlt1Icon />}
                         onClick={toggleFollow}
                     >

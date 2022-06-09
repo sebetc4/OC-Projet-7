@@ -62,6 +62,7 @@ export default function FormSignIn(props) {
                     <Form className="login-form" onSubmit={handleSubmit}>
                         <div className="login-form-row">
                             <Field
+                                color='secondary'
                                 className='login-form-row__input'
                                 id='signup-form-firstname-input'
                                 error={touched.firstName && !!errors.firstName}
@@ -76,6 +77,7 @@ export default function FormSignIn(props) {
                         </div>
                         <div className="login-form-row">
                             <Field
+                                color='secondary'
                                 className='login-form-row__input'
                                 id='signup-form-lastname-input'
                                 error={touched.lastName && !!errors.lastName}
@@ -90,6 +92,7 @@ export default function FormSignIn(props) {
                         </div>
                         <div className="login-form-row">
                             <Field
+                                color='secondary'
                                 className='login-form-row__input'
                                 id='signup-form-email-input'
                                 error={touched.email && !!errors.email}
@@ -104,6 +107,7 @@ export default function FormSignIn(props) {
                         </div>
                         <div className="login-form-row">
                             <Field
+                                color='secondary'
                                 id='signup-form-password-input'
                                 className='login-form-row__input'
                                 name={'password'}
@@ -116,6 +120,7 @@ export default function FormSignIn(props) {
                         </div>
                         <div className='login-form__button-container'>
                             <Button
+                                color='secondary'
                                 variant='contained'
                                 type='submit'
                                 disabled={!(isValid && !isSubmitting && dirty)}

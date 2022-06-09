@@ -53,7 +53,7 @@ exports.updatePost = async (req, res, next) => {
         const post = await findOnePostWhereId(postId)
         user.checkIsAuthorOrAdmin(post.UserId)
         const postObject = await getPostObject(req, text, videoUrl, updateImage)
-        if ((postObject.imageUrl && post.videoUrl) || (postObject.videoUrl && post.imageUrl))
+        if ((postObject.imageUrl && post.videoUrl) || (postObject.videoUrl && (postObject.imageUrl || (post.imageUrl && !updateImage))))
             throw { message: 'Image and video in same post is not allowed' }
         if (updateImage === 'true' && post.imageUrl)
             deleteLastPostImage(post)

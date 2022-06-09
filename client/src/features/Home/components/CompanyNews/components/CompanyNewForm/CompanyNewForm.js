@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
+
+import CloseIcon from '@mui/icons-material/Close';
 
 import { Button, IconButton, TextField, TextareaAutosize } from '@mui/material';
 
@@ -44,6 +45,7 @@ export default function CompanyNewForm({ type, companyNewId, initialTitle, initi
             </div>
             <form>
                 <TextField
+                    color='secondary'
                     className='company-new-form__input'
                     id="company-new-form-title-input"
                     name='title'
@@ -70,6 +72,7 @@ export default function CompanyNewForm({ type, companyNewId, initialTitle, initi
                 <div className='company-new-form-bottom'>
 
                     <Button
+                        color='secondary'
                         variant='contained'
                         type='submit'
                         onClick={submit}

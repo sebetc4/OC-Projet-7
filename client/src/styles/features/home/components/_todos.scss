@@ -29,7 +29,7 @@
 
 .todos-item-input {
 	margin-left: 10px;
-	
+
 	input {
 		display: none;
 	}
@@ -76,16 +76,40 @@
 				stroke-dashoffset: 66;
 			}
 		}
-		&:hover, &:focus {
+		&:hover,
+		&:focus {
 			&:before {
 				opacity: 1;
 			}
 			svg {
-				stroke: #42a5f5;
+				stroke: $secondary-color--light-mode;
 			}
 		}
 		&:focus {
 			outline: none;
+		}
+	}
+}
+
+.main--dark {
+	.todos-item {
+		.todos-item-input {
+			&__check {
+				&::before {
+					background: rgba(#aeb9d0, 0.03);
+				}
+				&:hover,
+				&:focus {
+					svg {
+						stroke: $secondary-color--dark-mode;
+					}
+				}
+			}
+		}
+		.todos-item-input input:checked + .todos-item-input__check {
+			svg {
+				stroke: #6df774;
+			}
 		}
 	}
 }

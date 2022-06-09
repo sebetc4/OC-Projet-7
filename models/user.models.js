@@ -115,9 +115,21 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    bio: DataTypes.STRING,
-
+    bio: {
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [0, 500],
+          msg: 'Votre bio doit contenir moins de 500 caractères'
+        }
+      }
+    },
     isAdmin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: 0
+    },
+    darkMode: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: 0

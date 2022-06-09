@@ -52,7 +52,7 @@ export default function CommentContent({ type, postIndex, comment, commentIndex,
                     <div className='comment-card-right-content__settings-container'>
                         <IconButton
                             onClick={toggleShowCommentSettings}
-                            color="primary"
+                            color="secondary"
                             aria-label="Paramètres de commentaire"
                         >
                             <MoreHorizIcon />

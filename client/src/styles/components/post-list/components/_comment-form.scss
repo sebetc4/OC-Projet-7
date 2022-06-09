@@ -1,6 +1,6 @@
 .comment-form {
 	&__author-name {
-		@include link-style;
+		text-decoration: none;
 		margin-bottom: 10px;
 		display: block;
 		font-weight: 600;
@@ -9,7 +9,7 @@
 
 	&__button-container {
 		width: 100%;
-        margin: 20px 0;
+		margin: 20px 0;
 		display: flex;
 		justify-content: center;
 	}
@@ -21,6 +21,15 @@
 	&__input {
 		width: 100%;
 		font-size: 13px;
+		color: $text-color--light-mode;
+	}
+}
+
+.main--dark {
+	.comment-form-textarea {
+		.comment-form-textarea__input {
+			color: $text-color--dark-mode;
+		}
 	}
 }
 

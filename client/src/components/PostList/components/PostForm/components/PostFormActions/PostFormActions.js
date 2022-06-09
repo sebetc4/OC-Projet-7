@@ -24,7 +24,7 @@ export default function PostFormActions({ image, videoUrl, setFile, handleDelete
                                 />
                                 <Button
                                     variant="text"
-                                    color="primary"
+                                    color="secondary"
                                     component="span"
                                     startIcon={<PhotoCamera />}
                                     disabled={submitting}
@@ -50,7 +50,7 @@ export default function PostFormActions({ image, videoUrl, setFile, handleDelete
                         {!showVideoInput ?
                             <Button
                                 variant="text"
-                                color="primary"
+                                color="secondary"
                                 component="span"
                                 onClick={toggleShowVideoInput}
                                 startIcon={<OndemandVideoIcon />}

@@ -18,11 +18,16 @@
 
 @media screen and (max-width: $media-tablette) {
 	.home {
-		max-width: 95%;
+		width: 95%;
 	}
 }
 
 @media screen and (max-width: $media-mobile) {
+
+	.home {
+		width: 100%;
+	}
+	
 	.home-columns {
 		@include features-columns-mobile;
 	}
@@ -34,9 +39,7 @@
 }
 
 @media screen and (max-width: $media-small-screen) {
-	.home {
-		max-width: 100%;
-	}
+
 
 	.todos,
 	.company-news {

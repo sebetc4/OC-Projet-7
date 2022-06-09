@@ -59,6 +59,7 @@ export default function EmailForm({ user, closeAccordion }) {
                 >
                     <div className='settings-form-row settings-form-row--double-inputs'>
                         <Field
+                            color='secondary'
                             id='settings-firstname-lastname-form-firstname-input'
                             className='settings-form-row__inputs'
                             error={errors.firstName}
@@ -71,6 +72,7 @@ export default function EmailForm({ user, closeAccordion }) {
                             helperText={<ErrorMessage name={'firstName'} />}
                         />
                         <Field
+                            color='secondary'
                             id='settings-firstname-lastname-form-lastname-input'
                             className='settings-form-row__inputs'
                             error={errors.lasttName}
@@ -85,6 +87,7 @@ export default function EmailForm({ user, closeAccordion }) {
                     </div>
                     <div className='settings-form__button-container'>
                         <Button
+                            color='secondary'
                             variant='contained'
                             onClick={toggleShowConfirmModale}
                             disabled={!(isValid && !isSubmitting && (values.firstName !== user.firstName || values.lastName !== user.lastName))}

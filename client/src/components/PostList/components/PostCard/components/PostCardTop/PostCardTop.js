@@ -53,10 +53,10 @@ export default function PostCardTop({ type, author, post, postIndex, user, toggl
                 {
                     type !== 'profile' ?
                         <NavLink to={`/profile/${author.id}`}>
-                            {`${author.firstName} ${author.lastName}`}
+                            <h3>{author.firstName} {author.lastName}</h3>
                         </NavLink>
                         :
-                        `${author.firstName} ${author.lastName}`
+                        <h3>{author.firstName} {author.lastName}</h3>
                 }
 
                 <FromNowDate date={post.createdAt} update={post.updatedAt} />
@@ -66,7 +66,7 @@ export default function PostCardTop({ type, author, post, postIndex, user, toggl
                 >
                     <IconButton
                         onClick={toggleShowPostSettings}
-                        color="primary"
+                        color="secondary"
                         aria-label="Paramètres de commentaire"
                     >
                         <MoreHorizIcon />

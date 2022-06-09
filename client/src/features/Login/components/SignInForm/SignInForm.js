@@ -61,6 +61,7 @@ export default function FormSignIn(props) {
                     <Form className="login-form" onSubmit={handleSubmit}>
                         <div className="login-form-row">
                             <Field
+                                color='secondary'
                                 className='login-form-row__input'
                                 error={touched.email && !!errors.email}
                                 as={TextField}
@@ -76,6 +77,7 @@ export default function FormSignIn(props) {
 
                         <div className="login-form-row">
                             <Field
+                                color='secondary'
                                 className='login-form-row__input'
                                 id='signin-form-password-input'
                                 name={'password'}
@@ -89,6 +91,7 @@ export default function FormSignIn(props) {
 
                         <div className='login-form__button-container'>
                             <Button
+                                color='secondary'
                                 variant='contained'
                                 type='submit'
                                 disabled={!(isValid && !isSubmitting && dirty)}

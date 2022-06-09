@@ -14,12 +14,16 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { IconButton } from '@mui/material';
+import { toggleColorMode } from '../../../../store/actions/app.actions';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 
 export default function SettingsBar() {
 
     // Store
     const userAvatar = useSelector((state) => state.user.data.avatarUrl)
+    const colorMode = useSelector((state) => state.app.colorMode)
 
     // Hooks
     const dispatch = useDispatch();
@@ -33,15 +37,31 @@ export default function SettingsBar() {
         toggleDisplayModalSettings()
     }
 
+    const handleColorMode = () => dispatch(toggleColorMode())
+
     const toggleDisplayModalSettings = () => setDisplayModalSettings(!displayModalSettings)
 
     return (
         <div className='right-menu'>
 
             <IconButton
-                className='right-menu__button'
+                className='right-menu__button-color-mode'
+                onClick={handleColorMode}
+                color='secondary'
+                aria-label='Modifier le mode de couleur'
+            >
+                {colorMode === 'dark' ?
+                    <Brightness7Icon color="toggleColorMode"/> 
+                    :
+                    <Brightness4Icon color="toggleColorMode"/>
+                    }
+            </IconButton>
+
+            <IconButton
+                className='right-menu__button-avatar'
                 onClick={toggleDisplayModalSettings}
-                color='primary'
+                color='secondary'
+                aria-label='Paramètre et déconnexion'
             >
                 <img
                     alt={'avatar de l\'ustilisateur'}

@@ -11,7 +11,7 @@ export default function CreateComment({ type, post, postIndex, user, textareaRef
     const deviceSize = useSelector(state => state.app.deviceSize)
 
     return (
-        <div className='comment-card'>
+        <article className='comment-card'>
             {
                 (deviceSize !== 0 && type === 'feed') &&
                 <div className='comment-card-left'>
@@ -38,6 +38,6 @@ export default function CreateComment({ type, post, postIndex, user, textareaRef
                     user={user}
                 />
             </div>
-        </div>
+        </article>
     )
 }

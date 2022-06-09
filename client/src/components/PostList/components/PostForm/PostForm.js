@@ -165,12 +165,13 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
             <div className='post-form-bottom'>
                 {!submitting ?
                     <Button
+                        color='secondary'
                         disabled={submitDisabled}
                         type='submit'
                         variant="contained">
                         {type === 'modify' ? 'Modifier' : 'Poster'}
                     </Button> :
-                    <CircularProgress />
+                    <CircularProgress color='primary'/>
                 }
 
             </div>

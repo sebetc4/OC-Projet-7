@@ -14,6 +14,7 @@ export default function customPasswordInput({ field, form, ...props }) {
             size={'small'}
             variant="outlined"
             error={props.error}
+            color='secondary'
         >
             <InputLabel htmlFor="outlined-adornment-password">{props.label}</InputLabel>
             <OutlinedInput

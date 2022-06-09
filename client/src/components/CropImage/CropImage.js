@@ -94,7 +94,7 @@ const CropEasy = (props) => {
                     >
                         Valider
                     </Button> :
-                    <CircularProgress />
+                    <CircularProgress color='primary'/>
                 }
             </div>
         </div>

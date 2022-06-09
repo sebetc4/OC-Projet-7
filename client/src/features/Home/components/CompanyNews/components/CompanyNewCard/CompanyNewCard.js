@@ -52,9 +52,9 @@ export default function CompanyNewCard({ userIsAdmin, companyNew, setAllCompanyN
             {userIsAdmin &&
                 <div className='company-new-card-settings-container'>
                     <IconButton
+                        color='secondary'
                         onClick={toggleShowCompanyNewsSettings}
-                        color="primary"
-                        aria-label="Paramètres de commentaire"
+                        aria-label="Paramètres de la nouvelle"
                     >
                         <MoreHorizIcon />
                     </IconButton>

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 
 import { Feed, Header, Home, Login, Profile, Settings, Search, ChatTechDep, Chat } from '../features'
 import { Errors } from "../components";
+import { Box } from "@mui/material";
 
 
 export default function Index() {
@@ -22,7 +23,13 @@ export default function Index() {
                 :
                 <>
                     <Header />
-                    <main className={`main ${app.displayMobileMenu ? 'main--active-menu' : ''}`}>
+                    <Box
+                        component="main"
+                        sx={{
+                            backgroundColor: 'background.main',
+                        }}
+                        className={`main ${app.displayMobileMenu ? 'main--active-menu' : ''} ${app.colorMode === 'dark' ? 'main--dark' : ''}`}
+                    >
                         <Routes>
                             <Route path='/search' >
                                 <Route path=':query' element={<Search />} />
@@ -43,7 +50,7 @@ export default function Index() {
                             <ChatTechDep />
                         }
                         <Errors />
-                    </main>
+                    </Box>
                 </>
             }
         </Router>

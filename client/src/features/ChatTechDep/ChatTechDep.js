@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { useSelector } from 'react-redux'
 
 
-import { Divider, TextField, Slide, IconButton, Fab } from '@mui/material';
+import { Divider, TextField, Slide, IconButton, Fab, Box } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 
@@ -19,6 +19,7 @@ export default function ChatTechDep() {
     // Store
     const user = useSelector((state) => state.user.data)
     const deviceSize = useSelector(state => state.app.deviceSize)
+    const colorMode = useSelector(state => state.app.colorMode)
 
     // State
     const [showChatBox, setShowChatBox] = useState(false)
@@ -70,115 +71,127 @@ export default function ChatTechDep() {
     const toggleShowChatBox = () => setShowChatBox(!showChatBox)
 
     return (
-        <div className='chat-tech-dep'>
-            <>{
+        <section className='chat-tech-dep'>
+            {
                 deviceSize === 2 &&
                 <Fab
                     className='chat-tech-dep-button'
-                    color="primary"
+                    color="secondary"
                     aria-label="Fermet le chat"
                     onClick={toggleShowChatBox}
                 >
                     <img
-                        src={`/img/assistance.png`}
+                        src={colorMode === 'light' ? `/img/assistance-light.png` : `/img/assistance-dark.png`}
                         alt='assistant technique'
                     />
                 </Fab>
             }
-                <Slide
-                    direction="left"
-                    in={deviceSize === 2 ? showChatBox : true}
-                    mountOnEnter
-                    unmountOnExit
-                >
-                    <div className='chat-tech-dep-box'>
-                        <div
-                            className="chat-tech-dep-box-top"
-                            id="chat-tech-dep-box-top"
-                        >
-                            <h2>Service technique</h2>
-                            {deviceSize === 2 &&
-                                <IconButton
-                                    onClick={toggleShowChatBox}
-                                    color='error'
-                                >
-                                    <ArrowForwardIosRoundedIcon />
-                                </IconButton>
-                            }
-                        </div>
-                        <div
-                            ref={chatBoxContentRef}
-                            className="chat-tech-dep-box-content"
-                        >
-                            {
-                                messageList && messageList.map((message, index) => (
-                                    index % 2 ?
-                                        <UserMessage
-                                            key={index}
-                                            message={message}
-                                            userAvatar={user.avatarUrl}
-                                        /> :
-                                        <TechMessage
-                                            key={index}
-                                            message={message}
-                                        />
-                                ))
-                            }
-                            {
-                                resIsLoading && <LoaderMessage />
-                            }
-                        </div>
-                        <div className="chat-tech-dep-box-bottom">
-                            <Formik
-                                onSubmit={submit}
-                                initialValues={{
-                                    message: ''
-                                }}
-                                validationSchema={settingsSchema}
-                                validateOnBlur={true}
-                                validateOnChange={true}
+            <Slide
+                direction="left"
+                in={deviceSize === 2 ? showChatBox : true}
+                mountOnEnter
+                unmountOnExit
+            >
+                <section className='chat-tech-dep-box'>
+                    <Box
+                        component="div"
+                        sx={{
+                            backgroundColor: 'background.top',
+                        }}
+                        className="chat-tech-dep-box-top"
+                        id="chat-tech-dep-box-top"
+                    >
+                        <h2>Service technique</h2>
+                        {deviceSize === 2 &&
+                            <IconButton
+                                onClick={toggleShowChatBox}
+                                color='error'
                             >
-                                {({ handleSubmit, isValid, dirty }) => (
-                                    <Form
-                                        onSubmit={handleSubmit}
-                                        className="chat-tech-dep-box-bottom-form"
-                                    >
-                                        <Field
-                                            className="chat-tech-dep-box-bottom-form__input"
-                                            id='chat-tech-dep-box-bottom-form__input'
-                                            as={TextField}
-                                            variant='standard'
-                                            name={'message'}
-                                            type={'text'}
-                                            size="small"
-                                            placeholder={'Votre message...'}
-                                        />
-                                        <Divider
-                                            className="chat-tech-dep-box-bottom-form__divider"
-                                            sx={{ height: 40 }}
-                                            orientation="vertical"
-                                        />
+                                <ArrowForwardIosRoundedIcon />
+                            </IconButton>
+                        }
+                    </Box>
+                    <Box
+                        component="section"
+                        sx={{
+                            backgroundColor: 'background.section'
+                        }}
+                        ref={chatBoxContentRef}
+                        className="chat-tech-dep-box-content"
+                    >
+                        {
+                            messageList && messageList.map((message, index) => (
+                                index % 2 ?
+                                    <UserMessage
+                                        key={index}
+                                        message={message}
+                                        userAvatar={user.avatarUrl}
+                                    /> :
+                                    <TechMessage
+                                        key={index}
+                                        message={message}
+                                    />
+                            ))
+                        }
+                        {
+                            resIsLoading && <LoaderMessage />
+                        }
+                    </Box>
+                    <Box
+                        component="div"
+                        sx={{
+                            backgroundColor: 'background.top',
+                        }}
+                        className="chat-tech-dep-box-bottom"
+                    >
+                        <Formik
+                            onSubmit={submit}
+                            initialValues={{
+                                message: ''
+                            }}
+                            validationSchema={settingsSchema}
+                            validateOnBlur={true}
+                            validateOnChange={true}
+                        >
+                            {({ handleSubmit, isValid, dirty }) => (
+                                <Form
+                                    onSubmit={handleSubmit}
+                                    className="chat-tech-dep-box-bottom-form"
+                                >
+                                    <Field
+                                        className="chat-tech-dep-box-bottom-form__input"
+                                        id='chat-tech-dep-box-bottom-form__input'
+                                        as={TextField}
+                                        color='secondary'
+                                        variant='standard'
+                                        name={'message'}
+                                        type={'text'}
+                                        size="small"
+                                        placeholder={'Votre message...'}
+                                    />
+                                    <Divider
+                                        className="chat-tech-dep-box-bottom-form__divider"
+                                        sx={{ height: 40 }}
+                                        orientation="vertical"
+                                    />
 
-                                        <div>
-                                            <IconButton
-                                                type="submit"
-                                                aria-label="Envoyer"
-                                                disabled={!(isValid && dirty && !resIsLoading)}
-                                                color='primary'
-                                            >
-                                                <SendIcon />
-                                            </IconButton>
-                                        </div>
-                                    </Form>
-                                )}
-                            </Formik>
-                        </div>
-                    </div>
-                </Slide>
-            </>
-        </div>
-
-
+                                    <div>
+                                        <IconButton
+                                            type="submit"
+                                            aria-label="Envoyer"
+                                            disabled={!(isValid && dirty && !resIsLoading)}
+                                            color='secondary'
+                                        >
+                                            <SendIcon />
+                                        </IconButton>
+                                    </div>
+                                </Form>
+                            )}
+                        </Formik>
+                    </Box>
+                </section>
+            </Slide>
+        </section >
     )
 }
 

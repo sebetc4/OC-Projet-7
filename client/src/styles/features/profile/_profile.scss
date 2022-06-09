@@ -22,6 +22,29 @@
 	justify-content: center;
 }
 
+.profile-user-bio__no-bio, .profile-user-posts__no-post {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	p {
+		padding: 10px;
+		font-size: 16px;
+		color: $text-color-grey--light-mode;
+		text-align: center;
+	}
+}
+
+.main--dark {
+	.profile-user-bio__no-bio, .profile-user-posts__no-post {
+		p {
+			color: $text-color-grey--dark-mode;
+		}
+	}
+}
+
 @media screen and (max-width: $media-tablette) {
 	.profile {
 		max-width: 100%;
@@ -35,6 +58,12 @@
 	.profile-columns {
 		@include features-columns-mobile;
 		width: 100%;
+	}
+
+	.profile-user-information,
+	.profile-user-bio,
+	.profile-user-posts {
+		@include features-section-mobile
 	}
 }
 

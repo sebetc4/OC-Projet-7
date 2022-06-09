@@ -3,7 +3,6 @@
 	padding: 20px;
 	box-shadow: $box-shadow-main-element;
 	border-radius: $border-radius-main-element;
-	background-color: $grey-background;
 }
 
 .post-card-top {
@@ -32,9 +31,13 @@
 	&__infos {
 		margin-left: 20px;
 		a {
-			@include link-style;
+			text-decoration: none;
 			display: block;
-			font-weight: 500;
+
+			h3 {
+				font-size: 16px;
+				font-weight: 500;
+			}
 		}
 		p {
 			margin-top: 5px;

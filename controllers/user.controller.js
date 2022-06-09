@@ -7,7 +7,7 @@ exports.createUser = async (req, res, next) => {
     try {
         if (!email || !lastName || !firstName || !password) throw { message: 'Missing parameters' }
         await createUser(req, email, firstName, lastName, password)
-        return res.status(201).json('User creation is done')
+        return res.status(201).json('User creation success')
     } catch (err) {
         next(err)
     }
@@ -54,7 +54,7 @@ exports.updatePassword = async (req, res, next) => {
         user.checkPassword(password, user.password)
         const newHashPassword = await user.hashNewPassword(newPassword)
         await user.update({ password: newHashPassword })
-        res.status(200).json("Password update is done")
+        res.status(200).json("Password update success")
     } catch (err) {
         next(err)
     }
@@ -64,7 +64,7 @@ exports.deleteUser = async (req, res, next) => {
     const user = req.user
     try {
         await user.destroy()
-        res.status(200).json("User deletion is done")
+        res.status(200).json("User deletion sucess")
     } catch (err) {
         next(err)
     }
@@ -82,12 +82,22 @@ exports.resetImage = async (req, res, next) => {
     }
 }
 
+exports.toggleDarkMode = async (req, res, next) => {
+    const user = req.user
+    try {
+        await user.update({darkMode: !user.darkMode})
+        res.status(200).json('Toggle dark mode success')
+    } catch (err) {
+        next(err)
+    }
+}
+
 
 exports.deleteUser = async (req, res, next) => {
     const user = req.user
     try {
         await user.destroy()
-        res.status(200).json("User deletion is done")
+        res.status(200).json("User deletion success")
     } catch (err) {
         next(err)
     }

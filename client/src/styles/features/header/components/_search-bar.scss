@@ -14,12 +14,11 @@
 		height: 40px;
 		padding: 8px 4px 8px 10px;
 		border: none;
-		color: $text-color-dark;
+		background-color: inherit;
 		font-size: 14px;
 		transition: all 0.3s ease-out;
 
 		&::placeholder {
-			color: $text-color-dark;
 			font-weight: 500;
 		}
 
@@ -41,7 +40,13 @@
 		& svg {
 			height: 25px;
 			width: 25px;
-			fill: $grey-color-dark;
+			fill: $secondary-color--light-mode;
+		}
+
+		&:disabled {
+			& svg {
+				fill: $nav-link-inactive;
+			}
 		}
 	}
 
@@ -57,9 +62,32 @@
 		transform-origin: bottom right;
 		transition: ease-in-out 0.4s;
 	}
+
 }
 
-@media screen and (max-width: $media-small-screen ) {
+.header--dark {
+	.search-bar {
+		.search-bar__input {
+			color: $text-color--dark-mode;
+
+			&::placeholder {
+				font-weight: 500;
+			}
+		}
+		.search-bar__button {
+			& svg {
+				fill: $secondary-color--dark-mode;
+			}
+			&:disabled {
+				& svg {
+					fill: $nav-link-inactive;
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: $media-small-screen) {
 	.search-bar-container {
 		width: 100%;
 		margin-left: 0;

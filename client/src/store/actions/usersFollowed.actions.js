@@ -1,13 +1,16 @@
 import axios from 'axios';
 
+export const RESET_USERS_FOLLOWED = 'RESET_USERS_FOLLOWED'
 export const SET_USERS_FOLLOWED = 'GET_FOLLOWING'
 export const ADD_USER_FOLLOWED = 'ADD_FOLLOWING'
 export const DELETE_USER_FOLLOWED = 'DELETE_USER_FOLLOWED'
 
-export const visibilityFilters = {
-    SHOW_ALL: 'SHOW_ALL',
-    SHOW_DONE: 'SHOW_DONE',
-    SHOW_ACTIVE: 'SHOW_ACTIVE'
+
+export const resetUsersFollowed = () => {
+    return {
+        type: RESET_USERS_FOLLOWED,
+        payload: ''
+    }
 }
 
 export const setUsersFollowed = (usersFollowed) => {

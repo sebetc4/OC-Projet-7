@@ -36,6 +36,7 @@ export default function AddTodo({ dispatchCreateTodo }) {
                         className='todos-add__input'
                         error={!!errors.todo}
                         id='todos-add__input'
+                        color='secondary'
                         as={TextField}
                         variant='outlined'
                         name={'todo'}
@@ -49,7 +50,7 @@ export default function AddTodo({ dispatchCreateTodo }) {
                             onClick={handleSubmit}
                             component="span"
                             size='large'
-                            color='primary'
+                            color='secondary'
                             disabled={ !(!isSubmitting && isValid && values.todo !== '') }
                             aria-label='Ajouter une todo'
                         >

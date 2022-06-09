@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setDisplayMobileMenu } from '../../store/actions/app.actions';
 
 import { Divide as Hamburger } from 'hamburger-react'
+import { Box, Divider } from '@mui/material';
 
 
 export default function Header() {
@@ -15,24 +16,30 @@ export default function Header() {
   // State
   const deviceSize = useSelector((state) => state.app.deviceSize)
   const displayMobileMenu = useSelector((state) => state.app.displayMobileMenu)
+  const colorMode = useSelector(state => state.app.colorMode)
 
   const toggleDisplayMobileMenu = () => dispatch(setDisplayMobileMenu(!displayMobileMenu))
 
   return (
     <>
-      <header className='header'>
+      <Box
+        component='header'
+        sx={{
+          backgroundColor: 'background.header',
+        }}
+        className={`header ${colorMode === 'dark' ? 'header--dark' : ''}`}
+      >
         <div className='header__components--left'>
           {deviceSize === 2 ?
             <GroupomaniaLogoSvg className={'header-components-left__logo'} /> :
             <div className='header-components-left__button-container'>
               <Hamburger
+                color={colorMode === 'light' ? '#2b60d0' : '#7195e1'}
                 rounded
                 toggled={displayMobileMenu}
                 toggle={toggleDisplayMobileMenu}
                 label='Menu de navigation'
                 hideOutline={false}
-
-
               />
             </div>
           }
@@ -48,19 +55,13 @@ export default function Header() {
             </div>
           </>
         }
-      </header>
+        <Divider className='header__divider' />
+      </Box>
       <MobileMenu
         displayMobileMenu={displayMobileMenu}
         toggleDisplayMobileMenu={toggleDisplayMobileMenu}
       />
     </>
-
-
-
-
-
-
-
   )
 }
 

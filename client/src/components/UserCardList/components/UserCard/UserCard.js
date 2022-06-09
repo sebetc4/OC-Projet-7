@@ -52,6 +52,7 @@ export default function UserCard({ cardIndex, userInCard, handleFollow, handleUn
                     />
                 }
                 <Button
+                    color='secondary'
                     startIcon={<AccountBoxIcon />}
                     onClick={() => navigateToProfile(userInCard.id)}
                 >

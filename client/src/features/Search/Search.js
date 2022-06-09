@@ -61,26 +61,36 @@ export default function Search() {
                             deviceSize === 2 ?
                                 <div className='search-columns'>
                                     <div className='search-columns__column-1'>
-                                        <section className='search-posts'>
+                                        <Box
+                                            component="section"
+                                            sx={{
+                                                backgroundColor: 'background.section',
+                                            }} className='search-posts'>
                                             <h2 className='search-posts__title'>
                                                 Les posts
                                             </h2>
                                             <SearchPosts
                                                 posts={posts.data}
                                             />
-                                        </section>
+                                        </Box>
                                     </div>
                                     <div className='search-columns__column-2'>
-                                        <section className='search-users'>
+                                        <Box
+                                            component="section"
+                                            sx={{
+                                                backgroundColor: 'background.section',
+                                            }} className='search-users'
+                                        >
                                             <h2 className='search-users__title'>
                                                 Les utilisateurs
                                             </h2>
                                             <SearchUsers
                                                 users={usersResult}
                                             />
-                                        </section>
+                                        </Box>
                                     </div>
-                                </div> :
+                                </div>
+                                :
                                 <TabContext value={tabValue}>
                                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                         <Tabs

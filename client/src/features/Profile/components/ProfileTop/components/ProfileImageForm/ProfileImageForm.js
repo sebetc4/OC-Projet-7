@@ -69,7 +69,7 @@ export default function ImageForm({ user, field, ratio, cropShape, showGrid }) {
                     onChange={handleChange}
                 />
                 <Fab
-                    color="primary"
+                    color="secondary"
                     size="small"
                     aria-label={`Modifier ${field === 'avatar' ? 'l\'avatar' : 'la photo de couverture'}`}
                     onClick={() => inputRef.current && inputRef.current.click()}

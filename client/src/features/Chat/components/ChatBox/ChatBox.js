@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import axios from 'axios';
 
-import { Divider, IconButton } from '@mui/material'
+import { Box, Divider, IconButton } from '@mui/material'
 import { TextareaAutosize } from '@mui/base';
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
@@ -59,7 +59,13 @@ export default function ChatBox({ deviceSize, socket, user, currentChat, otherUs
                         {
                             otherUser ?
                                 <>
-                                    < div className='chat-box-top' >
+                                    <Box
+                                        component="div"
+                                        sx={{
+                                            backgroundColor: 'background.top',
+                                        }}
+                                        className='chat-box-top'
+                                    >
                                         <img
                                             src={otherUser.avatarUrl}
                                             alt={`Avatar de ${otherUser.firstName} ${otherUser.lastName}`}
@@ -78,7 +84,7 @@ export default function ChatBox({ deviceSize, socket, user, currentChat, otherUs
                                             </div>
                                         }
 
-                                    </div >
+                                    </Box >
 
                                     <div
                                         className='chat-box-content'
@@ -95,7 +101,13 @@ export default function ChatBox({ deviceSize, socket, user, currentChat, otherUs
                                             )
                                         }
                                     </div>
-                                    <div className='chat-box-bottom'>
+                                    <Box
+                                        component="div"
+                                        sx={{
+                                            backgroundColor: 'background.top',
+                                        }}
+                                        className='chat-box-bottom'
+                                    >
                                         <form
                                             onSubmit={submitNewMessage}
                                             className="chat-box-bottom-form"
@@ -125,15 +137,14 @@ export default function ChatBox({ deviceSize, socket, user, currentChat, otherUs
                                                     type="submit"
                                                     aria-label="Envoyer"
                                                     disabled={newMessage === ''}
-                                                    color='primary'
+                                                    color='secondary'
                                                 >
                                                     <SendIcon />
                                                 </IconButton>
                                             </div>
                                         </form>
-                                    </div>
+                                    </Box>
                                 </>
-
                                 :
                                 <Loader />
                         }
@@ -142,7 +153,6 @@ export default function ChatBox({ deviceSize, socket, user, currentChat, otherUs
                     :
                     <div className='chat-box-no-chat'>
                         <p>Ouvrir une conversation pour commencer à parler</p>
-
                     </div>
             }
         </>

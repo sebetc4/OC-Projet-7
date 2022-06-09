@@ -1,18 +1,33 @@
-.navbar__nav-link {
-	padding: 0 14px;
-				
-	button svg {
-		color: $grey-color-dark;
-		fill: $grey-color-dark;
-		font-size: 38px;
-		height: 38px;
-	}
+.navbar {
+	&__nav-link {
+		padding: 0 14px;
 
-	&.active {
-        button svg{
-            color: $secondary-color;
-			fill: $secondary-color;
-        }
+		button svg {
+			color: $nav-link-inactive;
+			fill: $nav-link-inactive;
+			font-size: 38px;
+			height: 38px;
+		}
+
+		&.active {
+			button svg {
+				color: $secondary-color--light-mode;
+				fill: $secondary-color--light-mode;
+			}
+		}
+	}
+}
+
+.header--dark {
+	.navbar {
+		.navbar__nav-link {
+			&.active {
+				button svg {
+					color: $secondary-color--dark-mode;
+					fill: $secondary-color--dark-mode;
+				}
+			}
+		}
 	}
 }
 

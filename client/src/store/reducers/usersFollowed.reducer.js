@@ -1,4 +1,4 @@
-import { ADD_USER_FOLLOWED, DELETE_USER_FOLLOWED, SET_USERS_FOLLOWED } from "../actions/usersFollowed.actions"
+import { ADD_USER_FOLLOWED, DELETE_USER_FOLLOWED, SET_USERS_FOLLOWED, RESET_USERS_FOLLOWED } from "../actions/usersFollowed.actions"
 
 const usersFollowedDefaultState = {
     data: [],
@@ -6,11 +6,12 @@ const usersFollowedDefaultState = {
 
 export default function usersFollowedReducer(state = usersFollowedDefaultState, action) {
     switch (action.type) {
+        case RESET_USERS_FOLLOWED: {
+            return usersFollowedDefaultState
+        }
         case SET_USERS_FOLLOWED: {
             const data = action.payload
-            return {
-                data
-            }
+            return { data }
         }
         case ADD_USER_FOLLOWED: {
             const newUserFollowed = action.payload

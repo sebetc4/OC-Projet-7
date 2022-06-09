@@ -8,8 +8,10 @@ import SendIcon from '@mui/icons-material/Send';
 
 export default function CommentForm({ type, initialValueText, postId, postIndex, commentId, commentIndex, user, textareaRef, toggleShowCommentForm }) {
 
+    // Hooks
     const dispatch = useDispatch()
 
+    // state
     const [text, setText] = useState(initialValueText)
     const [textLength, setTextLength] = useState(0)
 
@@ -40,10 +42,10 @@ export default function CommentForm({ type, initialValueText, postId, postIndex,
             </div>
 
             <div className='comment-form-textarea'>
-                <label className='comment-form-textarea__label' htmlFor='comment-form-textarea'>Texte</label>
+                <label className='comment-form-textarea__label' htmlFor={`comment-form-textarea-${type === 'modify' ? commentId : 'new-comment'}`}>Texte</label>
                 <TextareaAutosize
                     ref={textareaRef}
-                    id='comment-form-textarea'
+                    id={`comment-form-textarea-${postId}-${type === 'modify' ? commentId : 'new-comment'}`}
                     maxLength={300}
                     maxRows={4}
                     className='comment-form-textarea__input'
@@ -59,6 +61,7 @@ export default function CommentForm({ type, initialValueText, postId, postIndex,
             </div>
             <div className='comment-form__button-container'>
                 <Button
+                    color='secondary'
                     onClick={submit}
                     size="small"
                     variant="contained"

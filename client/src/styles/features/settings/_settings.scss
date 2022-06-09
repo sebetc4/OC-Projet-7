@@ -2,6 +2,22 @@
 	@include center-width($width: $settings-width-desktop);
 	min-height: calc(100vh - $header-height);
 	padding-top: 30px;
+
+	.MuiPaper-root {
+		background-color: $settings-accordeon-background-color--light-mode;
+	}
+}
+
+.main--dark {
+	.settings {
+		.MuiPaper-root {
+			background-color: $settings-accordeon-background-color--dark-mode;
+		}
+
+		.settings-form-textarea__input {
+			color: $text-color--dark-mode;
+		}
+	}
 }
 
 .settings-tab {
@@ -86,6 +102,7 @@
 
 	&__input {
 		width: 100%;
+		color: $text-color--light-mode;
 	}
 }
 

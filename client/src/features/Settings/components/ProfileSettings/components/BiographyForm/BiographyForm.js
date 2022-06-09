@@ -47,7 +47,7 @@ export default function BiographyForm({ user, closeAccordion }) {
         <form
             className='settings-form'
             onSubmit={submit}
-            >
+        >
             <div className='settings-form-textarea'>
                 <label className='settings-form-textarea__label' htmlFor='settings-form-textarea'>Biographie</label>
                 <TextareaAutosize
@@ -68,6 +68,7 @@ export default function BiographyForm({ user, closeAccordion }) {
             </div>
             <div className='settings-form__button-container'>
                 <Button
+                    color='secondary'
                     variant='contained'
                     onClick={toggleShowConfirmModale}
                     disabled={(bio === user.bio) || (!bio && !user.bio)}

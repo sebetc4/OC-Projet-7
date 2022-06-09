@@ -9,6 +9,7 @@ import { SearchThinSvg } from '../../../../components';
 
 export default function SearchBar() {
 
+    // Hooks
     const navigate = useNavigate()
 
     const settingsSchema = Yup.object().shape({
@@ -34,8 +35,11 @@ export default function SearchBar() {
                 validateOnBlur={true}
                 validateOnChange={true}
             >
-                {({ handleSubmit, handleChange, handleBlur, isSubmitting, isValid, dirty, values }) => (
-                    <form className='search-bar' onSubmit={handleSubmit}>
+                {({ handleSubmit, handleChange, handleBlur, isSubmitting, isValid, values }) => (
+                    <form 
+                    className='search-bar' 
+                    onSubmit={handleSubmit}
+                    >
                         <input
                             name='query'
                             value={values.query}
@@ -50,7 +54,7 @@ export default function SearchBar() {
                             className='search-bar__button'
                             type='submit'
                             color="primary"
-                            disabled={isSubmitting && !isValid && !dirty }
+                            disabled={isSubmitting || !isValid || values.query === '' }
                         >
                             <SearchThinSvg />
                         </IconButton>

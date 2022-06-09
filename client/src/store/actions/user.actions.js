@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { setTodos } from './todos.actions';
-import { setUsersFollowed } from './usersFollowed.actions';
-
+import { resetTodos, setTodos } from './todos.actions';
+import { resetUsersFollowed, setUsersFollowed } from './usersFollowed.actions';
+import { resetApp, setColorMode } from './app.actions';
+import { resetPosts } from './posts.actions';
 
 export const FETCH_USER_DATA = 'FETCH_USER_DATA'
 export const LOGIN_USER = 'LOGIN_USER'
@@ -13,8 +14,10 @@ export const fetchUserData = () => {
         try {
             const user = await axios.get('/api/auth');
             if (user.data.user) {
+                dispatch(setColorMode(user.data.user.darkMode))
                 dispatch(setTodos(user.data.user.Todos))
                 dispatch(setUsersFollowed(user.data.user.following))
+                delete user.data.user.darkMode
                 delete user.data.user.Todos
                 delete user.data.user.followings
                 dispatch({
@@ -52,6 +55,10 @@ export const logoutUser = () => {
     return async (dispatch) => {
         try {
             await axios.get(`/api/auth/logout`);
+            dispatch(resetUsersFollowed())
+            dispatch(resetTodos())
+            dispatch(resetPosts())
+            dispatch(resetApp())
             dispatch({ type: LOGOUT_USER });
         } catch (err) {
             return console.log(err);

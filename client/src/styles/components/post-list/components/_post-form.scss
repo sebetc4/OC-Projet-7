@@ -9,6 +9,15 @@
 	margin: 10px auto 30px auto;
 	&__input {
 		width: 100%;
+		color: $text-color--light-mode;
+	}
+}
+
+.main--dark {
+	.post-form-textarea {
+		.post-form-textarea__input {
+			color: $text-color--dark-mode;
+		}
 	}
 }
 
@@ -59,7 +68,7 @@
 	.post-form {
 		@include standard-modal-mobile;
 	}
-	
+
 	.post-form-actions {
 		width: 100%;
 		margin: 40px auto 0 auto;
@@ -68,7 +77,7 @@
 
 @media screen and (max-width: $media-small-screen) {
 	.post-form {
-		@include standard-modal-small-screen
+		@include standard-modal-small-screen;
 	}
 
 	.post-form-actions {

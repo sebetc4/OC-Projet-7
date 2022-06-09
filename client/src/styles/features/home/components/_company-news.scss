@@ -29,8 +29,18 @@
 	p {
 		padding: 10px;
 		font-size: 16px;
-		color: rgb(80, 80, 80);
+		color: $text-color-grey--light-mode;
 		text-align: center;
+	}
+}
+
+.main--dark {
+	.company-news {
+		.company-news-no-new {
+			p {
+				color: $text-color-grey--dark-mode;
+			}
+		}
 	}
 }
 
@@ -58,7 +68,7 @@
 			width: 8px;
 			height: 8px;
 			background-color: $primary-color;
-			border-radius: 50%;	
+			border-radius: 50%;
 			transform: translateY(-50%);
 		}
 	}
@@ -114,6 +124,16 @@
 
 	&__input {
 		width: 100%;
+		color: $text-color--light-mode;
+	}
+}
+
+.main--dark {
+	.company-new-form-textarea {
+		.company-new-form-textarea__input {
+			width: 100%;
+			color: $text-color--dark-mode;
+		}
 	}
 }
 
