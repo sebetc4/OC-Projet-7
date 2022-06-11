@@ -5,7 +5,7 @@ module.exports = ((err, req, res, next) => {
         othersErrors(err, res)
     else if (process.env.NODE_ENV !== 'production')
         res.status(500).json(err.message)
-    res.status(500).json('internal server error')
+    res.status(500).json('Internal server error')
 })
 
 const sequelizeErrors = (err, res) => {
@@ -16,8 +16,8 @@ const othersErrors = (err, res) => {
     switch (err.message) {
         case 'Missing parameters':
             res.status(400).json('Missing parameters')
-        case 'Unauthorized':
-            res.status(401).json('Unauthorized')
+        case 'Invalid token':
+            res.status(401).json('Invalid token')
         case 'Invalid password':
             res.status(403).json({ path: 'password', error: 'Mot de passe invalide' })
         case 'Post already liked':
@@ -30,6 +30,8 @@ const othersErrors = (err, res) => {
             res.status(403).json({ path: 'email', error: 'Adresse mail inconnue' });
         case `Conversation already exist`:
             res.status(403).json(`Conversation already exist`);
+        case 'Account disabled':
+        res.status(403).json({ path: 'accountDisabled', error: 'Account disabled' });
         case 'User id unknown':
             res.status(404).send(`User id unknown`)
         case `Post id unknown`:
@@ -45,6 +47,6 @@ const othersErrors = (err, res) => {
         default:
             if (process.env.NODE_ENV !== 'production')
                 res.status(500).json(err.message)
-            res.status(500).json('internal server error')
+            res.status(500).json('Internal server error')
     }
 }

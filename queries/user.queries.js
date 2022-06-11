@@ -99,7 +99,8 @@ exports.findOneUserTodoAndFollowWhereId = async (id) => {
 
 exports.findOneUserWhereEmail = async (email) => {
     const user = await User.findOne({
-        where: { email }
+        where: { email },
+        paranoid: false
     })
     if (user)
         return user

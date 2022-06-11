@@ -1,13 +1,18 @@
 import React, { useState } from 'react'
-import axios from 'axios';
+import api from '../../../../config/api.config';
 
 import CloseIcon from '@mui/icons-material/Close';
 import { TextField, IconButton } from '@mui/material';
 
 
 import ChatUserCard from '../ChatUserCard/ChatUserCard';
+import { useDispatch } from 'react-redux';
+import { setError } from '../../../../store/actions/errors.actions';
 
 export default function SearchUser({ user, toggleShowSearchUser, handleOpenConversation, onlineUsersId }) {
+
+    // Hooks
+    const dispatch = useDispatch()
 
     // State
     const [resultSearch, setResultSearch] = useState([])
@@ -16,9 +21,13 @@ export default function SearchUser({ user, toggleShowSearchUser, handleOpenConve
     const fetchSearch = async (e) => {
         setQuery(e.target.value)
         if (e.target.value) {
-            const result = await axios.get(`/api/search/chat-search/?query=${e.target.value.replaceAll(' ', '+')}`)
-            result.data = result.data.filter(userInResult => userInResult.id !== user.id)
-            setResultSearch(result.data)
+            try {
+                const result = await api.get(`search/chat-search/?query=${e.target.value.replaceAll(' ', '+')}`)
+                result.data = result.data.filter(userInResult => userInResult.id !== user.id)
+                setResultSearch(result.data)
+            } catch {
+                dispatch(setError('Echec lors de l\'envoi du message'))
+            }
         } else
             setResultSearch([])
     }

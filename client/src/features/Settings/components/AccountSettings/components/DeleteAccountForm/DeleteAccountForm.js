@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import { useDispatch } from "react-redux";
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
-import axios from 'axios';
 
 import { Button } from '@mui/material';
 
+import api from '../../../../../../config/api.config';
 import customPasswordInput from '../utils/customPasswordInput'
 import { logoutUser } from '../../../../../../store/actions/user.actions';
 import { ConfirmModal } from '../../../../../../components';
+import { setError } from '../../../../../../store/actions/errors.actions';
 
 
 export default function DeleteAccountForm({ closeAccordion }) {
@@ -37,12 +38,14 @@ export default function DeleteAccountForm({ closeAccordion }) {
         setFormIsSubmitting(true)
         try {
             const password = values.password
-            await axios.post('/api/auth/check-password', { password })
-            await axios.delete(`/api/user`)
+            await api.post('auth/check-password', { password })
+            await api.delete(`user`)
             dispatch(logoutUser())
         } catch (err) {
-            if (err.response)
+            if (err.response.data.path && err.response.data.error)
                 actions.setFieldError(err.response.data.path, err.response.data.error)
+            else
+                dispatch(setError('Echec lors de la modification du mot de passe'))
         }
         actions.setSubmitting(false);
         toggleShowConfirmModale()
@@ -92,8 +95,8 @@ export default function DeleteAccountForm({ closeAccordion }) {
                         </Button>
                     </div>
                     <ConfirmModal
-                        title={'Confirmer la supression du compte'}
-                        content={`Voulez vous vraiment supprimer votre compte? Cette action est irréversible!`}
+                        title={'Confirmer la désactivation du compte'}
+                        content={`Voulez vous vraiment sdésactiver votre compte?`}
                         button='Valider'
                         showConfirmModale={showConfirmModale}
                         toggleShowConfirmModale={toggleShowConfirmModale}

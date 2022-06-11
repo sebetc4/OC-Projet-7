@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
-import axios from 'axios';
+import api from '../../../../../../config/api.config';
 
 import { Button } from '@mui/material';
 
@@ -34,7 +34,7 @@ export default function PasswordForm({ closeAccordion }) {
         setFormIsSubmitting(true)
         try {
             const { password, newPassword } = values
-            await axios.put(`/api/user/password`, { password, newPassword })
+            await api.put(`user/password`, { password, newPassword })
             closeAccordion()
         } catch (err) {
             if (err.response)

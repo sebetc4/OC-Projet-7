@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import { useDispatch } from "react-redux";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import axios from 'axios';
-
-
-import { updateUser } from '../../../../../../store/actions/user.actions';
-import { ConfirmModal } from '../../../../../../components';
+import api from '../../../../../../config/api.config';
 
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
+
+import { updateUser } from '../../../../../../store/actions/user.actions';
+import { ConfirmModal } from '../../../../../../components';
+import { setError } from '../../../../../../store/actions/errors.actions';
 
 export default function EmailForm({ user, closeAccordion }) {
 
@@ -30,12 +30,15 @@ export default function EmailForm({ user, closeAccordion }) {
     const submit = async (values, actions) => {
         setFormIsSubmitting(true)
         try {
-            const user = await axios.put(`/api/user`, values)
+            const user = await api.put(`user`, values)
             dispatch(updateUser(user.data))
             closeAccordion()
         } catch (err) {
-            if (err.response)
+            if (err.response.data.path && err.response.data.error)
                 actions.setFieldError(err.response.data.path, err.response.data.error)
+            else {
+                dispatch(setError('Echec lors de la modification du nom et prénom'))
+            }
         }
         setFormIsSubmitting(false)
         toggleShowConfirmModale()

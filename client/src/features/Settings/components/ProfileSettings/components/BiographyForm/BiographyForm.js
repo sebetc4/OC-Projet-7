@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import axios from 'axios';
-
+import api from '../../../../../../config/api.config';
 
 import { updateUser } from '../../../../../../store/actions/user.actions';
 import { ConfirmModal } from '../../../../../../components';
 
 import { Button, TextareaAutosize } from '@mui/material';
+import { setError } from '../../../../../../store/actions/errors.actions';
 
 
 export default function BiographyForm({ user, closeAccordion }) {
@@ -32,12 +32,14 @@ export default function BiographyForm({ user, closeAccordion }) {
     const submit = async (values, actions) => {
         setFormIsSubmitting(true)
         try {
-            const user = await axios.put(`/api/user`, { bio: bio })
+            const user = await api.put(`user`, { bio: bio })
             dispatch(updateUser(user.data))
             closeAccordion()
         } catch (err) {
-            if (err.response)
+            if (err.response.data.path && err.response.data.error) 
                 actions.setFieldError(err.response.data.path, err.response.data.error)
+            else
+                dispatch(setError('Echec lors de l\'envoi du message'))
         }
         setFormIsSubmitting(false)
         toggleShowConfirmModale()

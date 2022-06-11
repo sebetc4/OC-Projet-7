@@ -18,7 +18,6 @@ exports.signup = (req, res) => {
         return res.status(400).json({ 'error': 'missing parameters' });
     }
 
-    console.log(req.body);
     try {
         models.User.findOne({
             attributes: ['email'],

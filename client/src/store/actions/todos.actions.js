@@ -1,22 +1,12 @@
-import axios from 'axios';
+import api from '../../config/api.config';
+import { SET_ERROR } from './errors.actions';
 
 export const RESET_TODOS = 'RESET_TODOS'
-
 export const SET_TODOS = 'SET_TODOS'
-
 export const CREATE_TODO = 'CREATE_TODO'
-export const CREATE_TODO_SUCCESS = 'CREATE_TODO_SUCCESS'
-
 export const TOGGLE_TODO = 'TOGGLE_TODO'
-export const TOGGLE_TODO_SUCCESS = 'TOGGLE_TODO_SUCCESS'
-
 export const DELETE_TODO = 'DELETE_TODO'
-export const DELETE_TODO_SUCCESS = 'DELETE_TODO_SUCCESS'
-
 export const SET_FILTER = 'SET_FILTER'
-
-export const TODOS_ERROR = 'TODOS_ERROR'
-
 
 export const visibilityFilters = {
     SHOW_ALL: 'SHOW_ALL',
@@ -41,24 +31,24 @@ export const setTodos = (todos) => {
 export const createTodo = (todo) => {
     return async (dispatch) => {
         try {
-            const newTodo = await axios.post(`/api/todo`, { name: todo });
+            const newTodo = await api.post(`todo`, { name: todo });
             dispatch(createTodoSucess(newTodo.data));
-        } catch {
+        } catch (err) {
             dispatch(createTodoError())
         }
     }
 }
 
-export const createTodoSucess = (todos) => {
+export const createTodoSucess = (newTodo) => {
     return {
-        type: CREATE_TODO_SUCCESS,
-        payload: todos
+        type: CREATE_TODO,
+        payload: newTodo
     }
 }
 
-export const createTodoError = () => {
+export const createTodoError = (err) => {
     return {
-        type: TODOS_ERROR,
+        type: SET_ERROR,
         playload: 'Echec lors de l\'ajout de la tâche'
     }
 }
@@ -66,9 +56,9 @@ export const createTodoError = () => {
 export const toggleTodo = (index, todoId) => {
     return async (dispatch) => {
         try {
-            await axios.put(`/api/todo/toggle-done/${todoId}`);
+            await api.put(`todo/toggle-done/${todoId}`);
             dispatch(toggleTodoSuccess(index));
-        } catch {
+        } catch (err) {
             dispatch(toggleTodoError())
         }
     }
@@ -76,14 +66,14 @@ export const toggleTodo = (index, todoId) => {
 
 export const toggleTodoSuccess = (index) => {
     return {
-        type: TOGGLE_TODO_SUCCESS,
+        type: TOGGLE_TODO,
         payload: index
     }
 }
 
 export const toggleTodoError = () => {
     return {
-        type: TODOS_ERROR,
+        type: SET_ERROR,
         playload: 'Echec lors de la modification d\'état de la tâche'
     }
 }
@@ -91,9 +81,9 @@ export const toggleTodoError = () => {
 export const deleteTodo = (index, todoId) => {
     return async (dispatch) => {
         try {
-            await axios.delete(`/api/todo/${todoId}`);
+            await api.delete(`todo/${todoId}`);
             dispatch(deleteTodoSuccess(index))
-        } catch {
+        } catch (err) {
             dispatch(deleteTodoError())
         }
     }
@@ -101,14 +91,14 @@ export const deleteTodo = (index, todoId) => {
 
 export const deleteTodoSuccess = (index) => {
     return {
-        type: DELETE_TODO_SUCCESS,
+        type: DELETE_TODO,
         payload: index
     }
 }
 
 export const deleteTodoError = () => {
     return {
-        type: TODOS_ERROR,
+        type: SET_ERROR,
         playload: 'Echec lors de la supression de la tâche'
     }
 }

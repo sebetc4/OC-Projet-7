@@ -13,13 +13,11 @@
 	}
 }
 
-.main--dark {
-	.post-form-textarea {
+.post-form--dark .post-form-textarea {
 		.post-form-textarea__input {
 			color: $text-color--dark-mode;
 		}
 	}
-}
 
 .post-form-image {
 	margin: 20px 0;

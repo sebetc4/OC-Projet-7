@@ -41,6 +41,15 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Post',
+    paranoid: true,
   });
+
+  const softDestroyComments = async (user) => {
+    const comments = await user.getComments()
+    comments.forEach( post => post.destroy())
+  }
+
+  Post.beforeDestroy(softDestroyComments);
+
   return Post;
 };

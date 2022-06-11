@@ -128,12 +128,10 @@
 	}
 }
 
-.main--dark {
-	.company-new-form-textarea {
-		.company-new-form-textarea__input {
-			width: 100%;
-			color: $text-color--dark-mode;
-		}
+.company-new-form--dark .company-new-form-textarea {
+	.company-new-form-textarea__input {
+		width: 100%;
+		color: $text-color--dark-mode;
 	}
 }
 

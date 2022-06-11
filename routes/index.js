@@ -12,6 +12,8 @@ const followRoutes = require("./follow.routes")
 const conversationRoutes = require('./conversation.routes')
 const messageRoutes = require('./message.routes')
 const companyNewRoutes = require('./companyNew.routes')
+const adminRoutes = require('./admin.routes')
+
 
 
 // Static routes
@@ -29,6 +31,7 @@ router.use('/api/follow', followRoutes)
 router.use('/api/conversation', conversationRoutes)
 router.use('/api/message', messageRoutes)
 router.use('/api/company-new', companyNewRoutes)
+router.use('/api/admin', adminRoutes)
 
 
 // Front route

@@ -1,12 +1,13 @@
 import React, { useEffect, useState, forwardRef, useRef } from "react";
 import { useDispatch } from "react-redux";
-import axios from 'axios';
+import api from '../../../../../../config/api.config';
 import { updateUser } from "../../../../../../store/actions/user.actions";
 
 import { Fab, useMediaQuery, Slide, Dialog } from '@mui/material';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 
 import { CropImage } from "../../../../../../components";
+import { setError } from "../../../../../../store/actions/errors.actions";
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -28,17 +29,21 @@ export default function ImageForm({ user, field, ratio, cropShape, showGrid }) {
     // onSubmit
     useEffect(() => {
         const submitNewImage = async () => {
+            try {
             setFormIsSubmitting(true)
             const file = new File([cropImage], `${field}-${user.id}.jpeg`);
             const formData = new FormData()
             formData.append(field, file)
             formData.append('directory', field)
-            const userData = await axios.put(`/api/user`, formData)
+            const userData = await api.put(`user`, formData)
             dispatch(updateUser(userData.data))
             setFormIsSubmitting(false)
             setOpenCrop(false)
             setPhotoURL(null)
             setCropImage(null)
+            } catch {
+                dispatch(setError('Echec lors de la modification de l\'image'))
+            }
         }
         if (cropImage) submitNewImage()
     }, [cropImage, field, dispatch, user])

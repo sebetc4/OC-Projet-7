@@ -137,6 +137,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'User',
+    paranoid: true,
   });
 
   const hashPassword = async (user) => {
@@ -146,7 +147,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
 
+  const softDestroyPosts = async (user) => {
+    const posts = await user.getPosts()
+    posts.forEach( post => post.destroy())
+  }
+
   User.beforeCreate(hashPassword)
+  User.beforeDestroy(softDestroyPosts)
 
   return User;
 };

@@ -1,11 +1,17 @@
 import React, { useState } from 'react'
-import axios from 'axios';
+import { useDispatch, useSelector } from "react-redux";
 
 import CloseIcon from '@mui/icons-material/Close';
-
 import { Button, IconButton, TextField, TextareaAutosize } from '@mui/material';
 
+import api from '../../../../../../config/api.config';
+import { setError } from '../../../../../../store/actions/errors.actions';
+
 export default function CompanyNewForm({ type, companyNewId, initialTitle, initialtext, closeModal, setAllCompanyNews }) {
+
+    // Store
+    const colorMode = useSelector(state => state.app.colorMode)
+    const dispatch = useDispatch()
 
     // State
     const [title, setTitle] = useState(initialTitle)
@@ -14,23 +20,31 @@ export default function CompanyNewForm({ type, companyNewId, initialTitle, initi
     const submit = async (e) => {
         e.preventDefault()
         if (type === 'modify') {
-            const updatedCompanyNew = await axios.put(`api/company-new/${companyNewId}`, { title, text })
+            try {
+            const updatedCompanyNew = await api.put(`company-new/${companyNewId}`, { title, text })
             setAllCompanyNews(prev => prev.map(compNew =>
                 compNew.id === companyNewId ?
                     updatedCompanyNew.data
                     :
                     compNew
             ))
+            } catch {
+                dispatch(setError('Echec lors de la modification de la new'))
+            }
         } else {
-            const newCompanyNew = await axios.post('api/company-new', { title, text })
+            try {
+            const newCompanyNew = await api.post('company-new', { title, text })
             setAllCompanyNews(prev => [newCompanyNew.data, ...prev])
+            } catch {
+                dispatch(setError('Echec lors de la modification de la new'))
+            }
         }
         closeModal()
     }
 
     return (
 
-        <div className='company-new-form'>
+        <div className={`company-new-form ${colorMode === 'dark' ? 'company-new-form--dark' : ''}`}>
             <div className='company-new-form-top'>
                 <h2>Ajouter une nouvelle</h2>
                 <div className='company-new-form-top__button-container'>

@@ -1,4 +1,9 @@
 // Middleware d'authentification
 module.exports = (req, res, next) => {
-    req.user ? next() : next({message : 'Unauthorized' })
+    if (req.user)
+        next()
+    else {
+        res.clearCookie('jwt')
+        next({ message: 'Invalid token' })
+    }
 };

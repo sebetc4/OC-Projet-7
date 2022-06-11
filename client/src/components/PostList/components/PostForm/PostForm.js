@@ -21,6 +21,7 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
     const user = useSelector((state) => state.user.data)
     const postSubmitting = useSelector((state) => state.posts.submitting)
     const deviceSize = useSelector(state => state.app.deviceSize)
+    const colorMode = useSelector(state => state.app.colorMode)
 
     // State
     const [text, setText] = useState(initialValueText)
@@ -106,7 +107,7 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
 
     return (
         <form
-            className='post-form'
+            className={`post-form ${colorMode === 'dark' ? 'post-form--dark' : ''}`}
             onSubmit={submit}
         >
             <PostFormTop

@@ -3,6 +3,7 @@ import { resetTodos, setTodos } from './todos.actions';
 import { resetUsersFollowed, setUsersFollowed } from './usersFollowed.actions';
 import { resetApp, setColorMode } from './app.actions';
 import { resetPosts } from './posts.actions';
+import { resetError, SET_ERROR } from './errors.actions';
 
 export const FETCH_USER_DATA = 'FETCH_USER_DATA'
 export const LOGIN_USER = 'LOGIN_USER'
@@ -20,34 +21,30 @@ export const fetchUserData = () => {
                 delete user.data.user.darkMode
                 delete user.data.user.Todos
                 delete user.data.user.followings
-                dispatch({
-                    type: FETCH_USER_DATA,
-                    playload: {
-                        data: user.data.user,
-                        isLogged: true,
-                        isLoaded: true
-                    }
-                })
-            } else {
-                dispatch({
-                    type: FETCH_USER_DATA,
-                    playload: {
-                        data: null,
-                        isLogged: false,
-                        isLoaded: true
-                    }
-                });
-            }
+                dispatch(fetchUserDataSuccess(user.data.user, true))
+            } else
+                dispatch(fetchUserDataSuccess(null, false))
         } catch {
-            dispatch({
-                type: FETCH_USER_DATA,
-                playload: {
-                    data: null,
-                    isLogged: false,
-                    isLoaded: true
-                }
-            });
+            dispatch(fetchUserDataError())
         }
+    }
+}
+
+const fetchUserDataSuccess = (data, isLogged) => {
+    return {
+        type: FETCH_USER_DATA,
+        playload: {
+            data,
+            isLogged,
+            isLoaded: true
+        }
+    }
+}
+
+const fetchUserDataError = () => {
+    return {
+        type: SET_ERROR,
+        playload: 'Echec lors de la récupération des données de l\'utilisateur'
     }
 }
 
@@ -58,11 +55,26 @@ export const logoutUser = () => {
             dispatch(resetUsersFollowed())
             dispatch(resetTodos())
             dispatch(resetPosts())
+            dispatch(resetError())
             dispatch(resetApp())
-            dispatch({ type: LOGOUT_USER });
+            dispatch(logoutUserSuccess());
         } catch (err) {
-            return console.log(err);
+            dispatch(logoutUserDelete());
         }
+    }
+}
+
+const logoutUserSuccess = () => {
+    return {
+        type: LOGOUT_USER,
+        playload: ''
+    }
+}
+
+const logoutUserDelete = () => {
+    return {
+        type: SET_ERROR,
+        playload: 'Echec lors de la déconnexion'
     }
 }
 

@@ -7,7 +7,7 @@ import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import PersonRemoveAlt1Icon from '@mui/icons-material/PersonRemoveAlt1';
 import { addUserFollowed, deleteUserFollowed } from '../../store/actions/usersFollowed.actions';
 
-export default function FollowButton({ type, user, handleFollow, handleUnfollow }) {
+export default function FollowButton({ type, size, user, handleFollow, handleUnfollow }) {
 
     const [userIsFollowed, setUserIsFollowed] = useState(false)
     const [indexInUsersFollowed, setIndexInUsersFollowed] = useState(null)
@@ -57,6 +57,7 @@ export default function FollowButton({ type, user, handleFollow, handleUnfollow 
                         variant="extended"
                         onClick={toggleFollow}
                         color='secondary'
+                        size={size}
                     >
                         {userIsFollowed ? <PersonRemoveAlt1Icon sx={{ mr: 1.5 }} /> : <PersonAddAlt1Icon sx={{ mr: 1.5 }} />}
                         {userIsFollowed ? 'Se désabonner' : 'S\'abonner'}

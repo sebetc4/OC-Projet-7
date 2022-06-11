@@ -1,12 +1,13 @@
 import React, { useEffect, useState, forwardRef } from 'react'
-import { useSelector } from 'react-redux';
-import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux';
+import api from '../../../../config/api.config'
 
 import { Button, Divider, Fab, Dialog, Slide, useMediaQuery, Box } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddIcon from '@mui/icons-material/Add';
 
 import { CompanyNewForm, CompanyNewCard } from './components';
+import { setError } from '../../../../store/actions/errors.actions';
 
 
 const Transition = forwardRef(function Transition(props, ref) {
@@ -23,6 +24,7 @@ export default function CompanyNews() {
 
     // Store
     const userIsAdmin = useSelector(state => state.user.data.isAdmin)
+    const dispatch = useDispatch()
 
     // State
     const [allCompanyNews, setAllCompanyNews] = useState([])
@@ -30,11 +32,15 @@ export default function CompanyNews() {
     const [companyNewListLength, setCompanyNewListLength] = useState(nbCompagnyNewsDisplay)
     const [showAddCompanyNew, setShowAddCompanyNew] = useState(false)
 
-    // Fetch all nbews
+    // Fetch all news
     useEffect(() => {
         const fetchNews = async () => {
-            const news = await axios.get('api/company-new')
+            try {
+            const news = await api.get('company-new')
             setAllCompanyNews(news.data)
+            } catch {
+                dispatch(setError('Echec lors de la récupération des news'))
+            }
         }
         fetchNews()
     }, [])

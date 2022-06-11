@@ -1,13 +1,15 @@
 import React, { useEffect, useState, forwardRef } from 'react'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { io } from 'socket.io-client'
-import axios from 'axios';
+
 
 import { Dialog, Slide, useMediaQuery, Box, Tab, Tabs, Fab } from '@mui/material';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import { TabContext, TabPanel } from '@mui/lab';
 
+import api from '../../config/api.config'
 import { ChatBox, OnlineUsers, ChatMenu, SearchUser } from './components';
+import { setError } from '../../store/actions/errors.actions';
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -17,6 +19,7 @@ export default function Chat() {
 
     // Hooks
     const fullScreen = useMediaQuery('(max-width:768px)');
+    const dispatch = useDispatch()
 
 
     // Store
@@ -92,28 +95,28 @@ export default function Chat() {
     useEffect(() => {
         const fetchConversations = async () => {
             try {
-                const conv = await axios.get('/api/conversation')
+                const conv = await api.get('conversation')
                 setConversations(conv.data)
             } catch (err) {
-                console.log(err)
+                dispatch(setError('Echec lors de la récupération des conversations'))
             }
         }
         fetchConversations()
-    }, [user])
+    }, [user, dispatch])
 
     // Fetch conversation messages
     useEffect(() => {
         const fetchMessages = async () => {
             try {
-                const messages = await axios.get(`/api/message/${currentChat.id}`);
+                const messages = await api.get(`message/${currentChat.id}`);
                 setMessages(messages.data)
             } catch (err) {
-                console.log(err)
+                dispatch(setError('Echec lors de la récupération des messages'))
             }
         }
         if (currentChat)
             fetchMessages()
-    }, [currentChat])
+    }, [currentChat, dispatch])
 
     // Set other user of current Chat
     useEffect(() => {
@@ -155,7 +158,7 @@ export default function Chat() {
                 }
             })
             if (!existingConversation) {
-                const newConversation = await axios.post(`/api/conversation/${otherUser.id}`);
+                const newConversation = await api.post(`conversation/${otherUser.id}`);
                 conversation = newConversation.data
                 conversation.firstUser = {
                     firstName: user.firstName,

@@ -16,6 +16,7 @@ export default function customPasswordInput({ field, form, ...props }) {
             className='login-form-row__input'
             variant="filled"
             error={props.error}
+            color='secondary'
         >
             <InputLabel htmlFor="outlined-adornment-password">
                 {props.label}

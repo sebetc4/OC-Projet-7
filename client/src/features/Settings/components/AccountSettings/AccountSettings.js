@@ -69,7 +69,7 @@ export default function AccountSettings() {
                         id="panel3bh-top"
                     >
                         <Typography sx={{ width: '75%', flexShrink: 0 }}>
-                            Supression du compte
+                            Désactivation du compte
                         </Typography>
                     </AccordionSummary>
                     <AccordionDetails>

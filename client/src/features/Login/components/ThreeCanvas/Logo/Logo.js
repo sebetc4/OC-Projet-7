@@ -1,5 +1,4 @@
 import { useFrame } from "@react-three/fiber";
-import * as THREE from "three";
 import { useRef, useState, useEffect } from "react";
 import Model from "./components/Model";
 import Texture from "./components/Texture";
@@ -44,18 +43,10 @@ export default function Logo({ mouseOnOneButton, deviceSize, allModalsAreClose }
     return (
         <group>
             <mesh ref={myMesh}>
-                {deviceSize === 2 ?
                     <Texture
                         attach="material"
                         mouseOnOneButton={mouseOnOneButton}
-                    /> :
-                    <meshStandardMaterial
-                        attach="material"
-                        color={new THREE.Color(new THREE.Color('hsl(356, 75%, 30%)'))}
-                        metalness={0.5}
-                        roughness={0}
                     />
-                }
                 <Model />
             </mesh>
         </group>

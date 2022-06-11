@@ -7,6 +7,8 @@ exports.login = async (req, res, next) => {
     try {
         const user = await findOneUserWhereEmail(email)
         user.checkPassword(password)
+        if (user.deletedAt)
+            throw { message: `Account disabled` }
         req.login(user.id)
         return res.status(200).json('User logged in')
     } catch (err) {
@@ -36,7 +38,7 @@ exports.checkPassword = async (req, res, next) => {
     try {
         if (!password) throw { message: 'Missing parameters' }
         await user.checkPassword(password)
-        res.status(200).json({password: true})
+        res.status(200).json({ password: true })
     } catch (err) {
         next(err)
     }

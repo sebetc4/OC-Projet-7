@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios'
+import api from '../../config/api.config'
 
 import { Box, Tab, Tabs } from '@mui/material';
 import { TabContext, TabPanel } from '@mui/lab';
@@ -10,6 +10,7 @@ import { Loader } from '../../components';
 import { resetPosts, fetchPostsSucess } from '../../store/actions/posts.actions';
 import SearchPosts from './components/SearchPost/SearchPosts';
 import SearchUsers from './components/SearchUsers/SearchUsers';
+import { setError } from '../../store/actions/errors.actions';
 
 
 export default function Search() {
@@ -31,9 +32,13 @@ export default function Search() {
     // Fetch results
     useEffect(() => {
         const getResult = async () => {
-            const results = await axios.get(`/api/search/?query=${params.query}`)
+            try {
+            const results = await api.get(`search/?query=${params.query}`)
             dispatch(fetchPostsSucess(results.data.posts, 'search', true))
             setUsersResult(results.data.users)
+            } catch {
+                dispatch(setError('Echec lors de la recherche'))
+            }
         }
         getResult()
         return () => dispatch(resetPosts())
@@ -97,6 +102,7 @@ export default function Search() {
                                             centered
                                             onChange={handleChange}
                                             value={tabValue}
+                                            textColor='secondary'
                                         >
                                             <Tab className='search-tab' label="Les posts" value="1" />
                                             <Tab className='search-tab' label="Les utilisateurs" value="2" />

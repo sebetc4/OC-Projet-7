@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
-import axios from "axios";
+import api from '../../config/api.config';
 
 import { ProfileTop, ProfileUserInformation, ProfileUserBio, ProfileUserPosts } from './components';
 import { Loader } from '../../components';
@@ -28,7 +28,7 @@ export default function Profile() {
 		const fetchProfileData = async () => {
 			try {
 				setProfileDataIsLoaded(false)
-				const user = await axios.get(`/api/user/${params.userId}`)
+				const user = await api.get(`user/${params.userId}`)
 				dispatch(fetchPostsSucess(user.data.Posts, 'profile', true))
 				setProfileData(user.data)
 				setProfileDataIsLoaded(true)

@@ -1,5 +1,5 @@
 import React, { useState, forwardRef } from 'react'
-import axios from 'axios'
+import api from '../../../../../../config/api.config'
 
 import { IconButton, useMediaQuery, Slide, Dialog } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -7,6 +7,8 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { CreationDate } from '../../../../../../components'
 import { CompanyNewSettings } from './components';
 import { CompanyNewForm } from '../index'
+import { useDispatch } from 'react-redux';
+import { setError } from '../../../../../../store/actions/errors.actions';
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -16,6 +18,7 @@ export default function CompanyNewCard({ userIsAdmin, companyNew, setAllCompanyN
 
     // Hooks
     const fullScreen = useMediaQuery('(max-width:768px)');
+    const dispatch = useDispatch()
 
     // State
     const [showCompanyNewsSettings, setShowCompanyNewsSettings] = useState(false)
@@ -23,10 +26,10 @@ export default function CompanyNewCard({ userIsAdmin, companyNew, setAllCompanyN
 
     const handleDeleteCompanyNew = async () => {
         try {
-            await axios.delete(`api/company-new/${companyNew.id}`)
+            await api.delete(`company-new/${companyNew.id}`)
             setAllCompanyNews(prev => prev.filter(compNew => compNew.id !== companyNew.id))
         } catch (err) {
-            console.log(err)
+            dispatch(setError('Echec lors de l\'envoi du message'))
         }
     }
 

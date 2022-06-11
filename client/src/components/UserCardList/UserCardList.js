@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useSelector } from "react-redux";
 
@@ -32,7 +33,11 @@ export default function UserCardList({ users }) {
         <>
             {
                 allUsers.map((userInCard, index) => (
-                    <article
+                    <Box
+                        component="article"
+                        sx={{
+                            backgroundColor: 'background.article',
+                        }}
                         className='user-card'
                         key={userInCard.id}
                     >
@@ -42,7 +47,7 @@ export default function UserCardList({ users }) {
                             handleFollow={handleFollow}
                             handleUnfollow={handleUnfollow}
                         />
-                    </article>
+                    </Box>
                 ))
             }
         </>

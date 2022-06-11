@@ -21,5 +21,4 @@ export default function appReducer(state = appDefaultState, action) {
         default:
             return state;
     }
-
 }

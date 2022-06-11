@@ -1,14 +1,19 @@
 import React, { useState } from "react";
 import { Formik, Field, ErrorMessage, Form } from "formik";
-import axios from "axios";
-import { Button, TextField } from '@mui/material';
+import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 
 import customPasswordInput from "../utils/customPasswordInput";
-import { IconButton } from "@mui/material";
+import { IconButton, Button, TextField } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
+import { setError } from "../../../../store/actions/errors.actions";
+
+import api from '../../../../config/api.config';
 
 export default function FormSignIn(props) {
+
+    // Hooks
+    const dispatch = useDispatch()
 
     // State
     const [showPassword, setShowPassword] = useState(false)
@@ -22,18 +27,17 @@ export default function FormSignIn(props) {
         password: Yup.string().min(6, "Trop court! 6 caractères minimum").required("Champ requis"),
     });
 
-    const submit = (values, actions) => {
-        axios.post(`api/user/register`, values)
-            .then((res) => {
-                props.handleLogin(res.data.userId)
-                actions.setSubmitting(false);
-            })
-            .catch((err) => {
-                if (err.response) {
-                    actions.setFieldError(err.response.data.path, err.response.data.error);
-                    actions.setSubmitting(false);
-                }
-            });
+    const submit = async (values, actions) => {
+        try {
+            const res = await api.post(`user/register`, values)
+            props.handleLogin(res.data.userId)
+        } catch (err) {
+            if (err.response.data.path && err.response.data.error)
+                actions.setFieldError(err.response.data.path, err.response.data.error);
+            else
+                dispatch(setError('Echec lors de l\'inscription'))
+        }
+        actions.setSubmitting(false);
     };
 
     return (

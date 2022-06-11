@@ -1,20 +1,21 @@
 import React, { useEffect, useState, useRef } from 'react'
-import axios from 'axios';
 import { Formik, Field, Form } from "formik";
 import * as Yup from "yup";
-import { useSelector } from 'react-redux'
-
+import { useDispatch, useSelector } from 'react-redux'
 
 import { Divider, TextField, Slide, IconButton, Fab, Box } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 
+import api from '../../config/api.config';
 import { LoaderMessage, TechMessage, UserMessage } from './components';
+import { setError } from '../../store/actions/errors.actions';
 
 export default function ChatTechDep() {
 
     // Hooks
     const chatBoxContentRef = useRef()
+    const dispatch = useDispatch()
 
     // Store
     const user = useSelector((state) => state.user.data)
@@ -50,12 +51,16 @@ export default function ChatTechDep() {
     // Fetch open-ai response and set state
     useEffect(() => {
         const fetchResponse = async () => {
-            setResIsLoading(true)
-            const message = `${sendMessage}Human:${userMessage}\nAI:`
-            const res = await axios.post(`/api/open-ai/`, { message })
-            setSendMessage(prev => `${prev}Human:${userMessage}\nAI:` + res.data + '\n')
-            setResIsLoading(false)
-            setMessageList(prev => [...prev, res.data.replaceAll('Human:', '').replaceAll('AI:', '').replaceAll('\n', '')])
+            try {
+                setResIsLoading(true)
+                const message = `${sendMessage}Human:${userMessage}\nAI:`
+                const res = await api.post(`open-ai/`, { message })
+                setSendMessage(prev => `${prev}Human:${userMessage}\nAI:` + res.data + '\n')
+                setResIsLoading(false)
+                setMessageList(prev => [...prev, res.data.replaceAll('Human:', '').replaceAll('AI:', '').replaceAll('\n', '')])
+            } catch {
+                dispatch(setError('Echec lors de l\'envoi du message'))
+            }
         }
         if (userMessage) fetchResponse()
         // eslint-disable-next-line react-hooks/exhaustive-deps

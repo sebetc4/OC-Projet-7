@@ -1,4 +1,5 @@
-import axios from 'axios';
+import api from '../../config/api.config';
+import { SET_ERROR } from './errors.actions';
 
 export const RESET_APP = 'RESET_APP'
 export const SET_DEVICE_SIZE = 'SET_DEVICE_SIZE'
@@ -9,7 +10,7 @@ export const SET_COLOR_MODE = 'SET_COLOR_MODE'
 export const resetApp = () => {
     return {
         type: RESET_APP,
-        playload:''
+        playload: ''
     }
 }
 
@@ -38,13 +39,24 @@ export const setColorMode = (darkMode) => {
 export const toggleColorMode = () => {
     return async (dispatch) => {
         try {
-            await axios.put('/api/user/toggle-dark-mode');
-            dispatch({
-                type: TOGGLE_COLOR_MODE,
-                playload: ''
-            });
+            await api.put('user/toggle-dark-mode');
+            dispatch(toggleColorModeSuccess());
         } catch (err) {
-            console.log(err)
-        };
+            dispatch(toggleColorModeError())
+        }
+    }
+}
+
+export const toggleColorModeSuccess = () => {
+    return {
+        type: TOGGLE_COLOR_MODE,
+        playload: ''
+    }
+}
+
+export const toggleColorModeError = () => {
+    return {
+        type: SET_ERROR,
+        playload: 'Echec lors de la modification du mode de couleur'
     }
 }

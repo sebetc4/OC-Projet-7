@@ -1,10 +1,12 @@
-import React from 'react'
-import { FollowButton } from '../../../../components'
-import { useSelector } from "react-redux";
+import React, { useState } from 'react'
+import { ConfirmModal, FollowButton } from '../../../../components'
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
+import api from '../../../../config/api.config';
 
-import { Avatar, Tooltip, AvatarGroup } from '@mui/material';
+import { Avatar, Tooltip, AvatarGroup, Fab } from '@mui/material';
 import { ProfileImageForm } from './components';
+import { setError } from '../../../../store/actions/errors.actions';
 
 export default function ProfileHeader({ profileData, handleFollow, handleUnfollow }) {
 
@@ -13,9 +15,24 @@ export default function ProfileHeader({ profileData, handleFollow, handleUnfollo
 
     // Store
     const user = useSelector(state => state.user.data)
+    const dispatch = useDispatch()
 
+    // State
+    const [showDisableAccountConfirmModale, setShowDisableAccountConfirmModale] = useState(false)
 
     const navigateToProfile = (id) => navigate(`/profile/${id}`, { replace: true })
+
+    const handleDisableAccount = async () => {
+        try {
+            await api.delete(`admin/disable-user-account/${profileData.id}`)
+            toggleShowDisableAccountConfirmModale()
+            navigate(`/home`, { replace: true })
+        } catch {
+            dispatch(setError('Echec lors de la désactivation du compte'))
+        }
+    }
+
+    const toggleShowDisableAccountConfirmModale = () => setShowDisableAccountConfirmModale(prev => !prev)
 
     return (
         <section className='profile-top'>
@@ -96,16 +113,36 @@ export default function ProfileHeader({ profileData, handleFollow, handleUnfollo
                 </div>
                 {
                     user.id !== profileData.id &&
-                    <div className='profile-top-content-follow-button-container'>
+
+                    <div className='profile-top-content-actions'>
                         <FollowButton
                             type={'floatingButton'}
+                            size={user.isAdmin ? 'small' : 'large'}
                             user={profileData}
                             handleFollow={handleFollow}
                             handleUnfollow={handleUnfollow}
                         />
+                        {user.isAdmin &&
+                            <Fab
+                                color='warning'
+                                variant="extended"
+                                size='small'
+                                onClick={toggleShowDisableAccountConfirmModale}
+                            >
+                                Désactiver le Compte
+                            </Fab>
+                        }
                     </div>
                 }
             </div>
+            <ConfirmModal
+                title={'Confirmer la désactivation du compte'}
+                content={`Voulez vous vraiment désactiver ce compte?`}
+                button='Désactiver'
+                showConfirmModale={showDisableAccountConfirmModale}
+                toggleShowConfirmModale={toggleShowDisableAccountConfirmModale}
+                onClickConfirm={handleDisableAccount}
+            />
         </section>
     )
 }

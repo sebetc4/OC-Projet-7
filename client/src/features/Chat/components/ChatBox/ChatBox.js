@@ -1,18 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react'
-import axios from 'axios';
 
 import { Box, Divider, IconButton } from '@mui/material'
 import { TextareaAutosize } from '@mui/base';
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
 
+import api from '../../../../config/api.config';
 import { Message } from './components';
 import { Loader } from '../../../../components';
+import { setError } from '../../../../store/actions/errors.actions';
+import { useDispatch } from 'react-redux';
 
 export default function ChatBox({ deviceSize, socket, user, currentChat, otherUser, messages, setMessages, setShowChatBox }) {
 
     // Hooks
     const chatBoxContentRef = useRef()
+    const dispatch = useDispatch()
 
     // State
     const [newMessage, setNewMessage] = useState('')
@@ -31,7 +34,7 @@ export default function ChatBox({ deviceSize, socket, user, currentChat, otherUs
                 lastName: user.lastName,
                 avatarUrl: user.avatarUrl
             }
-            const res = await axios.post(`/api/message/${currentChat.id}`, { message: newMessage })
+            const res = await api.post(`message/${currentChat.id}`, { message: newMessage })
             socket.emit('sendMessage', {
                 senderId: user.id,
                 receiverId: otherUser.id,
@@ -47,7 +50,7 @@ export default function ChatBox({ deviceSize, socket, user, currentChat, otherUs
             setMessages([...messages, message])
             setNewMessage('')
         } catch (err) {
-            console.log(err)
+            dispatch(setError('Echec lors de l\'envoi du message'))
         }
     }
 

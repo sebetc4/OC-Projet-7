@@ -68,11 +68,12 @@
 	}
 }
 
-.profile-top-content-follow-button-container {
+.profile-top-content-actions {
 	flex: 1;
 	display: flex;
-	justify-content: flex-end;
-	align-items: center;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: flex-end;
 
 	button {
 		z-index: 0;
