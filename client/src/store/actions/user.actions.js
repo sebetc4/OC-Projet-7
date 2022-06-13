@@ -44,7 +44,10 @@ const fetchUserDataSuccess = (data, isLogged) => {
 const fetchUserDataError = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec lors de la récupération des données de l\'utilisateur'
+        playload: {
+            title: 'Erreur du serveur',
+            message: 'Echec lors de l\'autentification.'
+        }
     }
 }
 
@@ -74,7 +77,11 @@ const logoutUserSuccess = () => {
 const logoutUserDelete = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec lors de la déconnexion'
+        playload: {
+            title: 'Erreur du serveur',
+            message: 'Echec lors de la déconnexion.'
+        }
+
     }
 }
 

@@ -41,7 +41,12 @@ export default function SettingsImageForm({ picture, user, field, ratio, cropSha
                 setFormIsSubmitting(false)
                 setOpenCrop(false)
             } catch {
-                dispatch(setError('Echec lors de la modification de l\'image'))
+                dispatch(setError({
+                    title: 'Erreur du serveur',
+                    message: 'Echec de la modification de l\'image'
+                }))
+                setFormIsSubmitting(false)
+                setOpenCrop(false)
             }
         }
         if (cropImage) submitNewImage()
@@ -57,11 +62,16 @@ export default function SettingsImageForm({ picture, user, field, ratio, cropSha
 
     const handleChange = (e) => {
         const file = e.target.files[0];
-        if (file) {
+        const filetypes = /jpeg|jpg|png|gif|webp/;
+        if (filetypes.test(file.type) && file.size <= 4194304) {
             setPhotoURL(URL.createObjectURL(file));
             setOpenCrop(true);
-        }
-    };
+        } else
+            dispatch(setError({
+                title: 'Erreur de format',
+                message: 'Seules les images d’une taille inférieure à 4 Mo et au format JPG, PNG, GIF ou WebP sont autorisées.'
+            }))
+    }
 
     const handleCancel = () => {
         setOpenCrop(false)
@@ -70,12 +80,15 @@ export default function SettingsImageForm({ picture, user, field, ratio, cropSha
 
     const handleDelete = async () => {
         try {
-        const directory = field === 'cover' ? 'cover' : 'avatar'
-        const userData = await api.put(`user/reset-image`, { directory })
-        dispatch(updateUser(userData.data))
-        setPhotoURL(Object.values(userData.data)[0])
+            const directory = field === 'cover' ? 'cover' : 'avatar'
+            const userData = await api.put(`user/reset-image`, { directory })
+            dispatch(updateUser(userData.data))
+            setPhotoURL(Object.values(userData.data)[0])
         } catch {
-            dispatch(setError('Echec lors de la supression de l\'image'))
+            dispatch(setError({
+                title: 'Erreur du serveur',
+                message: 'Echec de la supression de l\'image'
+            }))
         }
     }
 
@@ -87,7 +100,7 @@ export default function SettingsImageForm({ picture, user, field, ratio, cropSha
 
             <label htmlFor={`settings-profile-images-form-${field}`} className="settings-profile-images-form__label">
                 <input
-                    accept="image/*"
+                    accept="image/png, image/jpeg, image/jpg, image/gif, image/webp"
                     id={`settings-profile-images-form-${field}`}
                     name={field}
                     type="file"

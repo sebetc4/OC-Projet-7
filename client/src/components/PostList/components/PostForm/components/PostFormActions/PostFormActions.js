@@ -1,10 +1,29 @@
+import { useDispatch } from "react-redux";
+
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import Divider from '@mui/material/Divider';
+import { setError } from '../../../../../../store/actions/errors.actions';
 
 export default function PostFormActions({ image, videoUrl, setFile, handleDeleteImage, toggleShowVideoInput, showVideoInput, handleDeleteVideo, submitting }) {
+
+    // Hooks
+    const dispatch = useDispatch();
+
+    const handleChangeFile = (e) => {
+        const file = e.target.files[0];
+        const filetypes = /jpeg|jpg|png|gif|webp/;
+        if (filetypes.test(file.type) && file.size <= 4194304) {
+            setFile(file)
+        } else
+            dispatch(setError({
+                title: 'Erreur de format',
+                message: 'Seules les images d’une taille inférieure à 4 Mo et au format JPG, PNG, GIF ou WebP sont autorisées.'
+            }))
+    }
+
     return (
         <div className='post-form-actions' >
             <Divider />
@@ -15,12 +34,12 @@ export default function PostFormActions({ image, videoUrl, setFile, handleDelete
                             <label>
                                 <input
                                     title="Type search term here"
-                                    accept="image/*"
+                                    accept="image/png, image/jpeg, image/jpg, image/gif, image/webp"
                                     id='input-post-image'
                                     name='input-post-image'
                                     type="file"
                                     style={{ display: 'none' }}
-                                    onChange={(e) => setFile(e.target.files[0])}
+                                    onChange={handleChangeFile}
                                 />
                                 <Button
                                     variant="text"

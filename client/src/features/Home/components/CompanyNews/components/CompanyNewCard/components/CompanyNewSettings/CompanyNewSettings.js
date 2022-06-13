@@ -9,7 +9,7 @@ import DeleteOutlineOutlined from '@mui/icons-material/DeleteOutlineOutlined';
 
 
 
-export default function CommentSettings({ closeModal, handleDeleteCompanyNew, toggleShowModifyCompanyNew }) {
+export default function CommentSettings({ closeModal, handleDeleteCompanyNew, toggleShowDeleteConfirmModale }) {
 
     return (
         <MenuModal closeModal={closeModal}>
@@ -18,7 +18,7 @@ export default function CommentSettings({ closeModal, handleDeleteCompanyNew, to
                     <MenuList>
                         <MenuItem
                             onClick={() => {
-                                toggleShowModifyCompanyNew()
+                                toggleShowDeleteConfirmModale()
                                 closeModal()
                             }}
                         >

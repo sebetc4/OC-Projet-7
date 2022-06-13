@@ -49,7 +49,7 @@ export const createTodoSucess = (newTodo) => {
 export const createTodoError = (err) => {
     return {
         type: SET_ERROR,
-        playload: 'Echec lors de l\'ajout de la tâche'
+        playload: 'Echec de l\'ajout de la tâche'
     }
 }
 
@@ -74,7 +74,7 @@ export const toggleTodoSuccess = (index) => {
 export const toggleTodoError = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec lors de la modification d\'état de la tâche'
+        playload: 'Echec de la modification d\'état de la tâche'
     }
 }
 
@@ -99,7 +99,7 @@ export const deleteTodoSuccess = (index) => {
 export const deleteTodoError = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec lors de la supression de la tâche'
+        playload: 'Echec de la supression de la tâche'
     }
 }
 

@@ -59,7 +59,10 @@ export default function ChatTechDep() {
                 setResIsLoading(false)
                 setMessageList(prev => [...prev, res.data.replaceAll('Human:', '').replaceAll('AI:', '').replaceAll('\n', '')])
             } catch {
-                dispatch(setError('Echec lors de l\'envoi du message'))
+                dispatch(setError({
+                    title: 'Erreur du serveur',
+                    message: 'Echec de l\'envoi du message'
+                }))
             }
         }
         if (userMessage) fetchResponse()

@@ -36,10 +36,13 @@ export default function BiographyForm({ user, closeAccordion }) {
             dispatch(updateUser(user.data))
             closeAccordion()
         } catch (err) {
-            if (err.response.data.path && err.response.data.error) 
+            if (err.response.data.path && err.response.data.error)
                 actions.setFieldError(err.response.data.path, err.response.data.error)
             else
-                dispatch(setError('Echec lors de l\'envoi du message'))
+                dispatch(setError({
+                    title: 'Erreur du serveur',
+                    message: 'Echec de l\'envoi du message'
+                }))
         }
         setFormIsSubmitting(false)
         toggleShowConfirmModale()

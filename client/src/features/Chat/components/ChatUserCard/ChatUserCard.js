@@ -35,6 +35,8 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 export default function ChatUserCard({ userInCard, userInCardIsOnline, unreadMessages }) {
 
+    console.log(userInCard)
+
     return (
         <Box
             component="article"
@@ -43,7 +45,7 @@ export default function ChatUserCard({ userInCard, userInCardIsOnline, unreadMes
             }}
             className='chat-user-card'>
             {
-                userInCardIsOnline ?
+                userInCard.avatarUrl && userInCardIsOnline ?
                     <StyledBadge
                         overlap="circular"
                         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
@@ -59,8 +61,12 @@ export default function ChatUserCard({ userInCard, userInCardIsOnline, unreadMes
                         alt={`Avatar de ${userInCard.firstName} ${userInCard.lastName}`}
                         src={userInCard.avatarUrl}
                     />
+            }{
+                userInCard.firstName ?
+                    <p className='chat-user-card__name'>{`${userInCard.firstName} ${userInCard.lastName}`}</p>
+                    :
+                    <p className='chat-user-card__name'>Compte désactivé</p>
             }
-            <p className='chat-user-card__name'>{`${userInCard.firstName} ${userInCard.lastName}`}</p>
             {unreadMessages !== 0 &&
                 <div className='chat-user-card__new-message'>
                     <Badge badgeContent={unreadMessages} color="primary">

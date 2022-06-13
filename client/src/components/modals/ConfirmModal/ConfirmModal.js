@@ -45,7 +45,7 @@ export default function ConfirmSubmitModal({ title, content, button, showConfirm
           >
             {button}
           </Button> :
-          <CircularProgress color='primary'
+          <CircularProgress color='secondary'
           />
         }
       </DialogActions>

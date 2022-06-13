@@ -1,6 +1,43 @@
 .errors {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
+	z-index: 99999;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+}
+
+.invalid-token-modal {
+	width: 400px;
+	height: 200px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	h2 {
+		margin-top: 20px;
+		font-size: 20px;
+		font-weight: bold;
+		text-align: center;
+	}
+
+	p {
+		text-align: center;
+	}
+}
+
+@media screen and (max-width: $media-mobile) {
+	.invalid-token-modal {
+        width: 100%;
+        
+		h2 {
+			order: 2;
+		}
+
+        p {
+            order: 3;
+        }
+		&__linear-progress-container {
+			order: 1;
+		}
+	}
 }

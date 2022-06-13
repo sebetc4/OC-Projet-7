@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
 import Cropper from 'react-easy-crop';
+import { useDispatch } from 'react-redux';
+
 
 import CloseIcon from '@mui/icons-material/Close';
 import { Button, CircularProgress, Slider, IconButton } from '@mui/material';
 
 import getCroppedImg from './utils/scripts';
+import { setError } from '../../store/actions/errors.actions';
 
 const CropEasy = (props) => {
+
+    // Hooks
+    const dispatch = useDispatch()
 
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
@@ -27,8 +33,13 @@ const CropEasy = (props) => {
             );
             props.setPhotoURL(url);
             props.setCropImage(file);
-        } catch (error) {
-            console.log(error);
+        } catch {
+            props.setFormIsSubmitting(false)
+            props.handleCancel()
+            dispatch(setError({
+                title: 'Erreur de l\'application',
+                message: 'Echec du recadrage de l\'image.'
+            }))
         }
     };
 
@@ -97,7 +108,8 @@ const CropEasy = (props) => {
                         onClick={cropImage}
                     >
                         Valider
-                    </Button> :
+                    </Button>
+                    :
                     <CircularProgress color='secondary' />
                 }
             </div>

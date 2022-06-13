@@ -43,7 +43,7 @@ export const addUserFollowedSuccess = (data) => {
 export const addUserFollowedError = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec lors de l\'abonnement'
+        playload: 'Echec de l\'abonnement'
     }
 }
 
@@ -68,6 +68,6 @@ export const deleteUserFollowedSuccess = (index) => {
 export const deleteUserFollowedError = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec lors du désabonnement'
+        playload: 'Echec du désabonnement'
     }
 }

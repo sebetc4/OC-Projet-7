@@ -5,6 +5,8 @@ exports.createConversation = async (req, res, next) => {
    const user = req.user
    const otherUserId = req.params.id
    try {
+      if (!otherUserId)
+         throw { message: 'Missing parameters' }
       const otherUser = await findOneUserWhereId(otherUserId)
       const conversationAlreadyexist = await getOneConversation(user.id, otherUser.id)
       if (conversationAlreadyexist)

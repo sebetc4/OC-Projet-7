@@ -36,14 +36,17 @@ export default function CompanyNews() {
     useEffect(() => {
         const fetchNews = async () => {
             try {
-            const news = await api.get('company-new')
-            setAllCompanyNews(news.data)
+                const news = await api.get('company-new')
+                setAllCompanyNews(news.data)
             } catch {
-                dispatch(setError('Echec lors de la récupération des news'))
+                dispatch(setError({
+                    title: 'Erreur du serveur',
+                    message: 'Echec de la récupération des news'
+                }))
             }
         }
         fetchNews()
-    }, [])
+    }, [dispatch])
 
     // Add news in list
     useEffect(() => {
@@ -142,6 +145,7 @@ export default function CompanyNews() {
                     setAllCompanyNews={setAllCompanyNews}
                 />
             </ Dialog>
+
         </Box >
     )
 }

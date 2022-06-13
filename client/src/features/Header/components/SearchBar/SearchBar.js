@@ -53,7 +53,7 @@ export default function SearchBar() {
                             aria-label='Rechercher'
                             className='search-bar__button'
                             type='submit'
-                            color="primary"
+                            color="secondary"
                             disabled={isSubmitting || !isValid || values.query === '' }
                         >
                             <SearchThinSvg />

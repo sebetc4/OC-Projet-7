@@ -12,7 +12,7 @@ import { ConfirmModal } from '../../../../../../components';
 import { setError } from '../../../../../../store/actions/errors.actions';
 
 
-export default function DeleteAccountForm({ closeAccordion }) {
+export default function DeleteAccountForm() {
 
     // Hooks
     const dispatch = useDispatch();
@@ -45,7 +45,10 @@ export default function DeleteAccountForm({ closeAccordion }) {
             if (err.response.data.path && err.response.data.error)
                 actions.setFieldError(err.response.data.path, err.response.data.error)
             else
-                dispatch(setError('Echec lors de la modification du mot de passe'))
+                dispatch(setError({
+                    title: 'Erreur du serveur',
+                    message: 'Echec de la modification du mot de passe'
+                }))
         }
         actions.setSubmitting(false);
         toggleShowConfirmModale()
@@ -91,12 +94,12 @@ export default function DeleteAccountForm({ closeAccordion }) {
                             onClick={toggleShowConfirmModale}
                             disabled={!(isValid && !isSubmitting && dirty)}
                         >
-                            Supprimer
+                            Désactiver
                         </Button>
                     </div>
                     <ConfirmModal
                         title={'Confirmer la désactivation du compte'}
-                        content={`Voulez vous vraiment sdésactiver votre compte?`}
+                        content={`Voulez vous vraiment désactiver votre compte?`}
                         button='Valider'
                         showConfirmModale={showConfirmModale}
                         toggleShowConfirmModale={toggleShowConfirmModale}

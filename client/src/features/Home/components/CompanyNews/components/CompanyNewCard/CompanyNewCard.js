@@ -4,7 +4,7 @@ import api from '../../../../../../config/api.config'
 import { IconButton, useMediaQuery, Slide, Dialog } from '@mui/material';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
-import { CreationDate } from '../../../../../../components'
+import { ConfirmModal, CreationDate } from '../../../../../../components'
 import { CompanyNewSettings } from './components';
 import { CompanyNewForm } from '../index'
 import { useDispatch } from 'react-redux';
@@ -23,18 +23,23 @@ export default function CompanyNewCard({ userIsAdmin, companyNew, setAllCompanyN
     // State
     const [showCompanyNewsSettings, setShowCompanyNewsSettings] = useState(false)
     const [showModifyCompanyNew, setShowModifyCompanyNew] = useState(false)
+    const [showDeleteConfirmModale, setShowDeleteConfirmModale] = useState(false)
 
     const handleDeleteCompanyNew = async () => {
         try {
             await api.delete(`company-new/${companyNew.id}`)
             setAllCompanyNews(prev => prev.filter(compNew => compNew.id !== companyNew.id))
         } catch (err) {
-            dispatch(setError('Echec lors de l\'envoi du message'))
+            dispatch(setError({
+                title: 'Erreur du serveur',
+                message: 'Echec de l\'envoi du message'
+            }))
         }
     }
 
     const toggleShowCompanyNewsSettings = () => setShowCompanyNewsSettings(prev => !prev)
     const toggleShowModifyCompanyNew = () => setShowModifyCompanyNew(prev => !prev)
+    const toggleShowDeleteConfirmModale = () => setShowDeleteConfirmModale(prev => !prev)
 
     return (
         <>
@@ -64,7 +69,7 @@ export default function CompanyNewCard({ userIsAdmin, companyNew, setAllCompanyN
                     {showCompanyNewsSettings &&
                         <CompanyNewSettings
                             closeModal={toggleShowCompanyNewsSettings}
-                            handleDeleteCompanyNew={handleDeleteCompanyNew}
+                            toggleShowDeleteConfirmModale={toggleShowDeleteConfirmModale}
                             toggleShowModifyCompanyNew={toggleShowModifyCompanyNew}
                         />
                     }
@@ -88,6 +93,14 @@ export default function CompanyNewCard({ userIsAdmin, companyNew, setAllCompanyN
                     setAllCompanyNews={setAllCompanyNews}
                 />
             </ Dialog>
+            <ConfirmModal
+                title={'Confirmer la supression de la new'}
+                content={`Voulez vous vraiment supprimer cette new?`}
+                button='Supprimer'
+                showConfirmModale={showDeleteConfirmModale}
+                toggleShowConfirmModale={toggleShowDeleteConfirmModale}
+                onClickConfirm={handleDeleteCompanyNew}
+            />
         </>
     )
 }

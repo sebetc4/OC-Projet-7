@@ -27,6 +27,6 @@ module.exports = async (req, res, next) => {
     const user = await extractJwtToken(req, res)
     req.user = user
     req.logout = () => res.clearCookie('jwt')
-    req.login = (userId) => res.cookie('jwt', createJwtToken(userId), { httpOnly: true, maxAge: process.env.TOKEN_TIME_LIFE, signed: true })
+    req.login = (userId) => res.cookie('jwt', createJwtToken(userId), { httpOnly: true, maxAge: process.env.TOKEN_TIME_LIFE, signed: true, sameSite: 'strict' })
     next();
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 
-import { Box, Divider, IconButton } from '@mui/material'
+import { Avatar, Box, Divider, IconButton } from '@mui/material'
 import { TextareaAutosize } from '@mui/base';
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
@@ -50,7 +50,10 @@ export default function ChatBox({ deviceSize, socket, user, currentChat, otherUs
             setMessages([...messages, message])
             setNewMessage('')
         } catch (err) {
-            dispatch(setError('Echec lors de l\'envoi du message'))
+            dispatch(setError({
+                title: 'Erreur du serveur',
+                message: 'Echec de l\'envoi du message'
+            }))
         }
     }
 
@@ -69,11 +72,20 @@ export default function ChatBox({ deviceSize, socket, user, currentChat, otherUs
                                         }}
                                         className='chat-box-top'
                                     >
-                                        <img
-                                            src={otherUser.avatarUrl}
-                                            alt={`Avatar de ${otherUser.firstName} ${otherUser.lastName}`}
-                                        />
-                                        <h2>{`${otherUser.firstName} ${otherUser.lastName}`}</h2>
+                                        {otherUser.avatarUrl ?
+                                            <img
+                                                src={otherUser.avatarUrl}
+                                                alt={`Avatar de ${otherUser.firstName} ${otherUser.lastName}`}
+                                            />
+                                            :
+                                            <Avatar />
+                                        }
+                                        {
+                                            otherUser.firstName ?
+                                                <h2>{`${otherUser.firstName} ${otherUser.lastName}`}</h2>
+                                                :
+                                                <h2>Compte désactivé</h2>
+                                        }
                                         {
                                             deviceSize === 0 &&
                                             <div className='chat-box-top__button-container'>
@@ -104,49 +116,52 @@ export default function ChatBox({ deviceSize, socket, user, currentChat, otherUs
                                             )
                                         }
                                     </div>
-                                    <Box
-                                        component="div"
-                                        sx={{
-                                            backgroundColor: 'background.top',
-                                        }}
-                                        className='chat-box-bottom'
-                                    >
-                                        <form
-                                            onSubmit={submitNewMessage}
-                                            className="chat-box-bottom-form"
+                                    {
+                                        otherUser.firstName &&
+                                        <Box
+                                            component="div"
+                                            sx={{
+                                                backgroundColor: 'background.top',
+                                            }}
+                                            className='chat-box-bottom'
                                         >
-                                            <div className='chat-box-bottom-form-textarea'>
-                                                <label className='chat-box-bottom-form-textarea__label' htmlFor='settings-form-textarea'>Biographie</label>
-                                                <TextareaAutosize
-                                                    id='chat-box-input'
-                                                    maxLength={300}
-                                                    maxRows={4}
-                                                    className='chat-box-bottom-form-textarea__input'
-                                                    name='message'
-                                                    value={newMessage}
-                                                    onChange={(e) => setNewMessage(e.target.value)}
-                                                    onFocus={(e) => e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)}
-                                                    placeholder='Votre message...'
+                                            <form
+                                                onSubmit={submitNewMessage}
+                                                className="chat-box-bottom-form"
+                                            >
+                                                <div className='chat-box-bottom-form-textarea'>
+                                                    <label className='chat-box-bottom-form-textarea__label' htmlFor='settings-form-textarea'>Biographie</label>
+                                                    <TextareaAutosize
+                                                        id='chat-box-input'
+                                                        maxLength={300}
+                                                        maxRows={4}
+                                                        className='chat-box-bottom-form-textarea__input'
+                                                        name='message'
+                                                        value={newMessage}
+                                                        onChange={(e) => setNewMessage(e.target.value)}
+                                                        onFocus={(e) => e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)}
+                                                        placeholder='Votre message...'
+                                                    />
+                                                </div>
+                                                <Divider
+                                                    className="chat-tech-dep-box-bottom-form__divider"
+                                                    sx={{ height: 40 }}
+                                                    orientation="vertical"
                                                 />
-                                            </div>
-                                            <Divider
-                                                className="chat-tech-dep-box-bottom-form__divider"
-                                                sx={{ height: 40 }}
-                                                orientation="vertical"
-                                            />
 
-                                            <div>
-                                                <IconButton
-                                                    type="submit"
-                                                    aria-label="Envoyer"
-                                                    disabled={newMessage === ''}
-                                                    color='secondary'
-                                                >
-                                                    <SendIcon />
-                                                </IconButton>
-                                            </div>
-                                        </form>
-                                    </Box>
+                                                <div>
+                                                    <IconButton
+                                                        type="submit"
+                                                        aria-label="Envoyer"
+                                                        disabled={newMessage === ''}
+                                                        color='secondary'
+                                                    >
+                                                        <SendIcon />
+                                                    </IconButton>
+                                                </div>
+                                            </form>
+                                        </Box>
+                                    }
                                 </>
                                 :
                                 <Loader />

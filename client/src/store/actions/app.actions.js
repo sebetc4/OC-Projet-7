@@ -29,7 +29,6 @@ export const setDisplayMobileMenu = (state) => {
 }
 
 export const setColorMode = (darkMode) => {
-    console.log(darkMode)
     return {
         type: SET_COLOR_MODE,
         playload: darkMode ? 'dark' : 'light'
@@ -57,6 +56,6 @@ export const toggleColorModeSuccess = () => {
 export const toggleColorModeError = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec lors de la modification du mode de couleur'
+        playload: 'Echec de la modification du mode de couleur'
     }
 }

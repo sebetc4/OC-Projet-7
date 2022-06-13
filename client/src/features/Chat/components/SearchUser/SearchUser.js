@@ -26,7 +26,10 @@ export default function SearchUser({ user, toggleShowSearchUser, handleOpenConve
                 result.data = result.data.filter(userInResult => userInResult.id !== user.id)
                 setResultSearch(result.data)
             } catch {
-                dispatch(setError('Echec lors de l\'envoi du message'))
+                dispatch(setError({
+                    title: 'Erreur du serveur',
+                    message: 'Echec de l\'envoi du message'
+                }))
             }
         } else
             setResultSearch([])

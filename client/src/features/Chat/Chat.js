@@ -98,7 +98,10 @@ export default function Chat() {
                 const conv = await api.get('conversation')
                 setConversations(conv.data)
             } catch (err) {
-                dispatch(setError('Echec lors de la récupération des conversations'))
+                dispatch(setError({
+                    title: 'Erreur du serveur',
+                    message: 'Echec de la récupération des conversations'
+                }))
             }
         }
         fetchConversations()
@@ -111,7 +114,10 @@ export default function Chat() {
                 const messages = await api.get(`message/${currentChat.id}`);
                 setMessages(messages.data)
             } catch (err) {
-                dispatch(setError('Echec lors de la récupération des messages'))
+                dispatch(setError({
+                    title: 'Erreur du serveur',
+                    message: 'Echec de la récupération des messages'
+                }))
             }
         }
         if (currentChat)
@@ -174,7 +180,10 @@ export default function Chat() {
             }
             setCurrentChat(conversation)
         } catch (err) {
-            console.log(err)
+            dispatch(setError({
+                title: 'Erreur du serveur',
+                message: 'Echec de la création de la conversation'
+            }))
         }
     }
 

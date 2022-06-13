@@ -1,19 +1,21 @@
-import { DELETE_ERROR, SET_ERROR, SET_INVALID_TOKEN } from "../actions/errors.actions";
+import { DELETE_ERROR, RESET_ERROR, SET_ERROR, SET_INVALID_TOKEN } from "../actions/errors.actions";
 
 const errorDefaultState = {
     error: null,
     invalidToken: false
 }
 
-export default function appReducer(state = errorDefaultState, action) {
+export default function errorsReducer(state = errorDefaultState, action) {
     switch (action.type) {
+        case RESET_ERROR:
+            return errorDefaultState
         case SET_ERROR:
             const error = action.playload
-            return { error, invalidToken: false }
+            return { ...state, error }
         case DELETE_ERROR:
-            return { error: null, invalidToken: false }
+            return { ...state, error: null }
         case SET_INVALID_TOKEN:
-            return { error: false, invalidToken: true }
+            return { ...state, invalidToken: true }
         default:
             return state;
     }

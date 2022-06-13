@@ -33,11 +33,14 @@ export default function Search() {
     useEffect(() => {
         const getResult = async () => {
             try {
-            const results = await api.get(`search/?query=${params.query}`)
-            dispatch(fetchPostsSucess(results.data.posts, 'search', true))
-            setUsersResult(results.data.users)
+                const results = await api.get(`search/?query=${params.query}`)
+                dispatch(fetchPostsSucess(results.data.posts, 'search', true))
+                setUsersResult(results.data.users)
             } catch {
-                dispatch(setError('Echec lors de la recherche'))
+                dispatch(setError({
+                    title: 'Erreur du serveur',
+                    message: 'Echec de la recherche'
+                }))
             }
         }
         getResult()

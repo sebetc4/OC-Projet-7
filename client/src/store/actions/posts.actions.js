@@ -50,7 +50,7 @@ export const createPostSuccess = (post, user) => {
 export const createPostError = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec lors de l\'ajout du post'
+        playload: 'Echec de l\'ajout du post'
     }
 }
 
@@ -89,7 +89,7 @@ export const fetchPostsSucess = (data, type, allPostsFetch) => {
 export const fetchPostsError = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec lors de la récupération des posts.'
+        playload: 'Echec de la récupération des posts.'
     }
 }
 
@@ -115,7 +115,7 @@ export const updatePostSuccess = (postIndex, newPost) => {
 export const updatePostError = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec lors de la modification du post.'
+        playload: 'Echec de la modification du post.'
     }
 }
 
@@ -141,7 +141,7 @@ export const deletePostSuccess = (postIndex) => {
 export const deletePostError = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec lors de la supression du post.'
+        playload: 'Echec de la supression du post.'
     }
 }
 
@@ -166,7 +166,7 @@ export const likePostSuccess = (postIndex, userId, userIndex, likeStatut) => {
 export const likePostError = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec lors du like / dislike.'
+        playload: 'Echec du like / dislike.'
     }
 }
 
@@ -194,7 +194,7 @@ export const createCommentPostSuccess = (user, comment, postIndex) => {
 export const createCommentError = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec lors de l\'ajout du commentaire.'
+        playload: 'Echec de l\'ajout du commentaire.'
     }
 }
 
@@ -219,7 +219,7 @@ export const updateCommentSuccess = (commentIndex, postIndex, text) => {
 export const updateCommentError = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec lors de la modification du commentaire.'
+        playload: 'Echec de la modification du commentaire.'
     }
 }
 
@@ -244,6 +244,6 @@ export const deleteCommentSuccess = (commentIndex, postIndex) => {
 export const deleteCommentError = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec lors de la supression du commentaire.'
+        playload: 'Echec de la supression du commentaire.'
     }
 }

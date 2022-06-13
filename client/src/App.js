@@ -8,7 +8,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Routes from "./routes/routes";
 import { fetchUserData } from "./store/actions/user.actions";
 import { setDeviceSize, setDisplayMobileMenu } from "./store/actions/app.actions";
-import { Loader } from "./components";
+import { Errors, Loader } from "./components";
 import { getTheme } from "./theme/theme";
 
 
@@ -58,6 +58,7 @@ export default function App() {
                 :
                 <Loader />
             }
+            <Errors />
         </ThemeProvider>
     )
 }

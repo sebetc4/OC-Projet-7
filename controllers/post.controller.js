@@ -2,6 +2,12 @@ const { getPostImagePath } = require('../utils/pathFile')
 const { createPost, findAllPostsUserLikeAndComment, findOnePostWhereId } = require('../queries/post.queries')
 const { deleteLastPostImage } = require('../utils/deleteFile')
 
+const checkAllowedVideo = (videoUrl) => {
+    if (videoUrl.includes('https://www.youtube') || videoUrl.includes('https://youtube'))
+        return true
+    else
+        return false
+}
 
 exports.createPost = async (req, res, next) => {
     const user = req.user
@@ -10,6 +16,8 @@ exports.createPost = async (req, res, next) => {
         const imageUrl = await getPostImagePath(req)
         if (!text && !imageUrl && !videoUrl)
             throw { message: 'Missing parameters' }
+        if (!checkAllowedVideo(videoUrl))
+            throw { message: 'Only Youtube\'s videos are allowed' }
         if (imageUrl && videoUrl)
             throw { message: 'Image and video in same post is not allowed' }
         const newPost = await createPost(user.id, text, imageUrl, videoUrl)
@@ -74,7 +82,7 @@ exports.deletePost = async (req, res, next) => {
         user.checkIsAuthorOrAdmin(post.UserId)
         post.imageUrl && deleteLastPostImage(post)
         await post.destroy()
-        res.status(200).json("Deletion post is done")
+        res.status(200).json("Deletion post success")
     } catch (err) {
         next(err)
     }
@@ -93,11 +101,11 @@ exports.likePost = async (req, res, next) => {
             case 0:
                 if (!alreadyLike) throw { message: 'Post already not liked' }
                 await post.removeUsersLiked(user.id)
-                return res.status(200).json('Dislike is done')
+                return res.status(200).json('Dislike success')
             case 1:
                 if (alreadyLike) throw { message: 'Post already liked' }
                 await post.addUsersLiked(user.id)
-                return res.status(200).json('Like is done')
+                return res.status(200).json('Like success')
             default:
                 throw { message: 'Unable to like or dislike' }
         }

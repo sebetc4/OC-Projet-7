@@ -172,7 +172,7 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
                         variant="contained">
                         {type === 'modify' ? 'Modifier' : 'Poster'}
                     </Button> :
-                    <CircularProgress color='primary'/>
+                    <CircularProgress color='secondary'/>
                 }
 
             </div>

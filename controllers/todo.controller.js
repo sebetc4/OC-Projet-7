@@ -19,7 +19,7 @@ exports.toggleTodo = async (req, res, next) => {
         if (!todoId) throw { message: 'Missing parameters' }
         const todo = await findOneTodoWhereId(todoId)
         await todo.update({done: !todo.done});
-        return res.status(200).json('Toggle done is done')
+        return res.status(200).json('Toggle done success')
     } catch (err) {
         next(err)
     }
@@ -31,7 +31,7 @@ exports.deleteTodo = async (req, res, next) => {
         if (!todoId) throw { message: 'Missing parameters' }
         const todo = await findOneTodoWhereId(todoId)
         await todo.destroy()
-        res.status(200).json("Deletion todo is done")
+        res.status(200).json("Deletion todo success")
     } catch (err) {
         next(err)
     }

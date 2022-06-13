@@ -49,7 +49,7 @@ exports.deleteCompanyNew = async (req, res, next) => {
         user.checkIsAdmin()
         const companyNew = await findOneCompanyNewWhereId(companyNewId)
         await companyNew.destroy()
-        res.status(200).json("Deletion company nex is done")
+        res.status(200).json("Deletion company nex success")
     } catch (err) {
         next(err)
     }

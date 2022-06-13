@@ -2,8 +2,8 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-d
 import { useSelector } from 'react-redux'
 
 import { Feed, Header, Home, Login, Profile, Settings, Search, ChatTechDep, Chat } from '../features'
-import { Errors } from "../components";
 import { Box } from "@mui/material";
+import InvalidToken from "../components/InvalidToken/InvalidToken";
 
 
 export default function Index() {
@@ -49,11 +49,12 @@ export default function Index() {
                         {app.deviceSize === 2 &&
                             <ChatTechDep />
                         }
-                        <Errors />
                     </Box>
+                    <InvalidToken />
                 </>
             }
         </Router>
+
     );
 }
 

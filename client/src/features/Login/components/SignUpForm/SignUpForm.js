@@ -35,7 +35,10 @@ export default function FormSignIn(props) {
             if (err.response.data.path && err.response.data.error)
                 actions.setFieldError(err.response.data.path, err.response.data.error);
             else
-                dispatch(setError('Echec lors de l\'inscription'))
+                dispatch(setError({
+                    title: 'Erreur du serveur',
+                    message: 'Echec de l\'inscription'
+                }))
         }
         actions.setSubmitting(false);
     };
@@ -137,9 +140,13 @@ export default function FormSignIn(props) {
             </Formik>
             <p className="login-form-modal-content__text">
                 Déjà inscrit ?
-                <span className="login-form-modal-content__link" onClick={props.handleModal}>
+                <Button
+                    color='secondary'
+                    className="login-form-modal-content__button"
+                    onClick={props.handleModal}
+                >
                     Connectez-vous !
-                </span>
+                </Button>
             </p>
         </div>
     );

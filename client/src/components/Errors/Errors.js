@@ -1,53 +1,45 @@
-import React, { useEffect, useState } from 'react'
-import { useSelector } from "react-redux";
+import React from 'react'
+import { useDispatch, useSelector } from "react-redux";
 
 import { Alert, AlertTitle, IconButton, Slide } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { deleteError } from '../../store/actions/errors.actions';
 
 export default function PostError() {
 
-    const postError = useSelector(state => state.posts.error)
-    const todosError = useSelector(state => state.todos.error)
+    // Hooks
+    const dispatch = useDispatch()
 
+    // Store
+    const error = useSelector(state => state.errors.error)
+    const invalidToken = useSelector(state => state.errors.invalidToken)
 
-    const [showError, setShowError] = useState(false)
-    const [error, setError] = useState(null)
-
-    useEffect(() => {
-        if (postError)
-            setError(postError)
-        else if (todosError)
-            setError(todosError)
-    }, [postError, todosError])
-
-    useEffect(() => {
-        if (error)
-            setShowError(true)
-        else
-            setShowError(false)
-    }, [error])
+    const handleDeleteError = () => dispatch(deleteError())
 
     return (
-        <Slide
-            in={showError}
-            direction="up"
-        >
-            <Alert
-                className='errors'
-                severity="error"
-                action={
-                    <IconButton
-                        aria-label="Fermer"
-                        color="inherit"
-                        size="small"
-                        onClick={() => setShowError(false)}
-                    >
-                        <CloseIcon fontSize="inherit" />
-                    </IconButton>
-                }>
-                <AlertTitle>Erreur de serveur</AlertTitle>
-                {error} - <strong>Veuillez réessayer ultérieurement.</strong>
-            </Alert>
-        </Slide>
+        <>
+            <Slide
+                in={!!error && !invalidToken}
+                direction="up"
+            >
+                <Alert
+                    className='errors'
+                    severity="error"
+                    action={
+                        <IconButton
+                            aria-label="Fermer"
+                            color="inherit"
+                            size="small"
+                            onClick={handleDeleteError}
+                        >
+                            <CloseIcon fontSize="inherit" />
+                        </IconButton>
+                    }>
+                    <AlertTitle>{error && error.title}</AlertTitle>
+                    {error && error.message}
+                </Alert>
+            </Slide>
+        </>
+
     )
 }

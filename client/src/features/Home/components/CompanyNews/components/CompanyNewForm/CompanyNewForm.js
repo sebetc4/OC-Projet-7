@@ -21,22 +21,28 @@ export default function CompanyNewForm({ type, companyNewId, initialTitle, initi
         e.preventDefault()
         if (type === 'modify') {
             try {
-            const updatedCompanyNew = await api.put(`company-new/${companyNewId}`, { title, text })
-            setAllCompanyNews(prev => prev.map(compNew =>
-                compNew.id === companyNewId ?
-                    updatedCompanyNew.data
-                    :
-                    compNew
-            ))
+                const updatedCompanyNew = await api.put(`company-new/${companyNewId}`, { title, text })
+                setAllCompanyNews(prev => prev.map(compNew =>
+                    compNew.id === companyNewId ?
+                        updatedCompanyNew.data
+                        :
+                        compNew
+                ))
             } catch {
-                dispatch(setError('Echec lors de la modification de la new'))
+                dispatch(setError({
+                    title: 'Erreur du serveur',
+                    message: 'Echec de la modification de la new'
+                }))
             }
         } else {
             try {
-            const newCompanyNew = await api.post('company-new', { title, text })
-            setAllCompanyNews(prev => [newCompanyNew.data, ...prev])
+                const newCompanyNew = await api.post('company-new', { title, text })
+                setAllCompanyNews(prev => [newCompanyNew.data, ...prev])
             } catch {
-                dispatch(setError('Echec lors de la modification de la new'))
+                dispatch(setError({
+                    title: 'Erreur du serveur',
+                    message: 'Echec de la modification de la new'
+                }))
             }
         }
         closeModal()

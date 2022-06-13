@@ -37,7 +37,10 @@ export default function EmailForm({ user, closeAccordion }) {
             if (err.response.data.path && err.response.data.error)
                 actions.setFieldError(err.response.data.path, err.response.data.error)
             else {
-                dispatch(setError('Echec lors de la modification du nom et prénom'))
+                dispatch(setError({
+                    title: 'Erreur du serveur',
+                    message: 'Echec de la modification du nom et prénom'
+                }))
             }
         }
         setFormIsSubmitting(false)

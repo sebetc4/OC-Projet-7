@@ -28,7 +28,10 @@ export default function ProfileHeader({ profileData, handleFollow, handleUnfollo
             toggleShowDisableAccountConfirmModale()
             navigate(`/home`, { replace: true })
         } catch {
-            dispatch(setError('Echec lors de la désactivation du compte'))
+            dispatch(setError({
+                title: 'Erreur du serveur',
+                message: 'Echec de la désactivation du compte'
+            }))
         }
     }
 

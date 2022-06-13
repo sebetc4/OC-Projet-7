@@ -26,7 +26,7 @@
 				content: '';
 				position: absolute;
 				left: 0;
-				bottom: -6px;
+				bottom: 0px;
 				width: 30px;
 				height: 3px;
 				background: $primary-color;
@@ -38,13 +38,8 @@
 		color: black;
 	}
 
-	&__link {
-		display: inline-block;
-		color: $secondary-color--light-mode;
-		margin-left: 10px;
-		cursor: pointer;
-		font-weight: bold;
-		transition: 0.3s ease;
+	&__button {
+		margin-left: 10px !important;
 	}
 }
 

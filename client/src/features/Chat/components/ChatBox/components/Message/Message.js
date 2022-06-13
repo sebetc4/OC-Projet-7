@@ -1,3 +1,4 @@
+import { Avatar } from '@mui/material'
 import React from 'react'
 
 import { FromNowDate } from '../../../../../../components'
@@ -19,11 +20,15 @@ export default function Message({ message, userIsSender }) {
                         </>
                         :
                         <>
-                            <img
-                                src={message.User.avatarUrl}
-                                alt="Votre avatar"
-                                className='chat-message-content__avatar chat-message-content__avatar--other-user'
-                            />
+                            {message.User ?
+                                <img
+                                    src={message.User.avatarUrl}
+                                    alt="Votre avatar"
+                                    className='chat-message-content__avatar chat-message-content__avatar--other-user'
+                                />
+                                :
+                                <Avatar />
+                            }
                             <p className="chat-message-content__text chat-message-content__text--other-user">{message.message}</p>
                         </>
                 }
