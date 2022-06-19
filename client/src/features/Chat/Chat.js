@@ -25,6 +25,7 @@ export default function Chat() {
     // Store
     const user = useSelector(state => state.user.data)
     const deviceSize = useSelector((state) => state.app.deviceSize)
+    const colorMode = useSelector((state) => state.app.colorMode)
 
     // State
     const [value, setValue] = useState('1');
@@ -176,6 +177,7 @@ export default function Chat() {
                     lastName: otherUser.lastName,
                     avatarUrl: otherUser.avatarUrl,
                 }
+                setConversations(prev => [conversation, ...prev])
                 socket.emit('newConversation', { otherUserId: otherUser.id, conversation })
             }
             setCurrentChat(conversation)
@@ -217,7 +219,8 @@ export default function Chat() {
                             component="section"
                             sx={{
                                 backgroundColor: 'background.section',
-                            }} className='chat-box'
+                            }}
+                            className={`chat-box ${colorMode === 'dark' ? 'chat-box--dark' : ''}`}
                         >
                             <ChatBox
                                 deviceSize={deviceSize}
@@ -314,6 +317,7 @@ export default function Chat() {
                                     }} className='chat-online'
                                 >
                                     <OnlineUsers
+                                        setShowChatBox={setShowChatBox}
                                         deviceSize={deviceSize}
                                         onlineUsers={onlineUsers}
                                         user={user}
@@ -345,7 +349,8 @@ export default function Chat() {
                                 component="section"
                                 sx={{
                                     backgroundColor: 'background.section',
-                                }} className='chat-box'
+                                }}
+                                className={`chat-box ${colorMode === 'dark' ? 'chat-box--dark' : ''}`}
                             >
                                 <ChatBox
                                     deviceSize={deviceSize}
@@ -368,6 +373,8 @@ export default function Chat() {
                             scroll={'body'}
                         >
                             <SearchUser
+                                deviceSize={deviceSize}
+                                setShowChatBox={setShowChatBox}
                                 toggleShowSearchUser={toggleShowSearchUser}
                                 user={user}
                                 handleOpenConversation={handleOpenConversation}

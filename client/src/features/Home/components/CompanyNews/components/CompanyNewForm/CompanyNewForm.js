@@ -38,6 +38,8 @@ export default function CompanyNewForm({ type, companyNewId, initialTitle, initi
             try {
                 const newCompanyNew = await api.post('company-new', { title, text })
                 setAllCompanyNews(prev => [newCompanyNew.data, ...prev])
+                setTitle('')
+                setText('')
             } catch {
                 dispatch(setError({
                     title: 'Erreur du serveur',
@@ -52,7 +54,7 @@ export default function CompanyNewForm({ type, companyNewId, initialTitle, initi
 
         <div className={`company-new-form ${colorMode === 'dark' ? 'company-new-form--dark' : ''}`}>
             <div className='company-new-form-top'>
-                <h2>Ajouter une nouvelle</h2>
+                <h2>{type === 'modify' ? 'Modifier une new' : 'Ajouter une new'}</h2>
                 <div className='company-new-form-top__button-container'>
                     <IconButton
                         color="error"

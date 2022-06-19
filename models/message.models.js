@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
         },
         message: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false,
         }
     }, {

@@ -22,9 +22,25 @@
 		padding: 1px;
 		background-color: $primary-color;
 		margin: 5px 0;
+		transition: 0.3s;
+
+		a {
+			img {
+				transition: 0.3s;
+			}
+				
+			&:hover,
+			&:focus {
+				img {
+					transform: scale(1.1);		
+				}
+			}
+		}
 
 		img {
 			border-radius: 50%;
+			width: 100%;
+			height: 100%;
 		}
 	}
 
@@ -35,8 +51,16 @@
 			display: block;
 
 			h3 {
+				transition: 0.3s;
 				font-size: 16px;
 				font-weight: 500;
+			}
+
+			&:hover,
+			&:focus {
+				h3 {
+					color: $secondary-color--light-mode;
+				}
 			}
 		}
 		p {
@@ -52,6 +76,21 @@
 		justify-content: flex-end;
 		align-items: center;
 		display: flex;
+	}
+}
+
+.main--dark {
+	.post-card-top {
+		&__infos {
+			a {
+				&:hover,
+				:focus {
+					h3 {
+						color: $secondary-color--dark-mode;
+					}
+				}
+			}
+		}
 	}
 }
 

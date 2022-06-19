@@ -1,9 +1,7 @@
 const { uploadFile } = require("../config/s3.config")
-
 const getImagesPath = (req) => `${req.protocol}://${req.get("host")}/images`
 
 // User's images path
-
 exports.getNewUserAvatarPath = (req) => `${getImagesPath(req)}/avatar/avatar-profile.webp`
 exports.getNewUserCoverPath = (req) => `${getImagesPath(req)}/cover/cover-profile.webp`
 

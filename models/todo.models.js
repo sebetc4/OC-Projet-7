@@ -22,6 +22,12 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        len: {
+          args: [1, 50],
+          msg: 'Votretodo ne doit pas contenir plus de 500 caractères'
+        }
+      }
     },
     done: {
       type: DataTypes.BOOLEAN,

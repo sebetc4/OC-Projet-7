@@ -16,7 +16,7 @@ exports.createPost = async (req, res, next) => {
         const imageUrl = await getPostImagePath(req)
         if (!text && !imageUrl && !videoUrl)
             throw { message: 'Missing parameters' }
-        if (!checkAllowedVideo(videoUrl))
+        if (videoUrl && !checkAllowedVideo(videoUrl))
             throw { message: 'Only Youtube\'s videos are allowed' }
         if (imageUrl && videoUrl)
             throw { message: 'Image and video in same post is not allowed' }
@@ -53,15 +53,17 @@ const getPostObject = async (req, text, videoUrl, updateImage) => {
 
 exports.updatePost = async (req, res, next) => {
     const user = req.user
-    const { text, updateImage, video: videoUrl } = req.body
+    const { text, updateImage, deleteVideo, video: videoUrl } = req.body
     const postId = req.params.id
     try {
-        if (!postId || !text && !req.files.post)
+        if (!postId || !text && !req.files.post && !videoUrl)
             throw { message: 'Missing parameters' }
+        if (videoUrl && !checkAllowedVideo(videoUrl))
+            throw { message: 'Only Youtube\'s videos are allowed' }
         const post = await findOnePostWhereId(postId)
         user.checkIsAuthorOrAdmin(post.UserId)
         const postObject = await getPostObject(req, text, videoUrl, updateImage)
-        if ((postObject.imageUrl && post.videoUrl) || (postObject.videoUrl && (postObject.imageUrl || (post.imageUrl && !updateImage))))
+        if ((postObject.imageUrl && post.videoUrl && !deleteVideo) || (postObject.videoUrl && (postObject.imageUrl || (post.imageUrl && !updateImage))))
             throw { message: 'Image and video in same post is not allowed' }
         if (updateImage === 'true' && post.imageUrl)
             deleteLastPostImage(post)
@@ -81,7 +83,7 @@ exports.deletePost = async (req, res, next) => {
         const post = await findOnePostWhereId(postId)
         user.checkIsAuthorOrAdmin(post.UserId)
         post.imageUrl && deleteLastPostImage(post)
-        await post.destroy()
+        await post.destroy({ force: true })
         res.status(200).json("Deletion post success")
     } catch (err) {
         next(err)

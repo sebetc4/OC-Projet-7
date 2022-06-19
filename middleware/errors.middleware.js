@@ -67,9 +67,9 @@ const othersErrors = (err, res) => {
             res.status(500).json('Unable to like or dislike')
             break
         default:
-            if (process.env.NODE_ENV !== 'production')
+            // if (process.env.NODE_ENV !== 'production')
                 res.status(500).json(err.message)
-            else
-                res.status(500).json('Internal server error')
+            // else
+            //     res.status(500).json('Internal server error')
     }
 }

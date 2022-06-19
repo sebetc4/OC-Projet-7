@@ -9,7 +9,7 @@ import ChatUserCard from '../ChatUserCard/ChatUserCard';
 import { useDispatch } from 'react-redux';
 import { setError } from '../../../../store/actions/errors.actions';
 
-export default function SearchUser({ user, toggleShowSearchUser, handleOpenConversation, onlineUsersId }) {
+export default function SearchUser({ user, deviceSize, setShowChatBox, toggleShowSearchUser, handleOpenConversation, onlineUsersId }) {
 
     // Hooks
     const dispatch = useDispatch()
@@ -69,6 +69,7 @@ export default function SearchUser({ user, toggleShowSearchUser, handleOpenConve
                                 toggleShowSearchUser()
                                 setQuery('')
                                 setResultSearch([])
+                                deviceSize === 0 && setShowChatBox(true)
                             }
                             }
                         >

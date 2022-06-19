@@ -36,7 +36,8 @@ exports.updateUser = async (req, res, next) => {
     const user = req.user
     const { email, firstName, lastName, bio } = req.body
     try {
-        if (!req.files && !email && !firstName && !lastName && bio == null) throw { message: 'Missing parameters' }
+        if (!req.files && !email && !firstName && !lastName && bio == null) 
+            throw { message: 'Missing parameters' }
         const userObject = await getUserObject(req, email, firstName, lastName, bio)
         req.files && deleteLastUserImage(req, user)
         await user.update(userObject);

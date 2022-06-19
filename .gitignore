@@ -5,7 +5,7 @@ images/cover/*
 images/post/*
 !images/post/.gitkeep 
 
-*.env*
+*.env
 node_modules/
 
 

@@ -3,6 +3,7 @@ import { SET_ERROR } from './errors.actions';
 
 export const RESET_POSTS = 'RESET_POSTS'
 export const POST_SUBMITTING = 'POST_SUBMITTING'
+export const POST_SUBMITTING_ERROR = 'POST_SUBMITTING_ERROR'
 export const CREATE_POST = 'CREATE_POST'
 export const FETCH_POSTS = 'GET_POSTS'
 export const ALL_POSTS_FETCH = 'ALL_POSTS_FETCH'
@@ -27,13 +28,21 @@ export const postSubmitting = () => {
     }
 }
 
+export const postSubmittingError = () => {
+    return {
+        type: POST_SUBMITTING_ERROR,
+        playload: ''
+    }
+}
+
 export const createPost = (data, user) => {
     return async (dispatch) => {
         try {
             dispatch(postSubmitting())
             const post = await api.post(`post`, data);
             dispatch(createPostSuccess(post.data, user));
-        } catch (err) {
+        } catch {
+            dispatch(postSubmittingError())
             dispatch(createPostError())
         }
     }
@@ -50,7 +59,10 @@ export const createPostSuccess = (post, user) => {
 export const createPostError = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec de l\'ajout du post'
+        playload: {
+            title: 'Erreur du serveur',
+            message: 'Echec de l\'ajout du post'
+        }
     }
 }
 
@@ -89,7 +101,10 @@ export const fetchPostsSucess = (data, type, allPostsFetch) => {
 export const fetchPostsError = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec de la récupération des posts.'
+        playload: {
+            title: 'Erreur du serveur',
+            message: 'Echec de la récupération des posts.'
+        }
     }
 }
 
@@ -100,6 +115,7 @@ export const updatePost = (data, postId, postIndex) => {
             const newPost = await api.put(`post/${postId}`, data);
             dispatch(updatePostSuccess(postIndex, newPost.data));
         } catch (err) {
+            dispatch(postSubmittingError())
             updatePostError()
         }
     }
@@ -115,7 +131,10 @@ export const updatePostSuccess = (postIndex, newPost) => {
 export const updatePostError = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec de la modification du post.'
+        playload: {
+            title: 'Erreur du serveur',
+            message: 'Echec de la modification du post.'
+        }
     }
 }
 
@@ -141,7 +160,10 @@ export const deletePostSuccess = (postIndex) => {
 export const deletePostError = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec de la supression du post.'
+        playload: {
+            title: 'Erreur du serveur',
+            message: 'Echec de la supression du post.'
+        }
     }
 }
 
@@ -166,7 +188,10 @@ export const likePostSuccess = (postIndex, userId, userIndex, likeStatut) => {
 export const likePostError = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec du like / dislike.'
+        playload: {
+            title: 'Erreur du serveur',
+            message: 'Echec du like / dislike.'
+        }
     }
 }
 
@@ -194,7 +219,10 @@ export const createCommentPostSuccess = (user, comment, postIndex) => {
 export const createCommentError = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec de l\'ajout du commentaire.'
+        playload: {
+            title: 'Erreur du serveur',
+            message: 'Echec de l\'ajout du commentaire.'
+        }
     }
 }
 
@@ -219,7 +247,10 @@ export const updateCommentSuccess = (commentIndex, postIndex, text) => {
 export const updateCommentError = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec de la modification du commentaire.'
+        playload: {
+            title: 'Erreur du serveur',
+            message: 'Echec de la modification du commentaire.'
+        }
     }
 }
 
@@ -244,6 +275,9 @@ export const deleteCommentSuccess = (commentIndex, postIndex) => {
 export const deleteCommentError = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec de la supression du commentaire.'
+        playload: {
+            title: 'Erreur du serveur',
+            message: 'Echec de la supression du commentaire.'
+        }
     }
 }

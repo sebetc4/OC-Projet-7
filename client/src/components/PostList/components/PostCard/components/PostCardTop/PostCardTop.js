@@ -34,21 +34,21 @@ export default function PostCardTop({ type, author, post, postIndex, user, toggl
 
     return (
         <div className={`post-card-top ${type === 'feed' ? '' : 'post-card-top--small'}`}>
-            {
-                type !== 'profile' ?
-                    <NavLink to={`/profile/${author.id}`}>
+            <div className='post-card-top__avatar'>
+                {
+                    type !== 'profile' ?
+                        <NavLink to={`/profile/${author.id}`}>
+                            <img
+                                src={author.avatarUrl}
+                                alt={`Avatar de ${author.firstName} ${author.lastName}`}
+                            />
+                        </NavLink> :
                         <img
-                            className='post-card-top__avatar'
                             src={author.avatarUrl}
                             alt={`Avatar de ${author.firstName} ${author.lastName}`}
                         />
-                    </NavLink> :
-                    <img
-                        className='post-card-top__avatar'
-                        src={author.avatarUrl}
-                        alt={`Avatar de ${author.firstName} ${author.lastName}`}
-                    />
-            }
+                }
+            </div>
             <div className='post-card-top__infos'>
                 {
                     type !== 'profile' ?
@@ -80,14 +80,14 @@ export default function PostCardTop({ type, author, post, postIndex, user, toggl
                     }
                 </div>
             }
-                <ConfirmModal
-                    title={'Confirmer la supression du post'}
-                    content={`Voulez vous vraiment supprimer ce post?`}
-                    button='Supprimer'
-                    showConfirmModale={showDeleteConfirmModale}
-                    toggleShowConfirmModale={toggleShowDeleteConfirmModale}
-                    onClickConfirm={handleDeletePost}
-                />
+            <ConfirmModal
+                title={'Confirmer la supression du post'}
+                content={`Voulez vous vraiment supprimer ce post?`}
+                button='Supprimer'
+                showConfirmModale={showDeleteConfirmModale}
+                toggleShowConfirmModale={toggleShowDeleteConfirmModale}
+                onClickConfirm={handleDeletePost}
+            />
         </div>
     )
 }

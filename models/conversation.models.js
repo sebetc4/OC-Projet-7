@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
                 foreignKey: 'secondUserId',
                 as: 'secondUser'
             });
+            models.Conversation.hasMany(models.Message, {
+                onDelete: 'cascade',
+                foreignKey: 'conversationId',
+                hooks: true
+              })
         }
     }
     Conversation.init({

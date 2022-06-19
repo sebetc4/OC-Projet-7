@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { AddTodo, Filter, TodoList } from './components'
 import { createTodo, toggleTodo, deleteTodo, setFilter, visibilityFilters } from '../../../../store/actions/todos.actions';
-import { useSelector } from "react-redux"
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux"
 import { Box, Divider } from '@mui/material';
 
 export default function Todo() {

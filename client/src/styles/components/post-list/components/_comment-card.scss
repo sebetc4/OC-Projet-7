@@ -37,6 +37,15 @@
 		flex-grow: 1;
 	}
 
+	a {
+		transition: 0.3s;
+
+		&:hover,
+		&:focus {
+			transform: scale(1.1);
+		}
+	}
+
 	&__avatar {
 		box-shadow: $box-shadow-avatar;
 		width: 40px;
@@ -45,10 +54,6 @@
 		padding: 1px;
 		background-color: $primary-color;
 		margin: 5px 0;
-
-		img {
-			border-radius: 50%;
-		}
 	}
 }
 
@@ -70,6 +75,11 @@
 			display: block;
 			font-weight: 600;
 			font-size: 14px;
+			transition: 0.3s;
+			&:hover,
+			&:focus {
+				color: $secondary-color--light-mode;
+			}
 		}
 
 		p {
@@ -79,10 +89,29 @@
 			word-wrap: break-word;
 			font-size: 13px;
 		}
+
+		&-date {
+			p {
+				font-size: 11px;
+			}
+		}
 	}
 
 	&__settings-container {
 		position: relative;
+	}
+}
+
+.main--dark {
+	.comment-card-right-content {
+		&__author-name-text-container {
+			a {
+				&:hover,
+				&:focus {
+					color: $secondary-color--dark-mode;
+				}
+			}
+		}
 	}
 }
 

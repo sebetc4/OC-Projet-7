@@ -32,13 +32,11 @@ export default function FormSignIn(props) {
             props.handleLogin(res.data.userId)
             actions.setSubmitting(false);
         } catch (err) {
-            if (err.response.data.path && err.response.data.error) {
-                console.log('ttttttt')
+            if (err.response.data.path && err.response.data.error)
                 err.response.data.path === 'accountDisabled' ?
                     setAccountDisabled(true)
                     :
                     actions.setFieldError(err.response.data.path, err.response.data.error)
-            }
             else
                 dispatch(setError({
                     title: 'Erreur du serveur',

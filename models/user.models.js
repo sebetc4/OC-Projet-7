@@ -26,12 +26,16 @@ module.exports = (sequelize, DataTypes) => {
       models.User.belongsToMany(models.User, {
         foreignKey: 'userId',
         as: 'followers',
-        through: 'Followers'
+        through: 'Followers',
+        onDelete: 'cascade',
+        hooks: true
       })
       models.User.belongsToMany(models.User, {
         foreignKey: 'followerId',
         as: 'following',
-        through: 'Followers'
+        through: 'Followers',
+        onDelete: 'cascade',
+        hooks: true
       })
       models.User.hasMany(models.Conversation, {
         foreignKey: 'firstUserId',
@@ -51,6 +55,10 @@ module.exports = (sequelize, DataTypes) => {
     hashNewPassword = async (password) => {
       const salt = await bcrypt.genSalt(10);
       return bcrypt.hashSync(password, salt);
+    }
+    checkIsAuthor = (targetId) => {
+      if (this.id !== targetId)
+        throw { message: 'Not allowed!' }
     }
     checkIsAuthorOrAdmin = (targetId) => {
       if (this.id !== targetId && !this.isAdmin)
@@ -116,12 +124,13 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     bio: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       validate: {
         len: {
           args: [0, 500],
-          msg: 'Votre bio doit contenir moins de 500 caractères'
+          msg: 'Votre bio ne doit pas contenir plus de 500 caractères'
         }
+        
       }
     },
     isAdmin: {

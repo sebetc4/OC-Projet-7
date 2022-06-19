@@ -56,6 +56,9 @@ export const toggleColorModeSuccess = () => {
 export const toggleColorModeError = () => {
     return {
         type: SET_ERROR,
-        playload: 'Echec de la modification du mode de couleur'
+        playload: {
+            title: 'Erreur du serveur',
+            message: 'Echec de la modification du mode de couleur'
+        }
     }
 }

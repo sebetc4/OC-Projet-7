@@ -5,7 +5,7 @@ import { Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 
-export default function PostFormVideoInput({ type, post, video, setVideo, setVideoUrl, toggleShowVideoInput }) {
+export default function PostFormVideoInput({ type, post, video, setVideo, setVideoUrl, toggleShowVideoInput, setDeleteVideo }) {
 
     const textFieldRef = useRef()
 
@@ -24,6 +24,7 @@ export default function PostFormVideoInput({ type, post, video, setVideo, setVid
     const handleAddVideo = () => {
         setVideoUrl(video.replace('watch?v=', 'embed/').split('&')[0])
         toggleShowVideoInput()
+        setDeleteVideo(false)
     }
 
     return (
@@ -31,7 +32,7 @@ export default function PostFormVideoInput({ type, post, video, setVideo, setVid
             <TextField
                 color='secondary'
                 ref={textFieldRef}
-                className='post-form-video-input__input-container'
+                className='post-form-video-input__input'
                 id={type !== 'modify' ? 'post-video-input-new-post' : `post-video-input-${post.id}`}
                 sx={{ width: '100%' }}
                 size='small'
@@ -41,7 +42,7 @@ export default function PostFormVideoInput({ type, post, video, setVideo, setVid
                 onChange={handleVideo}
             />
             <Button
-                color='primary'
+                color='secondary'
                 startIcon={<AddIcon />}
                 size='small'
                 onClick={handleAddVideo}

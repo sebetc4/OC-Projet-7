@@ -4,7 +4,7 @@ import { Box, Divider } from '@mui/material'
 
 import { ChatUserCard } from '../index'
 
-export default function OnlineUsers({ deviceSize, onlineUsers, user, handleOpenConversation }) {
+export default function OnlineUsers({ deviceSize, setShowChatBox, onlineUsers, user, handleOpenConversation }) {
 
     // State
     const [onlineFollowUsers, setOnlineFollowUsers] = useState([])
@@ -53,7 +53,10 @@ export default function OnlineUsers({ deviceSize, onlineUsers, user, handleOpenC
                                             onlineFollowUsers.map(onlineUser =>
                                                 <li
                                                     key={onlineUser.userId}
-                                                    onClick={() => handleOpenConversation({ ...onlineUser.data, id: onlineUser.userId })}
+                                                    onClick={() => {
+                                                        handleOpenConversation({ ...onlineUser.data, id: onlineUser.userId })
+                                                        deviceSize === 0 && setShowChatBox(true)
+                                                }}
                                                 >
                                                     <ChatUserCard
                                                         userInCard={onlineUser.data}

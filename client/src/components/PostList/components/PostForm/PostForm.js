@@ -30,6 +30,7 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
     const [image, setImage] = useState(initialValueImage ? initialValueImage : null)
     const [file, setFile] = useState(null)
     const [video, setVideo] = useState('')
+    const [deleteVideo, setDeleteVideo] = useState(false)
     const [videoUrl, setVideoUrl] = useState(initialValueVideoUrl)
     const [showVideoInput, setShowVideoInput] = useState(false)
     const [submitDisabled, setSubmitDisabled] = useState(true)
@@ -87,6 +88,7 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
     const handleDeleteVideo = () => {
         setVideo('')
         setVideoUrl('')
+        type === 'modify' && setDeleteVideo(true)
     }
 
     const toggleShowVideoInput = () => setShowVideoInput(prev => !prev)
@@ -96,6 +98,7 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
         const formData = new FormData()
         formData.append('text', text)
         type === 'modify' && formData.append('updateImage', updateImage)
+        type === 'modify' && formData.append('deleteVideo', deleteVideo)
         videoUrl && formData.append('video', videoUrl)
         file && formData.append('post', file)
         if (type === 'modify')
@@ -161,6 +164,7 @@ export default function PostForm({ type, post, postIndex, initialValueText, init
                     setVideo={setVideo}
                     setVideoUrl={setVideoUrl}
                     toggleShowVideoInput={toggleShowVideoInput}
+                    setDeleteVideo={setDeleteVideo}
                 />
             </Collapse>
             <div className='post-form-bottom'>

@@ -14,10 +14,10 @@
 }
 
 .post-form--dark .post-form-textarea {
-		.post-form-textarea__input {
-			color: $text-color--dark-mode;
-		}
+	.post-form-textarea__input {
+		color: $text-color--dark-mode;
 	}
+}
 
 .post-form-image {
 	margin: 20px 0;
@@ -57,7 +57,7 @@
 	align-items: center;
 	justify-content: space-between;
 
-	&__input-container {
+	&__input {
 		max-width: 350px;
 	}
 }
@@ -67,8 +67,16 @@
 		@include standard-modal-mobile;
 	}
 
+	.post-form-video-input {
+		flex-direction: column;
+
+		button {
+			margin-top: 20px;
+		}
+	}
+
 	.post-form-actions {
-		width: 100%;
+		max-width: 100%;
 		margin: 40px auto 0 auto;
 	}
 }

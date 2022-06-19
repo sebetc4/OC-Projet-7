@@ -35,8 +35,6 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 export default function ChatUserCard({ userInCard, userInCardIsOnline, unreadMessages }) {
 
-    console.log(userInCard)
-
     return (
         <Box
             component="article"

@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-  Comment .init({
+  Comment.init({
     id: {
       type: Sequelize.UUID,
       defaultValue: Sequelize.UUIDV4,
@@ -25,7 +25,13 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
     },
     text: {
-      type: DataTypes.STRING
+      type: DataTypes.TEXT,
+      validate: {
+        len: {
+          args: [1, 300],
+          msg: 'Votre commentaire ne doit pas contenir plus de 300 caractères'
+        }
+      }
     }
   },
     {

@@ -36,7 +36,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
      text: {
-      type: DataTypes.STRING
+      type: DataTypes.TEXT,
+      validate: {
+        len: {
+          args: [1, 500],
+          msg: 'Votre post ne doit pas contenir plus de 500 caractères'
+        }
+      }
     }
   }, {
     sequelize,

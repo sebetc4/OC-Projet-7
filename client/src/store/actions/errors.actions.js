@@ -11,7 +11,6 @@ export const resetError = () => {
 }
 
 export const setError = (error) => {
-    console.log(error)
     return {
         type: SET_ERROR,
         playload: error

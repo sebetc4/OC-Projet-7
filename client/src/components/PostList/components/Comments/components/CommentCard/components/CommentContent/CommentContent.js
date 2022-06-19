@@ -39,12 +39,13 @@ export default function CommentContent({ type, postIndex, comment, commentIndex,
                 </NavLink>
                 {
                     (deviceSize === 0 || type !== 'feed') &&
-                    <FromNowDate
-                        withoutAgo={true}
-                        date={comment.createdAt}
-                    />
+                    <div className='comment-card-right-content__author-name-text-container-date'>
+                        <FromNowDate
+                            withoutAgo={true}
+                            date={comment.createdAt}
+                        />
+                    </div>
                 }
-
                 <p>{comment.text}</p>
             </div>
             <div>

@@ -140,3 +140,15 @@
 	display: flex;
 	justify-content: center;
 }
+
+@media screen and (max-width: $media-mobile) {
+	.company-new-form {
+		@include standard-modal-mobile;
+	}
+}
+
+@media screen and (max-width: $media-small-screen) {
+	.company-new-form {
+		@include standard-modal-small-screen;
+	}
+}

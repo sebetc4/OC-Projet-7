@@ -9,7 +9,7 @@ import DeleteOutlineOutlined from '@mui/icons-material/DeleteOutlineOutlined';
 
 
 
-export default function CommentSettings({ closeModal, handleDeleteCompanyNew, toggleShowDeleteConfirmModale }) {
+export default function CommentSettings({ closeModal, toggleShowModifyCompanyNew, toggleShowDeleteConfirmModale }) {
 
     return (
         <MenuModal closeModal={closeModal}>
@@ -18,7 +18,7 @@ export default function CommentSettings({ closeModal, handleDeleteCompanyNew, to
                     <MenuList>
                         <MenuItem
                             onClick={() => {
-                                toggleShowDeleteConfirmModale()
+                                toggleShowModifyCompanyNew()
                                 closeModal()
                             }}
                         >
@@ -30,7 +30,7 @@ export default function CommentSettings({ closeModal, handleDeleteCompanyNew, to
                         <Divider className='comment-card-settings__divider'/>
                         <MenuItem
                             onClick={() => {
-                                handleDeleteCompanyNew()
+                                toggleShowDeleteConfirmModale()
                                 closeModal()
                             }}
                         >

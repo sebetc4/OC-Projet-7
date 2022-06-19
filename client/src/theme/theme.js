@@ -30,7 +30,7 @@ export const getTheme = (colorMode) => {
                         main: '#C8525B'
                     },
                     secondary: {
-                        main: '#7195e1' //40% #0e1f43
+                        main: '#7195e1'
                     },
                     inactiveLink: {
                         main: 'rgb(100, 100, 100)',

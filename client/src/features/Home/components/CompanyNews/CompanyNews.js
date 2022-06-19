@@ -21,10 +21,10 @@ export default function CompanyNews() {
 
     // Hooks
     const fullScreen = useMediaQuery('(max-width:768px)');
+    const dispatch = useDispatch()
 
     // Store
     const userIsAdmin = useSelector(state => state.user.data.isAdmin)
-    const dispatch = useDispatch()
 
     // State
     const [allCompanyNews, setAllCompanyNews] = useState([])

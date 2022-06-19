@@ -17,9 +17,13 @@ module.exports = (sequelize, DataTypes) => {
     title: {
       type: DataTypes.STRING,
       allowNull: false,
+      len: {
+        args: [1, 200],
+        msg: 'Votre titre ne doit pas contenir plus de 200 caractères'
+      }
     },
     text: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     }
   }, {
