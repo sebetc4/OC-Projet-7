@@ -9,11 +9,11 @@ const userDefaultState = {
 export default function userReducer(state = userDefaultState, action) {
     switch (action.type) {
         case FETCH_USER_DATA:
-            return action.playload
+            return action.payload
         case LOGOUT_USER:
             return { ...userDefaultState, isLoaded: true }
         case UPDATE_USER:
-            return { ...state, data: { ...state.data, ...action.playload } }
+            return { ...state, data: { ...state.data, ...action.payload } }
         default:
             return state;
     }

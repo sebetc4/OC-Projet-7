@@ -22,32 +22,32 @@ export default function postsReducer(state = postsDefaultState, action) {
             return { ...state, submitting: false }
         }
         case CREATE_POST: {
-            const post = action.playload
+            const post = action.payload
             return { ...state, data: [post, ...state.data], submitting: false }
         }
         case FETCH_POSTS: {
-            const { posts, type } = action.playload
+            const { posts, type } = action.payload
             return { ...state, data: [...state.data, ...posts], type, isLoaded: true, allPostsFetch: false }
         }
         case ALL_POSTS_FETCH: {
-            const { posts, type } = action.playload
+            const { posts, type } = action.payload
             return { ...state, data: [...state.data, ...posts], type, isLoaded: true, allPostsFetch: true }
         }
         case UPDATE_POST: {
-            const { postIndex, newPost } = action.playload
+            const { postIndex, newPost } = action.payload
             const data = [...state.data]
             const lastData = data[postIndex]
             data[postIndex] = { ...lastData, ...newPost }
             return { ...state, data, submitting: false }
         }
         case DELETE_POST: {
-            const postIndex = action.playload
+            const postIndex = action.payload
             const data = [...state.data]
             data.splice(postIndex, 1)
             return { ...state, data, submitting: false }
         }
         case LIKE_POST: {
-            const { postIndex, likeStatut, userId, userIndex } = action.playload
+            const { postIndex, likeStatut, userId, userIndex } = action.payload
             const data = [...state.data]
             if (likeStatut)
                 data[postIndex].usersLiked.push(userId)
@@ -56,19 +56,19 @@ export default function postsReducer(state = postsDefaultState, action) {
             return { ...state, data }
         }
         case CREATE_COMMENT: {
-            const { comment, postIndex } = action.playload
+            const { comment, postIndex } = action.payload
             const data = [...state.data]
             data[postIndex].Comments.unshift(comment)
             return { ...state, data }
         }
         case UPDATE_COMMENT: {
-            const { commentIndex, postIndex, text } = action.playload
+            const { commentIndex, postIndex, text } = action.payload
             const data = [...state.data]
             data[postIndex].Comments[commentIndex].text = text
             return { ...state, data }
         }
         case DELETE_COMMENT: {
-            const { commentIndex, postIndex } = action.playload
+            const { commentIndex, postIndex } = action.payload
             const data = [...state.data]
             data[postIndex].Comments.splice(commentIndex, 1)
             return { ...state, data }

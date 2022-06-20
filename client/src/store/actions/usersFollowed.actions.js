@@ -43,7 +43,7 @@ export const addUserFollowedSuccess = (data) => {
 export const addUserFollowedError = () => {
     return {
         type: SET_ERROR,
-        playload: {
+        payload: {
             title: 'Erreur du serveur',
             message: 'Echec de l\'abonnement'
         }
@@ -71,7 +71,7 @@ export const deleteUserFollowedSuccess = (index) => {
 export const deleteUserFollowedError = () => {
     return {
         type: SET_ERROR,
-        playload: {
+        payload: {
             title: 'Erreur du serveur',
             message: 'Echec du désabonnement'
         }

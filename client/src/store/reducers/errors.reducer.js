@@ -10,7 +10,7 @@ export default function errorsReducer(state = errorDefaultState, action) {
         case RESET_ERROR:
             return errorDefaultState
         case SET_ERROR:
-            const error = action.playload
+            const error = action.payload
             return { ...state, error }
         case DELETE_ERROR:
             return { ...state, error: null }

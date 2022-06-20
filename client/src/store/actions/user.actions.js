@@ -33,7 +33,7 @@ export const fetchUserData = () => {
 const fetchUserDataSuccess = (data, isLogged) => {
     return {
         type: FETCH_USER_DATA,
-        playload: {
+        payload: {
             data,
             isLogged,
             isLoaded: true
@@ -44,7 +44,7 @@ const fetchUserDataSuccess = (data, isLogged) => {
 const fetchUserDataError = () => {
     return {
         type: SET_ERROR,
-        playload: {
+        payload: {
             title: 'Erreur du serveur',
             message: 'Echec lors de l\'autentification.'
         }
@@ -70,14 +70,14 @@ export const logoutUser = () => {
 const logoutUserSuccess = () => {
     return {
         type: LOGOUT_USER,
-        playload: ''
+        payload: ''
     }
 }
 
 const logoutUserDelete = () => {
     return {
         type: SET_ERROR,
-        playload: {
+        payload: {
             title: 'Erreur du serveur',
             message: 'Echec lors de la déconnexion.'
         }
@@ -88,6 +88,6 @@ const logoutUserDelete = () => {
 export const updateUser = (data) => {
     return {
         type: UPDATE_USER,
-        playload: data
+        payload: data
     }
 }

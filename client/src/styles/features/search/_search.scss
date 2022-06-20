@@ -1,6 +1,6 @@
 .search {
 	@include center-width($width: $profile-width-desktop);
-	margin-bottom: 30px;
+	padding-bottom: 30px;
 
 	&__title {
 		margin: 30px 0;

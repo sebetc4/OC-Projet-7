@@ -33,6 +33,7 @@ export default function SearchUsers({ users }) {
             {userListLength < users.length &&
               <div className='search-users-bottom'>
                 <Button
+                  color='secondary'
                   size="large"
                   endIcon={<ExpandMoreIcon />}
                   onClick={addUsersInList}

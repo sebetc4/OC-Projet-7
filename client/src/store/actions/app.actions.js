@@ -10,28 +10,28 @@ export const SET_COLOR_MODE = 'SET_COLOR_MODE'
 export const resetApp = () => {
     return {
         type: RESET_APP,
-        playload: ''
+        payload: ''
     }
 }
 
 export const setDeviceSize = (deviceSize) => {
     return {
         type: SET_DEVICE_SIZE,
-        playload: deviceSize
+        payload: deviceSize
     };
 }
 
 export const setDisplayMobileMenu = (state) => {
     return {
         type: SET_DISPLAY_MOBILE_MENU,
-        playload: state
+        payload: state
     }
 }
 
 export const setColorMode = (darkMode) => {
     return {
         type: SET_COLOR_MODE,
-        playload: darkMode ? 'dark' : 'light'
+        payload: darkMode ? 'dark' : 'light'
     }
 }
 
@@ -49,14 +49,14 @@ export const toggleColorMode = () => {
 export const toggleColorModeSuccess = () => {
     return {
         type: TOGGLE_COLOR_MODE,
-        playload: ''
+        payload: ''
     }
 }
 
 export const toggleColorModeError = () => {
     return {
         type: SET_ERROR,
-        playload: {
+        payload: {
             title: 'Erreur du serveur',
             message: 'Echec de la modification du mode de couleur'
         }

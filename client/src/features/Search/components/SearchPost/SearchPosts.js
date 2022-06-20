@@ -36,6 +36,7 @@ export default function SearchPosts({ posts }) {
 									size="large"
 									endIcon={<ExpandMoreIcon />}
 									onClick={addPotsInList}
+									color='secondary'
 								>
 									Afficher plus de posts
 								</Button>

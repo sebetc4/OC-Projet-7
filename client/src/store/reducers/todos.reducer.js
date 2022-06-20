@@ -51,7 +51,7 @@ export default function todosReducer(state = todosDefaultState, action) {
             }
         }
         case 'TODOS_ERROR': {
-            const error = action.playload
+            const error = action.payload
             return { ...state, error }
         }
         default: {
