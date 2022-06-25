@@ -35,11 +35,11 @@ module.exports = (sequelize, DataTypes) => {
     videoUrl: {
       type: DataTypes.STRING
     },
-     text: {
+    text: {
       type: DataTypes.TEXT,
       validate: {
-        len: {
-          args: [1, 500],
+        max: {
+          args: 500,
           msg: 'Votre post ne doit pas contenir plus de 500 caractères'
         }
       }
@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
 
   const softDestroyComments = async (user) => {
     const comments = await user.getComments()
-    comments.forEach( post => post.destroy())
+    comments.forEach(post => post.destroy())
   }
 
   Post.beforeDestroy(softDestroyComments);

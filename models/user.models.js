@@ -126,8 +126,8 @@ module.exports = (sequelize, DataTypes) => {
     bio: {
       type: DataTypes.TEXT,
       validate: {
-        len: {
-          args: [0, 500],
+        max: {
+          args: 500,
           msg: 'Votre bio ne doit pas contenir plus de 500 caractères'
         }
         
